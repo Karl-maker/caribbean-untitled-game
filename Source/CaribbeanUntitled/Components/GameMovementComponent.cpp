@@ -13,9 +13,7 @@ UGameMovementComponent::UGameMovementComponent()
     PrimaryComponentTick.bCanEverTick = false;
 
     DesiredDirection = FVector::ZeroVector;
-    DesiredVelocity = FVector::ZeroVector;
-    Velocity = FVector::ZeroVector;
-
+    
     MovementMode = EGameMovementMode::Grounded;
 
     bIsGrounded = true;
@@ -33,25 +31,12 @@ void UGameMovementComponent::BeginPlay()
     Super::BeginPlay();
 
     DesiredDirection = FVector::ZeroVector;
-    DesiredVelocity = FVector::ZeroVector;
 }
 
 
 FVector UGameMovementComponent::GetDesiredDirection() const
 {
     return DesiredDirection;
-}
-
-
-FVector UGameMovementComponent::GetDesiredVelocity() const
-{
-    return DesiredVelocity;
-}
-
-
-FVector UGameMovementComponent::GetVelocity() const
-{
-    return Velocity;
 }
 
 
@@ -97,23 +82,6 @@ void UGameMovementComponent::SetDesiredDirection(
 
     DesiredDirection = Direction.GetSafeNormal();
 }
-
-
-void UGameMovementComponent::SetDesiredVelocity(
-    const FVector& NewVelocity
-)
-{
-    DesiredVelocity = NewVelocity;
-}
-
-
-void UGameMovementComponent::SetVelocity(
-    const FVector& NewVelocity
-)
-{
-    Velocity = NewVelocity;
-}
-
 
 void UGameMovementComponent::SetMovementMode(
     EGameMovementMode NewMode
@@ -174,7 +142,6 @@ void UGameMovementComponent::SetGrounded(bool bGrounded)
 void UGameMovementComponent::ClearDesiredMovement()
 {
     DesiredDirection = FVector::ZeroVector;
-    DesiredVelocity = FVector::ZeroVector;
 }
 
 

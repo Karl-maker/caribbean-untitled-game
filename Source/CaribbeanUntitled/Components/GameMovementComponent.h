@@ -241,29 +241,6 @@ public:
     )
     FVector DesiredDirection = FVector::ZeroVector;
 
-
-    /**
-     * Desired velocity produced by the movement system.
-     */
-    UPROPERTY(
-        VisibleAnywhere,
-        BlueprintReadOnly,
-        Category="Movement|State"
-    )
-    FVector DesiredVelocity = FVector::ZeroVector;
-
-
-    /**
-     * Current movement velocity.
-     */
-    UPROPERTY(
-        VisibleAnywhere,
-        BlueprintReadOnly,
-        Category="Movement|State"
-    )
-    FVector Velocity = FVector::ZeroVector;
-
-
     /**
      * Current movement mode.
      */
@@ -350,14 +327,6 @@ public:
 
 
     UFUNCTION(BlueprintPure, Category="Movement")
-    FVector GetDesiredVelocity() const;
-
-
-    UFUNCTION(BlueprintPure, Category="Movement")
-    FVector GetVelocity() const;
-
-
-    UFUNCTION(BlueprintPure, Category="Movement")
     EGameMovementMode GetMovementMode() const;
 
 
@@ -383,15 +352,6 @@ public:
 
     UFUNCTION(BlueprintCallable, Category="Movement")
     void SetDesiredDirection(const FVector& Direction);
-
-
-    UFUNCTION(BlueprintCallable, Category="Movement")
-    void SetDesiredVelocity(const FVector& NewVelocity);
-
-
-    UFUNCTION(BlueprintCallable, Category="Movement")
-    void SetVelocity(const FVector& NewVelocity);
-
 
     UFUNCTION(BlueprintCallable, Category="Movement")
     void SetMovementMode(EGameMovementMode NewMode);
