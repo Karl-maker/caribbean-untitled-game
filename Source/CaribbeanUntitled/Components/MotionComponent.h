@@ -100,7 +100,7 @@ public:
     FVector DesiredAngularAcceleration = FVector::ZeroVector;
     
     
-    UPROPERTY()
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Motion|Intent")
     bool bWantsToJump = false;
 
 
