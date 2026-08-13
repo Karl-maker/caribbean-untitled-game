@@ -171,6 +171,20 @@ public:
         Category = "Control|Look"
     )
     FVector LookDirection = FVector::ForwardVector;
+    
+    
+    /**
+     * Desired world-space movement direction.
+     *
+     * This is independent of the control source.
+     * Player, AI, Network, and Script can all provide it.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Control|Movement"
+    )
+    FVector MoveDirection = FVector::ForwardVector;
 
 public:
 
@@ -331,6 +345,13 @@ public:
      */
     UFUNCTION(BlueprintCallable, Category = "Control|Look")
     void ClearLookInput();
+    
+    
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetMoveDirection(const FVector& Direction);
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    FVector GetMoveDirection() const;
     
 protected:
 
