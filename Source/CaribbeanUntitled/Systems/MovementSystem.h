@@ -4,7 +4,7 @@
 #include "Subsystems/WorldSubsystem.h"
 #include "MovementSystem.generated.h"
 
-class AGameActor;
+class AK98Actor;
 class UControlComponent;
 
 /**

@@ -6,7 +6,7 @@
 //
 
 #include "ControlComponent.h"
-#include "../GameActors/GameActor.h"
+#include "../Actors/K98Actor.h"
 #include "Engine/World.h"
 
 UControlComponent::UControlComponent()
@@ -20,7 +20,7 @@ void UControlComponent::BeginPlay()
     Super::BeginPlay();
     
     // Initialize cached rotation
-    if (AGameActor* Owner = Cast<AGameActor>(GetOwner()))
+    if (AK98Actor* Owner = Cast<AK98Actor>(GetOwner()))
     {
         CachedActorRotation = Owner->GetActorRotation();
     }
@@ -48,7 +48,7 @@ void UControlComponent::SetWorldMoveDirection(const FVector& WorldDirection)
     WorldMoveDirection = WorldDirection.GetSafeNormal();
     
     // Convert world direction to local space if we have an owner
-    if (AGameActor* Owner = Cast<AGameActor>(GetOwner()))
+    if (AK98Actor* Owner = Cast<AK98Actor>(GetOwner()))
     {
         const FRotator OwnerRotation = Owner->GetActorRotation();
         const FVector LocalDirection = OwnerRotation.UnrotateVector(WorldDirection);

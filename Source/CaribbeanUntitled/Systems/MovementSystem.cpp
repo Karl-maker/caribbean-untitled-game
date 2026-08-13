@@ -1,6 +1,6 @@
 #include "MovementSystem.h"
 
-#include "../GameActors/GameActor.h"
+#include "../Actors/K98Actor.h"
 #include "ActorRegistry.h"
 
 #include "../Components/ControlComponent.h"

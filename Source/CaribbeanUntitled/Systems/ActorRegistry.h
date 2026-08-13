@@ -13,7 +13,7 @@
 #include "ActorRegistry.generated.h"
 
 // Forward declaration - breaks the circular dependency
-class AGameActor;
+class AK98Actor;
 
 UCLASS()
 class CARIBBEANUNTITLED_API UActorRegistry : public UWorldSubsystem
@@ -22,16 +22,16 @@ class CARIBBEANUNTITLED_API UActorRegistry : public UWorldSubsystem
 
 public:
 
-    void RegisterActor(AGameActor* Actor);
+    void RegisterActor(AK98Actor* Actor);
 
-    void UnregisterActor(AGameActor* Actor);
+    void UnregisterActor(AK98Actor* Actor);
 
-    bool IsRegistered(const AGameActor* Actor) const;
+    bool IsRegistered(const AK98Actor* Actor) const;
 
     /**
      * Returns every registered gameplay Actor.
      */
-    const TSet<TWeakObjectPtr<AGameActor>>& GetAllActors() const
+    const TSet<TWeakObjectPtr<AK98Actor>>& GetAllActors() const
     {
         return AllActors;
     }
@@ -41,14 +41,14 @@ public:
      *
      * This is O(1) lookup and O(1) average insertion/removal.
      */
-    const TSet<TWeakObjectPtr<AGameActor>>*
+    const TSet<TWeakObjectPtr<AK98Actor>>*
     GetComponentIndex(UClass* ComponentClass) const;
 
     /**
      * Called when a component is added to an Actor.
      */
     void ComponentAdded(
-        AGameActor* Actor,
+        AK98Actor* Actor,
         UActorComponent* Component
     );
 
@@ -56,12 +56,12 @@ public:
      * Called when a component is removed from an Actor.
      */
     void ComponentRemoved(
-        AGameActor* Actor,
+        AK98Actor* Actor,
         UActorComponent* Component
     );
 
     template<typename T>
-    const TSet<TWeakObjectPtr<AGameActor>>*
+    const TSet<TWeakObjectPtr<AK98Actor>>*
     GetActorsWithComponent() const
     {
         static_assert(
@@ -81,7 +81,7 @@ private:
     /**
      * Master Actor set.
      */
-    TSet<TWeakObjectPtr<AGameActor>> AllActors;
+    TSet<TWeakObjectPtr<AK98Actor>> AllActors;
 
     /**
      * Component -> Actor index.
@@ -99,12 +99,12 @@ private:
      */
     TMap<
         TObjectPtr<UClass>,
-        TSet<TWeakObjectPtr<AGameActor>>
+        TSet<TWeakObjectPtr<AK98Actor>>
     > ComponentIndexes;
 
-    void BuildIndexesForActor(AGameActor* Actor);
+    void BuildIndexesForActor(AK98Actor* Actor);
 
-    void RemoveActorFromIndexes(AGameActor* Actor);
+    void RemoveActorFromIndexes(AK98Actor* Actor);
 
     void CleanupInvalidActors();
 };

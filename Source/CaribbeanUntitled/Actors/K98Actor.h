@@ -10,16 +10,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "GameActor.generated.h"
+#include "K98Actor.generated.h"
 
 UCLASS()
-class CARIBBEANUNTITLED_API AGameActor : public AActor
+class CARIBBEANUNTITLED_API AK98Actor : public AActor
 {
     GENERATED_BODY()
 
 public:
 
-    AGameActor();
+    AK98Actor();
 
     /**
      * Dynamically creates a component and attaches it to this Actor.
@@ -65,7 +65,7 @@ private:
 
 
 template<typename T>
-T* AGameActor::AddComponent()
+T* AK98Actor::AddComponent()
 {
     static_assert(
         TIsDerivedFrom<T, UActorComponent>::IsDerived,
@@ -102,7 +102,7 @@ T* AGameActor::AddComponent()
 
 
 template<typename T>
-T* AGameActor::GetComponent() const
+T* AK98Actor::GetComponent() const
 {
     static_assert(
         TIsDerivedFrom<T, UActorComponent>::IsDerived,
@@ -114,7 +114,7 @@ T* AGameActor::GetComponent() const
 
 
 template<typename T>
-void AGameActor::GetComponentsOfType(TArray<T*>& OutComponents) const
+void AK98Actor::GetComponentsOfType(TArray<T*>& OutComponents) const
 {
     static_assert(
         TIsDerivedFrom<T, UActorComponent>::IsDerived,
@@ -128,7 +128,7 @@ void AGameActor::GetComponentsOfType(TArray<T*>& OutComponents) const
 
 
 template<typename T>
-bool AGameActor::HasComponent() const
+bool AK98Actor::HasComponent() const
 {
     return GetComponent<T>() != nullptr;
 }

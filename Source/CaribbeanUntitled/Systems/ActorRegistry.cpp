@@ -7,9 +7,9 @@
 //
 
 #include "ActorRegistry.h"
-#include "../GameActors/GameActor.h"
+#include "../Actors/K98Actor.h"
 
-void UActorRegistry::RegisterActor(AGameActor* Actor)
+void UActorRegistry::RegisterActor(AK98Actor* Actor)
 {
     if (!IsValid(Actor))
     {
@@ -28,7 +28,7 @@ void UActorRegistry::RegisterActor(AGameActor* Actor)
 }
 
 
-void UActorRegistry::UnregisterActor(AGameActor* Actor)
+void UActorRegistry::UnregisterActor(AK98Actor* Actor)
 {
     if (!Actor)
     {
@@ -42,18 +42,18 @@ void UActorRegistry::UnregisterActor(AGameActor* Actor)
 
 
 bool UActorRegistry::IsRegistered(
-    const AGameActor* Actor
+    const AK98Actor* Actor
 ) const
 {
     return Actor &&
            AllActors.Contains(
-               const_cast<AGameActor*>(Actor)
+               const_cast<AK98Actor*>(Actor)
            );
 }
 
 
 void UActorRegistry::BuildIndexesForActor(
-    AGameActor* Actor
+     AK98Actor* Actor
 )
 {
     if (!IsValid(Actor))
@@ -63,7 +63,7 @@ void UActorRegistry::BuildIndexesForActor(
 
     TArray<UActorComponent*> Components;
 
-    Actor->GetComponents(Components);  // <-- This needs the full AGameActor definition
+    Actor->GetComponents(Components);  // <-- This needs the full AK98Actor definition
 
     for (UActorComponent* Component : Components)
     {
@@ -81,7 +81,7 @@ void UActorRegistry::BuildIndexesForActor(
 
 
 void UActorRegistry::ComponentAdded(
-    AGameActor* Actor,
+    AK98Actor* Actor,
     UActorComponent* Component
 )
 {
@@ -98,7 +98,7 @@ void UActorRegistry::ComponentAdded(
         return;
     }
 
-    TSet<TWeakObjectPtr<AGameActor>>& Index =
+    TSet<TWeakObjectPtr<AK98Actor>>& Index =
         ComponentIndexes.FindOrAdd(ComponentClass);
 
     Index.Add(Actor);
@@ -106,7 +106,7 @@ void UActorRegistry::ComponentAdded(
 
 
 void UActorRegistry::ComponentRemoved(
-    AGameActor* Actor,
+    AK98Actor* Actor,
     UActorComponent* Component
 )
 {
@@ -122,7 +122,7 @@ void UActorRegistry::ComponentRemoved(
         return;
     }
 
-    TSet<TWeakObjectPtr<AGameActor>>* Index =
+    TSet<TWeakObjectPtr<AK98Actor>>* Index =
         ComponentIndexes.Find(ComponentClass);
 
     if (!Index)
@@ -140,7 +140,7 @@ void UActorRegistry::ComponentRemoved(
 }
 
 
-const TSet<TWeakObjectPtr<AGameActor>>*
+const TSet<TWeakObjectPtr<AK98Actor>>*
 UActorRegistry::GetComponentIndex(
     UClass* ComponentClass
 ) const
@@ -155,7 +155,7 @@ UActorRegistry::GetComponentIndex(
 
 
 void UActorRegistry::RemoveActorFromIndexes(
-    AGameActor* Actor
+   AK98Actor* Actor
 )
 {
     if (!Actor)
@@ -167,7 +167,7 @@ void UActorRegistry::RemoveActorFromIndexes(
          It;
          ++It)
     {
-        TSet<TWeakObjectPtr<AGameActor>>& Index = It.Value();
+        TSet<TWeakObjectPtr<AK98Actor>>& Index = It.Value();
 
         Index.Remove(Actor);
 
@@ -195,7 +195,7 @@ void UActorRegistry::CleanupInvalidActors()
          It;
          ++It)
     {
-        TSet<TWeakObjectPtr<AGameActor>>& Index = It.Value();
+        TSet<TWeakObjectPtr<AK98Actor>>& Index = It.Value();
 
         for (auto ActorIt = Index.CreateIterator();
              ActorIt;

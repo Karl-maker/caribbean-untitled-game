@@ -6,11 +6,11 @@
 //  Copyright © 2026 Epic Games, Inc. All rights reserved.
 //
 
-#include "GameActor.h"
+#include "K98Actor.h"
 #include "Engine/World.h"
 #include "../Systems/ActorRegistry.h"
 
-AGameActor::AGameActor()
+AK98Actor::AK98Actor()
 {
     PrimaryActorTick.bCanEverTick = false;
 
@@ -19,7 +19,7 @@ AGameActor::AGameActor()
     RootComponent = Root;
 }
 
-void AGameActor::NotifyRegistryComponentAdded(UActorComponent* Component)
+void AK98Actor::NotifyRegistryComponentAdded(UActorComponent* Component)
 {
     if (UActorRegistry* Registry = GetWorld()->GetSubsystem<UActorRegistry>())
     {
@@ -28,7 +28,7 @@ void AGameActor::NotifyRegistryComponentAdded(UActorComponent* Component)
 }
 
 
-bool AGameActor::RemoveComponent(
+bool AK98Actor::RemoveComponent(
     UActorComponent* Component
 )
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameActor.h"
+#include "K98Actor.h"
 #include "PlayerActor.generated.h"
 
 class UControlComponent;
@@ -9,7 +9,7 @@ class UControlComponent;
 // etc.
 
 UCLASS()
-class CARIBBEANUNTITLED_API APlayerActor : public AGameActor
+class CARIBBEANUNTITLED_API APlayerActor : public AK98Actor
 {
     GENERATED_BODY()
 
