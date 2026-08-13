@@ -53,7 +53,8 @@ public:
     void UnregisterRigidbody(
         URigidbodyComponent* Rigidbody);
 
-
+    void Tick(float DeltaTime) override;
+    
 private:
 
     // ========================================================================
@@ -79,8 +80,6 @@ private:
         URigidbodyComponent* Rigidbody);
 
     void CleanupRegistry();
-    
-    virtual void Tick(float DeltaTime) override;
 
     virtual bool IsTickable() const override;
 

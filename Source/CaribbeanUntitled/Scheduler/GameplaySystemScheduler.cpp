@@ -4,7 +4,7 @@
 //
 
 #include "GameplaySystemScheduler.h"
-
+#include "../Systems/PhysicsSystem.h"
 #include "../Systems/MovementSystem.h"
 
 
@@ -14,13 +14,14 @@ void UGameplaySystemScheduler::Initialize(
     Super::Initialize(Collection);
 
     MovementSystem = NewObject<UMovementSystem>(this);
+    PhysicsSystem = NewObject<UPhysicsSystem>(this);
 }
 
 
 void UGameplaySystemScheduler::Deinitialize()
 {
     MovementSystem = nullptr;
-
+    PhysicsSystem = nullptr;
     Super::Deinitialize();
 }
 
@@ -78,7 +79,12 @@ void UGameplaySystemScheduler::TickMovement(float DeltaTime)
 
 void UGameplaySystemScheduler::TickPhysics(float DeltaTime)
 {
-    // Physics systems.
+    if (!PhysicsSystem)
+    {
+        return;
+    }
+
+    PhysicsSystem->Tick(DeltaTime);
 }
 
 
