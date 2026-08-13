@@ -7,6 +7,7 @@
 //
 
 #include "GameActor.h"
+#include "Engine/World.h"
 #include "../Systems/ActorRegistry.h"
 
 AGameActor::AGameActor()
