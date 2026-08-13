@@ -9,6 +9,7 @@
 #include "CharacterActor.h"
 
 #include "../Components/ControlComponent.h"
+#include "../Components/StatsComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 
@@ -28,5 +29,9 @@ ACharacterActor::ACharacterActor()
         TEXT("Collision")
     );
 
+    
+    StatsComponent = CreateDefaultSubobject<UStatsComponent>(
+        TEXT("Stats")
+    );
 
 }

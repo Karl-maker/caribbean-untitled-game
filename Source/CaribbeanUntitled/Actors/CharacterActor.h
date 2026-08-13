@@ -15,6 +15,7 @@
 class UControlComponent;
 class USkeletalMeshComponent;
 class UCapsuleComponent;
+class UStatsComponent;
 
 UCLASS()
 class CARIBBEANUNTITLED_API ACharacterActor : public AK98Actor
@@ -35,4 +36,7 @@ protected:
     
     UPROPERTY(VisibleAnywhere, Category = "Actor")
     TObjectPtr<UCapsuleComponent> CollisionComponent;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Actor")
+    TObjectPtr<UStatsComponent> StatsComponent;
 };
