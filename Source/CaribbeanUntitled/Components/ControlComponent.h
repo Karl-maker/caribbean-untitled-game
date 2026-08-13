@@ -142,7 +142,35 @@ public:
         )
     )
     float InteractIntent = 0.0f;
+    
+    /**
+     * Look input / mouse delta.
+     *
+     * X = horizontal look input
+     * Y = vertical look input
+     *
+     * This is input rather than a world-space direction.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Control|Look"
+    )
+    FVector2D LookInput = FVector2D::ZeroVector;
 
+    
+    /**
+     * Desired world-space look direction.
+     *
+     * This represents the direction the controlled Actor wants
+     * to look toward, independent of where the input came from.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Control|Look"
+    )
+    FVector LookDirection = FVector::ForwardVector;
 
 public:
 
@@ -270,6 +298,40 @@ public:
     void ClearActionIntent();
 
 
+    /**
+     * Sets mouse/controller look input.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Control|Look")
+    void SetLookInput(const FVector2D& Input);
+
+
+    /**
+     * Sets the desired world-space look direction.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Control|Look")
+    void SetLookDirection(const FVector& Direction);
+
+
+    /**
+     * Returns the desired look direction.
+     */
+    UFUNCTION(BlueprintPure, Category = "Control|Look")
+    FVector GetLookDirection() const;
+
+
+    /**
+     * Returns the current look input.
+     */
+    UFUNCTION(BlueprintPure, Category = "Control|Look")
+    FVector2D GetLookInput() const;
+
+
+    /**
+     * Clears look input.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Control|Look")
+    void ClearLookInput();
+    
 protected:
 
     virtual void BeginPlay() override;

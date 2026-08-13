@@ -13,6 +13,8 @@ UControlComponent::UControlComponent()
     PrimaryComponentTick.bCanEverTick = false;
 
     MoveIntent = FVector2D::ZeroVector;
+    LookInput = FVector2D::ZeroVector;
+    LookDirection = FVector::ForwardVector;
     JumpIntent = 0.0f;
     InteractIntent = 0.0f;
 }
@@ -66,6 +68,40 @@ void UControlComponent::SetJumpIntent(float Weight)
 void UControlComponent::SetInteractIntent(float Weight)
 {
     InteractIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
+
+void UControlComponent::SetLookInput(const FVector2D& Input)
+{
+    LookInput = Input;
+}
+
+
+void UControlComponent::SetLookDirection(const FVector& Direction)
+{
+    if (Direction.IsNearlyZero())
+    {
+        return;
+    }
+
+    LookDirection = Direction.GetSafeNormal();
+}
+
+
+FVector UControlComponent::GetLookDirection() const
+{
+    return LookDirection;
+}
+
+
+FVector2D UControlComponent::GetLookInput() const
+{
+    return LookInput;
+}
+
+
+void UControlComponent::ClearLookInput()
+{
+    LookInput = FVector2D::ZeroVector;
 }
 
 
