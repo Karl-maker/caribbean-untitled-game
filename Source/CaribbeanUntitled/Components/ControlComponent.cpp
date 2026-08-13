@@ -21,6 +21,10 @@ UControlComponent::UControlComponent()
     JumpIntent = 0.0f;
     
     InteractIntent = 0.0f;
+    
+    SprintIntent = 0.0f;
+    CrouchIntent = 0.0f;
+    DashIntent = 0.0f;
 }
 
 
@@ -77,6 +81,59 @@ void UControlComponent::SetInteractIntent(float Weight)
 void UControlComponent::SetLookInput(const FVector2D& Input)
 {
     LookInput = Input;
+}
+
+void UControlComponent::SetSprintIntent(float Weight)
+{
+    SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
+
+
+void UControlComponent::SetCrouchIntent(float Weight)
+{
+    CrouchIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
+
+
+void UControlComponent::SetDashIntent(float Weight)
+{
+    DashIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
+
+
+float UControlComponent::GetSprintIntent() const
+{
+    return SprintIntent;
+}
+
+
+float UControlComponent::GetCrouchIntent() const
+{
+    return CrouchIntent;
+}
+
+
+float UControlComponent::GetDashIntent() const
+{
+    return DashIntent;
+}
+
+
+bool UControlComponent::WantsToSprint() const
+{
+    return SprintIntent > KINDA_SMALL_NUMBER;
+}
+
+
+bool UControlComponent::WantsToCrouch() const
+{
+    return CrouchIntent > KINDA_SMALL_NUMBER;
+}
+
+
+bool UControlComponent::WantsToDash() const
+{
+    return DashIntent > KINDA_SMALL_NUMBER;
 }
 
 
@@ -149,6 +206,15 @@ float UControlComponent::GetIntentWeight(
         case EControlIntent::Interact:
             return InteractIntent;
 
+        case EControlIntent::Sprint:
+            return SprintIntent;
+
+        case EControlIntent::Crouch:
+            return CrouchIntent;
+
+        case EControlIntent::Dash:
+            return DashIntent;
+
         default:
             return 0.0f;
     }
@@ -188,11 +254,22 @@ void UControlComponent::SetIntentWeight(
             SetInteractIntent(Weight);
             break;
 
+        case EControlIntent::Sprint:
+            SetSprintIntent(Weight);
+            break;
+
+        case EControlIntent::Crouch:
+            SetCrouchIntent(Weight);
+            break;
+
+        case EControlIntent::Dash:
+            SetDashIntent(Weight);
+            break;
+
         default:
             break;
     }
 }
-
 
 bool UControlComponent::HasIntent(
     EControlIntent Intent,
@@ -215,12 +292,13 @@ bool UControlComponent::HasActionIntent() const
            InteractIntent > KINDA_SMALL_NUMBER;
 }
 
-
 void UControlComponent::ClearMovementIntent()
 {
     MoveIntent = FVector2D::ZeroVector;
+    SprintIntent = 0.0f;
+    CrouchIntent = 0.0f;
+    DashIntent = 0.0f;
 }
-
 
 void UControlComponent::ClearActionIntent()
 {

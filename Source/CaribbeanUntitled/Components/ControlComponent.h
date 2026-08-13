@@ -38,7 +38,10 @@ enum class EControlIntent : uint8
     Left,
     Right,
     Jump,
-    Interact
+    Interact,
+    Sprint,
+    Crouch,
+    Dash
 };
 
 
@@ -185,6 +188,65 @@ public:
         Category = "Control|Movement"
     )
     FVector MoveDirection = FVector::ForwardVector;
+    
+    
+    /**
+     * Sprint intent.
+     *
+     * 0 = no sprint
+     * 1 = full sprint intent
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Control|Movement",
+        meta = (
+            ClampMin = "0.0",
+            ClampMax = "1.0"
+        )
+    )
+    float SprintIntent = 0.0f;
+    
+    /**
+     * Crouch intent.
+     *
+     * 0 = not crouching
+     * 1 = full crouch intent
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Control|Movement",
+        meta = (
+            ClampMin = "0.0",
+            ClampMax = "1.0"
+        )
+    )
+    float CrouchIntent = 0.0f;
+
+
+    /**
+     * Dash intent.
+     *
+     * This represents a request to dash.
+     *
+     * 0 = no dash request
+     * 1 = dash requested
+     *
+     * The movement system is responsible for deciding
+     * whether the dash is actually allowed.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Control|Movement",
+        meta = (
+            ClampMin = "0.0",
+            ClampMax = "1.0"
+        )
+    )
+    float DashIntent = 0.0f;
+    
 
 public:
 
@@ -352,6 +414,33 @@ public:
 
     UFUNCTION(BlueprintPure, Category = "Control|Movement")
     FVector GetMoveDirection() const;
+    
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetSprintIntent(float Weight);
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetCrouchIntent(float Weight);
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetDashIntent(float Weight);
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    float GetSprintIntent() const;
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    float GetCrouchIntent() const;
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    float GetDashIntent() const;
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    bool WantsToSprint() const;
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    bool WantsToCrouch() const;
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    bool WantsToDash() const;
     
 protected:
 
