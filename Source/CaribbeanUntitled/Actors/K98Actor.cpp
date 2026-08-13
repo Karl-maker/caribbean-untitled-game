@@ -14,7 +14,7 @@ AK98Actor::AK98Actor()
 {
     PrimaryActorTick.bCanEverTick = false;
 
-    Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+    Root = CreateDefaultSubobject<USceneComponent>(TEXT("Transform"));
 
     RootComponent = Root;
 }
