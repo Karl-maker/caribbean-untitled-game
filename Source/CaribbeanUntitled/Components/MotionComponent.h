@@ -5,11 +5,14 @@
 #include "MotionComponent.generated.h"
 
 /**
- * Stores the current and desired motion state of an Actor.
+ * Stores requested motion and derived movement state for an Actor.
  *
- * Movement systems modify DesiredVelocity / Acceleration.
- * Physics systems modify Velocity / AngularVelocity.
- * Transform systems consume the resulting motion.
+ * Movement systems write DesiredVelocity / DesiredAngularVelocity.
+ *
+ * Physics systems consume those requests and produce the actual
+ * physical motion through UPhysicsComponent / UE Chaos.
+ *
+ * MotionComponent does NOT own actual velocity.
  */
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CARIBBEANUNTITLED_API UMotionComponent : public UActorComponent
@@ -20,71 +23,121 @@ public:
 
     UMotionComponent();
 
+
     // -------------------------------------------------------------------------
-    // Linear Motion
+    // Linear Motion Request
     // -------------------------------------------------------------------------
 
-    /** Current world-space velocity. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Motion|Linear")
-    FVector Velocity = FVector::ZeroVector;
-
-    /** Desired world-space velocity requested by movement/AI/input systems. */
+    /**
+     * World-space velocity requested by movement, AI, input, etc.
+     *
+     * This is an INTENT, not the actual physical velocity.
+     */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Motion|Linear")
     FVector DesiredVelocity = FVector::ZeroVector;
 
-    /** Current world-space acceleration. */
+
+    /**
+     * Desired world-space acceleration requested by gameplay systems.
+     *
+     * Optional for systems that want to request acceleration directly.
+     */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Motion|Linear")
-    FVector Acceleration = FVector::ZeroVector;
+    FVector DesiredAcceleration = FVector::ZeroVector;
 
-    /** Velocity from the previous motion update. */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Motion|Linear")
-    FVector PreviousVelocity = FVector::ZeroVector;
 
-    /** Direction of current movement. Derived from Velocity. */
+    /**
+     * Direction requested by the movement system.
+     *
+     * Usually derived from DesiredVelocity.
+     */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Motion|Linear")
+    FVector DesiredDirection = FVector::ForwardVector;
+
+
+    /**
+     * Requested movement speed.
+     *
+     * This is not necessarily the actual physical speed.
+     */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Motion|Linear")
+    float DesiredSpeed = 0.0f;
+
+
+    // -------------------------------------------------------------------------
+    // Derived State
+    // -------------------------------------------------------------------------
+
+    /**
+     * Direction of requested movement.
+     */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Motion|State")
     FVector Direction = FVector::ForwardVector;
 
-    /** Magnitude of current velocity. Derived from Velocity. */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Motion|Linear")
+
+    /**
+     * Requested movement speed.
+     */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Motion|State")
     float Speed = 0.0f;
 
 
     // -------------------------------------------------------------------------
-    // Angular Motion
+    // Angular Motion Request
     // -------------------------------------------------------------------------
 
-    /** Current angular velocity in degrees per second. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Motion|Angular")
-    FVector AngularVelocity = FVector::ZeroVector;
-
-    /** Desired angular velocity. */
+    /**
+     * Desired angular velocity in degrees per second.
+     */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Motion|Angular")
     FVector DesiredAngularVelocity = FVector::ZeroVector;
 
-    /** Current angular acceleration. */
+
+    /**
+     * Desired angular acceleration.
+     */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Motion|Angular")
-    FVector AngularAcceleration = FVector::ZeroVector;
+    FVector DesiredAngularAcceleration = FVector::ZeroVector;
+    
+    
+    UPROPERTY()
+    bool bWantsToJump = false;
 
 
     // -------------------------------------------------------------------------
     // State
     // -------------------------------------------------------------------------
 
-    /** Updates derived motion values such as Speed and Direction. */
+    /**
+     * Updates derived values from the current movement request.
+     */
     UFUNCTION(BlueprintCallable, Category="Motion")
     void UpdateDerivedState();
 
-    /** Saves the current velocity as the previous velocity. */
-    UFUNCTION(BlueprintCallable, Category="Motion")
-    void SavePreviousState();
 
-    /** Returns whether the Actor is currently moving. */
+    /**
+     * Clears the current movement request.
+     *
+     * Useful at the beginning/end of a frame so stale input
+     * does not continue affecting the actor.
+     */
+    UFUNCTION(BlueprintCallable, Category="Motion")
+    void ClearMotionRequest();
+
+
+    /**
+     * Returns whether movement has been requested.
+     */
     UFUNCTION(BlueprintPure, Category="Motion")
     bool IsMoving() const;
 
-    /** Returns whether the Actor is moving faster than the supplied threshold. */
+
+    /**
+     * Returns whether requested movement is above the supplied speed.
+     */
     UFUNCTION(BlueprintPure, Category="Motion")
     bool IsMovingAboveSpeed(float Threshold) const;
+
 
 protected:
 

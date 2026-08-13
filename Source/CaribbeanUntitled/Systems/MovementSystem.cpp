@@ -35,8 +35,8 @@ void UMovementSystem::Tick(float DeltaTime)
     /*
      * Start from the ControlComponent index.
      *
-     * This means we only inspect Actors that can actually
-     * receive movement/control input.
+     * Only Actors capable of receiving movement/control
+     * input are considered.
      */
     const TSet<TWeakObjectPtr<AGameActor>>* ControlActors =
         Registry->GetActorsWithComponent<UControlComponent>();
@@ -59,7 +59,7 @@ void UMovementSystem::Tick(float DeltaTime)
          * Movement requires:
          *
          * Control
-         * Movement configuration/state
+         * Movement configuration
          * Motion
          */
         if (!Actor->HasComponent<UGameMovementComponent>() ||
@@ -68,7 +68,10 @@ void UMovementSystem::Tick(float DeltaTime)
             continue;
         }
 
-        ProcessActor(Actor, DeltaTime);
+        ProcessActor(
+            Actor,
+            DeltaTime
+        );
     }
 }
 
@@ -95,7 +98,6 @@ void UMovementSystem::ProcessActor(
     {
         return;
     }
-
 
     // ============================================================
     // INPUT → DIRECTION
@@ -139,34 +141,28 @@ void UMovementSystem::ProcessActor(
 
 
     // ============================================================
-    // CONTROL → MOTION
+    // MOVEMENT → MOTION REQUEST
     // ============================================================
 
     /*
-     * UGameMovementComponent does not store velocity.
+     * MovementSystem does NOT calculate actual velocity.
      *
-     * The movement system writes the requested velocity directly
-     * into UMotionComponent.
+     * It only tells the physics system what movement is wanted.
      */
     Motion->DesiredVelocity =
         DesiredDirection * TargetSpeed;
 
 
-    // ============================================================
-    // ACCELERATION
-    // ============================================================
+    Motion->DesiredDirection =
+        DesiredDirection;
 
-    UpdateHorizontalMotion(
-        Movement,
-        Motion,
-        DesiredDirection,
-        TargetSpeed,
-        DeltaTime
-    );
+
+    Motion->DesiredSpeed =
+        TargetSpeed;
 
 
     // ============================================================
-    // JUMP
+    // JUMP REQUEST
     // ============================================================
 
     ProcessJump(
@@ -177,7 +173,7 @@ void UMovementSystem::ProcessActor(
 
 
     // ============================================================
-    // DERIVED MOTION STATE
+    // DERIVED REQUEST STATE
     // ============================================================
 
     Motion->UpdateDerivedState();
@@ -194,8 +190,8 @@ FVector UMovementSystem::CalculateDesiredDirection(
     }
 
     /*
-     * AI / Network / Script may provide a world-space direction
-     * directly.
+     * AI / Network / Script may provide a world-space
+     * movement direction directly.
      */
     if (!Control->MoveDirection.IsNearlyZero())
     {
@@ -209,7 +205,7 @@ FVector UMovementSystem::CalculateDesiredDirection(
 
 
     /*
-     * Otherwise convert local control input into world-space.
+     * Convert local control input into world-space.
      *
      * X = Left / Right
      * Y = Back / Forward
@@ -277,87 +273,6 @@ float UMovementSystem::CalculateTargetSpeed(
 }
 
 
-void UMovementSystem::UpdateHorizontalMotion(
-    UGameMovementComponent* Movement,
-    UMotionComponent* Motion,
-    const FVector& DesiredDirection,
-    float TargetSpeed,
-    float DeltaTime)
-{
-    if (!Movement || !Motion)
-    {
-        return;
-    }
-
-    /*
-     * MotionComponent is the owner of actual velocity.
-     */
-    const FVector CurrentVelocity =
-        Motion->Velocity;
-
-    /*
-     * Horizontal movement is controlled here.
-     *
-     * Vertical velocity belongs to gravity/jump/physics.
-     */
-    FVector HorizontalVelocity(
-        CurrentVelocity.X,
-        CurrentVelocity.Y,
-        0.0f
-    );
-
-    const FVector TargetVelocity =
-        DesiredDirection * TargetSpeed;
-
-    const bool bHasMovement =
-        !DesiredDirection.IsNearlyZero();
-
-    const float Rate =
-        bHasMovement
-            ? Movement->Acceleration
-            : Movement->Deceleration;
-
-    /*
-     * Airborne movement has reduced control.
-     */
-    const float EffectiveRate =
-        Movement->IsGrounded()
-            ? Rate
-            : Movement->AirAcceleration;
-
-    HorizontalVelocity =
-        FMath::VInterpConstantTo(
-            HorizontalVelocity,
-            TargetVelocity,
-            DeltaTime,
-            EffectiveRate
-        );
-
-    /*
-     * Preserve vertical velocity.
-     */
-    Motion->Velocity =
-        FVector(
-            HorizontalVelocity.X,
-            HorizontalVelocity.Y,
-            CurrentVelocity.Z
-        );
-
-    /*
-     * DesiredVelocity represents what the movement system
-     * requested.
-     *
-     * Velocity represents what the Actor is actually doing.
-     */
-    Motion->DesiredVelocity =
-        FVector(
-            TargetVelocity.X,
-            TargetVelocity.Y,
-            CurrentVelocity.Z
-        );
-}
-
-
 void UMovementSystem::ProcessJump(
     UGameMovementComponent* Movement,
     UMotionComponent* Motion,
@@ -384,18 +299,14 @@ void UMovementSystem::ProcessJump(
     }
 
     /*
-     * Jump modifies actual motion.
+     * Do NOT modify velocity here.
      *
-     * Gravity/physics can subsequently take ownership of Z.
+     * We simply create a jump request.
+     *
+     * PhysicsSystem will turn this into an actual
+     * physical impulse/velocity change.
      */
-    Motion->Velocity.Z =
-        Movement->JumpVelocity;
-
-    Movement->SetGrounded(false);
-
-    Movement->SetMovementMode(
-        EGameMovementMode::Airborne
-    );
+    Motion->bWantsToJump = true;
 }
 
 

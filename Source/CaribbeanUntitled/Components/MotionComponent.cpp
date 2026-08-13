@@ -4,18 +4,33 @@ UMotionComponent::UMotionComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
 
-    Velocity = FVector::ZeroVector;
-    DesiredVelocity = FVector::ZeroVector;
-    Acceleration = FVector::ZeroVector;
+    // -------------------------------------------------------------------------
+    // Linear Motion Request
+    // -------------------------------------------------------------------------
 
-    PreviousVelocity = FVector::ZeroVector;
+    DesiredVelocity = FVector::ZeroVector;
+    DesiredAcceleration = FVector::ZeroVector;
+
+    DesiredDirection = FVector::ForwardVector;
+    DesiredSpeed = 0.0f;
+
+    // -------------------------------------------------------------------------
+    // Derived State
+    // -------------------------------------------------------------------------
+
     Direction = FVector::ForwardVector;
     Speed = 0.0f;
 
-    AngularVelocity = FVector::ZeroVector;
+    // -------------------------------------------------------------------------
+    // Angular Motion Request
+    // -------------------------------------------------------------------------
+
     DesiredAngularVelocity = FVector::ZeroVector;
-    AngularAcceleration = FVector::ZeroVector;
+    DesiredAngularAcceleration = FVector::ZeroVector;
+    
+    bWantsToJump = false;
 }
+
 
 void UMotionComponent::BeginPlay()
 {
@@ -24,27 +39,69 @@ void UMotionComponent::BeginPlay()
     UpdateDerivedState();
 }
 
+
 void UMotionComponent::UpdateDerivedState()
 {
-    Speed = Velocity.Size();
+    // -------------------------------------------------------------------------
+    // Desired Linear Motion
+    // -------------------------------------------------------------------------
 
-    if (!Velocity.IsNearlyZero())
+    DesiredSpeed = DesiredVelocity.Size();
+
+    if (!DesiredVelocity.IsNearlyZero())
     {
-        Direction = Velocity.GetSafeNormal();
+        DesiredDirection =
+            DesiredVelocity.GetSafeNormal();
+    }
+    else
+    {
+        DesiredDirection = FVector::ZeroVector;
+    }
+
+
+    // -------------------------------------------------------------------------
+    // Derived Movement State
+    // -------------------------------------------------------------------------
+
+    Speed = DesiredSpeed;
+
+    if (!DesiredVelocity.IsNearlyZero())
+    {
+        Direction =
+            DesiredVelocity.GetSafeNormal();
+    }
+    else
+    {
+        Direction = FVector::ZeroVector;
     }
 }
 
-void UMotionComponent::SavePreviousState()
+
+void UMotionComponent::ClearMotionRequest()
 {
-    PreviousVelocity = Velocity;
+    DesiredVelocity = FVector::ZeroVector;
+    DesiredAcceleration = FVector::ZeroVector;
+
+    DesiredDirection = FVector::ZeroVector;
+    DesiredSpeed = 0.0f;
+
+    DesiredAngularVelocity = FVector::ZeroVector;
+    DesiredAngularAcceleration = FVector::ZeroVector;
+
+    Speed = 0.0f;
+    Direction = FVector::ZeroVector;
+    
+    bWantsToJump = false;
 }
+
 
 bool UMotionComponent::IsMoving() const
 {
-    return !Velocity.IsNearlyZero();
+    return !DesiredVelocity.IsNearlyZero();
 }
+
 
 bool UMotionComponent::IsMovingAboveSpeed(float Threshold) const
 {
-    return Speed > Threshold;
+    return DesiredSpeed > Threshold;
 }
