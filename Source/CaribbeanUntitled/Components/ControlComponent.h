@@ -11,7 +11,6 @@
 #include "Components/ActorComponent.h"
 #include "ControlComponent.generated.h"
 
-
 /**
  * Defines where control intent originates.
  */
@@ -24,47 +23,42 @@ enum class EControlType : uint8
     Script  UMETA(DisplayName = "Script")
 };
 
-
 /**
  * Individual gameplay intents.
- *
- * Values are represented as weights from -1.0 to 1.0 where appropriate.
  */
 UENUM(BlueprintType)
 enum class EControlIntent : uint8
 {
-    Forward,
-    Back,
-    Left,
-    Right,
+    MoveForward,
+    MoveBack,
+    MoveLeft,
+    MoveRight,
     Jump,
     Interact,
     Sprint,
     Crouch,
-    Dash
+    Dash,
+    Aim,
+    Fire,
+    Reload
 };
-
 
 /**
  * Stores normalized control intent for an Actor.
  *
+ * For third-person control, movement is relative to the actor's
+ * current facing direction. The MoveIntent values (-1 to 1) represent
+ * the desired movement in local space:
+ *   - X: Left (-1) to Right (+1)
+ *   - Y: Back (-1) to Forward (+1)
+ *
  * The component does not perform movement, jumping, interaction,
- * or other gameplay logic.
+ * or other gameplay logic. It only represents what the Actor intends to do.
  *
- * It only represents what the Actor intends to do.
- *
- * Example:
- *
- * Player input:
- *     Move = (0.0, 1.0)
- *
- * AI input:
- *     Move = (0.5, 0.8)
- *
- * Network input:
- *     Move = (-1.0, 0.0)
- *
- * Gameplay systems consume this component.
+ * Example usage:
+ *   Player input: MoveIntent = (0.0, 1.0)  → Move forward
+ *   Player input: MoveIntent = (-1.0, 0.5) → Move left-forward
+ *   AI input: MoveIntent = (0.0, 1.0)      → Move toward target
  */
 UCLASS(ClassGroup=(Gameplay), BlueprintType, Blueprintable, meta=(BlueprintSpawnableComponent))
 class CARIBBEANUNTITLED_API UControlComponent : public UActorComponent
@@ -72,307 +66,293 @@ class CARIBBEANUNTITLED_API UControlComponent : public UActorComponent
     GENERATED_BODY()
 
 public:
-
     UControlComponent();
+
+    //=========================================================================
+    // Core Control Properties
+    //=========================================================================
 
     /**
      * Determines the source of this control.
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control"
-    )
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control")
     EControlType ControlType = EControlType::Player;
 
-
     /**
-     * Normalized movement intent.
+     * Movement intent in LOCAL space relative to the actor's facing direction.
      *
-     * X:
-     *     -1 = Left
-     *      0 = None
-     *     +1 = Right
+     * X (Horizontal):
+     *   -1.0 = Move Left
+     *    0.0 = No horizontal movement
+     *   +1.0 = Move Right
      *
-     * Y:
-     *     -1 = Back
-     *      0 = None
-     *     +1 = Forward
+     * Y (Vertical/Forward):
+     *   -1.0 = Move Backward
+     *    0.0 = No forward/backward movement
+     *   +1.0 = Move Forward
+     *
+     * Values are normalized and should be clamped to [-1, 1].
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Movement",
-        meta = (
-            ClampMin = "-1.0",
-            ClampMax = "1.0"
-        )
-    )
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Movement",
+        meta = (ClampMin = "-1.0", ClampMax = "1.0"))
     FVector2D MoveIntent = FVector2D::ZeroVector;
 
-
     /**
-     * Jump intent.
+     * Raw world-space movement direction.
      *
-     * 0 = no intent
-     * 1 = full intent
+     * This is the direction in world space that the actor wants to move.
+     * Automatically calculated from MoveIntent relative to actor rotation.
+     * Can also be set directly for AI/scripted movement.
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Action",
-        meta = (
-            ClampMin = "0.0",
-            ClampMax = "1.0"
-        )
-    )
-    float JumpIntent = 0.0f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Movement")
+    FVector WorldMoveDirection = FVector::ZeroVector;
 
-
-    /**
-     * Interaction intent.
-     *
-     * 0 = no intent
-     * 1 = full intent
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Action",
-        meta = (
-            ClampMin = "0.0",
-            ClampMax = "1.0"
-        )
-    )
-    float InteractIntent = 0.0f;
-    
-    /**
-     * Look input / mouse delta.
-     *
-     * X = horizontal look input
-     * Y = vertical look input
-     *
-     * This is input rather than a world-space direction.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Look"
-    )
-    FVector2D LookInput = FVector2D::ZeroVector;
-
-    
     /**
      * Desired world-space look direction.
      *
-     * This represents the direction the controlled Actor wants
-     * to look toward, independent of where the input came from.
+     * Represents the direction the controlled Actor wants to face.
+     * For player control, this is typically derived from camera orientation.
+     * For AI, this is typically the direction toward the target.
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Look"
-    )
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Look")
     FVector LookDirection = FVector::ForwardVector;
-    
-    
+
     /**
-     * Desired world-space movement direction.
+     * Look input from mouse/controller.
      *
-     * This is independent of the control source.
-     * Player, AI, Network, and Script can all provide it.
+     * X = Horizontal look input (Yaw)
+     * Y = Vertical look input (Pitch)
+     *
+     * This is raw input, not a world-space direction.
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Movement"
-    )
-    FVector MoveDirection = FVector::ForwardVector;
-    
-    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Look")
+    FVector2D LookInput = FVector2D::ZeroVector;
+
+    //=========================================================================
+    // Action Intents (0.0 = None, 1.0 = Full Intent)
+    //=========================================================================
+
+    /**
+     * Jump intent.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float JumpIntent = 0.0f;
+
+    /**
+     * Interaction intent.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float InteractIntent = 0.0f;
+
     /**
      * Sprint intent.
-     *
-     * 0 = no sprint
-     * 1 = full sprint intent
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Movement",
-        meta = (
-            ClampMin = "0.0",
-            ClampMax = "1.0"
-        )
-    )
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float SprintIntent = 0.0f;
-    
+
     /**
      * Crouch intent.
-     *
-     * 0 = not crouching
-     * 1 = full crouch intent
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Movement",
-        meta = (
-            ClampMin = "0.0",
-            ClampMax = "1.0"
-        )
-    )
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float CrouchIntent = 0.0f;
 
-
     /**
-     * Dash intent.
-     *
-     * This represents a request to dash.
-     *
-     * 0 = no dash request
-     * 1 = dash requested
-     *
-     * The movement system is responsible for deciding
-     * whether the dash is actually allowed.
+     * Dash intent (request, not guaranteed execution).
      */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Control|Movement",
-        meta = (
-            ClampMin = "0.0",
-            ClampMax = "1.0"
-        )
-    )
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float DashIntent = 0.0f;
-    
-
-public:
 
     /**
-     * Sets the complete movement intent.
-     *
-     * X = Left / Right
-     * Y = Back / Forward
+     * Aim intent.
      */
-    UFUNCTION(BlueprintCallable, Category = "Control")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float AimIntent = 0.0f;
+
+    /**
+     * Fire/Attack intent.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float FireIntent = 0.0f;
+
+    /**
+     * Reload intent.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions",
+        meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float ReloadIntent = 0.0f;
+
+    //=========================================================================
+    // Movement Direction Setters
+    //=========================================================================
+
+    /**
+     * Sets movement intent in local space.
+     *
+     * @param Intent - Local space movement where X = Left/Right, Y = Back/Forward
+     */
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
     void SetMoveIntent(const FVector2D& Intent);
 
+    /**
+     * Sets movement intent from a world-space direction.
+     * Automatically converts to local space based on actor rotation.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetWorldMoveDirection(const FVector& WorldDirection);
 
     /**
-     * Sets forward intent.
+     * Gets the world-space movement direction.
+     * Calculated from MoveIntent relative to actor rotation.
+     */
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    FVector GetWorldMoveDirection() const;
+
+    /**
+     * Sets forward/backward movement weight.
      *
-     * Positive values move forward.
+     * @param Weight - -1.0 (Back) to 1.0 (Forward)
      */
-    UFUNCTION(BlueprintCallable, Category = "Control")
-    void SetForwardIntent(float Weight);
-
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetForwardBackIntent(float Weight);
 
     /**
-     * Sets backward intent.
+     * Sets left/right movement weight.
      *
-     * Positive values move backward.
+     * @param Weight - -1.0 (Left) to 1.0 (Right)
      */
-    UFUNCTION(BlueprintCallable, Category = "Control")
-    void SetBackIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetLeftRightIntent(float Weight);
 
+    //=========================================================================
+    // Individual Intent Setters
+    //=========================================================================
 
-    /**
-     * Sets left intent.
-     *
-     * Positive values move left.
-     */
-    UFUNCTION(BlueprintCallable, Category = "Control")
-    void SetLeftIntent(float Weight);
-
-
-    /**
-     * Sets right intent.
-     *
-     * Positive values move right.
-     */
-    UFUNCTION(BlueprintCallable, Category = "Control")
-    void SetRightIntent(float Weight);
-
-
-    /**
-     * Sets jump intent.
-     */
-    UFUNCTION(BlueprintCallable, Category = "Control")
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
     void SetJumpIntent(float Weight);
 
-
-    /**
-     * Sets interaction intent.
-     */
-    UFUNCTION(BlueprintCallable, Category = "Control")
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
     void SetInteractIntent(float Weight);
 
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
+    void SetSprintIntent(float Weight);
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
+    void SetCrouchIntent(float Weight);
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
+    void SetDashIntent(float Weight);
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
+    void SetAimIntent(float Weight);
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
+    void SetFireIntent(float Weight);
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
+    void SetReloadIntent(float Weight);
+
+    //=========================================================================
+    // Intent Getters
+    //=========================================================================
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetJumpIntent() const { return JumpIntent; }
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetInteractIntent() const { return InteractIntent; }
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetSprintIntent() const { return SprintIntent; }
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetCrouchIntent() const { return CrouchIntent; }
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetDashIntent() const { return DashIntent; }
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetAimIntent() const { return AimIntent; }
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetFireIntent() const { return FireIntent; }
+
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    float GetReloadIntent() const { return ReloadIntent; }
 
     /**
-     * Gets the weight associated with an intent.
+     * Gets the weight associated with any intent.
      */
     UFUNCTION(BlueprintPure, Category = "Control")
     float GetIntentWeight(EControlIntent Intent) const;
 
-
     /**
-     * Sets the weight associated with an intent.
+     * Sets the weight associated with any intent.
      */
     UFUNCTION(BlueprintCallable, Category = "Control")
-    void SetIntentWeight(
-        EControlIntent Intent,
-        float Weight
-    );
+    void SetIntentWeight(EControlIntent Intent, float Weight);
 
+    //=========================================================================
+    // Intent Query Functions
+    //=========================================================================
 
     /**
      * Returns true if the specified intent is active.
      */
     UFUNCTION(BlueprintPure, Category = "Control")
-    bool HasIntent(
-        EControlIntent Intent,
-        float MinimumWeight = 0.01f
-    ) const;
-
+    bool HasIntent(EControlIntent Intent, float MinimumWeight = 0.01f) const;
 
     /**
-     * Returns whether any movement intent exists.
+     * Returns true if the actor intends to move in any direction.
      */
-    UFUNCTION(BlueprintPure, Category = "Control")
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
     bool HasMovementIntent() const;
 
-
     /**
-     * Returns whether any action intent exists.
+     * Returns true if the actor intends to perform any action.
      */
-    UFUNCTION(BlueprintPure, Category = "Control")
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
     bool HasActionIntent() const;
 
+    /**
+     * Returns true if the actor intends to sprint.
+     */
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    bool WantsToSprint() const;
 
     /**
-     * Clears all control intent.
-     *
-     * Useful when a system consumes input each frame.
+     * Returns true if the actor intends to crouch.
      */
-    UFUNCTION(BlueprintCallable, Category = "Control")
-    void ClearIntents();
-
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    bool WantsToCrouch() const;
 
     /**
-     * Clears only movement intent.
+     * Returns true if the actor intends to dash.
      */
-    UFUNCTION(BlueprintCallable, Category = "Control")
-    void ClearMovementIntent();
-
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    bool WantsToDash() const;
 
     /**
-     * Clears only action intent.
+     * Returns true if the actor intends to aim.
      */
-    UFUNCTION(BlueprintCallable, Category = "Control")
-    void ClearActionIntent();
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    bool WantsToAim() const;
 
+    /**
+     * Returns true if the actor intends to fire.
+     */
+    UFUNCTION(BlueprintPure, Category = "Control|Actions")
+    bool WantsToFire() const;
+
+    //=========================================================================
+    // Look Functions
+    //=========================================================================
 
     /**
      * Sets mouse/controller look input.
@@ -380,6 +360,11 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Control|Look")
     void SetLookInput(const FVector2D& Input);
 
+    /**
+     * Gets current look input.
+     */
+    UFUNCTION(BlueprintPure, Category = "Control|Look")
+    FVector2D GetLookInput() const { return LookInput; }
 
     /**
      * Sets the desired world-space look direction.
@@ -387,62 +372,50 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Control|Look")
     void SetLookDirection(const FVector& Direction);
 
-
     /**
-     * Returns the desired look direction.
+     * Gets the desired look direction.
      */
     UFUNCTION(BlueprintPure, Category = "Control|Look")
-    FVector GetLookDirection() const;
-
-
-    /**
-     * Returns the current look input.
-     */
-    UFUNCTION(BlueprintPure, Category = "Control|Look")
-    FVector2D GetLookInput() const;
-
+    FVector GetLookDirection() const { return LookDirection; }
 
     /**
      * Clears look input.
      */
     UFUNCTION(BlueprintCallable, Category = "Control|Look")
     void ClearLookInput();
-    
-    
+
+    //=========================================================================
+    // Clearing Functions
+    //=========================================================================
+
+    /**
+     * Clears all control intent.
+     * Useful when a system consumes input each frame.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Control")
+    void ClearIntents();
+
+    /**
+     * Clears only movement intent.
+     */
     UFUNCTION(BlueprintCallable, Category = "Control|Movement")
-    void SetMoveDirection(const FVector& Direction);
+    void ClearMovementIntent();
 
-    UFUNCTION(BlueprintPure, Category = "Control|Movement")
-    FVector GetMoveDirection() const;
-    
-    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
-    void SetSprintIntent(float Weight);
+    /**
+     * Clears only action intent.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Control|Actions")
+    void ClearActionIntent();
 
-    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
-    void SetCrouchIntent(float Weight);
-
-    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
-    void SetDashIntent(float Weight);
-
-    UFUNCTION(BlueprintPure, Category = "Control|Movement")
-    float GetSprintIntent() const;
-
-    UFUNCTION(BlueprintPure, Category = "Control|Movement")
-    float GetCrouchIntent() const;
-
-    UFUNCTION(BlueprintPure, Category = "Control|Movement")
-    float GetDashIntent() const;
-
-    UFUNCTION(BlueprintPure, Category = "Control|Movement")
-    bool WantsToSprint() const;
-
-    UFUNCTION(BlueprintPure, Category = "Control|Movement")
-    bool WantsToCrouch() const;
-
-    UFUNCTION(BlueprintPure, Category = "Control|Movement")
-    bool WantsToDash() const;
-    
 protected:
-
     virtual void BeginPlay() override;
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+        FActorComponentTickFunction* ThisTickFunction) override;
+
+private:
+    /** Updates WorldMoveDirection from MoveIntent and actor rotation. */
+    void UpdateWorldMoveDirection();
+
+    /** Cached actor rotation for world-space calculations. */
+    FRotator CachedActorRotation;
 };
