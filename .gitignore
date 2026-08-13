@@ -1,0 +1,40 @@
+# Unreal Engine
+Intermediate/
+Binaries/
+DerivedDataCache/
+Saved/
+Build/
+*.sln
+*.xcodeproj
+*.xcworkspace
+*.DS_Store
+.vs/
+.vscode/
+*.user
+*.userprefs
+*.sln.docstates
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+*.cache
+
+# Unreal-specific
+*.pdb
+*.exp
+*.lib
+*.dylib.dSYM
+*.dylib
+*.so
+*.dll
+*.exe
