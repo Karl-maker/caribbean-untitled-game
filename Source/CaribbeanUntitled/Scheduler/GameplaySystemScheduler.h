@@ -11,7 +11,6 @@
 #include "GameplaySystemScheduler.generated.h"
 
 class UMovementSystem;
-class UPhysicsSystem;
 
 /**
  * Central scheduler for gameplay systems.
@@ -82,9 +81,7 @@ private:
 
     UPROPERTY()
     TObjectPtr<UMovementSystem> MovementSystem;
-    
-    UPROPERTY()
-    TObjectPtr<UPhysicsSystem> PhysicsSystem;
+
 
 
     // ------------------------------------------------------------
