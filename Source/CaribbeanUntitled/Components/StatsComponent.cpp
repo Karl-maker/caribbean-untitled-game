@@ -11,19 +11,18 @@
 UStatsComponent::UStatsComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
-
-    MaxStamina = 100.0f;
-    Stamina = MaxStamina;
-
-    StaminaRegenRate = 15.0f;
-    StaminaRegenDelay = 1.0f;
 }
 
+
+// ============================================================
+// LIFECYCLE
+// ============================================================
 
 void UStatsComponent::BeginPlay()
 {
     Super::BeginPlay();
 
+    // Make sure starting stamina never exceeds maximum stamina.
     Stamina = FMath::Clamp(
         Stamina,
         0.0f,
@@ -31,6 +30,10 @@ void UStatsComponent::BeginPlay()
     );
 }
 
+
+// ============================================================
+// STAMINA
+// ============================================================
 
 float UStatsComponent::GetStamina() const
 {
@@ -46,43 +49,37 @@ float UStatsComponent::GetMaxStamina() const
 
 float UStatsComponent::GetStaminaPercent() const
 {
-    if (MaxStamina <= KINDA_SMALL_NUMBER)
+    if (MaxStamina <= 0.0f)
     {
         return 0.0f;
     }
 
-    return FMath::Clamp(
-        Stamina / MaxStamina,
-        0.0f,
-        1.0f
-    );
+    return Stamina / MaxStamina;
 }
 
 
 bool UStatsComponent::HasStamina(float Amount) const
 {
-    if (Amount <= 0.0f)
-    {
-        return true;
-    }
-
-    return Stamina >= Amount;
+    return Stamina >= FMath::Max(Amount, 0.0f);
 }
 
 
 bool UStatsComponent::ConsumeStamina(float Amount)
 {
-    if (Amount <= 0.0f)
-    {
-        return true;
-    }
+    Amount = FMath::Max(Amount, 0.0f);
 
-    if (Stamina < Amount)
+    if (!HasStamina(Amount))
     {
         return false;
     }
 
     Stamina -= Amount;
+
+    Stamina = FMath::Clamp(
+        Stamina,
+        0.0f,
+        MaxStamina
+    );
 
     return true;
 }
@@ -90,13 +87,12 @@ bool UStatsComponent::ConsumeStamina(float Amount)
 
 void UStatsComponent::RestoreStamina(float Amount)
 {
-    if (Amount <= 0.0f)
-    {
-        return;
-    }
+    Amount = FMath::Max(Amount, 0.0f);
+
+    Stamina += Amount;
 
     Stamina = FMath::Clamp(
-        Stamina + Amount,
+        Stamina,
         0.0f,
         MaxStamina
     );
@@ -116,4 +112,54 @@ void UStatsComponent::SetStamina(float NewStamina)
 void UStatsComponent::RestoreFullStamina()
 {
     Stamina = MaxStamina;
+}
+
+
+// ============================================================
+// MOVEMENT
+// ============================================================
+
+float UStatsComponent::GetWalkSpeed() const
+{
+    return WalkSpeed;
+}
+
+
+float UStatsComponent::GetRunSpeed() const
+{
+    return RunSpeed;
+}
+
+
+float UStatsComponent::GetSprintSpeed() const
+{
+    return SprintSpeed;
+}
+
+
+float UStatsComponent::GetCrouchSpeed() const
+{
+    return CrouchSpeed;
+}
+
+
+// ============================================================
+// DASH
+// ============================================================
+
+float UStatsComponent::GetDashSpeed() const
+{
+    return DashSpeed;
+}
+
+
+float UStatsComponent::GetDashDistance() const
+{
+    return DashDistance;
+}
+
+
+float UStatsComponent::GetDashDuration() const
+{
+    return DashDuration;
 }

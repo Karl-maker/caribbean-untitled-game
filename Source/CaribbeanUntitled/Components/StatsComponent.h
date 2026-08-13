@@ -15,10 +15,11 @@
 /**
  * Stores general gameplay attributes and resources for an Actor.
  *
- * This component owns runtime values such as stamina, health, mana,
- * and other actor-wide resources.
+ * This component owns runtime gameplay values such as stamina,
+ * health, mana, and movement-related attributes.
  *
- * Movement-specific configuration belongs in UMovementComponent.
+ * Movement behavior belongs in the Actor's movement component.
+ * This component provides the values that movement systems use.
  */
 UCLASS(
     ClassGroup=(Gameplay),
@@ -143,6 +144,192 @@ public:
      */
     UFUNCTION(BlueprintCallable, Category="Stats|Stamina")
     void RestoreFullStamina();
+
+
+    // ============================================================
+    // MOVEMENT
+    // ============================================================
+
+    /**
+     * Normal walking movement speed.
+     *
+     * Unreal movement speeds are measured in centimeters per second.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float WalkSpeed = 300.0f;
+
+
+    /**
+     * Running movement speed.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float RunSpeed = 500.0f;
+
+
+    /**
+     * Sprinting movement speed.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float SprintSpeed = 700.0f;
+
+
+    /**
+     * Crouching movement speed.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float CrouchSpeed = 150.0f;
+
+
+    /**
+     * Maximum speed while airborne.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float AirSpeed = 300.0f;
+
+
+    // ============================================================
+    // DASH
+    // ============================================================
+
+    /**
+     * Distance travelled during a dash.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement|Dash",
+        meta=(ClampMin="0.0")
+    )
+    float DashDistance = 600.0f;
+
+
+    /**
+     * Duration of the dash in seconds.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement|Dash",
+        meta=(ClampMin="0.01")
+    )
+    float DashDuration = 0.20f;
+
+
+    /**
+     * Dash speed in centimeters per second.
+     *
+     * Usually calculated from DashDistance / DashDuration,
+     * but exposed separately so it can be tuned directly.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement|Dash",
+        meta=(ClampMin="0.0")
+    )
+    float DashSpeed = 3000.0f;
+
+
+    /**
+     * Stamina consumed when performing a dash.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement|Dash",
+        meta=(ClampMin="0.0")
+    )
+    float DashStaminaCost = 20.0f;
+
+
+    /**
+     * Time before another dash can be performed.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement|Dash",
+        meta=(ClampMin="0.0")
+    )
+    float DashCooldown = 0.5f;
+
+
+    // ============================================================
+    // MOVEMENT HELPERS
+    // ============================================================
+
+    /**
+     * Returns the normal walking speed.
+     */
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetWalkSpeed() const;
+
+
+    /**
+     * Returns running speed.
+     */
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetRunSpeed() const;
+
+
+    /**
+     * Returns sprinting speed.
+     */
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetSprintSpeed() const;
+
+
+    /**
+     * Returns crouching speed.
+     */
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetCrouchSpeed() const;
+
+
+    /**
+     * Returns dash speed.
+     */
+    UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
+    float GetDashSpeed() const;
+
+
+    /**
+     * Returns dash distance.
+     */
+    UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
+    float GetDashDistance() const;
+
+
+    /**
+     * Returns dash duration.
+     */
+    UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
+    float GetDashDuration() const;
 
 
 protected:
