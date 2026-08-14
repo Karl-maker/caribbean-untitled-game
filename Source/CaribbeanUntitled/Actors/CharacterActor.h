@@ -6,10 +6,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../Components/AnimationRegistryComponent.h"
 #include "CharacterActor.generated.h"
 
 class UControlComponent;
 class UStatsComponent;
+class UAnimationRegistryComponent;
 class UActorRegistry;
 
 UCLASS(Config=Game)
@@ -73,4 +75,11 @@ protected:
         Category="Actor|Components"
     )
     TObjectPtr<UStatsComponent> StatsComponent;
+    
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="Actor|Components"
+    )
+    TObjectPtr<UAnimationRegistryComponent> AnimationRegistryComponent;
 };

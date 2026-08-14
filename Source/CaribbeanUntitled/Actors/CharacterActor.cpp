@@ -6,6 +6,7 @@
 
 #include "../Components/ControlComponent.h"
 #include "../Components/StatsComponent.h"
+#include "../Components/AnimationRegistryComponent.h"
 #include "../Systems/ActorRegistry.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
@@ -31,7 +32,12 @@ ACharacterActor::ACharacterActor()
         CreateDefaultSubobject<UStatsComponent>(
             TEXT("StatsComponent")
         );
-
+    
+    
+    AnimationRegistryComponent =
+        CreateDefaultSubobject<UAnimationRegistryComponent>(
+            TEXT("AnimationRegistryComponent")
+        );
 
     // ============================================================
     // CHARACTER MOVEMENT
