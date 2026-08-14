@@ -71,6 +71,12 @@ public:
     {
         return true;
     }
+    
+    virtual bool IsTickableInEditor() const override
+    {
+        return true;
+    }
+
 
 
 private:
@@ -81,8 +87,6 @@ private:
 
     UPROPERTY()
     TObjectPtr<UMovementSystem> MovementSystem;
-
-
 
     // ------------------------------------------------------------
     // PHASES

@@ -4,7 +4,10 @@
 //
 
 #include "GameplaySystemScheduler.h"
+
 #include "../Systems/MovementSystem.h"
+
+#include "Engine/World.h"
 
 
 void UGameplaySystemScheduler::Initialize(
@@ -12,13 +15,36 @@ void UGameplaySystemScheduler::Initialize(
 {
     Super::Initialize(Collection);
 
+    UE_LOG(
+        LogTemp,
+        Error,
+        TEXT(
+            "[Scheduler] INITIALIZE | World=%s | Type=%d"
+        ),
+        *GetNameSafe(GetWorld()),
+        GetWorld()
+            ? static_cast<int32>(GetWorld()->WorldType)
+            : -1
+    );
+
     MovementSystem = NewObject<UMovementSystem>(this);
+
 }
 
 
 void UGameplaySystemScheduler::Deinitialize()
 {
+    UE_LOG(
+        LogTemp,
+        Error,
+        TEXT(
+            "[Scheduler] DEINITIALIZE | World=%s"
+        ),
+        *GetNameSafe(GetWorld())
+    );
+
     MovementSystem = nullptr;
+
     Super::Deinitialize();
 }
 
@@ -30,7 +56,10 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
         return;
     }
 
-    // Explicit execution order.
+
+    // ============================================================
+    // EXPLICIT EXECUTION ORDER
+    // ============================================================
 
     TickInput(DeltaTime);
 
@@ -46,14 +75,25 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
 }
 
 
+// ================================================================
+// INPUT
+// ================================================================
+
 void UGameplaySystemScheduler::TickInput(float DeltaTime)
 {
+
+
     // Input systems.
 }
 
 
+// ================================================================
+// GAMEPLAY
+// ================================================================
+
 void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 {
+
     // Gameplay systems.
     //
     // Stamina
@@ -63,16 +103,25 @@ void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 }
 
 
+// ================================================================
+// MOVEMENT
+// ================================================================
+
 void UGameplaySystemScheduler::TickMovement(float DeltaTime)
 {
-    if (!MovementSystem)
-    {
-        return;
-    }
 
-    MovementSystem->Tick(DeltaTime);
+    // ------------------------------------------------------------
+    // CONTROL TEST SYSTEM
+    // ------------------------------------------------------------
+
+    if (MovementSystem) MovementSystem->Tick(DeltaTime);
+
 }
 
+
+// ================================================================
+// PHYSICS
+// ================================================================
 
 void UGameplaySystemScheduler::TickPhysics(float DeltaTime)
 {
@@ -80,13 +129,25 @@ void UGameplaySystemScheduler::TickPhysics(float DeltaTime)
 }
 
 
+// ================================================================
+// POST PHYSICS
+// ================================================================
+
 void UGameplaySystemScheduler::TickPostPhysics(float DeltaTime)
 {
+
+
     // Collision / gameplay reactions.
 }
 
 
+// ================================================================
+// TRANSFORM
+// ================================================================
+
 void UGameplaySystemScheduler::TickTransform(float DeltaTime)
 {
+
+
     // Synchronize MotionComponent -> UE transforms.
 }

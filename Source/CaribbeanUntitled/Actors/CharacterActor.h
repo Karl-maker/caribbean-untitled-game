@@ -10,6 +10,7 @@
 
 class UControlComponent;
 class UStatsComponent;
+class UActorRegistry;
 
 UCLASS(Config=Game)
 class CARIBBEANUNTITLED_API ACharacterActor : public ACharacter
@@ -21,6 +22,12 @@ public:
     ACharacterActor();
 
 protected:
+    
+    virtual void PostInitializeComponents() override;
+
+    virtual void EndPlay(
+        const EEndPlayReason::Type EndPlayReason
+    ) override;
 
     // ============================================================
     // COMPONENTS

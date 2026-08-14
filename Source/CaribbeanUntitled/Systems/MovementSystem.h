@@ -7,7 +7,7 @@
 class AActor;
 
 UCLASS()
-class CARIBBEANUNTITLED_API UMovementSystem : public UWorldSubsystem
+class CARIBBEANUNTITLED_API UMovementSystem : public UObject
 {
     GENERATED_BODY()
 

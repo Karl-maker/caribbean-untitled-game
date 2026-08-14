@@ -6,10 +6,10 @@
 
 #include "../Components/ControlComponent.h"
 #include "../Components/StatsComponent.h"
+#include "../Systems/ActorRegistry.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-
 
 ACharacterActor::ACharacterActor()
 {
@@ -113,4 +113,56 @@ ACharacterActor::ACharacterActor()
             RotationRateYaw,
             0.0f
         );
+}
+
+void ACharacterActor::PostInitializeComponents()
+{
+    Super::PostInitializeComponents();
+
+    UWorld* World = GetWorld();
+
+    if (!World)
+    {
+        return;
+    }
+
+    UActorRegistry* Registry =
+        World->GetSubsystem<UActorRegistry>();
+
+    if (!Registry)
+    {
+        return;
+    }
+
+    Registry->RegisterActor(this);
+
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT(
+            "[CharacterActor] Registered during "
+            "PostInitializeComponents: %s"
+        ),
+        *GetNameSafe(this)
+    );
+}
+
+
+void ACharacterActor::EndPlay(
+    const EEndPlayReason::Type EndPlayReason)
+{
+    UWorld* World = GetWorld();
+
+    if (World)
+    {
+        UActorRegistry* Registry =
+            World->GetSubsystem<UActorRegistry>();
+
+        if (Registry)
+        {
+            Registry->UnregisterActor(this);
+        }
+    }
+
+    Super::EndPlay(EndPlayReason);
 }
