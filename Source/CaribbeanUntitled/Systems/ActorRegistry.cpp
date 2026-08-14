@@ -7,9 +7,12 @@
 //
 
 #include "ActorRegistry.h"
-#include "../Actors/K98Actor.h"
 
-void UActorRegistry::RegisterActor(AK98Actor* Actor)
+#include "GameFramework/Actor.h"
+#include "Components/ActorComponent.h"
+
+
+void UActorRegistry::RegisterActor(AActor* Actor)
 {
     if (!IsValid(Actor))
     {
@@ -22,7 +25,6 @@ void UActorRegistry::RegisterActor(AK98Actor* Actor)
         return;
     }
 
-    // Already registered.
     if (AllActors.Contains(Actor))
     {
         UE_LOG(
@@ -50,7 +52,7 @@ void UActorRegistry::RegisterActor(AK98Actor* Actor)
 }
 
 
-void UActorRegistry::UnregisterActor(AK98Actor* Actor)
+void UActorRegistry::UnregisterActor(AActor* Actor)
 {
     if (!Actor)
     {
@@ -92,18 +94,18 @@ void UActorRegistry::UnregisterActor(AK98Actor* Actor)
 
 
 bool UActorRegistry::IsRegistered(
-    const AK98Actor* Actor
+    const AActor* Actor
 ) const
 {
     return Actor &&
            AllActors.Contains(
-               const_cast<AK98Actor*>(Actor)
+               const_cast<AActor*>(Actor)
            );
 }
 
 
 void UActorRegistry::BuildIndexesForActor(
-    AK98Actor* Actor
+    AActor* Actor
 )
 {
     if (!IsValid(Actor))
@@ -139,7 +141,7 @@ void UActorRegistry::BuildIndexesForActor(
 
 
 void UActorRegistry::ComponentAdded(
-    AK98Actor* Actor,
+    AActor* Actor,
     UActorComponent* Component
 )
 {
@@ -156,11 +158,12 @@ void UActorRegistry::ComponentAdded(
         return;
     }
 
-    TSet<TWeakObjectPtr<AK98Actor>>& Index =
+    TSet<TWeakObjectPtr<AActor>>& Index =
         ComponentIndexes.FindOrAdd(ComponentClass);
 
-    const bool bWasAlreadyIndexed = Index.Contains(Actor);
- 
+    const bool bWasAlreadyIndexed =
+        Index.Contains(Actor);
+
     Index.Add(Actor);
 
     if (!bWasAlreadyIndexed)
@@ -168,7 +171,10 @@ void UActorRegistry::ComponentAdded(
         UE_LOG(
             LogTemp,
             Log,
-            TEXT("Component Added: Actor='%s' | Component='%s' | Type='%s' | Actors In Index: %d"),
+            TEXT(
+                "Component Added: Actor='%s' | "
+                "Component='%s' | Type='%s' | Actors In Index: %d"
+            ),
             *GetNameSafe(Actor),
             *GetNameSafe(Component),
             *GetNameSafe(ComponentClass),
@@ -179,7 +185,7 @@ void UActorRegistry::ComponentAdded(
 
 
 void UActorRegistry::ComponentRemoved(
-    AK98Actor* Actor,
+    AActor* Actor,
     UActorComponent* Component
 )
 {
@@ -195,7 +201,7 @@ void UActorRegistry::ComponentRemoved(
         return;
     }
 
-    TSet<TWeakObjectPtr<AK98Actor>>* Index =
+    TSet<TWeakObjectPtr<AActor>>* Index =
         ComponentIndexes.Find(ComponentClass);
 
     if (!Index)
@@ -203,7 +209,10 @@ void UActorRegistry::ComponentRemoved(
         UE_LOG(
             LogTemp,
             Verbose,
-            TEXT("Component Removed: No index exists for Component Type='%s'."),
+            TEXT(
+                "Component Removed: "
+                "No index exists for Component Type='%s'."
+            ),
             *GetNameSafe(ComponentClass)
         );
 
@@ -217,7 +226,10 @@ void UActorRegistry::ComponentRemoved(
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("Component Removed: Actor='%s' | Component='%s' | Type='%s' | Index Count: %d -> %d"),
+        TEXT(
+            "Component Removed: Actor='%s' | "
+            "Component='%s' | Type='%s' | Index Count: %d -> %d"
+        ),
         *GetNameSafe(Actor),
         *GetNameSafe(Component),
         *GetNameSafe(ComponentClass),
@@ -225,7 +237,6 @@ void UActorRegistry::ComponentRemoved(
         Index->Num()
     );
 
-    // Don't keep empty indexes around.
     if (Index->Num() == 0)
     {
         ComponentIndexes.Remove(ComponentClass);
@@ -233,14 +244,17 @@ void UActorRegistry::ComponentRemoved(
         UE_LOG(
             LogTemp,
             Verbose,
-            TEXT("Component Index Removed: Type='%s' had no remaining Actors."),
+            TEXT(
+                "Component Index Removed: "
+                "Type='%s' had no remaining Actors."
+            ),
             *GetNameSafe(ComponentClass)
         );
     }
 }
 
 
-const TSet<TWeakObjectPtr<AK98Actor>>*
+const TSet<TWeakObjectPtr<AActor>>*
 UActorRegistry::GetComponentIndex(
     UClass* ComponentClass
 ) const
@@ -255,7 +269,7 @@ UActorRegistry::GetComponentIndex(
 
 
 void UActorRegistry::RemoveActorFromIndexes(
-    AK98Actor* Actor
+    AActor* Actor
 )
 {
     if (!Actor)
@@ -269,7 +283,7 @@ void UActorRegistry::RemoveActorFromIndexes(
          It;
          ++It)
     {
-        TSet<TWeakObjectPtr<AK98Actor>>& Index = It.Value();
+        TSet<TWeakObjectPtr<AActor>>& Index = It.Value();
 
         if (Index.Remove(Actor) > 0)
         {
@@ -285,7 +299,9 @@ void UActorRegistry::RemoveActorFromIndexes(
     UE_LOG(
         LogTemp,
         Verbose,
-        TEXT("Removed Actor '%s' from %d component indexes."),
+        TEXT(
+            "Removed Actor '%s' from %d component indexes."
+        ),
         *GetNameSafe(Actor),
         RemovedFromIndexes
     );
@@ -312,7 +328,7 @@ void UActorRegistry::CleanupInvalidActors()
          It;
          ++It)
     {
-        TSet<TWeakObjectPtr<AK98Actor>>& Index = It.Value();
+        TSet<TWeakObjectPtr<AActor>>& Index = It.Value();
 
         for (auto ActorIt = Index.CreateIterator();
              ActorIt;
@@ -337,7 +353,10 @@ void UActorRegistry::CleanupInvalidActors()
         UE_LOG(
             LogTemp,
             Log,
-            TEXT("Registry Cleanup: Removed %d invalid Actors and %d invalid indexed Actors."),
+            TEXT(
+                "Registry Cleanup: Removed %d invalid Actors "
+                "and %d invalid indexed Actors."
+            ),
             RemovedActors,
             RemovedIndexedActors
         );
@@ -350,7 +369,10 @@ void UActorRegistry::Deinitialize()
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("Actor Registry Deinitializing | Actors: %d | Component Indexes: %d"),
+        TEXT(
+            "Actor Registry Deinitializing | "
+            "Actors: %d | Component Indexes: %d"
+        ),
         AllActors.Num(),
         ComponentIndexes.Num()
     );

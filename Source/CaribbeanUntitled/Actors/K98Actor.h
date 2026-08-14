@@ -52,12 +52,6 @@ public:
 
 protected:
 
-    /**
-     * Every scene-based component can attach to this.
-     */
-    UPROPERTY(VisibleAnywhere, Category = "Actor")
-    TObjectPtr<USceneComponent> Root;
-
 private:
     // Helper to notify registry about component addition
     void NotifyRegistryComponentAdded(UActorComponent* Component);
@@ -85,12 +79,9 @@ T* AK98Actor::AddComponent()
 
     if constexpr (TIsDerivedFrom<T, USceneComponent>::IsDerived)
     {
-        if (Root)
+        if (false)
         {
-            Component->AttachToComponent(
-                Root,
-                FAttachmentTransformRules::KeepRelativeTransform
-            );
+          
         }
     }
 

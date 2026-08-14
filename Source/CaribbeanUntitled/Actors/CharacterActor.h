@@ -1,25 +1,18 @@
 //
-//  CharacterActor.h
-//  CaribbeanUntitled (Mac)
-//
-//  Created by Family on 8/13/26.
-//  Copyright © 2026 Epic Games, Inc. All rights reserved.
+// CharacterActor.h
 //
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "K98Actor.h"
+#include "GameFramework/Character.h"
 #include "CharacterActor.generated.h"
 
 class UControlComponent;
-class USkeletalMeshComponent;
-class UCapsuleComponent;
 class UStatsComponent;
-class UCharacterMovementComponent;
 
-UCLASS()
-class CARIBBEANUNTITLED_API ACharacterActor : public AK98Actor
+UCLASS(Config=Game)
+class CARIBBEANUNTITLED_API ACharacterActor : public ACharacter
 {
     GENERATED_BODY()
 
@@ -29,18 +22,142 @@ public:
 
 protected:
 
-    UPROPERTY(VisibleAnywhere, Category = "Actor")
+    // ============================================================
+    // COMPONENTS
+    // ============================================================
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="Actor"
+    )
     TObjectPtr<UControlComponent> ControlComponent;
-    
-    UPROPERTY(VisibleAnywhere, Category = "Actor")
-    TObjectPtr<USkeletalMeshComponent> MeshComponent;
-    
-    UPROPERTY(VisibleAnywhere, Category = "Actor")
-    TObjectPtr<UCapsuleComponent> CollisionComponent;
-    
-    UPROPERTY(VisibleAnywhere, Category = "Actor")
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="Actor"
+    )
     TObjectPtr<UStatsComponent> StatsComponent;
-    
-    UPROPERTY(VisibleAnywhere, Category = "Actor")
-    TObjectPtr<UCharacterMovementComponent> CharacterMovementComponent;
+
+
+    // ============================================================
+    // MOVEMENT
+    // ============================================================
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Walking",
+        meta=(ClampMin="0.0")
+    )
+    float MaxWalkSpeed = 300.0f;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Walking",
+        meta=(ClampMin="0.0")
+    )
+    float MaxWalkSpeedCrouched = 150.0f;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Walking",
+        meta=(ClampMin="0.0")
+    )
+    float MaxAcceleration = 2048.0f;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Walking",
+        meta=(ClampMin="0.0")
+    )
+    float BrakingDecelerationWalking = 2048.0f;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Walking",
+        meta=(ClampMin="0.0")
+    )
+    float GroundFriction = 8.0f;
+
+
+    // ============================================================
+    // AIR MOVEMENT
+    // ============================================================
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Air",
+        meta=(ClampMin="0.0")
+    )
+    float AirControl = 0.35f;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Air",
+        meta=(ClampMin="0.0")
+    )
+    float AirControlBoostMultiplier = 2.0f;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Air",
+        meta=(ClampMin="0.0")
+    )
+    float AirControlBoostVelocityThreshold = 25.0f;
+
+
+    // ============================================================
+    // JUMP / FALL
+    // ============================================================
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Jump",
+        meta=(ClampMin="0.0")
+    )
+    float JumpZVelocity = 500.0f;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Jump"
+    )
+    float GravityScale = 1.0f;
+
+
+    // ============================================================
+    // ROTATION
+    // ============================================================
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Rotation"
+    )
+    bool bOrientRotationToMovement = true;
+
+
+    UPROPERTY(
+        EditAnywhere,
+        Config,
+        Category="Movement|Rotation"
+    )
+    float RotationRateYaw = 720.0f;
 };

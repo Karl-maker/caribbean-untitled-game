@@ -1,25 +1,17 @@
-//
-//  StatsComponent.h
-//  CaribbeanUntitled
-//
-//  Created by Karl-Johan Bailey on 8/12/26.
-//
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "StatsComponent.generated.h"
 
-
 /**
- * Stores general gameplay attributes and resources for an Actor.
+ * Stores gameplay attributes and resources for an Actor.
  *
- * This component owns runtime gameplay values such as stamina,
- * health, mana, and movement-related attributes.
+ * Movement behavior and base movement properties belong to
+ * Unreal's CharacterMovementComponent.
  *
- * Movement behavior belongs in the Actor's movement component.
- * This component provides the values that movement systems use.
+ * StatsComponent contains gameplay values that systems can
+ * use to modify or drive those systems.
  */
 UCLASS(
     ClassGroup=(Gameplay),
@@ -88,128 +80,29 @@ public:
     float StaminaRegenDelay = 1.0f;
 
 
-    /**
-     * Returns the current stamina.
-     */
     UFUNCTION(BlueprintPure, Category="Stats|Stamina")
     float GetStamina() const;
 
-
-    /**
-     * Returns maximum stamina.
-     */
     UFUNCTION(BlueprintPure, Category="Stats|Stamina")
     float GetMaxStamina() const;
 
-
-    /**
-     * Returns stamina as a normalized value from 0 to 1.
-     */
     UFUNCTION(BlueprintPure, Category="Stats|Stamina")
     float GetStaminaPercent() const;
 
-
-    /**
-     * Returns whether enough stamina is available.
-     */
     UFUNCTION(BlueprintPure, Category="Stats|Stamina")
     bool HasStamina(float Amount) const;
 
-
-    /**
-     * Consumes stamina.
-     *
-     * Returns false if insufficient stamina exists.
-     */
     UFUNCTION(BlueprintCallable, Category="Stats|Stamina")
     bool ConsumeStamina(float Amount);
 
-
-    /**
-     * Restores stamina.
-     */
     UFUNCTION(BlueprintCallable, Category="Stats|Stamina")
     void RestoreStamina(float Amount);
 
-
-    /**
-     * Sets current stamina directly.
-     */
     UFUNCTION(BlueprintCallable, Category="Stats|Stamina")
     void SetStamina(float NewStamina);
 
-
-    /**
-     * Completely restores stamina.
-     */
     UFUNCTION(BlueprintCallable, Category="Stats|Stamina")
     void RestoreFullStamina();
-
-
-    // ============================================================
-    // MOVEMENT
-    // ============================================================
-
-    /**
-     * Normal walking movement speed.
-     *
-     * Unreal movement speeds are measured in centimeters per second.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category="Stats|Movement",
-        meta=(ClampMin="0.0")
-    )
-    float WalkSpeed = 300.0f;
-
-
-    /**
-     * Running movement speed.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category="Stats|Movement",
-        meta=(ClampMin="0.0")
-    )
-    float RunSpeed = 500.0f;
-
-
-    /**
-     * Sprinting movement speed.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category="Stats|Movement",
-        meta=(ClampMin="0.0")
-    )
-    float SprintSpeed = 700.0f;
-
-
-    /**
-     * Crouching movement speed.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category="Stats|Movement",
-        meta=(ClampMin="0.0")
-    )
-    float CrouchSpeed = 150.0f;
-
-
-    /**
-     * Maximum speed while airborne.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category="Stats|Movement",
-        meta=(ClampMin="0.0")
-    )
-    float AirSpeed = 300.0f;
 
 
     // ============================================================
@@ -229,7 +122,7 @@ public:
 
 
     /**
-     * Duration of the dash in seconds.
+     * Duration of the dash.
      */
     UPROPERTY(
         EditAnywhere,
@@ -241,10 +134,10 @@ public:
 
 
     /**
-     * Dash speed in centimeters per second.
+     * Dash speed.
      *
-     * Usually calculated from DashDistance / DashDuration,
-     * but exposed separately so it can be tuned directly.
+     * This can be calculated from DashDistance / DashDuration,
+     * but remains exposed for tuning.
      */
     UPROPERTY(
         EditAnywhere,
@@ -279,55 +172,12 @@ public:
     float DashCooldown = 0.5f;
 
 
-    // ============================================================
-    // MOVEMENT HELPERS
-    // ============================================================
-
-    /**
-     * Returns the normal walking speed.
-     */
-    UFUNCTION(BlueprintPure, Category="Stats|Movement")
-    float GetWalkSpeed() const;
-
-
-    /**
-     * Returns running speed.
-     */
-    UFUNCTION(BlueprintPure, Category="Stats|Movement")
-    float GetRunSpeed() const;
-
-
-    /**
-     * Returns sprinting speed.
-     */
-    UFUNCTION(BlueprintPure, Category="Stats|Movement")
-    float GetSprintSpeed() const;
-
-
-    /**
-     * Returns crouching speed.
-     */
-    UFUNCTION(BlueprintPure, Category="Stats|Movement")
-    float GetCrouchSpeed() const;
-
-
-    /**
-     * Returns dash speed.
-     */
     UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
     float GetDashSpeed() const;
 
-
-    /**
-     * Returns dash distance.
-     */
     UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
     float GetDashDistance() const;
 
-
-    /**
-     * Returns dash duration.
-     */
     UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
     float GetDashDuration() const;
 

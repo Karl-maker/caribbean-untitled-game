@@ -1,12 +1,4 @@
-//
-//  StatsComponent.cpp
-//  CaribbeanUntitled
-//
-//  Created by Karl-Johan Bailey on 8/12/26.
-//
-
 #include "StatsComponent.h"
-
 
 UStatsComponent::UStatsComponent()
 {
@@ -15,14 +7,13 @@ UStatsComponent::UStatsComponent()
 
 
 // ============================================================
-// LIFECYCLE
+// BEGIN PLAY
 // ============================================================
 
 void UStatsComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Make sure starting stamina never exceeds maximum stamina.
     Stamina = FMath::Clamp(
         Stamina,
         0.0f,
@@ -60,23 +51,29 @@ float UStatsComponent::GetStaminaPercent() const
 
 bool UStatsComponent::HasStamina(float Amount) const
 {
-    return Stamina >= FMath::Max(Amount, 0.0f);
+    if (Amount <= 0.0f)
+    {
+        return true;
+    }
+
+    return Stamina >= Amount;
 }
 
 
 bool UStatsComponent::ConsumeStamina(float Amount)
 {
-    Amount = FMath::Max(Amount, 0.0f);
+    if (Amount <= 0.0f)
+    {
+        return true;
+    }
 
     if (!HasStamina(Amount))
     {
         return false;
     }
 
-    Stamina -= Amount;
-
     Stamina = FMath::Clamp(
-        Stamina,
+        Stamina - Amount,
         0.0f,
         MaxStamina
     );
@@ -87,12 +84,13 @@ bool UStatsComponent::ConsumeStamina(float Amount)
 
 void UStatsComponent::RestoreStamina(float Amount)
 {
-    Amount = FMath::Max(Amount, 0.0f);
-
-    Stamina += Amount;
+    if (Amount <= 0.0f)
+    {
+        return;
+    }
 
     Stamina = FMath::Clamp(
-        Stamina,
+        Stamina + Amount,
         0.0f,
         MaxStamina
     );
@@ -112,34 +110,6 @@ void UStatsComponent::SetStamina(float NewStamina)
 void UStatsComponent::RestoreFullStamina()
 {
     Stamina = MaxStamina;
-}
-
-
-// ============================================================
-// MOVEMENT
-// ============================================================
-
-float UStatsComponent::GetWalkSpeed() const
-{
-    return WalkSpeed;
-}
-
-
-float UStatsComponent::GetRunSpeed() const
-{
-    return RunSpeed;
-}
-
-
-float UStatsComponent::GetSprintSpeed() const
-{
-    return SprintSpeed;
-}
-
-
-float UStatsComponent::GetCrouchSpeed() const
-{
-    return CrouchSpeed;
 }
 
 

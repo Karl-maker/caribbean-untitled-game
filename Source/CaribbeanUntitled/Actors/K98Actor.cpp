@@ -14,9 +14,6 @@ AK98Actor::AK98Actor()
 {
     PrimaryActorTick.bCanEverTick = false;
 
-    Root = CreateDefaultSubobject<USceneComponent>(TEXT("Transform"));
-
-    RootComponent = Root;
 }
 
 void AK98Actor::NotifyRegistryComponentAdded(UActorComponent* Component)

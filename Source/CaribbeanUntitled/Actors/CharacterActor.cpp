@@ -1,41 +1,116 @@
 //
-//  CharacterActor.cpp
-//  CaribbeanUntitled (Mac)
-//
-//  Created by Family on 8/13/26.
-//  Copyright © 2026 Epic Games, Inc. All rights reserved.
+// CharacterActor.cpp
 //
 
 #include "CharacterActor.h"
 
 #include "../Components/ControlComponent.h"
 #include "../Components/StatsComponent.h"
-#include "Components/SkeletalMeshComponent.h"
-#include "Components/CapsuleComponent.h"
+
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
+
 
 ACharacterActor::ACharacterActor()
 {
+    PrimaryActorTick.bCanEverTick = false;
+
+
+    // ============================================================
+    // COMPONENTS
+    // ============================================================
+
     ControlComponent =
         CreateDefaultSubobject<UControlComponent>(
             TEXT("Control")
         );
-    
-    MeshComponent =
-        CreateDefaultSubobject<USkeletalMeshComponent>(
-            TEXT("Mesh")
+
+    StatsComponent =
+        CreateDefaultSubobject<UStatsComponent>(
+            TEXT("Stats")
         );
-    
-    CollisionComponent = CreateDefaultSubobject<UCapsuleComponent>(
-        TEXT("Collision")
+
+
+    // ============================================================
+    // COLLISION
+    // ============================================================
+
+    GetCapsuleComponent()->InitCapsuleSize(
+        42.0f,
+        96.0f
     );
 
-    
-    StatsComponent = CreateDefaultSubobject<UStatsComponent>(
-        TEXT("Stats")
-    );
 
-    CharacterMovementComponent = CreateDefaultSubobject<UCharacterMovementComponent>(
-        TEXT("Movement")
-    );
+    // ============================================================
+    // CHARACTER MOVEMENT
+    // ============================================================
+
+    UCharacterMovementComponent* Movement =
+        GetCharacterMovement();
+
+    if (!Movement)
+    {
+        return;
+    }
+
+
+    // Walking
+
+    Movement->MaxWalkSpeed =
+        MaxWalkSpeed;
+
+    Movement->MaxWalkSpeedCrouched =
+        MaxWalkSpeedCrouched;
+
+    Movement->MaxAcceleration =
+        MaxAcceleration;
+
+    Movement->BrakingDecelerationWalking =
+        BrakingDecelerationWalking;
+
+    Movement->GroundFriction =
+        GroundFriction;
+
+
+    // Air
+
+    Movement->AirControl =
+        AirControl;
+
+    Movement->AirControlBoostMultiplier =
+        AirControlBoostMultiplier;
+
+    Movement->AirControlBoostVelocityThreshold =
+        AirControlBoostVelocityThreshold;
+
+
+    // Jump / Fall
+
+    Movement->JumpZVelocity =
+        JumpZVelocity;
+
+    Movement->GravityScale =
+        GravityScale;
+
+
+    // Crouch
+
+    Movement->NavAgentProps.bCanCrouch =
+        true;
+
+
+    // Rotation
+
+    bUseControllerRotationYaw =
+        false;
+
+    Movement->bOrientRotationToMovement =
+        bOrientRotationToMovement;
+
+    Movement->RotationRate =
+        FRotator(
+            0.0f,
+            RotationRateYaw,
+            0.0f
+        );
 }
