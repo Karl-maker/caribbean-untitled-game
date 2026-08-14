@@ -17,15 +17,12 @@ void UMovementSystem::Tick(float DeltaTime)
     }
 
     UWorld* World = GetWorld();
-
     if (!World)
     {
         return;
     }
 
-    UActorRegistry* Registry =
-        World->GetSubsystem<UActorRegistry>();
-
+    UActorRegistry* Registry = World->GetSubsystem<UActorRegistry>();
     if (!Registry)
     {
         return;
@@ -41,278 +38,254 @@ void UMovementSystem::Tick(float DeltaTime)
 
     for (const TWeakObjectPtr<AActor>& WeakActor : *Actors)
     {
-        AActor* Actor = WeakActor.Get();
-
-        if (!IsValid(Actor))
+        if (AActor* Actor = WeakActor.Get())
         {
-            continue;
+            ProcessActor(Actor, DeltaTime);
         }
-
-        ProcessActor(Actor, DeltaTime);
     }
 }
 
 
-void UMovementSystem::ProcessActor(
-    AActor* Actor,
-    float DeltaTime)
+void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
 {
     if (!IsValid(Actor))
     {
         return;
     }
 
+    UControlComponent* Control = Actor->FindComponentByClass<UControlComponent>();
+    UStatsComponent* Stats = Actor->FindComponentByClass<UStatsComponent>();
+    UCharacterMovementComponent* Movement = Actor->FindComponentByClass<UCharacterMovementComponent>();
+    ACharacter* Character = Cast<ACharacter>(Actor);
 
-    // ============================================================
-    // REQUIRED COMPONENTS
-    // ============================================================
-
-    UControlComponent* Control =
-        Actor->FindComponentByClass<UControlComponent>();
-
-    UStatsComponent* Stats =
-        Actor->FindComponentByClass<UStatsComponent>();
-
-    UCharacterMovementComponent* Movement =
-        Actor->FindComponentByClass<UCharacterMovementComponent>();
-
-
-    if (!Control || !Stats || !Movement)
+    if (!Control || !Stats || !Movement || !Character)
     {
         return;
     }
 
+    ApplyLook(Character, Control, DeltaTime);
 
-    // ============================================================
-    // CHARACTER CAPABILITY
-    // ============================================================
+    const FVector MoveDirection = ResolveMoveDirection(Character, Control);
+    const bool bWantsToSprint = Control->WantsToSprint();
+    const bool bWantsToCrouch = Control->WantsToCrouch();
 
-    ACharacter* Character =
-        Cast<ACharacter>(Actor);
+    ApplySpeed(Stats, Movement, DeltaTime, bWantsToSprint, bWantsToCrouch, !MoveDirection.IsNearlyZero());
+    ApplyJump(Character, Stats, Movement, Control);
+    ApplyMovement(Character, MoveDirection);
+    ApplyCrouch(Character, bWantsToCrouch);
+}
 
-    if (!Character)
+
+//=========================================================================
+// Look
+//=========================================================================
+
+void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Control, float DeltaTime)
+{
+    // If the Actor is currently seeking a destination (MoveToWorldLocation),
+    // keep it facing that destination as it moves — recompute every tick
+    // from the Actor's live position via SetLookAtLocation, rather than
+    // relying on a one-shot direction that goes stale as the Actor moves.
+    if (Control->IsSeekingDestination())
     {
+        Control->SetLookAtLocation(Control->GetDesiredWorldLocation());
+    }
+
+    // Priority 1: an explicit world-space facing direction — either the
+    // one just computed above, or one set directly via SetLookDirection()
+    // / SetLookAtLocation() from elsewhere (mouse-derived, AI one-shot,
+    // etc). Rotate smoothly toward it rather than snapping.
+    FVector FaceDirection = Control->GetLookDirection();
+    FaceDirection.Z = 0.0f;
+
+    if (!FaceDirection.IsNearlyZero())
+    {
+        const float TargetYaw = FaceDirection.Rotation().Yaw;
+        const FRotator CurrentRotation = Character->GetActorRotation();
+
+        const FRotator NewRotation = FMath::RInterpTo(
+            CurrentRotation,
+            FRotator(0.0f, TargetYaw, 0.0f),
+            DeltaTime,
+            Control->LookRotationSpeed
+        );
+
+        Character->SetActorRotation(NewRotation);
         return;
     }
 
-
-    // ============================================================
-    // MOUSE LOOK / CHARACTER ROTATION
-    // ============================================================
-    //
-    // LookInput is raw mouse/controller input.
-    //
-    // X = horizontal mouse movement -> character yaw
-    // Y = vertical mouse movement   -> ignored here
-    //
-    // Movement remains separate from the mouse input.
-    // The mouse changes the character's facing direction,
-    // and movement is calculated from that facing direction.
-    //
-    // ============================================================
-
-    const FVector2D LookInput =
-        Control->GetLookInput();
-
+    // Priority 2: raw per-frame turn delta (e.g. gamepad right stick, or
+    // mouse fed as a delta instead of a direction). Only used when nothing
+    // above is driving rotation, so inputs don't fight each other.
+    const FVector2D LookInput = Control->GetLookInput();
     if (!FMath::IsNearlyZero(LookInput.X))
     {
-        FRotator CharacterRotation =
-            Character->GetActorRotation();
+        FRotator Rotation = Character->GetActorRotation();
+        Rotation.Yaw += LookInput.X;
+        Character->SetActorRotation(FRotator(0.0f, Rotation.Yaw, 0.0f));
+    }
+}
 
-        CharacterRotation.Yaw += LookInput.X;
 
-        Character->SetActorRotation(
-            FRotator(
-                0.0f,
-                CharacterRotation.Yaw,
-                0.0f
-            )
-        );
+//=========================================================================
+// Movement Direction
+//=========================================================================
+
+FVector UMovementSystem::ResolveMoveDirection(ACharacter* Character, UControlComponent* Control) const
+{
+    const FVector IntentDirection = ComputeIntentDirection(Character, Control->MoveIntent);
+    const FVector ExternalDirection = ResolveExternalDirection(Character, Control);
+
+    const bool bHasIntent = !IntentDirection.IsNearlyZero();
+    const bool bHasExternal = !ExternalDirection.IsNearlyZero();
+
+    FVector Result = FVector::ZeroVector;
+
+    if (bHasExternal && bHasIntent)
+    {
+        const float Strength = FMath::Clamp(Control->GetDirectionControlStrength(), 0.0f, 1.0f);
+        Result = FMath::Lerp(IntentDirection, ExternalDirection, Strength);
+    }
+    else if (bHasExternal)
+    {
+        Result = ExternalDirection;
+    }
+    else if (bHasIntent)
+    {
+        Result = IntentDirection;
     }
 
-
-    // ============================================================
-    // MOVEMENT INTENT
-    // ============================================================
-    //
-    // ControlComponent stores movement in LOCAL SPACE:
-    //
-    // X = Left / Right
-    // Y = Back / Forward
-    //
-    // Movement is calculated using the character's CURRENT
-    // facing direction.
-    //
-    // Therefore:
-    //
-    // Mouse right -> character turns right
-    // W            -> character moves in the new direction
-    //
-    // ============================================================
-
-    const FVector2D MoveIntent =
-        Control->MoveIntent;
-
-    FVector MoveDirection =
-        FVector::ZeroVector;
-
-    if (!MoveIntent.IsNearlyZero())
+    if (!Result.IsNearlyZero())
     {
-        const FRotator CharacterRotation =
-            Character->GetActorRotation();
+        Result.Normalize();
+    }
 
-        // Only use yaw for ground movement.
-        const FRotator YawRotation(
-            0.0f,
-            CharacterRotation.Yaw,
-            0.0f
-        );
+    return Result;
+}
 
-        const FVector Forward =
-            FRotationMatrix(YawRotation)
-                .GetUnitAxis(EAxis::X);
+FVector UMovementSystem::ResolveExternalDirection(ACharacter* Character, UControlComponent* Control) const
+{
+    if (Control->IsSeekingDestination())
+    {
+        FVector ToTarget = Control->GetDesiredWorldLocation() - Character->GetActorLocation();
+        ToTarget.Z = 0.0f;
 
-        const FVector Right =
-            FRotationMatrix(YawRotation)
-                .GetUnitAxis(EAxis::Y);
-
-        MoveDirection =
-            (Forward * MoveIntent.Y) +
-            (Right * MoveIntent.X);
-
-        MoveDirection.Z = 0.0f;
-
-        if (!MoveDirection.IsNearlyZero())
+        if (ToTarget.SizeSquared() <= FMath::Square(Control->GetDirectionAcceptanceRadius()))
         {
-            MoveDirection.Normalize();
+            Control->ClearDestination();
+            return FVector::ZeroVector;
         }
+
+        ToTarget.Normalize();
+        Control->SetWorldMoveDirection(ToTarget);
+
+        return ToTarget;
     }
 
+    FVector Direction = Control->GetWorldMoveDirection();
+    Direction.Z = 0.0f;
+    return Direction;
+}
 
-    // ============================================================
-    // MOVEMENT SPEED
-    // ============================================================
-
-    /*
-     * StatsComponent owns the gameplay speeds.
-     *
-     * CharacterMovementComponent owns the actual movement
-     * simulation and receives the current target speed.
-     */
-
-    const float NormalSpeed =
-        Stats->GetWalkSpeed();
-
-    const float SprintSpeed =
-        Stats->GetSprintSpeed();
-
-    const float CrouchSpeed =
-        Stats->GetCrouchSpeed();
-
-    float TargetSpeed =
-        NormalSpeed;
-
-
-    if (Control->WantsToCrouch())
+FVector UMovementSystem::ComputeIntentDirection(ACharacter* Character, const FVector2D& MoveIntent) const
+{
+    if (MoveIntent.IsNearlyZero())
     {
-        TargetSpeed =
-            CrouchSpeed;
-    }
-    else if (Control->WantsToSprint())
-    {
-        TargetSpeed =
-            SprintSpeed;
+        return FVector::ZeroVector;
     }
 
+    const FRotator YawRotation(0.0f, Character->GetActorRotation().Yaw, 0.0f);
+    const FVector Forward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    const FVector Right = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-    // ============================================================
-    // STAMINA
-    // ============================================================
+    FVector Direction = (Forward * MoveIntent.Y) + (Right * MoveIntent.X);
+    Direction.Z = 0.0f;
 
-    if (Control->WantsToSprint())
+    return Direction;
+}
+
+
+//=========================================================================
+// Speed
+//=========================================================================
+
+void UMovementSystem::ApplySpeed(
+    UStatsComponent* Stats,
+    UCharacterMovementComponent* Movement,
+    float DeltaTime,
+    bool bWantsToSprint,
+    bool bWantsToCrouch,
+    bool bIsMoving)
+{
+    float TargetSpeed = Stats->GetWalkSpeed();
+
+    if (bWantsToCrouch)
     {
-        /*
-         * Sprint stamina is only consumed while the character
-         * actually has movement input.
-         */
+        TargetSpeed = Stats->GetCrouchSpeed();
+    }
+    else if (bWantsToSprint)
+    {
+        TargetSpeed = Stats->GetSprintSpeed();
 
-        if (!MoveDirection.IsNearlyZero())
+        if (bIsMoving)
         {
-            const float SprintCostPerSecond =
-                Stats->GetSprintStaminaCostPerSecond();
-
-            const float Cost =
-                SprintCostPerSecond * DeltaTime;
+            const float Cost = Stats->GetSprintStaminaCostPerSecond() * DeltaTime;
 
             if (!Stats->ConsumeStamina(Cost))
             {
-                /*
-                 * Insufficient stamina.
-                 *
-                 * Fall back to normal walking speed.
-                 */
-
-                TargetSpeed =
-                    NormalSpeed;
+                TargetSpeed = Stats->GetWalkSpeed();
             }
         }
     }
 
-
-    // ============================================================
-    // APPLY SPEED
-    // ============================================================
-
-    Movement->MaxWalkSpeed =
-        TargetSpeed;
+    Movement->MaxWalkSpeed = TargetSpeed;
+}
 
 
-    // ============================================================
-    // JUMP
-    // ============================================================
+//=========================================================================
+// Jump
+//=========================================================================
 
-    Movement->JumpZVelocity =
-        Stats->GetJumpStrength();
+void UMovementSystem::ApplyJump(
+    ACharacter* Character,
+    UStatsComponent* Stats,
+    UCharacterMovementComponent* Movement,
+    UControlComponent* Control)
+{
+    Movement->JumpZVelocity = Stats->GetJumpStrength();
 
-
-    if (Control->HasIntent(EControlIntent::Jump))
+    if (Control->HasIntent(EControlIntent::Jump) && Movement->IsMovingOnGround())
     {
-        if (Movement->IsMovingOnGround())
-        {
-            Character->Jump();
-        }
+        Character->Jump();
     }
+}
 
 
-    // ============================================================
-    // MOVEMENT INPUT
-    // ============================================================
+//=========================================================================
+// Movement Application
+//=========================================================================
 
+void UMovementSystem::ApplyMovement(ACharacter* Character, const FVector& MoveDirection)
+{
     if (!MoveDirection.IsNearlyZero())
     {
-        Character->AddMovementInput(
-            MoveDirection,
-            1.0f
-        );
+        Character->AddMovementInput(MoveDirection, 1.0f);
     }
+}
 
 
-    // ============================================================
-    // CROUCH
-    // ============================================================
+//=========================================================================
+// Crouch
+//=========================================================================
 
-    if (Control->WantsToCrouch())
+void UMovementSystem::ApplyCrouch(ACharacter* Character, bool bWantsToCrouch)
+{
+    if (bWantsToCrouch && !Character->bIsCrouched)
     {
-        if (!Character->bIsCrouched)
-        {
-            Character->Crouch();
-        }
+        Character->Crouch();
     }
-    else
+    else if (!bWantsToCrouch && Character->bIsCrouched)
     {
-        if (Character->bIsCrouched)
-        {
-            Character->UnCrouch();
-        }
+        Character->UnCrouch();
     }
 }

@@ -59,6 +59,11 @@ ACharacterActor::ACharacterActor()
             0.0f
         );
     }
+    
+    GetCharacterMovement()->bOrientRotationToMovement = false;
+    bUseControllerRotationYaw = false;
+    bUseControllerRotationPitch = false;
+    bUseControllerRotationRoll = false;
 }
 
 

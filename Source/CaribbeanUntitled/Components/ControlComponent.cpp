@@ -7,7 +7,6 @@
 
 #include "ControlComponent.h"
 #include "../Actors/K98Actor.h"
-#include "Engine/World.h"
 
 UControlComponent::UControlComponent()
 {
@@ -18,20 +17,20 @@ UControlComponent::UControlComponent()
 void UControlComponent::BeginPlay()
 {
     Super::BeginPlay();
-    
-    // Initialize cached rotation
-    if (AK98Actor* Owner = Cast<AK98Actor>(GetOwner()))
-    {
-        CachedActorRotation = Owner->GetActorRotation();
-    }
 }
 
-void UControlComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UControlComponent::TickComponent(
+    float DeltaTime,
+    ELevelTick TickType,
+    FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-    
-    // Update world move direction from local intent
-    UpdateWorldMoveDirection();
+
+    // Intentionally empty: WorldMoveDirection is an independent field set
+    // directly via SetWorldMoveDirection() / MoveToWorldLocation(). It must
+    // persist across ticks until something explicitly changes it, so this
+    // component does not (and must not) recompute it from MoveIntent here.
+    // MovementSystem derives the player-intent direction on its own.
 }
 
 //=========================================================================
@@ -46,25 +45,6 @@ void UControlComponent::SetMoveIntent(const FVector2D& Intent)
 void UControlComponent::SetWorldMoveDirection(const FVector& WorldDirection)
 {
     WorldMoveDirection = WorldDirection.GetSafeNormal();
-    
-    // Convert world direction to local space if we have an owner
-    if (AK98Actor* Owner = Cast<AK98Actor>(GetOwner()))
-    {
-        const FRotator OwnerRotation = Owner->GetActorRotation();
-        const FVector LocalDirection = OwnerRotation.UnrotateVector(WorldDirection);
-        
-        // Convert to 2D local space (X = Right/Left, Y = Forward/Back)
-        MoveIntent.X = FVector::DotProduct(LocalDirection, Owner->GetActorRightVector());
-        MoveIntent.Y = FVector::DotProduct(LocalDirection, Owner->GetActorForwardVector());
-        
-        // Clamp and normalize
-        MoveIntent = MoveIntent.ClampAxes(-1.0f, 1.0f);
-    }
-}
-
-FVector UControlComponent::GetWorldMoveDirection() const
-{
-    return WorldMoveDirection;
 }
 
 void UControlComponent::SetForwardBackIntent(float Weight)
@@ -77,78 +57,47 @@ void UControlComponent::SetLeftRightIntent(float Weight)
     MoveIntent.X = FMath::Clamp(Weight, -1.0f, 1.0f);
 }
 
-void UControlComponent::UpdateWorldMoveDirection()
+void UControlComponent::SetDesiredWorldLocation(const FVector& Location)
 {
-    // Only calculate if we have an owner and some movement intent
-    AActor* Owner = GetOwner();
-    if (!Owner || MoveIntent.IsNearlyZero())
-    {
-        WorldMoveDirection = FVector::ZeroVector;
-        return;
-    }
-    
-    // Get the actor's forward and right vectors
-    const FVector Forward = Owner->GetActorForwardVector();
-    const FVector Right = Owner->GetActorRightVector();
-    
-    // Calculate world space direction from local intent
-    // MoveIntent.X = Right/Left (-1 to 1)
-    // MoveIntent.Y = Forward/Back (-1 to 1)
-    WorldMoveDirection = (Forward * MoveIntent.Y) + (Right * MoveIntent.X);
-    
-    // Normalize to ensure consistent speed
-    if (!WorldMoveDirection.IsNearlyZero())
-    {
-        WorldMoveDirection.Normalize();
-    }
-    
-    // Cache rotation for future use
-    CachedActorRotation = Owner->GetActorRotation();
+    DesiredWorldLocation = Location;
+}
+
+void UControlComponent::SetDirectionControlStrength(float Strength)
+{
+    DirectionControlStrength = FMath::Clamp(Strength, 0.0f, 1.0f);
+}
+
+void UControlComponent::SetDirectionAcceptanceRadius(float Radius)
+{
+    DirectionAcceptanceRadius = FMath::Max(Radius, 0.0f);
+}
+
+void UControlComponent::MoveToWorldLocation(const FVector& TargetLocation)
+{
+    DesiredWorldLocation = TargetLocation;
+    bSeekingDestination = true;
+    // Direction is now computed fresh every tick by MovementSystem,
+    // not here — this just records the request.
+}
+
+void UControlComponent::ClearDestination()
+{
+    bSeekingDestination = false;
+    WorldMoveDirection = FVector::ZeroVector;
 }
 
 //=========================================================================
 // Individual Action Setters
 //=========================================================================
 
-void UControlComponent::SetJumpIntent(float Weight)
-{
-    JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
-
-void UControlComponent::SetInteractIntent(float Weight)
-{
-    InteractIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
-
-void UControlComponent::SetSprintIntent(float Weight)
-{
-    SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
-
-void UControlComponent::SetCrouchIntent(float Weight)
-{
-    CrouchIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
-
-void UControlComponent::SetDashIntent(float Weight)
-{
-    DashIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
-
-void UControlComponent::SetAimIntent(float Weight)
-{
-    AimIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
-
-void UControlComponent::SetFireIntent(float Weight)
-{
-    FireIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
-
-void UControlComponent::SetReloadIntent(float Weight)
-{
-    ReloadIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-}
+void UControlComponent::SetJumpIntent(float Weight)      { JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetInteractIntent(float Weight)  { InteractIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetSprintIntent(float Weight)    { SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetCrouchIntent(float Weight)    { CrouchIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetDashIntent(float Weight)      { DashIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetAimIntent(float Weight)       { AimIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetFireIntent(float Weight)      { FireIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetReloadIntent(float Weight)    { ReloadIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 
 //=========================================================================
 // Generic Intent Functions
@@ -161,35 +110,20 @@ float UControlComponent::GetIntentWeight(EControlIntent Intent) const
         case EControlIntent::MoveForward:
         case EControlIntent::MoveBack:
             return MoveIntent.Y;
-            
+
         case EControlIntent::MoveLeft:
         case EControlIntent::MoveRight:
             return MoveIntent.X;
-            
-        case EControlIntent::Jump:
-            return JumpIntent;
-            
-        case EControlIntent::Interact:
-            return InteractIntent;
-            
-        case EControlIntent::Sprint:
-            return SprintIntent;
-            
-        case EControlIntent::Crouch:
-            return CrouchIntent;
-            
-        case EControlIntent::Dash:
-            return DashIntent;
-            
-        case EControlIntent::Aim:
-            return AimIntent;
-            
-        case EControlIntent::Fire:
-            return FireIntent;
-            
-        case EControlIntent::Reload:
-            return ReloadIntent;
-            
+
+        case EControlIntent::Jump:      return JumpIntent;
+        case EControlIntent::Interact:  return InteractIntent;
+        case EControlIntent::Sprint:    return SprintIntent;
+        case EControlIntent::Crouch:    return CrouchIntent;
+        case EControlIntent::Dash:      return DashIntent;
+        case EControlIntent::Aim:       return AimIntent;
+        case EControlIntent::Fire:      return FireIntent;
+        case EControlIntent::Reload:    return ReloadIntent;
+
         default:
             return 0.0f;
     }
@@ -197,66 +131,32 @@ float UControlComponent::GetIntentWeight(EControlIntent Intent) const
 
 void UControlComponent::SetIntentWeight(EControlIntent Intent, float Weight)
 {
-    // Clamp weight to valid range (0-1 for actions, -1 to 1 for movement)
-    bool bIsMovementIntent = (Intent == EControlIntent::MoveForward ||
-                              Intent == EControlIntent::MoveBack ||
-                              Intent == EControlIntent::MoveLeft ||
-                              Intent == EControlIntent::MoveRight);
-    
-    float ClampedWeight = bIsMovementIntent ?
-        FMath::Clamp(Weight, -1.0f, 1.0f) :
-        FMath::Clamp(Weight, 0.0f, 1.0f);
-    
+    const bool bIsMovementIntent =
+        (Intent == EControlIntent::MoveForward ||
+         Intent == EControlIntent::MoveBack    ||
+         Intent == EControlIntent::MoveLeft    ||
+         Intent == EControlIntent::MoveRight);
+
+    const float ClampedWeight = bIsMovementIntent
+        ? FMath::Clamp(Weight, -1.0f, 1.0f)
+        : FMath::Clamp(Weight, 0.0f, 1.0f);
+
     switch (Intent)
     {
-        case EControlIntent::MoveForward:
-            MoveIntent.Y = ClampedWeight;
-            break;
-            
-        case EControlIntent::MoveBack:
-            MoveIntent.Y = -ClampedWeight;
-            break;
-            
-        case EControlIntent::MoveLeft:
-            MoveIntent.X = -ClampedWeight;
-            break;
-            
-        case EControlIntent::MoveRight:
-            MoveIntent.X = ClampedWeight;
-            break;
-            
-        case EControlIntent::Jump:
-            JumpIntent = ClampedWeight;
-            break;
-            
-        case EControlIntent::Interact:
-            InteractIntent = ClampedWeight;
-            break;
-            
-        case EControlIntent::Sprint:
-            SprintIntent = ClampedWeight;
-            break;
-            
-        case EControlIntent::Crouch:
-            CrouchIntent = ClampedWeight;
-            break;
-            
-        case EControlIntent::Dash:
-            DashIntent = ClampedWeight;
-            break;
-            
-        case EControlIntent::Aim:
-            AimIntent = ClampedWeight;
-            break;
-            
-        case EControlIntent::Fire:
-            FireIntent = ClampedWeight;
-            break;
-            
-        case EControlIntent::Reload:
-            ReloadIntent = ClampedWeight;
-            break;
-            
+        case EControlIntent::MoveForward: MoveIntent.Y = ClampedWeight;  break;
+        case EControlIntent::MoveBack:    MoveIntent.Y = -ClampedWeight; break;
+        case EControlIntent::MoveLeft:    MoveIntent.X = -ClampedWeight; break;
+        case EControlIntent::MoveRight:   MoveIntent.X = ClampedWeight;  break;
+
+        case EControlIntent::Jump:      JumpIntent = ClampedWeight;     break;
+        case EControlIntent::Interact:  InteractIntent = ClampedWeight; break;
+        case EControlIntent::Sprint:    SprintIntent = ClampedWeight;   break;
+        case EControlIntent::Crouch:    CrouchIntent = ClampedWeight;   break;
+        case EControlIntent::Dash:      DashIntent = ClampedWeight;     break;
+        case EControlIntent::Aim:       AimIntent = ClampedWeight;      break;
+        case EControlIntent::Fire:      FireIntent = ClampedWeight;     break;
+        case EControlIntent::Reload:    ReloadIntent = ClampedWeight;   break;
+
         default:
             break;
     }
@@ -288,30 +188,11 @@ bool UControlComponent::HasActionIntent() const
            ReloadIntent > 0.0f;
 }
 
-bool UControlComponent::WantsToSprint() const
-{
-    return SprintIntent > 0.01f && HasMovementIntent();
-}
-
-bool UControlComponent::WantsToCrouch() const
-{
-    return CrouchIntent > 0.01f;
-}
-
-bool UControlComponent::WantsToDash() const
-{
-    return DashIntent > 0.01f;
-}
-
-bool UControlComponent::WantsToAim() const
-{
-    return AimIntent > 0.01f;
-}
-
-bool UControlComponent::WantsToFire() const
-{
-    return FireIntent > 0.01f;
-}
+bool UControlComponent::WantsToSprint() const { return SprintIntent > 0.01f && HasMovementIntent(); }
+bool UControlComponent::WantsToCrouch() const { return CrouchIntent > 0.01f; }
+bool UControlComponent::WantsToDash() const   { return DashIntent > 0.01f; }
+bool UControlComponent::WantsToAim() const    { return AimIntent > 0.01f; }
+bool UControlComponent::WantsToFire() const   { return FireIntent > 0.01f; }
 
 //=========================================================================
 // Look Functions
@@ -347,6 +228,7 @@ void UControlComponent::ClearMovementIntent()
 {
     MoveIntent = FVector2D::ZeroVector;
     WorldMoveDirection = FVector::ZeroVector;
+    bSeekingDestination = false;
 }
 
 void UControlComponent::ClearActionIntent()
@@ -359,4 +241,18 @@ void UControlComponent::ClearActionIntent()
     AimIntent = 0.0f;
     FireIntent = 0.0f;
     ReloadIntent = 0.0f;
+}
+
+void UControlComponent::SetLookAtLocation(const FVector& WorldLocation)
+{
+    if (AActor* Owner = GetOwner())
+    {
+        FVector Direction = WorldLocation - Owner->GetActorLocation();
+        Direction.Z = 0.0f;
+
+        if (!Direction.IsNearlyZero())
+        {
+            SetLookDirection(Direction);
+        }
+    }
 }
