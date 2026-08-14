@@ -97,17 +97,95 @@ void UMovementSystem::ProcessActor(
 
 
     // ============================================================
-    // MOVEMENT INTENT
+    // MOUSE LOOK / CHARACTER ROTATION
+    // ============================================================
+    //
+    // LookInput is raw mouse/controller input.
+    //
+    // X = horizontal mouse movement -> character yaw
+    // Y = vertical mouse movement   -> ignored here
+    //
+    // Movement remains separate from the mouse input.
+    // The mouse changes the character's facing direction,
+    // and movement is calculated from that facing direction.
+    //
     // ============================================================
 
-    FVector MoveDirection =
-        Control->GetWorldMoveDirection();
+    const FVector2D LookInput =
+        Control->GetLookInput();
 
-    MoveDirection.Z = 0.0f;
-
-    if (!MoveDirection.IsNearlyZero())
+    if (!FMath::IsNearlyZero(LookInput.X))
     {
-        MoveDirection.Normalize();
+        FRotator CharacterRotation =
+            Character->GetActorRotation();
+
+        CharacterRotation.Yaw += LookInput.X;
+
+        Character->SetActorRotation(
+            FRotator(
+                0.0f,
+                CharacterRotation.Yaw,
+                0.0f
+            )
+        );
+    }
+
+
+    // ============================================================
+    // MOVEMENT INTENT
+    // ============================================================
+    //
+    // ControlComponent stores movement in LOCAL SPACE:
+    //
+    // X = Left / Right
+    // Y = Back / Forward
+    //
+    // Movement is calculated using the character's CURRENT
+    // facing direction.
+    //
+    // Therefore:
+    //
+    // Mouse right -> character turns right
+    // W            -> character moves in the new direction
+    //
+    // ============================================================
+
+    const FVector2D MoveIntent =
+        Control->MoveIntent;
+
+    FVector MoveDirection =
+        FVector::ZeroVector;
+
+    if (!MoveIntent.IsNearlyZero())
+    {
+        const FRotator CharacterRotation =
+            Character->GetActorRotation();
+
+        // Only use yaw for ground movement.
+        const FRotator YawRotation(
+            0.0f,
+            CharacterRotation.Yaw,
+            0.0f
+        );
+
+        const FVector Forward =
+            FRotationMatrix(YawRotation)
+                .GetUnitAxis(EAxis::X);
+
+        const FVector Right =
+            FRotationMatrix(YawRotation)
+                .GetUnitAxis(EAxis::Y);
+
+        MoveDirection =
+            (Forward * MoveIntent.Y) +
+            (Right * MoveIntent.X);
+
+        MoveDirection.Z = 0.0f;
+
+        if (!MoveDirection.IsNearlyZero())
+        {
+            MoveDirection.Normalize();
+        }
     }
 
 
@@ -131,16 +209,19 @@ void UMovementSystem::ProcessActor(
     const float CrouchSpeed =
         Stats->GetCrouchSpeed();
 
-    float TargetSpeed = NormalSpeed;
+    float TargetSpeed =
+        NormalSpeed;
 
 
     if (Control->WantsToCrouch())
     {
-        TargetSpeed = CrouchSpeed;
+        TargetSpeed =
+            CrouchSpeed;
     }
     else if (Control->WantsToSprint())
     {
-        TargetSpeed = SprintSpeed;
+        TargetSpeed =
+            SprintSpeed;
     }
 
 
@@ -154,6 +235,7 @@ void UMovementSystem::ProcessActor(
          * Sprint stamina is only consumed while the character
          * actually has movement input.
          */
+
         if (!MoveDirection.IsNearlyZero())
         {
             const float SprintCostPerSecond =
@@ -165,11 +247,13 @@ void UMovementSystem::ProcessActor(
             if (!Stats->ConsumeStamina(Cost))
             {
                 /*
-                 * The Actor has insufficient stamina.
+                 * Insufficient stamina.
                  *
                  * Fall back to normal walking speed.
                  */
-                TargetSpeed = NormalSpeed;
+
+                TargetSpeed =
+                    NormalSpeed;
             }
         }
     }
@@ -179,12 +263,6 @@ void UMovementSystem::ProcessActor(
     // APPLY SPEED
     // ============================================================
 
-    /*
-     * CharacterMovementComponent remains responsible for
-     * movement simulation.
-     *
-     * StatsComponent provides the gameplay value.
-     */
     Movement->MaxWalkSpeed =
         TargetSpeed;
 
@@ -193,12 +271,6 @@ void UMovementSystem::ProcessActor(
     // JUMP
     // ============================================================
 
-    /*
-     * Jump strength is a gameplay stat.
-     *
-     * CharacterMovementComponent remains responsible for
-     * actually performing the jump.
-     */
     Movement->JumpZVelocity =
         Stats->GetJumpStrength();
 
