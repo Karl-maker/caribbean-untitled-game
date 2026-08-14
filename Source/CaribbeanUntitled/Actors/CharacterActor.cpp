@@ -12,6 +12,7 @@
 #include "../Components/StatsComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ACharacterActor::ACharacterActor()
 {
@@ -34,4 +35,7 @@ ACharacterActor::ACharacterActor()
         TEXT("Stats")
     );
 
+    CharacterMovementComponent = CreateDefaultSubobject<UCharacterMovementComponent>(
+        TEXT("Movement")
+    );
 }

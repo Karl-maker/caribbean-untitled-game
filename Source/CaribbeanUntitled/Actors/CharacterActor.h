@@ -16,6 +16,7 @@ class UControlComponent;
 class USkeletalMeshComponent;
 class UCapsuleComponent;
 class UStatsComponent;
+class UCharacterMovementComponent;
 
 UCLASS()
 class CARIBBEANUNTITLED_API ACharacterActor : public AK98Actor
@@ -39,4 +40,7 @@ protected:
     
     UPROPERTY(VisibleAnywhere, Category = "Actor")
     TObjectPtr<UStatsComponent> StatsComponent;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Actor")
+    TObjectPtr<UCharacterMovementComponent> CharacterMovementComponent;
 };
