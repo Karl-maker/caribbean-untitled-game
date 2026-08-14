@@ -1,0 +1,325 @@
+//
+// AnimationRegistryComponent.h
+// CaribbeanUntitled
+//
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Components/ActorComponent.h"
+#include "Animation/AnimationAsset.h"
+#include "Animation/AnimTypes.h"
+#include "AnimationRegistryComponent.generated.h"
+
+
+// ============================================================================
+// Animation Keys
+// ============================================================================
+
+/**
+ * Standardized animation keys used by gameplay systems.
+ *
+ * Gameplay systems reference these keys instead of knowing which
+ * animation assets a particular character uses.
+ */
+UENUM(BlueprintType)
+enum class EAnimationKey : uint8
+{
+    None        UMETA(DisplayName = "None"),
+
+    // Locomotion
+    Idle        UMETA(DisplayName = "Idle"),
+    Walk        UMETA(DisplayName = "Walk"),
+    Run         UMETA(DisplayName = "Run"),
+    Sprint      UMETA(DisplayName = "Sprint"),
+
+    // Airborne
+    Jump        UMETA(DisplayName = "Jump"),
+    Fall        UMETA(DisplayName = "Fall"),
+    Land        UMETA(DisplayName = "Land"),
+
+    // Combat
+    Attack_1    UMETA(DisplayName = "Attack 1"),
+    Attack_2    UMETA(DisplayName = "Attack 2"),
+    Attack_3    UMETA(DisplayName = "Attack 3"),
+
+    Hit         UMETA(DisplayName = "Hit"),
+    Death       UMETA(DisplayName = "Death"),
+
+    // Interaction
+    Interact    UMETA(DisplayName = "Interact"),
+    Mount       UMETA(DisplayName = "Mount"),
+    Dismount    UMETA(DisplayName = "Dismount")
+};
+
+
+// ============================================================================
+// Animation Playback
+// ============================================================================
+
+/**
+ * Defines how an animation should behave when played.
+ */
+UENUM(BlueprintType)
+enum class EAnimationPlaybackMode : uint8
+{
+    Loop        UMETA(DisplayName = "Loop"),
+    Once        UMETA(DisplayName = "Play Once"),
+    Hold        UMETA(DisplayName = "Hold Last Frame")
+};
+
+
+// ============================================================================
+// Animation Definition
+// ============================================================================
+
+/**
+ * Defines the animation associated with a gameplay animation key.
+ *
+ * This struct contains configuration only.
+ * It does not play or control the animation.
+ */
+USTRUCT(BlueprintType)
+struct FAnimationDefinition
+{
+    GENERATED_BODY()
+
+    /**
+     * Gameplay key used to identify this animation.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation"
+    )
+    EAnimationKey Key = EAnimationKey::None;
+
+
+    /**
+     * Unreal animation asset associated with this key.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation"
+    )
+    TObjectPtr<UAnimationAsset> Animation = nullptr;
+
+
+    /**
+     * How the animation should play.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Playback"
+    )
+    EAnimationPlaybackMode PlaybackMode =
+        EAnimationPlaybackMode::Loop;
+
+
+    /**
+     * Playback speed multiplier.
+     *
+     * 1.0 = normal speed
+     * 2.0 = twice as fast
+     * 0.5 = half speed
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Playback",
+        meta = (ClampMin = "0.0")
+    )
+    float PlayRate = 1.0f;
+
+
+    /**
+     * Starting position within the animation.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Playback",
+        meta = (ClampMin = "0.0")
+    )
+    float StartPosition = 0.0f;
+
+
+    /**
+     * Number of times the animation should repeat.
+     *
+     * -1 = infinite
+     *  1 = play once
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Playback",
+        meta = (ClampMin = "-1")
+    )
+    int32 LoopCount = -1;
+
+
+    /**
+     * Time required to blend into this animation.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Blend",
+        meta = (ClampMin = "0.0")
+    )
+    float BlendInTime = 0.15f;
+
+
+    /**
+     * Time required to blend out of this animation.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Blend",
+        meta = (ClampMin = "0.0")
+    )
+    float BlendOutTime = 0.15f;
+
+
+    /**
+     * Optional curve controlling the blend.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Blend"
+    )
+    TObjectPtr<UCurveFloat> BlendCurve = nullptr;
+
+
+    /**
+     * Optional description of the animation.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation"
+    )
+    FText Description;
+};
+
+
+// ============================================================================
+// Animation Registry Component
+// ============================================================================
+
+/**
+ * Component that maps gameplay animation keys to animation definitions.
+ *
+ * This component is DATA ONLY.
+ *
+ * It does not:
+ *
+ * - Play animations
+ * - Request animations
+ * - Track active animations
+ * - Track current animations
+ * - Modify the SkeletalMeshComponent
+ * - Execute animation logic
+ *
+ * Gameplay systems use EAnimationKey values.
+ *
+ * AnimationSystem uses this component to resolve those keys into
+ * Unreal animation assets and their playback configuration.
+ */
+UCLASS(
+    ClassGroup = (Gameplay),
+    BlueprintType,
+    Blueprintable,
+    meta = (BlueprintSpawnableComponent)
+)
+class CARIBBEANUNTITLED_API UAnimationRegistryComponent
+    : public UActorComponent
+{
+    GENERATED_BODY()
+
+public:
+
+    UAnimationRegistryComponent();
+
+
+    //=========================================================================
+    // Registry
+    //=========================================================================
+
+    /**
+     * All animations available to this Actor.
+     *
+     * Each entry represents:
+     *
+     *     AnimationKey -> AnimationDefinition
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation Registry"
+    )
+    TArray<FAnimationDefinition> Animations;
+
+
+    //=========================================================================
+    // Lookup
+    //=========================================================================
+
+    /**
+     * Finds an animation definition by gameplay key.
+     *
+     * Returns nullptr if the key is not registered.
+     *
+     * C++ only.
+     */
+    const FAnimationDefinition* FindAnimation(
+        EAnimationKey Key
+    ) const;
+
+
+    /**
+     * Gets an animation definition by gameplay key.
+     *
+     * Returns an empty definition if the key is not registered.
+     */
+    UFUNCTION(
+        BlueprintPure,
+        Category = "Animation Registry"
+    )
+    FAnimationDefinition GetAnimation(
+        EAnimationKey Key
+    ) const;
+
+
+    /**
+     * Returns true if the key has a registered animation.
+     */
+    UFUNCTION(
+        BlueprintPure,
+        Category = "Animation Registry"
+    )
+    bool HasAnimation(
+        EAnimationKey Key
+    ) const;
+
+
+    /**
+     * Attempts to find an animation definition.
+     *
+     * Returns true when the animation exists.
+     */
+    UFUNCTION(
+        BlueprintPure,
+        Category = "Animation Registry",
+        meta = (ReturnDisplayName = "Found")
+    )
+    bool TryFindAnimation(
+        EAnimationKey Key,
+        FAnimationDefinition& OutAnimation
+    ) const;
+};
