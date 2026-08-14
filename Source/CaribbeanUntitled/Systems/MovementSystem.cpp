@@ -31,12 +31,6 @@ void UMovementSystem::Tick(float DeltaTime)
         return;
     }
 
-    /*
-     * We don't care what kind of Actor this is.
-     *
-     * If it has a ControlComponent, the movement system
-     * considers it.
-     */
     const TSet<TWeakObjectPtr<AActor>>* Actors =
         Registry->GetActorsWithComponent<UControlComponent>();
 
@@ -93,14 +87,6 @@ void UMovementSystem::ProcessActor(
     // CHARACTER CAPABILITY
     // ============================================================
 
-    /*
-     * UCharacterMovementComponent is designed to work with
-     * ACharacter.
-     *
-     * The registry/system still doesn't care what the Actor is.
-     * We simply check whether this particular Actor supports
-     * Character movement.
-     */
     ACharacter* Character =
         Cast<ACharacter>(Actor);
 
@@ -126,25 +112,24 @@ void UMovementSystem::ProcessActor(
 
 
     // ============================================================
-    // DETERMINE MOVEMENT SPEED
+    // MOVEMENT SPEED
     // ============================================================
 
     /*
-     * Movement speeds now belong to CharacterMovementComponent.
+     * StatsComponent owns the gameplay speeds.
      *
-     * StatsComponent no longer contains:
-     *
-     *     WalkSpeed
-     *     RunSpeed
-     *     SprintSpeed
-     *     CrouchSpeed
-     *
-     * We therefore modify MaxWalkSpeed directly here.
+     * CharacterMovementComponent owns the actual movement
+     * simulation and receives the current target speed.
      */
 
-    const float NormalSpeed = 300.0f;
-    const float SprintSpeed = 700.0f;
-    const float CrouchSpeed = 150.0f;
+    const float NormalSpeed =
+        Stats->GetWalkSpeed();
+
+    const float SprintSpeed =
+        Stats->GetSprintSpeed();
+
+    const float CrouchSpeed =
+        Stats->GetCrouchSpeed();
 
     float TargetSpeed = NormalSpeed;
 
@@ -166,11 +151,13 @@ void UMovementSystem::ProcessActor(
     if (Control->WantsToSprint())
     {
         /*
-         * Only consume stamina while actually moving.
+         * Sprint stamina is only consumed while the character
+         * actually has movement input.
          */
         if (!MoveDirection.IsNearlyZero())
         {
-            const float SprintCostPerSecond = 10.0f;
+            const float SprintCostPerSecond =
+                Stats->GetSprintStaminaCostPerSecond();
 
             const float Cost =
                 SprintCostPerSecond * DeltaTime;
@@ -178,9 +165,9 @@ void UMovementSystem::ProcessActor(
             if (!Stats->ConsumeStamina(Cost))
             {
                 /*
-                 * No stamina.
+                 * The Actor has insufficient stamina.
                  *
-                 * Fall back to normal movement speed.
+                 * Fall back to normal walking speed.
                  */
                 TargetSpeed = NormalSpeed;
             }
@@ -192,12 +179,41 @@ void UMovementSystem::ProcessActor(
     // APPLY SPEED
     // ============================================================
 
+    /*
+     * CharacterMovementComponent remains responsible for
+     * movement simulation.
+     *
+     * StatsComponent provides the gameplay value.
+     */
     Movement->MaxWalkSpeed =
         TargetSpeed;
 
 
     // ============================================================
-    // APPLY MOVEMENT
+    // JUMP
+    // ============================================================
+
+    /*
+     * Jump strength is a gameplay stat.
+     *
+     * CharacterMovementComponent remains responsible for
+     * actually performing the jump.
+     */
+    Movement->JumpZVelocity =
+        Stats->GetJumpStrength();
+
+
+    if (Control->HasIntent(EControlIntent::Jump))
+    {
+        if (Movement->IsMovingOnGround())
+        {
+            Character->Jump();
+        }
+    }
+
+
+    // ============================================================
+    // MOVEMENT INPUT
     // ============================================================
 
     if (!MoveDirection.IsNearlyZero())
@@ -206,19 +222,6 @@ void UMovementSystem::ProcessActor(
             MoveDirection,
             1.0f
         );
-    }
-
-
-    // ============================================================
-    // JUMP
-    // ============================================================
-
-    if (Control->HasIntent(EControlIntent::Jump))
-    {
-        if (Movement->IsMovingOnGround())
-        {
-            Character->Jump();
-        }
     }
 
 

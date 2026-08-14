@@ -1,5 +1,6 @@
 #include "StatsComponent.h"
 
+
 UStatsComponent::UStatsComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
@@ -19,6 +20,40 @@ void UStatsComponent::BeginPlay()
         0.0f,
         MaxStamina
     );
+}
+
+
+// ============================================================
+// MOVEMENT
+// ============================================================
+
+float UStatsComponent::GetWalkSpeed() const
+{
+    return WalkSpeed;
+}
+
+
+float UStatsComponent::GetSprintSpeed() const
+{
+    return SprintSpeed;
+}
+
+
+float UStatsComponent::GetCrouchSpeed() const
+{
+    return CrouchSpeed;
+}
+
+
+float UStatsComponent::GetSprintStaminaCostPerSecond() const
+{
+    return SprintStaminaCostPerSecond;
+}
+
+
+float UStatsComponent::GetJumpStrength() const
+{
+    return JumpStrength;
 }
 
 

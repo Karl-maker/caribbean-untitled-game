@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 
+
 ACharacterActor::ACharacterActor()
 {
     PrimaryActorTick.bCanEverTick = false;
@@ -22,143 +23,86 @@ ACharacterActor::ACharacterActor()
 
     ControlComponent =
         CreateDefaultSubobject<UControlComponent>(
-            TEXT("Control")
+            TEXT("ControlComponent")
         );
+
 
     StatsComponent =
         CreateDefaultSubobject<UStatsComponent>(
-            TEXT("Stats")
+            TEXT("StatsComponent")
         );
-
-
-    // ============================================================
-    // COLLISION
-    // ============================================================
-
-    GetCapsuleComponent()->InitCapsuleSize(
-        42.0f,
-        96.0f
-    );
 
 
     // ============================================================
     // CHARACTER MOVEMENT
     // ============================================================
 
+    /*
+     * CharacterMovementComponent is created by ACharacter.
+     *
+     * We do NOT store these values as duplicate properties
+     * on ACharacterActor.
+     *
+     * StatsComponent owns gameplay attributes.
+     * MovementSystem applies those attributes to this component.
+     */
+
     UCharacterMovementComponent* Movement =
         GetCharacterMovement();
 
-    if (!Movement)
+    if (Movement)
     {
-        return;
-    }
-
-
-    // Walking
-
-    Movement->MaxWalkSpeed =
-        MaxWalkSpeed;
-
-    Movement->MaxWalkSpeedCrouched =
-        MaxWalkSpeedCrouched;
-
-    Movement->MaxAcceleration =
-        MaxAcceleration;
-
-    Movement->BrakingDecelerationWalking =
-        BrakingDecelerationWalking;
-
-    Movement->GroundFriction =
-        GroundFriction;
-
-
-    // Air
-
-    Movement->AirControl =
-        AirControl;
-
-    Movement->AirControlBoostMultiplier =
-        AirControlBoostMultiplier;
-
-    Movement->AirControlBoostVelocityThreshold =
-        AirControlBoostVelocityThreshold;
-
-
-    // Jump / Fall
-
-    Movement->JumpZVelocity =
-        JumpZVelocity;
-
-    Movement->GravityScale =
-        GravityScale;
-
-
-    // Crouch
-
-    Movement->NavAgentProps.bCanCrouch =
-        true;
-
-
-    // Rotation
-
-    bUseControllerRotationYaw =
-        false;
-
-    Movement->bOrientRotationToMovement =
-        bOrientRotationToMovement;
-
-    Movement->RotationRate =
-        FRotator(
+        Movement->bOrientRotationToMovement = true;
+        Movement->RotationRate = FRotator(
             0.0f,
-            RotationRateYaw,
+            720.0f,
             0.0f
         );
+    }
 }
+
+
+// ============================================================
+// POST INITIALIZE
+// ============================================================
 
 void ACharacterActor::PostInitializeComponents()
 {
     Super::PostInitializeComponents();
 
-    UWorld* World = GetWorld();
+    /*
+     * Actor/component registration happens here.
+     *
+     * At this point the Actor's default components have been
+     * initialized and are available.
+     */
 
-    if (!World)
+    if (UWorld* World = GetWorld())
     {
-        return;
+        if (UActorRegistry* Registry =
+            World->GetSubsystem<UActorRegistry>())
+        {
+            Registry->RegisterActor(this);
+        }
     }
-
-    UActorRegistry* Registry =
-        World->GetSubsystem<UActorRegistry>();
-
-    if (!Registry)
-    {
-        return;
-    }
-
-    Registry->RegisterActor(this);
-
-    UE_LOG(
-        LogTemp,
-        Verbose,
-        TEXT(
-            "[CharacterActor] Registered during "
-            "PostInitializeComponents: %s"
-        ),
-        *GetNameSafe(this)
-    );
 }
 
+
+// ============================================================
+// END PLAY
+// ============================================================
 
 void ACharacterActor::EndPlay(
     const EEndPlayReason::Type EndPlayReason)
 {
-    UWorld* World = GetWorld();
+    /*
+     * Remove the Actor from the registry before it is destroyed.
+     */
 
-    if (World)
+    if (UWorld* World = GetWorld())
     {
-        UActorRegistry* Registry =
-            World->GetSubsystem<UActorRegistry>();
-
-        if (Registry)
+        if (UActorRegistry* Registry =
+            World->GetSubsystem<UActorRegistry>())
         {
             Registry->UnregisterActor(this);
         }

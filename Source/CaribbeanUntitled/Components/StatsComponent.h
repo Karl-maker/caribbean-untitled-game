@@ -7,11 +7,14 @@
 /**
  * Stores gameplay attributes and resources for an Actor.
  *
- * Movement behavior and base movement properties belong to
- * Unreal's CharacterMovementComponent.
+ * StatsComponent owns gameplay values such as:
+ * - Movement speeds
+ * - Stamina
+ * - Dash values
+ * - Jump strength
  *
- * StatsComponent contains gameplay values that systems can
- * use to modify or drive those systems.
+ * Unreal's CharacterMovementComponent owns the actual
+ * movement simulation/state.
  */
 UCLASS(
     ClassGroup=(Gameplay),
@@ -26,6 +29,76 @@ class CARIBBEANUNTITLED_API UStatsComponent : public UActorComponent
 public:
 
     UStatsComponent();
+
+
+    // ============================================================
+    // MOVEMENT
+    // ============================================================
+
+    /**
+     * Normal walking speed.
+     *
+     * This is a gameplay stat.
+     * MovementSystem applies it to CharacterMovementComponent.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float WalkSpeed = 300.0f;
+
+
+    /**
+     * Sprinting speed.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float SprintSpeed = 700.0f;
+
+
+    /**
+     * Crouching movement speed.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement",
+        meta=(ClampMin="0.0")
+    )
+    float CrouchSpeed = 150.0f;
+
+
+    /**
+     * Stamina consumed per second while sprinting.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement|Sprint",
+        meta=(ClampMin="0.0")
+    )
+    float SprintStaminaCostPerSecond = 10.0f;
+
+
+    /**
+     * Jump strength used by the movement system.
+     *
+     * This is a gameplay stat. The movement system applies
+     * it to CharacterMovementComponent::JumpZVelocity.
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Movement|Jump",
+        meta=(ClampMin="0.0")
+    )
+    float JumpStrength = 500.0f;
 
 
     // ============================================================
@@ -135,9 +208,6 @@ public:
 
     /**
      * Dash speed.
-     *
-     * This can be calculated from DashDistance / DashDuration,
-     * but remains exposed for tuning.
      */
     UPROPERTY(
         EditAnywhere,
@@ -171,6 +241,25 @@ public:
     )
     float DashCooldown = 0.5f;
 
+
+    // ============================================================
+    // GETTERS
+    // ============================================================
+
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetWalkSpeed() const;
+
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetSprintSpeed() const;
+
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetCrouchSpeed() const;
+
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetSprintStaminaCostPerSecond() const;
+
+    UFUNCTION(BlueprintPure, Category="Stats|Movement")
+    float GetJumpStrength() const;
 
     UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
     float GetDashSpeed() const;

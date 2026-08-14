@@ -21,150 +21,56 @@ public:
 
     ACharacterActor();
 
+
 protected:
-    
+
+    // ============================================================
+    // LIFECYCLE
+    // ============================================================
+
     virtual void PostInitializeComponents() override;
 
     virtual void EndPlay(
         const EEndPlayReason::Type EndPlayReason
     ) override;
 
+
     // ============================================================
-    // COMPONENTS
+    // GAMEPLAY COMPONENTS
     // ============================================================
 
+    /**
+     * Handles player/AI movement intent.
+     *
+     * Examples:
+     * - Move
+     * - Sprint
+     * - Crouch
+     * - Jump
+     */
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
-        Category="Actor"
+        Category="Actor|Components"
     )
     TObjectPtr<UControlComponent> ControlComponent;
 
+
+    /**
+     * Stores gameplay attributes for this Actor.
+     *
+     * Examples:
+     * - Walk speed
+     * - Sprint speed
+     * - Crouch speed
+     * - Jump strength
+     * - Stamina
+     * - Dash values
+     */
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
-        Category="Actor"
+        Category="Actor|Components"
     )
     TObjectPtr<UStatsComponent> StatsComponent;
-
-
-    // ============================================================
-    // MOVEMENT
-    // ============================================================
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Walking",
-        meta=(ClampMin="0.0")
-    )
-    float MaxWalkSpeed = 300.0f;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Walking",
-        meta=(ClampMin="0.0")
-    )
-    float MaxWalkSpeedCrouched = 150.0f;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Walking",
-        meta=(ClampMin="0.0")
-    )
-    float MaxAcceleration = 2048.0f;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Walking",
-        meta=(ClampMin="0.0")
-    )
-    float BrakingDecelerationWalking = 2048.0f;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Walking",
-        meta=(ClampMin="0.0")
-    )
-    float GroundFriction = 8.0f;
-
-
-    // ============================================================
-    // AIR MOVEMENT
-    // ============================================================
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Air",
-        meta=(ClampMin="0.0")
-    )
-    float AirControl = 0.35f;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Air",
-        meta=(ClampMin="0.0")
-    )
-    float AirControlBoostMultiplier = 2.0f;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Air",
-        meta=(ClampMin="0.0")
-    )
-    float AirControlBoostVelocityThreshold = 25.0f;
-
-
-    // ============================================================
-    // JUMP / FALL
-    // ============================================================
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Jump",
-        meta=(ClampMin="0.0")
-    )
-    float JumpZVelocity = 500.0f;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Jump"
-    )
-    float GravityScale = 1.0f;
-
-
-    // ============================================================
-    // ROTATION
-    // ============================================================
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Rotation"
-    )
-    bool bOrientRotationToMovement = true;
-
-
-    UPROPERTY(
-        EditAnywhere,
-        Config,
-        Category="Movement|Rotation"
-    )
-    float RotationRateYaw = 720.0f;
 };
