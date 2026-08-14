@@ -91,7 +91,6 @@ public:
     )
     TObjectPtr<AActor> InteractionTarget = nullptr;
 
-
     /**
      * Maximum distance at which an interaction can occur.
      */
@@ -102,6 +101,21 @@ public:
         meta = (ClampMin = "0.0")
     )
     float InteractionRange = 200.0f;
+
+    /**
+     * Display name or description of this interaction.
+     *
+     * Example:
+     * "Mount Horse"
+     * "Pick Up Sword"
+     * "Enter Vehicle"
+     */
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Interactive"
+    )
+    FText InteractionDescription = FText::FromString("Interact");
 
 
     /**
