@@ -1,12 +1,9 @@
 #include "MovementSystem.h"
 
 #include "ActorRegistry.h"
+#include "../Events/MovementPayload.h"
 
-#include "../Components/ControlComponent.h"
 #include "../Components/StatsComponent.h"
-
-#include "GameFramework/Character.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 
 void UMovementSystem::Tick(float DeltaTime)
@@ -73,6 +70,9 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
     ApplyJump(Character, Stats, Movement, Control);
     ApplyMovement(Character, MoveDirection);
     ApplyCrouch(Character, bWantsToCrouch);
+    
+    // Determine and publish locomotion state changes
+    DetermineAndPublishLocomotion(Actor, Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch);
 }
 
 
@@ -288,4 +288,88 @@ void UMovementSystem::ApplyCrouch(ACharacter* Character, bool bWantsToCrouch)
     {
         Character->UnCrouch();
     }
+}
+
+
+//=========================================================================
+// Locomotion State
+//=========================================================================
+
+void UMovementSystem::DetermineAndPublishLocomotion(
+    AActor* Actor,
+    ACharacter* Character,
+    UCharacterMovementComponent* Movement,
+    UControlComponent* Control,
+    const FVector& MoveDirection,
+    bool bWantsToSprint,
+    bool bWantsToCrouch)
+{
+    ELocomotion CurrentState = DetermineLocomotionState(Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch);
+    
+    // Check if state has changed
+    ELocomotion* PreviousState = PreviousLocomotionStates.Find(Actor);
+    if (PreviousState && *PreviousState == CurrentState)
+    {
+        return; // State hasn't changed, don't publish
+    }
+    
+    // Update and publish
+    PreviousLocomotionStates.Add(Actor, CurrentState);
+    
+    UEventBusSubsystem* EventBus = GetEventBus();
+    if (EventBus)
+    {
+        FMovementPayload Payload;
+        Payload.Source = Actor;
+        Payload.Type = CurrentState;
+        EventBus->Publish(Payload);
+    }
+}
+
+ELocomotion UMovementSystem::DetermineLocomotionState(
+    ACharacter* Character,
+    UCharacterMovementComponent* Movement,
+    UControlComponent* Control,
+    const FVector& MoveDirection,
+    bool bWantsToSprint,
+    bool bWantsToCrouch) const
+{
+    // Check jump/fall states first (highest priority)
+    if (Movement->IsFalling())
+    {
+        return ELocomotion::Fall;
+    }
+    
+    if (Control->HasIntent(EControlIntent::Jump) && Movement->IsMovingOnGround())
+    {
+        return ELocomotion::Jump;
+    }
+    
+    // Check crouch state
+    if (bWantsToCrouch || Character->bIsCrouched)
+    {
+        return ELocomotion::Crouch;
+    }
+    
+    // Check movement states
+    const bool bIsMoving = !MoveDirection.IsNearlyZero();
+    if (bIsMoving)
+    {
+        // @TODO - Probably not efficent
+        UStatsComponent* Stats = Character->FindComponentByClass<UStatsComponent>();
+        if (bWantsToSprint && Movement->MaxWalkSpeed >= Stats->GetSprintSpeed())
+        {
+            return ELocomotion::Sprint;
+        }
+        return ELocomotion::Walk;
+    }
+    
+    // Standing/Idle
+    return ELocomotion::Idle;
+}
+
+UEventBusSubsystem* UMovementSystem::GetEventBus() const
+{
+    const UWorld* World = GetWorld();
+    return World ? World->GetSubsystem<UEventBusSubsystem>() : nullptr;
 }

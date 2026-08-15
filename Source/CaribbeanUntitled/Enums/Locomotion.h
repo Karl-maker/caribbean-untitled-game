@@ -8,5 +8,7 @@ enum class ELocomotion : uint8
     Walk,
     Sprint,
     Jump,
-    Fall
+    Fall,
+    Crouch
 };
+

@@ -66,11 +66,160 @@ ACharacterActor::ACharacterActor()
         Idle.LoopCount = -1;
         Idle.BlendInTime = 0.15f;
         Idle.BlendOutTime = 0.15f;
-        Idle.Description =
-        FText::FromString(TEXT("Character idle animation."));
-        
+        Idle.Description = FText::FromString(TEXT("Character idle animation."));
         AnimationRegistryComponent->Animations.Add(Idle);
         
+        FAnimationDefinition Walk;
+        Walk.Key = EAnimationKey::Walk;
+        Walk.PlaybackMode = EAnimationPlaybackMode::Loop;
+        Walk.PlayRate = 1.0f;
+        Walk.LoopCount = -1;
+        Walk.BlendInTime = 0.15f;
+        Walk.BlendOutTime = 0.15f;
+        Walk.Description = FText::FromString(TEXT("Character walk animation."));
+        AnimationRegistryComponent->Animations.Add(Walk);
+        
+        FAnimationDefinition Run;
+        Run.Key = EAnimationKey::Run;
+        Run.PlaybackMode = EAnimationPlaybackMode::Loop;
+        Run.PlayRate = 1.0f;
+        Run.LoopCount = -1;
+        Run.BlendInTime = 0.15f;
+        Run.BlendOutTime = 0.15f;
+        Run.Description = FText::FromString(TEXT("Character run animation."));
+        AnimationRegistryComponent->Animations.Add(Run);
+        
+        FAnimationDefinition Sprint;
+        Sprint.Key = EAnimationKey::Sprint;
+        Sprint.PlaybackMode = EAnimationPlaybackMode::Loop;
+        Sprint.PlayRate = 1.0f;
+        Sprint.LoopCount = -1;
+        Sprint.BlendInTime = 0.15f;
+        Sprint.BlendOutTime = 0.15f;
+        Sprint.Description = FText::FromString(TEXT("Character sprint animation."));
+        AnimationRegistryComponent->Animations.Add(Sprint);
+        
+        // --------------------------------------------------------
+        // Airborne
+        // --------------------------------------------------------
+        
+        FAnimationDefinition Jump;
+        Jump.Key = EAnimationKey::Jump;
+        Jump.PlaybackMode = EAnimationPlaybackMode::Once;
+        Jump.PlayRate = 1.0f;
+        Jump.LoopCount = 1;
+        Jump.BlendInTime = 0.05f;
+        Jump.BlendOutTime = 0.1f;
+        Jump.Description = FText::FromString(TEXT("Character jump animation."));
+        AnimationRegistryComponent->Animations.Add(Jump);
+        
+        FAnimationDefinition Fall;
+        Fall.Key = EAnimationKey::Fall;
+        Fall.PlaybackMode = EAnimationPlaybackMode::Loop;
+        Fall.PlayRate = 1.0f;
+        Fall.LoopCount = -1;
+        Fall.BlendInTime = 0.1f;
+        Fall.BlendOutTime = 0.1f;
+        Fall.Description = FText::FromString(TEXT("Character fall animation."));
+        AnimationRegistryComponent->Animations.Add(Fall);
+        
+        FAnimationDefinition Land;
+        Land.Key = EAnimationKey::Land;
+        Land.PlaybackMode = EAnimationPlaybackMode::Once;
+        Land.PlayRate = 1.0f;
+        Land.LoopCount = 1;
+        Land.BlendInTime = 0.05f;
+        Land.BlendOutTime = 0.1f;
+        Land.Description = FText::FromString(TEXT("Character land animation."));
+        AnimationRegistryComponent->Animations.Add(Land);
+        
+        // --------------------------------------------------------
+        // Combat
+        // --------------------------------------------------------
+        
+        FAnimationDefinition Attack1;
+        Attack1.Key = EAnimationKey::Attack_1;
+        Attack1.PlaybackMode = EAnimationPlaybackMode::Once;
+        Attack1.PlayRate = 1.0f;
+        Attack1.LoopCount = 1;
+        Attack1.BlendInTime = 0.05f;
+        Attack1.BlendOutTime = 0.1f;
+        Attack1.Description = FText::FromString(TEXT("Character attack 1 animation."));
+        AnimationRegistryComponent->Animations.Add(Attack1);
+        
+        FAnimationDefinition Attack2;
+        Attack2.Key = EAnimationKey::Attack_2;
+        Attack2.PlaybackMode = EAnimationPlaybackMode::Once;
+        Attack2.PlayRate = 1.0f;
+        Attack2.LoopCount = 1;
+        Attack2.BlendInTime = 0.05f;
+        Attack2.BlendOutTime = 0.1f;
+        Attack2.Description = FText::FromString(TEXT("Character attack 2 animation."));
+        AnimationRegistryComponent->Animations.Add(Attack2);
+        
+        FAnimationDefinition Attack3;
+        Attack3.Key = EAnimationKey::Attack_3;
+        Attack3.PlaybackMode = EAnimationPlaybackMode::Once;
+        Attack3.PlayRate = 1.0f;
+        Attack3.LoopCount = 1;
+        Attack3.BlendInTime = 0.05f;
+        Attack3.BlendOutTime = 0.1f;
+        Attack3.Description = FText::FromString(TEXT("Character attack 3 animation."));
+        AnimationRegistryComponent->Animations.Add(Attack3);
+        
+        FAnimationDefinition Hit;
+        Hit.Key = EAnimationKey::Hit;
+        Hit.PlaybackMode = EAnimationPlaybackMode::Once;
+        Hit.PlayRate = 1.0f;
+        Hit.LoopCount = 1;
+        Hit.BlendInTime = 0.05f;
+        Hit.BlendOutTime = 0.1f;
+        Hit.Description = FText::FromString(TEXT("Character hit reaction animation."));
+        AnimationRegistryComponent->Animations.Add(Hit);
+        
+        FAnimationDefinition Death;
+        Death.Key = EAnimationKey::Death;
+        Death.PlaybackMode = EAnimationPlaybackMode::Once;
+        Death.PlayRate = 1.0f;
+        Death.LoopCount = 1;
+        Death.BlendInTime = 0.05f;
+        Death.BlendOutTime = 0.2f;
+        Death.Description = FText::FromString(TEXT("Character death animation."));
+        AnimationRegistryComponent->Animations.Add(Death);
+        
+        // --------------------------------------------------------
+        // Interaction
+        // --------------------------------------------------------
+        
+        FAnimationDefinition Interact;
+        Interact.Key = EAnimationKey::Interact;
+        Interact.PlaybackMode = EAnimationPlaybackMode::Once;
+        Interact.PlayRate = 1.0f;
+        Interact.LoopCount = 1;
+        Interact.BlendInTime = 0.1f;
+        Interact.BlendOutTime = 0.1f;
+        Interact.Description = FText::FromString(TEXT("Character interact animation."));
+        AnimationRegistryComponent->Animations.Add(Interact);
+        
+        FAnimationDefinition Mount;
+        Mount.Key = EAnimationKey::Mount;
+        Mount.PlaybackMode = EAnimationPlaybackMode::Once;
+        Mount.PlayRate = 1.0f;
+        Mount.LoopCount = 1;
+        Mount.BlendInTime = 0.1f;
+        Mount.BlendOutTime = 0.1f;
+        Mount.Description = FText::FromString(TEXT("Character mount animation."));
+        AnimationRegistryComponent->Animations.Add(Mount);
+        
+        FAnimationDefinition Dismount;
+        Dismount.Key = EAnimationKey::Dismount;
+        Dismount.PlaybackMode = EAnimationPlaybackMode::Once;
+        Dismount.PlayRate = 1.0f;
+        Dismount.LoopCount = 1;
+        Dismount.BlendInTime = 0.1f;
+        Dismount.BlendOutTime = 0.1f;
+        Dismount.Description = FText::FromString(TEXT("Character dismount animation."));
+        AnimationRegistryComponent->Animations.Add(Dismount);
     }
 
     // ============================================================
