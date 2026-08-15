@@ -70,8 +70,7 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
     ApplyJump(Character, Stats, Movement, Control);
     ApplyMovement(Character, MoveDirection);
     ApplyCrouch(Character, bWantsToCrouch);
-    
-    // Determine and publish locomotion state changes
+
     DetermineAndPublishLocomotion(Actor, Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch);
 }
 
@@ -82,23 +81,28 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
 
 void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Control, float DeltaTime)
 {
-    // If the Actor is currently seeking a destination (MoveToWorldLocation),
-    // keep it facing that destination as it moves — recompute every tick
-    // from the Actor's live position via SetLookAtLocation, rather than
-    // relying on a one-shot direction that goes stale as the Actor moves.
+    FVector FaceDirection = FVector::ZeroVector;
+    bool bHasExplicitFaceDirection = false;
+
     if (Control->IsSeekingDestination())
     {
-        Control->SetLookAtLocation(Control->GetDesiredWorldLocation());
+        FVector ToTarget = Control->GetDesiredWorldLocation() - Character->GetActorLocation();
+        ToTarget.Z = 0.0f;
+
+        if (!ToTarget.IsNearlyZero())
+        {
+            FaceDirection = ToTarget.GetSafeNormal();
+            bHasExplicitFaceDirection = true;
+        }
+    }
+    else
+    {
+        FaceDirection = Control->GetLookDirection();
+        FaceDirection.Z = 0.0f;
+        bHasExplicitFaceDirection = !FaceDirection.IsNearlyZero();
     }
 
-    // Priority 1: an explicit world-space facing direction — either the
-    // one just computed above, or one set directly via SetLookDirection()
-    // / SetLookAtLocation() from elsewhere (mouse-derived, AI one-shot,
-    // etc). Rotate smoothly toward it rather than snapping.
-    FVector FaceDirection = Control->GetLookDirection();
-    FaceDirection.Z = 0.0f;
-
-    if (!FaceDirection.IsNearlyZero())
+    if (bHasExplicitFaceDirection)
     {
         const float TargetYaw = FaceDirection.Rotation().Yaw;
         const FRotator CurrentRotation = Character->GetActorRotation();
@@ -114,9 +118,6 @@ void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Contro
         return;
     }
 
-    // Priority 2: raw per-frame turn delta (e.g. gamepad right stick, or
-    // mouse fed as a delta instead of a direction). Only used when nothing
-    // above is driving rotation, so inputs don't fight each other.
     const FVector2D LookInput = Control->GetLookInput();
     if (!FMath::IsNearlyZero(LookInput.X))
     {
@@ -144,7 +145,7 @@ FVector UMovementSystem::ResolveMoveDirection(ACharacter* Character, UControlCom
     if (bHasExternal && bHasIntent)
     {
         const float Strength = FMath::Clamp(Control->GetDirectionControlStrength(), 0.0f, 1.0f);
-        Result = FMath::Lerp(IntentDirection, ExternalDirection, Strength);
+        Result = FMath::Lerp(ExternalDirection, IntentDirection, Strength);
     }
     else if (bHasExternal)
     {
@@ -254,11 +255,106 @@ void UMovementSystem::ApplyJump(
 {
     Movement->JumpZVelocity = Stats->GetJumpStrength();
 
-    if (Control->HasIntent(EControlIntent::Jump) && Movement->IsMovingOnGround())
+    // Restore normal gravity once the ascent is over.
+    if (AscendingJumpers.Contains(Character))
+    {
+        if (Movement->Velocity.Z <= 0.0f || Movement->IsMovingOnGround())
+        {
+            Movement->GravityScale = 1.0f;
+            AscendingJumpers.Remove(Character);
+        }
+    }
+
+    // Airborne for any reason — cancel any stale queued jump so it can't
+    // fire unexpectedly on a later, unrelated landing.
+    if (!Movement->IsMovingOnGround())
+    {
+        if (FTimerHandle* Handle = PendingJumpTimers.Find(Character))
+        {
+            if (UWorld* World = GetWorld())
+            {
+                World->GetTimerManager().ClearTimer(*Handle);
+            }
+            PendingJumpTimers.Remove(Character);
+        }
+        return;
+    }
+
+    const bool bWantsToJump =
+        Control->HasIntent(EControlIntent::Jump) && Movement->IsMovingOnGround();
+
+    if (!bWantsToJump)
+    {
+        return;
+    }
+
+    // Can't start a new jump while already mid-ascent, already queued,
+    // or still resolving Fall/Land — must return to a neutral grounded
+    // state (Idle/Walk/Sprint/Crouch) before jumping again.
+    const ELocomotion CurrentLocomotion = GetCurrentLocomotionState(Character);
+    const bool bInFallOrLand =
+        CurrentLocomotion == ELocomotion::Fall || CurrentLocomotion == ELocomotion::Land;
+
+    if (AscendingJumpers.Contains(Character) || PendingJumpTimers.Contains(Character) || bInFallOrLand)
+    {
+        return;
+    }
+
+    UWorld* World = GetWorld();
+    if (!World)
     {
         Character->Jump();
+        Movement->GravityScale = Stats->JumpAscentGravityScale;
+        AscendingJumpers.Add(Character);
+        return;
     }
+
+    TWeakObjectPtr<AActor> WeakActor(Character);
+    const float AscentGravityScale = Stats->JumpAscentGravityScale;
+
+    FTimerHandle Handle;
+    World->GetTimerManager().SetTimer(
+        Handle,
+        FTimerDelegate::CreateUObject(this, &UMovementSystem::PerformDelayedJump, WeakActor, AscentGravityScale),
+        Stats->JumpAnticipationDelay,
+        false
+    );
+
+    PendingJumpTimers.Add(Character, Handle);
 }
+
+void UMovementSystem::PerformDelayedJump(TWeakObjectPtr<AActor> WeakActor, float AscentGravityScale)
+{
+    AActor* Actor = WeakActor.Get();
+    if (Actor)
+    {
+        PendingJumpTimers.Remove(Actor);
+    }
+
+    ACharacter* Character = Cast<ACharacter>(Actor);
+    if (!Character)
+    {
+        return;
+    }
+
+    UCharacterMovementComponent* Movement = Character->FindComponentByClass<UCharacterMovementComponent>();
+    if (!Movement)
+    {
+        return;
+    }
+
+    // Re-check grounded state — actor may have walked off a ledge, been
+    // knocked airborne, etc. during the delay.
+    if (!Movement->IsMovingOnGround())
+    {
+        return;
+    }
+
+    Character->Jump();
+    Movement->GravityScale = AscentGravityScale;
+    AscendingJumpers.Add(Character);
+}
+
 
 
 //=========================================================================
@@ -304,18 +400,20 @@ void UMovementSystem::DetermineAndPublishLocomotion(
     bool bWantsToSprint,
     bool bWantsToCrouch)
 {
-    ELocomotion CurrentState = DetermineLocomotionState(Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch);
-    
-    // Check if state has changed
     ELocomotion* PreviousState = PreviousLocomotionStates.Find(Actor);
+    const ELocomotion PrevValue = PreviousState ? *PreviousState : ELocomotion::Idle;
+    const bool bJumpInProgress = IsJumpInProgress(Actor);
+
+    ELocomotion CurrentState = DetermineLocomotionState(
+        Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch, PrevValue, bJumpInProgress);
+
     if (PreviousState && *PreviousState == CurrentState)
     {
-        return; // State hasn't changed, don't publish
+        return;
     }
-    
-    // Update and publish
+
     PreviousLocomotionStates.Add(Actor, CurrentState);
-    
+
     UEventBusSubsystem* EventBus = GetEventBus();
     if (EventBus)
     {
@@ -332,30 +430,49 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
     UControlComponent* Control,
     const FVector& MoveDirection,
     bool bWantsToSprint,
-    bool bWantsToCrouch) const
+    bool bWantsToCrouch,
+    ELocomotion PreviousState,
+    bool bJumpInProgress) const
 {
-    // Check jump/fall states first (highest priority)
     if (Movement->IsFalling())
     {
         return ELocomotion::Fall;
     }
-    
-    if (Control->HasIntent(EControlIntent::Jump) && Movement->IsMovingOnGround())
+
+    if (PreviousState == ELocomotion::Fall)
+    {
+        return ELocomotion::Land;
+    }
+
+    // While anticipating (delayed) or ascending a jump, hold the Jump
+    // state — the character may still be grounded during the
+    // anticipation delay, but we don't want that to fall through to
+    // Idle/Walk/etc. and interrupt the jump animation.
+    if (bJumpInProgress)
     {
         return ELocomotion::Jump;
     }
-    
-    // Check crouch state
+
+    const bool bBlockedFromJumping =
+        PreviousState == ELocomotion::Jump ||
+        PreviousState == ELocomotion::Fall ||
+        PreviousState == ELocomotion::Land;
+
+    if (!bBlockedFromJumping &&
+        Control->HasIntent(EControlIntent::Jump) &&
+        Movement->IsMovingOnGround())
+    {
+        return ELocomotion::Jump;
+    }
+
     if (bWantsToCrouch || Character->bIsCrouched)
     {
         return ELocomotion::Crouch;
     }
-    
-    // Check movement states
+
     const bool bIsMoving = !MoveDirection.IsNearlyZero();
     if (bIsMoving)
     {
-        // @TODO - Probably not efficent
         UStatsComponent* Stats = Character->FindComponentByClass<UStatsComponent>();
         if (bWantsToSprint && Movement->MaxWalkSpeed >= Stats->GetSprintSpeed())
         {
@@ -363,8 +480,7 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
         }
         return ELocomotion::Walk;
     }
-    
-    // Standing/Idle
+
     return ELocomotion::Idle;
 }
 
@@ -372,4 +488,15 @@ UEventBusSubsystem* UMovementSystem::GetEventBus() const
 {
     const UWorld* World = GetWorld();
     return World ? World->GetSubsystem<UEventBusSubsystem>() : nullptr;
+}
+
+ELocomotion UMovementSystem::GetCurrentLocomotionState(AActor* Actor) const
+{
+    const ELocomotion* State = PreviousLocomotionStates.Find(Actor);
+    return State ? *State : ELocomotion::Idle;
+}
+
+bool UMovementSystem::IsJumpInProgress(AActor* Actor) const
+{
+    return PendingJumpTimers.Contains(Actor) || AscendingJumpers.Contains(Actor);
 }

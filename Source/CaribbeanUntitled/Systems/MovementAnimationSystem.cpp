@@ -20,8 +20,23 @@ void UMovementAnimationSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
 
+    UE_LOG(
+        LogTemp,
+        Warning,
+        TEXT("MovementAnimationSystem INITIALIZED - Instance: %p - World: %s"),
+        this,
+        *GetNameSafe(GetWorld())
+    );
+
     if (UEventBusSubsystem* EventBus = GetEventBus())
     {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("MovementAnimationSystem SUBSCRIBING - Instance: %p"),
+            this
+        );
+
         EventBus->Subscribe<FMovementPayload>(
             this,
             &UMovementAnimationSystem::OnMovementControlEvent
@@ -31,6 +46,14 @@ void UMovementAnimationSystem::Initialize(FSubsystemCollectionBase& Collection)
 
 void UMovementAnimationSystem::Deinitialize()
 {
+    UE_LOG(
+        LogTemp,
+        Warning,
+        TEXT("MovementAnimationSystem DEINITIALIZED - Instance: %p - World: %s"),
+        this,
+        *GetNameSafe(GetWorld())
+    );
+
     if (UEventBusSubsystem* EventBus = GetEventBus())
     {
         EventBus->Unsubscribe(this);
@@ -61,9 +84,21 @@ UAnimationSystem* UMovementAnimationSystem::GetAnimationSystem() const
 // Translation
 //=============================================================================
 
-void UMovementAnimationSystem::OnMovementControlEvent(const FMovementPayload& Payload)
+void UMovementAnimationSystem::OnMovementControlEvent(
+    const FMovementPayload& Payload
+)
 {
+    UE_LOG(
+        LogTemp,
+        Warning,
+        TEXT("MovementAnimationSystem EVENT - Instance: %p - Source: %s - Movement: %d"),
+        this,
+        *GetNameSafe(Payload.Source),
+        static_cast<uint8>(Payload.Type)
+    );
+
     EAnimationKey Key;
+
     if (!MapControlIntentToAnimationKey(Payload.Type, Key))
     {
         return;
@@ -71,7 +106,10 @@ void UMovementAnimationSystem::OnMovementControlEvent(const FMovementPayload& Pa
 
     if (UAnimationSystem* AnimationSystem = GetAnimationSystem())
     {
-        AnimationSystem->RequestAnimationState(Payload.Source, Key);
+        AnimationSystem->RequestAnimationState(
+            Payload.Source,
+            Key
+        );
     }
 }
 
@@ -80,6 +118,13 @@ bool UMovementAnimationSystem::MapControlIntentToAnimationKey(
     EAnimationKey& OutKey
 ) const
 {
+    UE_LOG(
+        LogTemp,
+        Log,
+        TEXT("MovementAnimationSystem: Movement = %d"),
+        static_cast<uint8>(Movement)
+    );
+
     switch (Movement)
     {
         case ELocomotion::Walk:
@@ -94,8 +139,17 @@ bool UMovementAnimationSystem::MapControlIntentToAnimationKey(
             OutKey = EAnimationKey::Jump;
             return true;
 
+        case ELocomotion::Land:
+            OutKey = EAnimationKey::Land;
+            return true;
+
+        case ELocomotion::Fall:
+            OutKey = EAnimationKey::Fall;
+            return true;
 
         default:
+            UE_LOG(LogTemp, Warning, TEXT("MovementAnimationSystem: Unknown locomotion value = %d"),
+                static_cast<uint8>(Movement));
             return false;
     }
 }

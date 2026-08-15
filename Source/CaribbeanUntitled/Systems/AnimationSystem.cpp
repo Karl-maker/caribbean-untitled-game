@@ -469,6 +469,7 @@ UAnimationSystem::PlayStateAnimation(
     {
         return nullptr;
     }
+    
 
     FAnimationDefinition Definition;
 
@@ -500,6 +501,11 @@ UAnimationSystem::PlayStateAnimation(
 
     if (AnimInstance)
     {
+        
+        AnimInstance->SetRootMotionMode(
+            ERootMotionMode::IgnoreRootMotion
+        );
+        
         if (
             UAnimSequenceBase* SequenceBase =
                 Cast<UAnimSequenceBase>(

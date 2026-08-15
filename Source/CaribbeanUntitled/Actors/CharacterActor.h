@@ -57,7 +57,6 @@ protected:
     )
     TObjectPtr<UControlComponent> ControlComponent;
 
-
     /**
      * Stores gameplay attributes for this Actor.
      *

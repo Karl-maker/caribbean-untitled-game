@@ -49,6 +49,11 @@ public:
     )
     float WalkSpeed = 300.0f;
 
+    UPROPERTY(EditAnywhere, Category = "Stats|Movement")
+    float JumpAscentGravityScale = 5.5f;
+    
+    UPROPERTY(EditAnywhere, Category = "Stats|Movement")
+    float JumpAnticipationDelay = 0.5f;
 
     /**
      * Sprinting speed.
