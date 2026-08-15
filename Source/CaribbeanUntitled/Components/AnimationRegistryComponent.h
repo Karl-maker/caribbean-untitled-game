@@ -93,17 +93,9 @@ struct FAnimationDefinition
         Category = "Animation"
     )
     EAnimationKey Key = EAnimationKey::None;
-
-
-    /**
-     * Unreal animation asset associated with this key.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Animation"
-    )
-    TObjectPtr<UAnimationAsset> Animation = nullptr;
+    
+    UPROPERTY(EditAnywhere)
+    TObjectPtr<UAnimSequence> Animation = nullptr;
 
 
     /**

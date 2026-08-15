@@ -161,7 +161,7 @@ private:
 //=============================================================================
 
 template<typename PayloadType>
-static uint32 GetEventTypeId()
+uint32 UEventBusSubsystem::GetEventTypeId()
 {
     static const uint32 TypeId = GetTypeHash(
         FString(TEXT("PayloadType_")) +

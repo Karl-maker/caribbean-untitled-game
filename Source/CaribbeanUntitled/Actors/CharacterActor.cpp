@@ -38,6 +38,40 @@ ACharacterActor::ACharacterActor()
         CreateDefaultSubobject<UAnimationRegistryComponent>(
             TEXT("AnimationRegistryComponent")
         );
+    
+    // ============================================================
+    // ANIMATION REGISTRY
+    // ============================================================
+
+    /*
+     * Register the standard animation keys available to this
+     * character.
+     *
+     * The gameplay systems only reference EAnimationKey.
+     *
+     * The actual animation assets can be assigned in the
+     * Unreal Editor through the AnimationRegistryComponent.
+     */
+
+    if (AnimationRegistryComponent)
+    {
+        // --------------------------------------------------------
+        // Locomotion
+        // --------------------------------------------------------
+        
+        FAnimationDefinition Idle;
+        Idle.Key = EAnimationKey::Idle;
+        Idle.PlaybackMode = EAnimationPlaybackMode::Loop;
+        Idle.PlayRate = 1.0f;
+        Idle.LoopCount = -1;
+        Idle.BlendInTime = 0.15f;
+        Idle.BlendOutTime = 0.15f;
+        Idle.Description =
+        FText::FromString(TEXT("Character idle animation."));
+        
+        AnimationRegistryComponent->Animations.Add(Idle);
+        
+    }
 
     // ============================================================
     // CHARACTER MOVEMENT
