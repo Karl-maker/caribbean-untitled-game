@@ -13,7 +13,7 @@
 class UAnimationSystem;
 class UEventBusSubsystem;
 struct FMovementPayload;
-enum class EControlIntent : uint8;
+enum class ELocomotion : uint8;
 
 
 /**
@@ -95,5 +95,5 @@ private:
      * Reload as of writing) return false; add the EAnimationKey entry
      * and a case here once those are ready to animate.
      */
-    bool MapControlIntentToAnimationKey(EControlIntent Intent, EAnimationKey& OutKey) const;
+    bool MapControlIntentToAnimationKey(ELocomotion Movement, EAnimationKey& OutKey) const;
 };

@@ -76,38 +76,25 @@ void UMovementAnimationSystem::OnMovementControlEvent(const FMovementPayload& Pa
 }
 
 bool UMovementAnimationSystem::MapControlIntentToAnimationKey(
-    EControlIntent Intent,
+    ELocomotion Movement,
     EAnimationKey& OutKey
 ) const
 {
-    switch (Intent)
+    switch (Movement)
     {
-        case EControlIntent::MoveForward:
-        case EControlIntent::MoveBack:
-        case EControlIntent::MoveLeft:
-        case EControlIntent::MoveRight:
+        case ELocomotion::Walk:
             OutKey = DefaultLocomotionKey;
             return true;
 
-        case EControlIntent::Sprint:
+        case ELocomotion::Sprint:
             OutKey = EAnimationKey::Sprint;
             return true;
 
-        case EControlIntent::Jump:
+        case ELocomotion::Jump:
             OutKey = EAnimationKey::Jump;
             return true;
 
-        case EControlIntent::Interact:
-            OutKey = EAnimationKey::Interact;
-            return true;
 
-        // No EAnimationKey equivalent yet — add one and a case here
-        // once these are ready to animate.
-        case EControlIntent::Crouch:
-        case EControlIntent::Dash:
-        case EControlIntent::Aim:
-        case EControlIntent::Fire:
-        case EControlIntent::Reload:
         default:
             return false;
     }

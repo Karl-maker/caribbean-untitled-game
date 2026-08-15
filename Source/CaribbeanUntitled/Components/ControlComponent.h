@@ -46,7 +46,6 @@ enum class EControlIntent : uint8
     Reload
 };
 
-
 /**
  * Stores normalized control intent for an Actor.
  *

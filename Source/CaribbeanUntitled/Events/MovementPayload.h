@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "../Components/ControlComponent.h"
+#include "../Enums/Locomotion.h"
 #include "MovementPayload.generated.h"
 
 USTRUCT(BlueprintType)
@@ -14,5 +14,5 @@ struct FMovementPayload
     TObjectPtr<AActor> Source = nullptr;
 
     UPROPERTY()
-    EControlIntent Type = EControlIntent::MoveForward;
+    ELocomotion Type = ELocomotion::Stand;
 };
