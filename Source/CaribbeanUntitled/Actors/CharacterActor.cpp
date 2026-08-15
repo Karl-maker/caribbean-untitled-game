@@ -39,7 +39,7 @@ ACharacterActor::ACharacterActor()
         Mesh->AddRelativeLocation(
             FVector(0.0f, 0.0f, OffsetZ)
         );
-    }xx
+    }
     // ============================================================
     // COMPONENTS
     // ============================================================
