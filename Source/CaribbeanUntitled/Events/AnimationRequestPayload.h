@@ -50,6 +50,19 @@ struct CARIBBEANUNTITLED_API FAnimationRequestPayload
         , bForce(bInForce)
     {
     }
+    
+    FAnimationRequestPayload(
+        AActor* InActor,
+        EAnimationKey InRequestedState,
+        EAnimationLayer InLayer,
+        bool bInForce = false
+    )
+        : Actor(InActor)
+        , RequestedState(InRequestedState)
+        , bForce(bInForce)
+        , Layer(InLayer)
+    {
+    }
 
     /**
      * Actor whose animation state should change.
@@ -75,6 +88,9 @@ struct CARIBBEANUNTITLED_API FAnimationRequestPayload
      */
     UPROPERTY(BlueprintReadWrite, Category = "Animation")
     bool bForce = false;
+    
+    UPROPERTY(BlueprintReadWrite, Category = "Animation")
+    EAnimationLayer Layer = EAnimationLayer::Base;
 };
 
 

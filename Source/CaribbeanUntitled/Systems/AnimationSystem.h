@@ -88,7 +88,8 @@ public:
     void RequestAnimationState(
         AActor* Actor,
         EAnimationKey NewState,
-        bool bForce = false
+        bool bForce = false,
+        EAnimationLayer Layer = EAnimationLayer::Base
     );
 
     /**
@@ -129,14 +130,6 @@ public:
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     TArray<FActorAnimTransitionRule> TransitionRules;
 
-    /**
-     * Skeletal animation slot used when dynamically playing animations
-     * as montages. Must exist in the AnimBP's AnimGraph for actors
-     * driven by this system.
-     */
-    UPROPERTY(EditDefaultsOnly, Category = "Animation")
-    FName AnimationSlotName = TEXT("DefaultSlot");
-
 
 private:
 
@@ -161,10 +154,24 @@ private:
         /** World time this actor's CurrentState was entered. */
         double StateEnteredTime = 0.0;
     };
+    
+    struct FActorAnimationLayers
+    {
+        TMap<EAnimationLayer, FActorAnimationState> Layers;
+    };
 
-    TMap<TWeakObjectPtr<AActor>, FActorAnimationState> ActorStates;
 
-    FActorAnimationState& GetOrCreateActorState(AActor* Actor);
+    TMap<TWeakObjectPtr<AActor>, FActorAnimationLayers> ActorStates;
+
+    FActorAnimationState& GetOrCreateActorState(
+        AActor* Actor,
+        EAnimationLayer Layer
+    );
+    
+    FActorAnimationState* FindActorAnimationState(
+        AActor* Actor,
+        EAnimationLayer Layer
+    );
 
     /** Removes entries whose actor has become invalid. */
     void PruneStaleActors();
@@ -199,7 +206,11 @@ private:
     //=========================================================================
 
     /** Begins playing the next entry in State.PendingQueue, if any. */
-    void AdvanceQueue(AActor* Actor, FActorAnimationState& State);
+    void AdvanceQueue(
+        AActor* Actor,
+        FActorAnimationState& State,
+        EAnimationLayer Layer
+    );
 
     /** Plays a single animation key on Actor and returns the montage it started, if any. */
     UAnimMontage* PlayStateAnimation(AActor* Actor, EAnimationKey Key);
@@ -208,7 +219,8 @@ private:
     void OnStateAnimationEnded(
         UAnimMontage* Montage,
         bool bInterrupted,
-        TWeakObjectPtr<AActor> Actor
+        TWeakObjectPtr<AActor> Actor,
+        EAnimationLayer Layer
     );
 
 

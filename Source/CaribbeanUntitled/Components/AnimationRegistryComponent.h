@@ -9,6 +9,7 @@
 #include "Components/ActorComponent.h"
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimTypes.h"
+#include "../Enums/AnimationBlend.h"
 #include "AnimationRegistryComponent.generated.h"
 
 
@@ -68,6 +69,16 @@ enum class EAnimationPlaybackMode : uint8
     Hold        UMETA(DisplayName = "Hold Last Frame")
 };
 
+UENUM(BlueprintType)
+enum class EAnimationLayer : uint8
+{
+    Base        UMETA(DisplayName = "Base"),
+    UpperBody   UMETA(DisplayName = "Upper Body"),
+    Additive    UMETA(DisplayName = "Additive"),
+    Face        UMETA(DisplayName = "Face"),
+    IK          UMETA(DisplayName = "IK")
+};
+
 
 // ============================================================================
 // Animation Definition
@@ -93,6 +104,13 @@ struct FAnimationDefinition
         Category = "Animation"
     )
     EAnimationKey Key = EAnimationKey::None;
+    
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Layering"
+    )
+    FName SlotName = TEXT("DefaultSlot");
     
     UPROPERTY(EditAnywhere)
     TObjectPtr<UAnimSequence> Animation = nullptr;
@@ -152,7 +170,13 @@ struct FAnimationDefinition
     )
     int32 LoopCount = -1;
 
-
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Layering"
+    )
+    EAnimationBlendMode BlendMode = EAnimationBlendMode::FullBody;
+    
     /**
      * Time required to blend into this animation.
      */

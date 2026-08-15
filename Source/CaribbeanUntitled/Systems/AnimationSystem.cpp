@@ -35,6 +35,7 @@ void UAnimationSystem::Initialize(FSubsystemCollectionBase& Collection)
     }
 }
 
+
 void UAnimationSystem::Deinitialize()
 {
     if (UEventBusSubsystem* EventBus = GetEventBus())
@@ -55,7 +56,8 @@ void UAnimationSystem::Deinitialize()
 void UAnimationSystem::RequestAnimationState(
     AActor* Actor,
     EAnimationKey NewState,
-    bool bForce
+    bool bForce,
+    EAnimationLayer Layer
 )
 {
     if (!Actor || NewState == EAnimationKey::None)
@@ -63,7 +65,9 @@ void UAnimationSystem::RequestAnimationState(
         return;
     }
 
-    FActorAnimationState& State = GetOrCreateActorState(Actor);
+    // Every layer has its own independent animation state.
+    FActorAnimationState& State =
+        GetOrCreateActorState(Actor, Layer);
 
     const bool bAlreadyThere =
         !bForce &&
@@ -72,20 +76,34 @@ void UAnimationSystem::RequestAnimationState(
 
     if (bAlreadyThere)
     {
-        // Same state re-requested (e.g. a system re-broadcasting
-        // "Sprint" every tick) — avoid restarting the animation.
+        // Same state re-requested.
+        //
+        // Example:
+        // Movement system broadcasts Sprint every tick.
+        //
+        // Don't restart the animation.
         return;
     }
 
     const UWorld* World = GetWorld();
-    const double Now = World ? World->GetTimeSeconds() : 0.0;
-    const double TimeInFromState = Now - State.StateEnteredTime;
 
-    const FActorAnimTransitionRule* Rule = bForce
-        ? nullptr
-        : FindTransitionRule(State.CurrentState, NewState, TimeInFromState);
+    const double Now =
+        World ? World->GetTimeSeconds() : 0.0;
+
+    const double TimeInFromState =
+        Now - State.StateEnteredTime;
+
+    const FActorAnimTransitionRule* Rule =
+        bForce
+            ? nullptr
+            : FindTransitionRule(
+                State.CurrentState,
+                NewState,
+                TimeInFromState
+            );
 
     EAnimationKey ResolvedTarget = NewState;
+
     TArray<EAnimationKey> Chain;
 
     if (Rule)
@@ -102,18 +120,48 @@ void UAnimationSystem::RequestAnimationState(
 
     State.PendingQueue = Chain;
 
-    AdvanceQueue(Actor, State);
+    AdvanceQueue(
+        Actor,
+        State,
+        Layer
+    );
 }
 
-EAnimationKey UAnimationSystem::GetCurrentState(AActor* Actor) const
+
+//=============================================================================
+// Current State
+//=============================================================================
+
+EAnimationKey UAnimationSystem::GetCurrentState(
+    AActor* Actor
+) const
 {
-    if (const FActorAnimationState* State = ActorStates.Find(Actor))
+    if (!Actor)
+    {
+        return EAnimationKey::None;
+    }
+
+    // Backwards-compatible behavior:
+    // GetCurrentState() means Base layer.
+    const FActorAnimationState* State =
+        const_cast<UAnimationSystem*>(this)
+            ->FindActorAnimationState(
+                Actor,
+                EAnimationLayer::Base
+            );
+
+    if (State)
     {
         return State->CurrentState;
     }
 
     return EAnimationKey::None;
 }
+
+
+//=============================================================================
+// Clear Actor
+//=============================================================================
 
 void UAnimationSystem::ClearActorState(AActor* Actor)
 {
@@ -122,16 +170,35 @@ void UAnimationSystem::ClearActorState(AActor* Actor)
         return;
     }
 
-    if (FActorAnimationState* State = ActorStates.Find(Actor))
+    FActorAnimationLayers* ActorLayers =
+        ActorStates.Find(Actor);
+
+    if (!ActorLayers)
     {
-        if (UAnimMontage* Montage = State->ActiveMontage.Get())
+        return;
+    }
+
+    USkeletalMeshComponent* Mesh =
+        Actor->FindComponentByClass<USkeletalMeshComponent>();
+
+    UAnimInstance* AnimInstance =
+        Mesh ? Mesh->GetAnimInstance() : nullptr;
+
+    if (AnimInstance)
+    {
+        // Stop every active montage belonging to every layer.
+        for (auto& LayerPair : ActorLayers->Layers)
         {
-            if (USkeletalMeshComponent* Mesh = Actor->FindComponentByClass<USkeletalMeshComponent>())
+            FActorAnimationState& State =
+                LayerPair.Value;
+
+            if (UAnimMontage* Montage =
+                State.ActiveMontage.Get())
             {
-                if (UAnimInstance* AnimInstance = Mesh->GetAnimInstance())
-                {
-                    AnimInstance->Montage_Stop(Montage->BlendOut.GetBlendTime(), Montage);
-                }
+                AnimInstance->Montage_Stop(
+                    Montage->BlendOut.GetBlendTime(),
+                    Montage
+                );
             }
         }
     }
@@ -141,21 +208,66 @@ void UAnimationSystem::ClearActorState(AActor* Actor)
 
 
 //=============================================================================
-// Per-actor state
+// Per-actor / Per-layer state
 //=============================================================================
 
 UAnimationSystem::FActorAnimationState&
-UAnimationSystem::GetOrCreateActorState(AActor* Actor)
+UAnimationSystem::GetOrCreateActorState(
+    AActor* Actor,
+    EAnimationLayer Layer
+)
 {
-    if (FActorAnimationState* Existing = ActorStates.Find(Actor))
+    if (!Actor)
     {
-        return *Existing;
+        // This should never happen because callers validate Actor.
+        // Returning a static state avoids undefined behavior.
+        static FActorAnimationState InvalidState;
+        return InvalidState;
     }
 
-    PruneStaleActors();
+    FActorAnimationLayers* ActorLayers =
+        ActorStates.Find(Actor);
 
-    return ActorStates.Add(Actor, FActorAnimationState());
+    if (!ActorLayers)
+    {
+        PruneStaleActors();
+
+        ActorLayers = &ActorStates.Add(
+            Actor,
+            FActorAnimationLayers()
+        );
+    }
+
+    // Create the state for this layer if it doesn't exist.
+    return ActorLayers->Layers.FindOrAdd(
+        Layer,
+        FActorAnimationState()
+    );
 }
+
+
+UAnimationSystem::FActorAnimationState*
+UAnimationSystem::FindActorAnimationState(
+    AActor* Actor,
+    EAnimationLayer Layer
+)
+{
+    if (!Actor)
+    {
+        return nullptr;
+    }
+
+    FActorAnimationLayers* ActorLayers =
+        ActorStates.Find(Actor);
+
+    if (!ActorLayers)
+    {
+        return nullptr;
+    }
+
+    return ActorLayers->Layers.Find(Layer);
+}
+
 
 void UAnimationSystem::PruneStaleActors()
 {
@@ -180,6 +292,7 @@ void UAnimationSystem::BuildResolvedRules()
     if (TransitionRulesTable)
     {
         TArray<FActorAnimTransitionRule*> Rows;
+
         TransitionRulesTable->GetAllRows<FActorAnimTransitionRule>(
             TEXT("UAnimationSystem::BuildResolvedRules"),
             Rows
@@ -197,7 +310,9 @@ void UAnimationSystem::BuildResolvedRules()
     ResolvedRules.Append(TransitionRules);
 }
 
-const FActorAnimTransitionRule* UAnimationSystem::FindTransitionRule(
+
+const FActorAnimTransitionRule*
+UAnimationSystem::FindTransitionRule(
     EAnimationKey FromState,
     EAnimationKey ToState,
     double TimeInFromState
@@ -212,23 +327,29 @@ const FActorAnimTransitionRule* UAnimationSystem::FindTransitionRule(
             continue;
         }
 
-        const bool bIsComboRule = Rule.OverrideResultState != EAnimationKey::None;
+        const bool bIsComboRule =
+            Rule.OverrideResultState != EAnimationKey::None;
 
-        if (bIsComboRule &&
+        if (
+            bIsComboRule &&
             Rule.ComboWindowSeconds > 0.0f &&
-            TimeInFromState > static_cast<double>(Rule.ComboWindowSeconds))
+            TimeInFromState >
+                static_cast<double>(Rule.ComboWindowSeconds)
+        )
         {
-            // Window expired — this rule no longer applies.
             continue;
         }
 
         if (Rule.FromState == FromState)
         {
-            // Exact match wins immediately.
+            // Exact match wins.
             return &Rule;
         }
 
-        if (Rule.FromState == EAnimationKey::None && !WildcardMatch)
+        if (
+            Rule.FromState == EAnimationKey::None &&
+            !WildcardMatch
+        )
         {
             WildcardMatch = &Rule;
         }
@@ -242,132 +363,243 @@ const FActorAnimTransitionRule* UAnimationSystem::FindTransitionRule(
 // Playback
 //=============================================================================
 
-void UAnimationSystem::AdvanceQueue(AActor* Actor, FActorAnimationState& State)
+void UAnimationSystem::AdvanceQueue(
+    AActor* Actor,
+    FActorAnimationState& State,
+    EAnimationLayer Layer
+)
 {
+    if (!Actor)
+    {
+        return;
+    }
+
     if (State.PendingQueue.Num() == 0)
     {
         return;
     }
 
-    const EAnimationKey NextKey = State.PendingQueue[0];
+    const EAnimationKey NextKey =
+        State.PendingQueue[0];
+
     State.PendingQueue.RemoveAt(0);
 
-    UAnimMontage* Montage = PlayStateAnimation(Actor, NextKey);
+    UAnimMontage* Montage =
+        PlayStateAnimation(
+            Actor,
+            NextKey
+        );
 
     State.CurrentState = NextKey;
     State.ActiveMontage = Montage;
 
     const UWorld* World = GetWorld();
-    State.StateEnteredTime = World ? World->GetTimeSeconds() : 0.0;
+
+    State.StateEnteredTime =
+        World ? World->GetTimeSeconds() : 0.0;
 
     if (!Montage)
     {
-        // Nothing to play (missing definition/asset, or no AnimInstance
-        // to drive) — don't stall the chain, move straight to the next
-        // queued entry, if any.
+        // Missing animation / AnimInstance / asset.
+        //
+        // Don't stall a transition chain.
         if (State.PendingQueue.Num() > 0)
         {
-            AdvanceQueue(Actor, State);
+            AdvanceQueue(
+                Actor,
+                State,
+                Layer
+            );
         }
 
         return;
     }
 
-    if (USkeletalMeshComponent* Mesh = Actor->FindComponentByClass<USkeletalMeshComponent>())
+    USkeletalMeshComponent* Mesh =
+        Actor->FindComponentByClass<USkeletalMeshComponent>();
+
+    if (!Mesh)
     {
-        if (UAnimInstance* AnimInstance = Mesh->GetAnimInstance())
-        {
-            FOnMontageEnded EndDelegate;
-            EndDelegate.BindUObject(
-                this,
-                &UAnimationSystem::OnStateAnimationEnded,
-                TWeakObjectPtr<AActor>(Actor)
-            );
-            AnimInstance->Montage_SetEndDelegate(EndDelegate, Montage);
-        }
+        return;
     }
+
+    UAnimInstance* AnimInstance =
+        Mesh->GetAnimInstance();
+
+    if (!AnimInstance)
+    {
+        return;
+    }
+
+    FOnMontageEnded EndDelegate;
+
+    EndDelegate.BindUObject(
+        this,
+        &UAnimationSystem::OnStateAnimationEnded,
+        TWeakObjectPtr<AActor>(Actor),
+        Layer
+    );
+
+    AnimInstance->Montage_SetEndDelegate(
+        EndDelegate,
+        Montage
+    );
 }
 
-UAnimMontage* UAnimationSystem::PlayStateAnimation(AActor* Actor, EAnimationKey Key)
+
+//=============================================================================
+// Play Animation
+//=============================================================================
+
+UAnimMontage*
+UAnimationSystem::PlayStateAnimation(
+    AActor* Actor,
+    EAnimationKey Key
+)
 {
-    UAnimationRegistryComponent* Registry = FindAnimationRegistry(Actor);
+    if (!Actor)
+    {
+        return nullptr;
+    }
+
+    UAnimationRegistryComponent* Registry =
+        FindAnimationRegistry(Actor);
+
     if (!Registry)
     {
         return nullptr;
     }
 
     FAnimationDefinition Definition;
-    if (!Registry->TryFindAnimation(Key, Definition) || !Definition.Animation)
+
+    if (
+        !Registry->TryFindAnimation(
+            Key,
+            Definition
+        ) ||
+        !Definition.Animation
+    )
     {
         return nullptr;
     }
 
-    USkeletalMeshComponent* Mesh = Actor->FindComponentByClass<USkeletalMeshComponent>();
+    USkeletalMeshComponent* Mesh =
+        Actor->FindComponentByClass<USkeletalMeshComponent>();
+
     if (!Mesh)
     {
         return nullptr;
     }
 
-    UAnimInstance* AnimInstance = Mesh->GetAnimInstance();
+    UAnimInstance* AnimInstance =
+        Mesh->GetAnimInstance();
 
-    // Preferred path: driven through an AnimBP via a dynamic montage on
-    // AnimationSlotName. This is what makes BlendInTime/BlendOutTime,
-    // PlayRate, StartPosition and LoopCount (all authored per-key on
-    // FAnimationDefinition) actually take effect, and gives us the
-    // OnMontageEnded hook the state machine chains off of.
+    //=========================================================================
+    // AnimBP / Dynamic Montage
+    //=========================================================================
+
     if (AnimInstance)
     {
-        if (UAnimSequenceBase* SequenceBase = Cast<UAnimSequenceBase>(Definition.Animation))
+        if (
+            UAnimSequenceBase* SequenceBase =
+                Cast<UAnimSequenceBase>(
+                    Definition.Animation
+                )
+        )
         {
             const int32 LoopCount =
-                Definition.PlaybackMode == EAnimationPlaybackMode::Loop
-                    ? INDEX_NONE // PlaySlotAnimationAsDynamicMontage treats <0 as infinite looping.
-                    : FMath::Max(1, Definition.LoopCount);
+                Definition.PlaybackMode ==
+                    EAnimationPlaybackMode::Loop
 
-            return AnimInstance->PlaySlotAnimationAsDynamicMontage(
-                SequenceBase,
-                AnimationSlotName,
-                Definition.BlendInTime,
-                Definition.BlendOutTime,
-                Definition.PlayRate,
-                LoopCount,
-                /*BlendOutTriggerTime=*/ -1.0f,
-                Definition.StartPosition
-            );
+                    ? INDEX_NONE
+
+                    : FMath::Max(
+                        1,
+                        Definition.LoopCount
+                    );
+
+            return AnimInstance
+                ->PlaySlotAnimationAsDynamicMontage(
+                    SequenceBase,
+
+                    // Current setup still uses the subsystem's slot.
+                    Definition.SlotName,
+
+                    Definition.BlendInTime,
+                    Definition.BlendOutTime,
+                    Definition.PlayRate,
+                    LoopCount,
+
+                    /* BlendOutTriggerTime */
+                    -1.0f,
+
+                    Definition.StartPosition
+                );
         }
     }
 
-    // Fallback for meshes with no AnimBP: play the asset directly.
-    // No chaining hook is available here, so a Hold/Loop definition
-    // will simply keep playing until superseded by the next request.
-    const bool bLooping = Definition.PlaybackMode == EAnimationPlaybackMode::Loop;
-    Mesh->PlayAnimation(Definition.Animation, bLooping);
+    //=========================================================================
+    // Fallback
+    //=========================================================================
+
+    const bool bLooping =
+        Definition.PlaybackMode ==
+        EAnimationPlaybackMode::Loop;
+
+    Mesh->PlayAnimation(
+        Definition.Animation,
+        bLooping
+    );
 
     return nullptr;
 }
 
+
+//=============================================================================
+// Montage End
+//=============================================================================
+
 void UAnimationSystem::OnStateAnimationEnded(
     UAnimMontage* Montage,
     bool bInterrupted,
-    TWeakObjectPtr<AActor> Actor
+    TWeakObjectPtr<AActor> Actor,
+    EAnimationLayer Layer
 )
 {
-    if (bInterrupted || !Actor.IsValid())
+    if (
+        bInterrupted ||
+        !Actor.IsValid() ||
+        !Montage
+    )
     {
         return;
     }
 
-    FActorAnimationState* State = ActorStates.Find(Actor);
-    if (!State || State->ActiveMontage.Get() != Montage)
+    FActorAnimationState* State =
+        FindActorAnimationState(
+            Actor.Get(),
+            Layer
+        );
+
+    if (!State)
     {
-        // A newer request already replaced this montage; ignore the
-        // stale callback.
+        return;
+    }
+
+    // A newer request may have already replaced
+    // this montage on this specific layer.
+    if (State->ActiveMontage.Get() != Montage)
+    {
         return;
     }
 
     if (State->PendingQueue.Num() > 0)
     {
-        AdvanceQueue(Actor.Get(), *State);
+        AdvanceQueue(
+            Actor.Get(),
+            *State,
+            Layer
+        );
     }
 }
 
@@ -376,29 +608,56 @@ void UAnimationSystem::OnStateAnimationEnded(
 // Lookups
 //=============================================================================
 
-UAnimationRegistryComponent* UAnimationSystem::FindAnimationRegistry(AActor* Actor) const
+UAnimationRegistryComponent*
+UAnimationSystem::FindAnimationRegistry(
+    AActor* Actor
+) const
 {
     if (!Actor)
     {
         return nullptr;
     }
 
-    return Actor->FindComponentByClass<UAnimationRegistryComponent>();
+    return Actor->FindComponentByClass<
+        UAnimationRegistryComponent
+    >();
 }
 
-UEventBusSubsystem* UAnimationSystem::GetEventBus() const
+
+UEventBusSubsystem*
+UAnimationSystem::GetEventBus() const
 {
     const UWorld* World = GetWorld();
-    return World ? World->GetSubsystem<UEventBusSubsystem>() : nullptr;
+
+    return World
+        ? World->GetSubsystem<UEventBusSubsystem>()
+        : nullptr;
 }
 
-UActorRegistry* UAnimationSystem::GetActorRegistry() const
+
+UActorRegistry*
+UAnimationSystem::GetActorRegistry() const
 {
     const UWorld* World = GetWorld();
-    return World ? World->GetSubsystem<UActorRegistry>() : nullptr;
+
+    return World
+        ? World->GetSubsystem<UActorRegistry>()
+        : nullptr;
 }
 
-void UAnimationSystem::OnAnimationRequest(const FAnimationRequestPayload& Payload)
+
+//=============================================================================
+// Event Bus
+//=============================================================================
+
+void UAnimationSystem::OnAnimationRequest(
+    const FAnimationRequestPayload& Payload
+)
 {
-    RequestAnimationState(Payload.Actor, Payload.RequestedState, Payload.bForce);
+    RequestAnimationState(
+        Payload.Actor,
+        Payload.RequestedState,
+        Payload.bForce,
+        Payload.Layer
+    );
 }

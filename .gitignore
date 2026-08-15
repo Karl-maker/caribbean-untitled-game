@@ -2,6 +2,8 @@
 Intermediate/
 Binaries/
 DerivedDataCache/
+Content/
+Assets/
 Saved/
 Build/
 *.sln
