@@ -1,4 +1,5 @@
 #include "PlayerInputComponent.h"
+
 #include "ControlComponent.h"
 
 #include "EnhancedInputComponent.h"
@@ -8,109 +9,530 @@
 
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Pawn.h"
+#include "Engine/LocalPlayer.h"
+
 
 UPlayerInputComponent::UPlayerInputComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
 }
 
+
 void UPlayerInputComponent::BeginPlay()
 {
     Super::BeginPlay();
-    Control = GetOwner() ? GetOwner()->FindComponentByClass<UControlComponent>() : nullptr;
+
+    Control =
+        GetOwner()
+        ? GetOwner()->FindComponentByClass<UControlComponent>()
+        : nullptr;
 }
 
-void UPlayerInputComponent::BindInput(UInputComponent* PlayerInputComponent)
+
+void UPlayerInputComponent::BindInput(
+    UInputComponent* PlayerInputComponent
+)
 {
-    if (!Control || Control->ControlType != EControlType::Player)
+    // ============================================================
+    // FIND CONTROL COMPONENT
+    // ============================================================
+
+    if (!Control)
+    {
+        Control =
+            GetOwner()
+            ? GetOwner()->FindComponentByClass<UControlComponent>()
+            : nullptr;
+    }
+
+    if (!Control)
+    {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("PlayerInputComponent: No ControlComponent found on %s"),
+            *GetOwner()->GetName()
+        );
+
+        return;
+    }
+
+
+    // ============================================================
+    // ONLY PLAYER CONTROLLED ACTORS ACCEPT PLAYER INPUT
+    // ============================================================
+
+    if (Control->ControlType != EControlType::Player)
     {
         return;
     }
 
-    APawn* OwningPawn = Cast<APawn>(GetOwner());
-    if (APlayerController* PC = OwningPawn ? Cast<APlayerController>(OwningPawn->GetController()) : nullptr)
+
+    // ============================================================
+    // ENHANCED INPUT COMPONENT
+    // ============================================================
+
+    UEnhancedInputComponent* EnhancedInput =
+        Cast<UEnhancedInputComponent>(PlayerInputComponent);
+
+    if (!EnhancedInput)
     {
-        if (ULocalPlayer* LocalPlayer = PC->GetLocalPlayer())
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("PlayerInputComponent: InputComponent is not EnhancedInputComponent")
+        );
+
+        return;
+    }
+
+
+    // ============================================================
+    // GET PLAYER CONTROLLER
+    // ============================================================
+
+    APawn* OwningPawn =
+        Cast<APawn>(GetOwner());
+
+    if (!OwningPawn)
+    {
+        return;
+    }
+
+
+    APlayerController* PC =
+        Cast<APlayerController>(
+            OwningPawn->GetController()
+        );
+
+    if (!PC)
+    {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("PlayerInputComponent: %s has no PlayerController"),
+            *GetOwner()->GetName()
+        );
+
+        return;
+    }
+
+
+    // ============================================================
+    // ADD MAPPING CONTEXT
+    // ============================================================
+
+    if (ULocalPlayer* LocalPlayer = PC->GetLocalPlayer())
+    {
+        if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+            LocalPlayer->GetSubsystem<
+                UEnhancedInputLocalPlayerSubsystem>())
         {
-            if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
-                LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
+            if (DefaultMappingContext)
             {
-                if (DefaultMappingContext)
-                {
-                    Subsystem->AddMappingContext(DefaultMappingContext, 0);
-                }
+                Subsystem->AddMappingContext(
+                    DefaultMappingContext,
+                    0
+                );
             }
         }
     }
 
-    UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-    if (!EnhancedInput)
+
+    // ============================================================
+    // MOVEMENT - DISCRETE WASD KEYS
+    // ============================================================
+
+    // Forward (W) - Y axis: +1 = Forward
+    if (MoveForwardAction)
+    {
+        EnhancedInput->BindAction(
+            MoveForwardAction,
+            ETriggerEvent::Triggered,
+            this,
+            &UPlayerInputComponent::HandleMoveForward
+        );
+
+        EnhancedInput->BindAction(
+            MoveForwardAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleMoveForward
+        );
+    }
+
+    // Backward (S) - Y axis: -1 = Back
+    if (MoveBackwardAction)
+    {
+        EnhancedInput->BindAction(
+            MoveBackwardAction,
+            ETriggerEvent::Triggered,
+            this,
+            &UPlayerInputComponent::HandleMoveBackward
+        );
+
+        EnhancedInput->BindAction(
+            MoveBackwardAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleMoveBackward
+        );
+    }
+
+    // Right (D) - X axis: +1 = Right
+    if (MoveRightAction)
+    {
+        EnhancedInput->BindAction(
+            MoveRightAction,
+            ETriggerEvent::Triggered,
+            this,
+            &UPlayerInputComponent::HandleMoveRight
+        );
+
+        EnhancedInput->BindAction(
+            MoveRightAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleMoveRight
+        );
+    }
+
+    // Left (A) - X axis: -1 = Left
+    if (MoveLeftAction)
+    {
+        EnhancedInput->BindAction(
+            MoveLeftAction,
+            ETriggerEvent::Triggered,
+            this,
+            &UPlayerInputComponent::HandleMoveLeft
+        );
+
+        EnhancedInput->BindAction(
+            MoveLeftAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleMoveLeft
+        );
+    }
+
+
+    // ============================================================
+    // LOOK
+    // ============================================================
+
+    if (LookAction)
+    {
+        EnhancedInput->BindAction(
+            LookAction,
+            ETriggerEvent::Triggered,
+            this,
+            &UPlayerInputComponent::HandleLookInput
+        );
+
+        EnhancedInput->BindAction(
+            LookAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleLookInput
+        );
+    }
+
+
+    // ============================================================
+    // JUMP
+    // ============================================================
+
+    if (JumpAction)
+    {
+        EnhancedInput->BindAction(
+            JumpAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleJumpStarted
+        );
+
+        EnhancedInput->BindAction(
+            JumpAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleJumpCompleted
+        );
+    }
+
+
+    // ============================================================
+    // SPRINT
+    // ============================================================
+
+    if (SprintAction)
+    {
+        EnhancedInput->BindAction(
+            SprintAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleSprintStarted
+        );
+
+        EnhancedInput->BindAction(
+            SprintAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleSprintCompleted
+        );
+    }
+
+
+    // ============================================================
+    // CROUCH
+    // ============================================================
+
+    if (CrouchAction)
+    {
+        EnhancedInput->BindAction(
+            CrouchAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleCrouchStarted
+        );
+
+        EnhancedInput->BindAction(
+            CrouchAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleCrouchCompleted
+        );
+    }
+}
+
+
+// ============================================================================
+// MOVEMENT - DISCRETE WASD HANDLERS
+// ============================================================================
+
+void UPlayerInputComponent::HandleMoveForward(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
     {
         return;
     }
 
-    if (MoveAction)
+    const bool bIsPressed = Value.Get<bool>();
+    FVector2D CurrentIntent = Control->MoveIntent;
+    
+    // Y = +1.0 is Forward
+    if (bIsPressed)
     {
-        EnhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &UPlayerInputComponent::HandleMoveInput);
-        EnhancedInput->BindAction(MoveAction, ETriggerEvent::Completed, this, &UPlayerInputComponent::HandleMoveInput);
+        CurrentIntent.Y = 1.0f;
     }
-    if (LookAction)
+    else
     {
-        EnhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, this, &UPlayerInputComponent::HandleLookInput);
+        // Only clear forward if we're not going backward
+        if (CurrentIntent.Y > 0.0f)
+        {
+            CurrentIntent.Y = 0.0f;
+        }
     }
-    if (JumpAction)
+    
+    Control->SetMoveIntent(CurrentIntent);
+}
+
+
+void UPlayerInputComponent::HandleMoveBackward(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
     {
-        EnhancedInput->BindAction(JumpAction, ETriggerEvent::Started, this, &UPlayerInputComponent::HandleJumpStarted);
-        EnhancedInput->BindAction(JumpAction, ETriggerEvent::Completed, this, &UPlayerInputComponent::HandleJumpCompleted);
+        return;
     }
-    if (SprintAction)
+
+    const bool bIsPressed = Value.Get<bool>();
+    FVector2D CurrentIntent = Control->MoveIntent;
+    
+    // Y = -1.0 is Backward
+    if (bIsPressed)
     {
-        EnhancedInput->BindAction(SprintAction, ETriggerEvent::Started, this, &UPlayerInputComponent::HandleSprintStarted);
-        EnhancedInput->BindAction(SprintAction, ETriggerEvent::Completed, this, &UPlayerInputComponent::HandleSprintCompleted);
+        CurrentIntent.Y = -1.0f;
     }
-    if (CrouchAction)
+    else
     {
-        EnhancedInput->BindAction(CrouchAction, ETriggerEvent::Started, this, &UPlayerInputComponent::HandleCrouchStarted);
-        EnhancedInput->BindAction(CrouchAction, ETriggerEvent::Completed, this, &UPlayerInputComponent::HandleCrouchCompleted);
+        // Only clear backward if we're not going forward
+        if (CurrentIntent.Y < 0.0f)
+        {
+            CurrentIntent.Y = 0.0f;
+        }
     }
+    
+    Control->SetMoveIntent(CurrentIntent);
 }
 
-void UPlayerInputComponent::HandleMoveInput(const FInputActionValue& Value)
+
+void UPlayerInputComponent::HandleMoveRight(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetMoveIntent(Value.Get<FVector2D>());
+    if (!Control)
+    {
+        return;
+    }
+
+    const bool bIsPressed = Value.Get<bool>();
+    FVector2D CurrentIntent = Control->MoveIntent;
+    
+    // X = +1.0 is Right
+    if (bIsPressed)
+    {
+        CurrentIntent.X = 1.0f;
+    }
+    else
+    {
+        // Only clear right if we're not going left
+        if (CurrentIntent.X > 0.0f)
+        {
+            CurrentIntent.X = 0.0f;
+        }
+    }
+    
+    Control->SetMoveIntent(CurrentIntent);
 }
 
-void UPlayerInputComponent::HandleLookInput(const FInputActionValue& Value)
+
+void UPlayerInputComponent::HandleMoveLeft(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetLookInput(Value.Get<FVector2D>());
+    if (!Control)
+    {
+        return;
+    }
+
+    const bool bIsPressed = Value.Get<bool>();
+    FVector2D CurrentIntent = Control->MoveIntent;
+    
+    // X = -1.0 is Left
+    if (bIsPressed)
+    {
+        CurrentIntent.X = -1.0f;
+    }
+    else
+    {
+        // Only clear left if we're not going right
+        if (CurrentIntent.X < 0.0f)
+        {
+            CurrentIntent.X = 0.0f;
+        }
+    }
+    
+    Control->SetMoveIntent(CurrentIntent);
 }
 
-void UPlayerInputComponent::HandleJumpStarted(const FInputActionValue& Value)
+
+// ============================================================================
+// LOOK
+// ============================================================================
+
+void UPlayerInputComponent::HandleLookInput(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetJumpIntent(1.0f);
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->SetLookInput(
+        Value.Get<FVector2D>()
+    );
 }
 
-void UPlayerInputComponent::HandleJumpCompleted(const FInputActionValue& Value)
+
+// ============================================================================
+// JUMP
+// ============================================================================
+
+void UPlayerInputComponent::HandleJumpStarted(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetJumpIntent(0.0f);
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->SetJumpIntent(1.0f);
 }
 
-void UPlayerInputComponent::HandleSprintStarted(const FInputActionValue& Value)
+
+void UPlayerInputComponent::HandleJumpCompleted(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetSprintIntent(1.0f);
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->SetJumpIntent(0.0f);
 }
 
-void UPlayerInputComponent::HandleSprintCompleted(const FInputActionValue& Value)
+
+// ============================================================================
+// SPRINT
+// ============================================================================
+
+void UPlayerInputComponent::HandleSprintStarted(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetSprintIntent(0.0f);
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->SetSprintIntent(1.0f);
 }
 
-void UPlayerInputComponent::HandleCrouchStarted(const FInputActionValue& Value)
+
+void UPlayerInputComponent::HandleSprintCompleted(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetCrouchIntent(1.0f);
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->SetSprintIntent(0.0f);
 }
 
-void UPlayerInputComponent::HandleCrouchCompleted(const FInputActionValue& Value)
+
+// ============================================================================
+// CROUCH
+// ============================================================================
+
+void UPlayerInputComponent::HandleCrouchStarted(
+    const FInputActionValue& Value
+)
 {
-    if (Control) Control->SetCrouchIntent(0.0f);
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->SetCrouchIntent(1.0f);
+}
+
+
+void UPlayerInputComponent::HandleCrouchCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->SetCrouchIntent(0.0f);
 }

@@ -44,5 +44,7 @@ protected:
     )
     TObjectPtr<UCameraComponent> FollowCamera;
 
-    virtual void SetupPlayerInputComponent(UInputComponent* PlayerInput) override;
+    virtual void SetupPlayerInputComponent(
+        UInputComponent* PlayerInput
+    ) override;
 };
