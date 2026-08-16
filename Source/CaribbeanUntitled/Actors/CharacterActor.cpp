@@ -93,7 +93,7 @@ ACharacterActor::ACharacterActor()
         Idle.Key = EAnimationKey::Idle;
         Idle.PlaybackMode = EAnimationPlaybackMode::Loop;
         Idle.PlayRate = 1.0f;
-        Idle.LoopCount = 1000000;
+        Idle.LoopCount = -1;
         Idle.BlendInTime = 0.15f;
         Idle.BlendOutTime = 0.15f;
         Idle.SlotName = "full-body";
@@ -104,7 +104,7 @@ ACharacterActor::ACharacterActor()
         Walk.Key = EAnimationKey::Walk;
         Walk.PlaybackMode = EAnimationPlaybackMode::Loop;
         Walk.PlayRate = 1.0f;
-        Walk.LoopCount = 1000000;
+        Walk.LoopCount = -1;
         Walk.BlendInTime = 0.15f;
         Walk.BlendOutTime = 0.15f;
         Walk.SlotName = "lower-body";
@@ -115,7 +115,7 @@ ACharacterActor::ACharacterActor()
         Run.Key = EAnimationKey::Run;
         Run.PlaybackMode = EAnimationPlaybackMode::Loop;
         Run.PlayRate = 1.0f;
-        Run.LoopCount = 1000000;
+        Run.LoopCount = -1;
         Run.BlendInTime = 0.15f;
         Run.BlendOutTime = 0.15f;
         Run.SlotName = "lower-body";
@@ -126,7 +126,7 @@ ACharacterActor::ACharacterActor()
         Sprint.Key = EAnimationKey::Sprint;
         Sprint.PlaybackMode = EAnimationPlaybackMode::Loop;
         Sprint.PlayRate = 1.0f;
-        Sprint.LoopCount = 1000000;
+        Sprint.LoopCount = -1;
         Sprint.BlendInTime = 0.15f;
         Sprint.BlendOutTime = 0.15f;
         Sprint.SlotName = "lower-body";
@@ -141,7 +141,7 @@ ACharacterActor::ACharacterActor()
         Jump.Key = EAnimationKey::Jump;
         Jump.PlaybackMode = EAnimationPlaybackMode::Once;
         Jump.PlayRate = 1.0f;
-        Jump.LoopCount = 0;
+        Jump.LoopCount = 1;
         Jump.BlendInTime = 0.05f;
         Jump.BlendOutTime = 0.1f;
         Jump.SlotName = "full-body";
@@ -152,7 +152,7 @@ ACharacterActor::ACharacterActor()
         Fall.Key = EAnimationKey::Fall;
         Fall.PlaybackMode = EAnimationPlaybackMode::Loop;
         Fall.PlayRate = 1.0f;
-        Fall.LoopCount = 1000000;
+        Fall.LoopCount = -1;
         Fall.BlendInTime = 0.1f;
         Fall.BlendOutTime = 0.1f;
         Fall.SlotName = "full-body";
@@ -163,7 +163,7 @@ ACharacterActor::ACharacterActor()
         Land.Key = EAnimationKey::Land;
         Land.PlaybackMode = EAnimationPlaybackMode::Once;
         Land.PlayRate = 1.0f;
-        Land.LoopCount = 0;
+        Land.LoopCount = 1;
         Land.BlendInTime = 0.05f;
         Land.BlendOutTime = 0.1f;
         Land.SlotName = "full-body";
@@ -178,7 +178,7 @@ ACharacterActor::ACharacterActor()
         Attack1.Key = EAnimationKey::Attack_1;
         Attack1.PlaybackMode = EAnimationPlaybackMode::Once;
         Attack1.PlayRate = 1.0f;
-        Attack1.LoopCount = 0;
+        Attack1.LoopCount = 1;
         Attack1.BlendInTime = 0.05f;
         Attack1.BlendOutTime = 0.1f;
         Attack1.SlotName = "upper-body";
@@ -189,7 +189,7 @@ ACharacterActor::ACharacterActor()
         Attack2.Key = EAnimationKey::Attack_2;
         Attack2.PlaybackMode = EAnimationPlaybackMode::Once;
         Attack2.PlayRate = 1.0f;
-        Attack2.LoopCount = 0;
+        Attack2.LoopCount = 1;
         Attack2.BlendInTime = 0.05f;
         Attack2.BlendOutTime = 0.1f;
         Attack2.SlotName = "upper-body";
@@ -200,7 +200,7 @@ ACharacterActor::ACharacterActor()
         Attack3.Key = EAnimationKey::Attack_3;
         Attack3.PlaybackMode = EAnimationPlaybackMode::Once;
         Attack3.PlayRate = 1.0f;
-        Attack3.LoopCount = 0;
+        Attack3.LoopCount = 1;
         Attack3.BlendInTime = 0.05f;
         Attack3.BlendOutTime = 0.1f;
         Attack3.SlotName = "upper-body";
@@ -211,7 +211,7 @@ ACharacterActor::ACharacterActor()
         Hit.Key = EAnimationKey::Hit;
         Hit.PlaybackMode = EAnimationPlaybackMode::Once;
         Hit.PlayRate = 1.0f;
-        Hit.LoopCount = 0;
+        Hit.LoopCount = 1;
         Hit.BlendInTime = 0.05f;
         Hit.BlendOutTime = 0.1f;
         Hit.SlotName = "upper-body";
@@ -222,7 +222,7 @@ ACharacterActor::ACharacterActor()
         Death.Key = EAnimationKey::Death;
         Death.PlaybackMode = EAnimationPlaybackMode::Once;
         Death.PlayRate = 1.0f;
-        Death.LoopCount = 0;
+        Death.LoopCount = 1;
         Death.BlendInTime = 0.05f;
         Death.BlendOutTime = 0.2f;
         Death.SlotName = "full-body";
@@ -237,7 +237,7 @@ ACharacterActor::ACharacterActor()
         Interact.Key = EAnimationKey::Interact;
         Interact.PlaybackMode = EAnimationPlaybackMode::Once;
         Interact.PlayRate = 1.0f;
-        Interact.LoopCount = 0;
+        Interact.LoopCount = 1;
         Interact.BlendInTime = 0.1f;
         Interact.BlendOutTime = 0.1f;
         Interact.SlotName = "upper-body";  // Reaching/interacting with objects
@@ -248,7 +248,7 @@ ACharacterActor::ACharacterActor()
         Mount.Key = EAnimationKey::Mount;
         Mount.PlaybackMode = EAnimationPlaybackMode::Once;
         Mount.PlayRate = 1.0f;
-        Mount.LoopCount = 0;
+        Mount.LoopCount = 1;
         Mount.BlendInTime = 0.1f;
         Mount.BlendOutTime = 0.1f;
         Mount.SlotName = "full-body";  // Full body movement to mount
@@ -259,7 +259,7 @@ ACharacterActor::ACharacterActor()
         Dismount.Key = EAnimationKey::Dismount;
         Dismount.PlaybackMode = EAnimationPlaybackMode::Once;
         Dismount.PlayRate = 1.0f;
-        Dismount.LoopCount = 0;
+        Dismount.LoopCount = 1;
         Dismount.BlendInTime = 0.1f;
         Dismount.BlendOutTime = 0.1f;
         Dismount.SlotName = "full-body";  // Full body movement to dismount

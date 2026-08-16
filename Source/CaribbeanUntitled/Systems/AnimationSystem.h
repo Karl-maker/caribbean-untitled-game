@@ -154,7 +154,7 @@ private:
         /** World time this actor's CurrentState was entered. */
         double StateEnteredTime = 0.0;
     };
-    
+
     struct FActorAnimationLayers
     {
         TMap<EAnimationLayer, FActorAnimationState> Layers;
@@ -167,7 +167,7 @@ private:
         AActor* Actor,
         EAnimationLayer Layer
     );
-    
+
     FActorAnimationState* FindActorAnimationState(
         AActor* Actor,
         EAnimationLayer Layer
@@ -205,6 +205,14 @@ private:
     // Playback
     //=========================================================================
 
+    /**
+     * Very large but finite loop count used to emulate "loop forever"
+     * for Loop-mode animations. PlaySlotAnimationAsDynamicMontage does
+     * not support INDEX_NONE (-1) as a loop count — passing it there
+     * causes montage creation to silently fail.
+     */
+    static constexpr int32 EffectiveInfiniteLoopCount = 1000000;
+
     /** Begins playing the next entry in State.PendingQueue, if any. */
     void AdvanceQueue(
         AActor* Actor,
@@ -212,8 +220,21 @@ private:
         EAnimationLayer Layer
     );
 
-    /** Plays a single animation key on Actor and returns the montage it started, if any. */
-    UAnimMontage* PlayStateAnimation(AActor* Actor, EAnimationKey Key);
+    /**
+     * Plays a single animation key on Actor.
+     *
+     * Returns true if playback genuinely started (either a dynamic
+     * montage, or the SkeletalMeshComponent fallback), false on
+     * failure (missing registry entry, missing asset, or montage
+     * creation failure). OutMontage is set only when a real montage
+     * was created — it stays nullptr on the fallback path even on
+     * success, since PlayAnimation() produces no montage to track.
+     */
+    bool PlayStateAnimation(
+        AActor* Actor,
+        EAnimationKey Key,
+        UAnimMontage*& OutMontage
+    );
 
     /** Bound to the active montage; advances the actor's queue when it finishes. */
     void OnStateAnimationEnded(

@@ -159,7 +159,7 @@ void UAnimationSystem::RequestAnimationState(
     }
 
     Chain.Add(ResolvedTarget);
-    
+
     UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Final chain has %d states for %s"),
            Chain.Num(), *Actor->GetName());
 
@@ -357,7 +357,7 @@ void UAnimationSystem::BuildResolvedRules()
     }
 
     ResolvedRules.Append(TransitionRules);
-    
+
     UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Total %d transition rules"), ResolvedRules.Num());
 }
 
@@ -419,7 +419,7 @@ UAnimationSystem::FindTransitionRule(
 
     UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: No transition rule found from %d to %d"),
            (int32)FromState, (int32)ToState);
-    
+
     return nullptr;
 }
 
@@ -455,25 +455,27 @@ void UAnimationSystem::AdvanceQueue(
     UE_LOG(LogTemp, Log, TEXT("AnimationSystem::AdvanceQueue - Playing animation %d for %s (remaining: %d)"),
            (int32)NextKey, *Actor->GetName(), State.PendingQueue.Num());
 
-    UAnimMontage* Montage =
+    UAnimMontage* Montage = nullptr;
+
+    const bool bPlayed =
         PlayStateAnimation(
             Actor,
-            NextKey
+            NextKey,
+            Montage
         );
 
-    State.CurrentState = NextKey;
-    State.ActiveMontage = Montage;
-
-    const UWorld* World = GetWorld();
-
-    State.StateEnteredTime =
-        World ? World->GetTimeSeconds() : 0.0;
-
-    if (!Montage)
+    if (!bPlayed)
     {
         UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::AdvanceQueue - Failed to play animation %d for %s"),
                (int32)NextKey, *Actor->GetName());
-        
+
+        // Deliberately do NOT update State.CurrentState / ActiveMontage /
+        // StateEnteredTime here. A genuine failure (missing anim, missing
+        // AnimInstance during a startup race, etc.) must not "poison" this
+        // state — a future request for the same NewState needs to retry
+        // rather than being swallowed by RequestAnimationState's no-op
+        // check, which compares against State.CurrentState.
+
         // Missing animation / AnimInstance / asset.
         // Don't stall a transition chain.
         if (State.PendingQueue.Num() > 0)
@@ -490,8 +492,24 @@ void UAnimationSystem::AdvanceQueue(
         return;
     }
 
+    // Success (either a real montage, or a fallback SkeletalMeshComponent
+    // play) — this state is now genuinely current.
+    State.CurrentState = NextKey;
+    State.ActiveMontage = Montage; // may still be nullptr on the fallback path
+
+    const UWorld* World = GetWorld();
+
+    State.StateEnteredTime =
+        World ? World->GetTimeSeconds() : 0.0;
+
     UE_LOG(LogTemp, Log, TEXT("AnimationSystem::AdvanceQueue - Successfully played animation %d for %s"),
            (int32)NextKey, *Actor->GetName());
+
+    if (!Montage)
+    {
+        // Fallback playback path — no montage to bind an end delegate to.
+        return;
+    }
 
     USkeletalMeshComponent* Mesh =
         Actor->FindComponentByClass<USkeletalMeshComponent>();
@@ -533,16 +551,18 @@ void UAnimationSystem::AdvanceQueue(
 // Play Animation
 //=============================================================================
 
-UAnimMontage*
-UAnimationSystem::PlayStateAnimation(
+bool UAnimationSystem::PlayStateAnimation(
     AActor* Actor,
-    EAnimationKey Key
+    EAnimationKey Key,
+    UAnimMontage*& OutMontage
 )
 {
+    OutMontage = nullptr;
+
     if (!Actor)
     {
         UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - Actor is null"));
-        return nullptr;
+        return false;
     }
 
     UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::PlayStateAnimation - Playing key %d for %s"),
@@ -555,7 +575,7 @@ UAnimationSystem::PlayStateAnimation(
     {
         UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - No AnimationRegistryComponent found on %s"),
                *Actor->GetName());
-        return nullptr;
+        return false;
     }
 
     FAnimationDefinition Definition;
@@ -570,7 +590,7 @@ UAnimationSystem::PlayStateAnimation(
     {
         UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - Animation not found for key %d on %s"),
                (int32)Key, *Actor->GetName());
-        return nullptr;
+        return false;
     }
 
     UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Found animation for key %d on %s"),
@@ -583,7 +603,7 @@ UAnimationSystem::PlayStateAnimation(
     {
         UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - No SkeletalMeshComponent found on %s"),
                *Actor->GetName());
-        return nullptr;
+        return false;
     }
 
     UAnimInstance* AnimInstance =
@@ -597,11 +617,11 @@ UAnimationSystem::PlayStateAnimation(
     {
         UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Using AnimInstance for %s"),
                *Actor->GetName());
-        
+
         AnimInstance->SetRootMotionMode(
             ERootMotionMode::IgnoreRootMotion
         );
-        
+
         if (
             UAnimSequenceBase* SequenceBase =
                 Cast<UAnimSequenceBase>(
@@ -613,14 +633,14 @@ UAnimationSystem::PlayStateAnimation(
                 Definition.PlaybackMode ==
                     EAnimationPlaybackMode::Loop
 
-                    ? INDEX_NONE
+                    ? EffectiveInfiniteLoopCount
 
                     : FMath::Max(
                         1,
                         Definition.LoopCount
                     );
 
-            UAnimMontage* Montage = AnimInstance
+            OutMontage = AnimInstance
                 ->PlaySlotAnimationAsDynamicMontage(
                     SequenceBase,
 
@@ -638,7 +658,7 @@ UAnimationSystem::PlayStateAnimation(
                     Definition.StartPosition
                 );
 
-            if (Montage)
+            if (OutMontage)
             {
                 UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Successfully created dynamic montage for %s"),
                        *Actor->GetName());
@@ -649,19 +669,18 @@ UAnimationSystem::PlayStateAnimation(
                        *Actor->GetName());
             }
 
-            return Montage;
+            return OutMontage != nullptr;
         }
         else
         {
             UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::PlayStateAnimation - Animation is not a SequenceBase for %s"),
                    *Actor->GetName());
+            return false;
         }
     }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::PlayStateAnimation - No AnimInstance found for %s, using fallback"),
-               *Actor->GetName());
-    }
+
+    UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::PlayStateAnimation - No AnimInstance found for %s, using fallback"),
+           *Actor->GetName());
 
     //=========================================================================
     // Fallback
@@ -679,7 +698,9 @@ UAnimationSystem::PlayStateAnimation(
         bLooping
     );
 
-    return nullptr;
+    // OutMontage stays nullptr — PlayAnimation() produces no montage to
+    // track, but playback itself genuinely succeeded.
+    return true;
 }
 
 
@@ -764,9 +785,7 @@ UAnimationSystem::FindAnimationRegistry(
         return nullptr;
     }
 
-    return Actor->FindComponentByClass<
-        UAnimationRegistryComponent
-    >();
+    return Actor->FindComponentByClass<UAnimationRegistryComponent>();
 }
 
 

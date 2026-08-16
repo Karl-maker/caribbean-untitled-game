@@ -400,28 +400,32 @@ void UMovementSystem::DetermineAndPublishLocomotion(
     bool bWantsToSprint,
     bool bWantsToCrouch)
 {
-    ELocomotion* PreviousState = PreviousLocomotionStates.Find(Actor);
-    const ELocomotion PrevValue = PreviousState ? *PreviousState : ELocomotion::Idle;
-    const bool bJumpInProgress = IsJumpInProgress(Actor);
+    ELocomotion CurrentState =
+        DetermineLocomotionState(
+            Character,
+            Movement,
+            Control,
+            MoveDirection,
+            bWantsToSprint,
+            bWantsToCrouch,
+            ELocomotion::Idle,
+            IsJumpInProgress(Actor)
+        );
 
-    ELocomotion CurrentState = DetermineLocomotionState(
-        Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch, PrevValue, bJumpInProgress);
+    UE_LOG(
+        LogTemp,
+        Warning,
+        TEXT("MOVEMENT -> %d"),
+        static_cast<uint8>(CurrentState)
+    );
 
-    if (PreviousState && *PreviousState == CurrentState)
-    {
-        return;
-    }
+    FMovementPayload Payload;
+    Payload.Source = Actor;
+    Payload.Type = CurrentState;
 
-    PreviousLocomotionStates.Add(Actor, CurrentState);
-
-    UEventBusSubsystem* EventBus = GetEventBus();
-    if (EventBus)
-    {
-        FMovementPayload Payload;
-        Payload.Source = Actor;
-        Payload.Type = CurrentState;
-        EventBus->Publish(Payload);
-    }
+    GetWorld()
+        ->GetSubsystem<UEventBusSubsystem>()
+        ->Publish(Payload);
 }
 
 ELocomotion UMovementSystem::DetermineLocomotionState(

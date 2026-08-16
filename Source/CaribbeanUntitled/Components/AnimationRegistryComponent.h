@@ -50,7 +50,9 @@ enum class EAnimationKey : uint8
     // Interaction
     Interact    UMETA(DisplayName = "Interact"),
     Mount       UMETA(DisplayName = "Mount"),
-    Dismount    UMETA(DisplayName = "Dismount")
+    Dismount    UMETA(DisplayName = "Dismount"),
+    
+    Crouch    UMETA(DisplayName = "Crouch")
 };
 
 
