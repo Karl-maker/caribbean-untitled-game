@@ -6,7 +6,10 @@
 
 #include "GameFramework/Actor.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/World.h"
+#include "Kismet/KismetMathLibrary.h"
 
 
 //=============================================================================
@@ -15,6 +18,33 @@
 
 UCameraSystem::UCameraSystem()
 {
+    // Default values - Closer camera, right shoulder (GOW style)
+    NormalOffset = FVector(0.0f, 120.0f, 70.0f);   // Closer right offset
+    NormalArmLength = 220.0f;                      // Closer
+    
+    RunningOffset = FVector(0.0f, 0.0f, 50.0f);    // Centered when running
+    RunningArmLength = 280.0f;                     // Closer
+    
+    ActionOffset = FVector(0.0f, 80.0f, 45.0f);    // Closer right for combat
+    ActionArmLength = 250.0f;                      // Closer
+    
+    // Progressive zoom settings - closer range
+    MinArmLength = 180.0f;
+    MaxArmLength = 350.0f;
+    SpeedZoomThreshold = 100.0f;
+    MaxSpeedForZoom = 800.0f;
+    
+    // Smooth damping - slightly slower for less jitter
+    PositionDamping = 10.0f;
+    ArmLengthDamping = 8.0f;
+    OffsetDamping = 6.0f;
+    
+    // Jump smoothing
+    JumpSmoothTime = 0.3f;
+    LastJumpTime = -1.0f;
+    
+    UpdateInterval = 1;
+    TickCounter = 0;
 }
 
 
@@ -31,18 +61,6 @@ void UCameraSystem::Tick(
     {
         return;
     }
-
-    TickCounter++;
-
-    if (TickCounter < UpdateInterval)
-    {
-        return;
-    }
-
-    TickCounter = 0;
-
-    const float EffectiveDeltaTime =
-        DeltaTime * static_cast<float>(UpdateInterval);
 
     UActorRegistry* Registry =
         World->GetSubsystem<UActorRegistry>();
@@ -71,7 +89,7 @@ void UCameraSystem::Tick(
 
         ProcessActor(
             Actor,
-            EffectiveDeltaTime
+            DeltaTime
         );
     }
 
@@ -115,10 +133,7 @@ void UCameraSystem::ProcessActor(
     UStatsComponent* Stats =
         Actor->FindComponentByClass<UStatsComponent>();
 
-    UControlComponent* Control =
-        Actor->FindComponentByClass<UControlComponent>();
-
-    if (!Stats || !Control)
+    if (!Stats)
     {
         return;
     }
@@ -126,46 +141,105 @@ void UCameraSystem::ProcessActor(
     FCameraState& State =
         CameraStates.FindOrAdd(Actor);
 
+    ACharacter* Character = Cast<ACharacter>(Actor);
+    float CurrentSpeed = 0.0f;
+    bool bIsJumping = false;
+    
+    if (Character)
+    {
+        UCharacterMovementComponent* Movement =
+            Character->GetCharacterMovement();
+        if (Movement)
+        {
+            CurrentSpeed = Movement->Velocity.Size();
+            bIsJumping = Movement->IsFalling();
+        }
+    }
+
 
     // ============================================================
-    // DETERMINE CAMERA STATE
+    // JUMP SMOOTHING - Detect jump with hysteresis
     // ============================================================
 
-    const bool bRunning =
-        IsRunning(Actor);
-
-    const bool bAction =
-        IsActionState(Actor);
+    // Update jump state with smooth timer
+    if (bIsJumping)
+    {
+        LastJumpTime = 0.0f;  // Reset timer when jumping
+    }
+    else if (LastJumpTime >= 0.0f)
+    {
+        LastJumpTime += DeltaTime;  // Increment timer when not jumping
+    }
+    
+    // Only consider jump active if recently jumped (within smooth time)
+    const bool bIsRecentlyJumping =
+        bIsJumping ||
+        (LastJumpTime >= 0.0f && LastJumpTime < JumpSmoothTime);
 
 
     // ============================================================
-    // SELECT TARGET
+    // DETERMINE BASE CAMERA STATE
     // ============================================================
+
+    const bool bRunning = IsRunning(Actor);
+    const bool bAction = IsActionState(Actor, bIsRecentlyJumping);
+
+
+    // ============================================================
+    // SELECT BASE TARGET
+    // ============================================================
+
+    FVector TargetOffset;
+    float TargetArmLength;
 
     if (bRunning)
     {
-        State.TargetOffset =
-            RunningOffset;
-
-        State.TargetArmLength =
-            RunningArmLength;
+        TargetOffset = RunningOffset;
+        TargetArmLength = RunningArmLength;
     }
     else if (bAction)
     {
-        State.TargetOffset =
-            ActionOffset;
-
-        State.TargetArmLength =
-            ActionArmLength;
+        TargetOffset = ActionOffset;
+        TargetArmLength = ActionArmLength;
     }
     else
     {
-        State.TargetOffset =
-            NormalOffset;
-
-        State.TargetArmLength =
-            NormalArmLength;
+        TargetOffset = NormalOffset;
+        TargetArmLength = NormalArmLength;
     }
+
+
+    // ============================================================
+    // PROGRESSIVE ZOOM BASED ON SPEED
+    // ============================================================
+
+    // Zoom out more as speed increases (GTA style)
+    float SpeedZoomFactor = FMath::Clamp(
+        (CurrentSpeed - SpeedZoomThreshold) / (MaxSpeedForZoom - SpeedZoomThreshold),
+        0.0f, 1.0f
+    );
+    
+    // Apply progressive zoom while preserving the base arm length
+    float ProgressiveArmLength = FMath::Lerp(
+        TargetArmLength,
+        FMath::Clamp(TargetArmLength * 1.3f, MinArmLength, MaxArmLength),  // Less aggressive zoom
+        SpeedZoomFactor
+    );
+
+    // Calculate dynamic offset based on speed (center the character when running fast)
+    FVector DynamicOffset = TargetOffset;
+    DynamicOffset.Y = FMath::Lerp(
+        TargetOffset.Y,           // Right offset (positive)
+        0.0f,                     // Center
+        SpeedZoomFactor * 0.7f    // Gradually center as speed increases
+    );
+    
+    // Slightly raise the camera at high speed for better visibility
+    DynamicOffset.Z = FMath::Lerp(
+        TargetOffset.Z,
+        TargetOffset.Z + 15.0f,
+        SpeedZoomFactor
+    );
 
 
     // ============================================================
@@ -174,14 +248,12 @@ void UCameraSystem::ProcessActor(
 
     if (State.CurrentArmLength <= 0.0f)
     {
-        State.CurrentArmLength =
-            CameraBoom->TargetArmLength;
+        State.CurrentArmLength = CameraBoom->TargetArmLength;
     }
 
     if (State.CurrentOffset.IsNearlyZero())
     {
-        State.CurrentOffset =
-            CameraBoom->GetRelativeLocation();
+        State.CurrentOffset = CameraBoom->GetRelativeLocation();
     }
 
 
@@ -189,12 +261,14 @@ void UCameraSystem::ProcessActor(
     // POSITION DAMPING
     // ============================================================
 
+    const float PositionSmoothFactor =
+        FMath::Clamp(1.0f - FMath::Exp(-PositionDamping * DeltaTime), 0.0f, 1.0f);
+    
     State.CurrentOffset =
-        FMath::VInterpTo(
+        FMath::Lerp(
             State.CurrentOffset,
-            State.TargetOffset,
-            DeltaTime,
-            PositionDamping
+            DynamicOffset,
+            PositionSmoothFactor
         );
 
 
@@ -202,12 +276,14 @@ void UCameraSystem::ProcessActor(
     // ARM LENGTH DAMPING
     // ============================================================
 
+    const float ArmLengthSmoothFactor =
+        FMath::Clamp(1.0f - FMath::Exp(-ArmLengthDamping * DeltaTime), 0.0f, 1.0f);
+    
     State.CurrentArmLength =
-        FMath::FInterpTo(
+        FMath::Lerp(
             State.CurrentArmLength,
-            State.TargetArmLength,
-            DeltaTime,
-            ArmLengthDamping
+            ProgressiveArmLength,
+            ArmLengthSmoothFactor
         );
 
 
@@ -215,17 +291,13 @@ void UCameraSystem::ProcessActor(
     // APPLY
     // ============================================================
 
-    CameraBoom->SetRelativeLocation(
-        State.CurrentOffset
-    );
-
-    CameraBoom->TargetArmLength =
-        State.CurrentArmLength;
+    CameraBoom->SetRelativeLocation(State.CurrentOffset);
+    CameraBoom->TargetArmLength = State.CurrentArmLength;
 }
 
 
 //=============================================================================
-// RUNNING
+// RUNNING - Using CharacterMovementComponent actual members
 //=============================================================================
 
 bool UCameraSystem::IsRunning(
@@ -233,6 +305,20 @@ bool UCameraSystem::IsRunning(
 ) const
 {
     if (!IsValid(Actor))
+    {
+        return false;
+    }
+
+    ACharacter* Character = Cast<ACharacter>(Actor);
+    if (!Character)
+    {
+        return false;
+    }
+
+    UCharacterMovementComponent* Movement =
+        Character->GetCharacterMovement();
+    
+    if (!Movement)
     {
         return false;
     }
@@ -250,48 +336,73 @@ bool UCameraSystem::IsRunning(
 
 
     // ============================================================
-    // MOVEMENT
+    // CHECK ACTUAL MOVEMENT SPEED
     // ============================================================
 
-    const bool bMoving =
-        !Control->MoveIntent.IsNearlyZero()
-        ||
-        !Control->WorldMoveDirection.IsNearlyZero();
-
-
-    // ============================================================
-    // SPRINT INTENT
-    // ============================================================
-
-    const bool bWantsSprint =
-        Control->SprintIntent > 0.0f;
+    const float CurrentSpeed = Movement->Velocity.Size();
+    const float WalkSpeed = Stats->GetWalkSpeed();
+    const float SprintSpeed = Stats->GetSprintSpeed();
 
 
     // ============================================================
-    // SPEED VALIDATION
+    // MOVEMENT VALIDATION - With speed threshold hysteresis
     // ============================================================
 
-    const bool bSprintIsFaster =
-        Stats->GetSprintSpeed() >
-        Stats->GetWalkSpeed();
+    // Is the character actually moving (with threshold)
+    const bool bIsMoving = CurrentSpeed > 10.0f;
+
+    // Is the character moving faster than walk speed (with hysteresis)
+    const bool bIsRunningSpeed = CurrentSpeed > WalkSpeed * 1.05f;  // Lower threshold
+
+    // Is the character using sprint input?
+    const bool bWantsSprint = Control->SprintIntent > 0.0f;
+
+    // Is sprint actually faster than walk?
+    const bool bSprintIsFaster = SprintSpeed > WalkSpeed;
+
+    // Check if we're in a movement mode that supports sprinting
+    const bool bIsWalkingOrRunning =
+        Movement->MovementMode == MOVE_Walking ||
+        Movement->MovementMode == MOVE_NavWalking;
+
+    // Don't trigger running during jump or landing (with hysteresis)
+    const bool bIsFalling = Movement->IsFalling();
 
 
     return
-        bMoving &&
+        bIsMoving &&
+        bIsRunningSpeed &&
         bWantsSprint &&
-        bSprintIsFaster;
+        bSprintIsFaster &&
+        bIsWalkingOrRunning &&
+        !bIsFalling;
 }
 
 
 //=============================================================================
-// ACTION STATE
+// ACTION STATE - With jump dampening
 //=============================================================================
 
 bool UCameraSystem::IsActionState(
-    AActor* Actor
+    AActor* Actor,
+    bool bIsRecentlyJumping
 ) const
 {
     if (!IsValid(Actor))
+    {
+        return false;
+    }
+
+    ACharacter* Character = Cast<ACharacter>(Actor);
+    if (!Character)
+    {
+        return false;
+    }
+
+    UCharacterMovementComponent* Movement =
+        Character->GetCharacterMovement();
+    
+    if (!Movement)
     {
         return false;
     }
@@ -306,19 +417,34 @@ bool UCameraSystem::IsActionState(
 
 
     // ============================================================
-    // ACTION INTENTS
+    // CHECK MOVEMENT STATE - With smooth jump detection
     // ============================================================
 
-    return
-        Control->GetJumpIntent() > 0.0f
-        ||
-        Control->GetDashIntent() > 0.0f
-        ||
-        Control->GetAimIntent() > 0.0f
-        ||
-        Control->GetFireIntent() > 0.0f
-        ||
+    const bool bIsCrouching = Movement->IsCrouching();
+
+
+    // ============================================================
+    // CHECK ACTION INTENTS
+    // ============================================================
+
+    const bool bHasDashIntent = Control->GetDashIntent() > 0.0f;
+
+    const bool bHasCombatIntent =
+        Control->GetAimIntent() > 0.0f ||
+        Control->GetFireIntent() > 0.0f ||
         Control->GetReloadIntent() > 0.0f;
+
+
+    // ============================================================
+    // ACTION STATE - With jump dampening
+    // ============================================================
+
+    // Only trigger action state for jump if recently jumping (smooth transition)
+    return
+        bIsCrouching ||
+        bHasDashIntent ||
+        bHasCombatIntent ||
+        bIsRecentlyJumping;  // Smooth jump detection
 }
 
 
@@ -335,4 +461,69 @@ void UCameraSystem::CleanupInvalidActors()
             It.RemoveCurrent();
         }
     }
+}
+
+
+//=============================================================================
+// SET NORMAL CAMERA
+//=============================================================================
+
+void UCameraSystem::SetNormalCamera(
+    const FVector& Offset,
+    float ArmLength
+)
+{
+    NormalOffset = Offset;
+    NormalArmLength = FMath::Max(80.0f, ArmLength);  // Allow closer
+}
+
+
+//=============================================================================
+// SET RUNNING CAMERA
+//=============================================================================
+
+void UCameraSystem::SetRunningCamera(
+    const FVector& Offset,
+    float ArmLength
+)
+{
+    RunningOffset = Offset;
+    RunningArmLength = FMath::Max(80.0f, ArmLength);  // Allow closer
+}
+
+
+//=============================================================================
+// SET ACTION CAMERA
+//=============================================================================
+
+void UCameraSystem::SetActionCamera(
+    const FVector& Offset,
+    float ArmLength
+)
+{
+    ActionOffset = Offset;
+    ActionArmLength = FMath::Max(80.0f, ArmLength);  // Allow closer
+}
+
+
+//=============================================================================
+// SET DAMPING
+//=============================================================================
+
+void UCameraSystem::SetDamping(
+    float InPositionDamping,
+    float InArmLengthDamping
+)
+{
+    PositionDamping = FMath::Max(0.1f, InPositionDamping);
+    ArmLengthDamping = FMath::Max(0.1f, InArmLengthDamping);
+}
+
+//=============================================================================
+// SET JUMP SMOOTH TIME
+//=============================================================================
+
+void UCameraSystem::SetJumpSmoothTime(float InJumpSmoothTime)
+{
+    JumpSmoothTime = FMath::Max(0.0f, InJumpSmoothTime);
 }
