@@ -166,7 +166,7 @@ public:
         Category = "Control|Movement",
         meta = (ClampMin = "0.0", ClampMax = "1.0")
     )
-    float DirectionControlStrength = 1.0f;
+    float DirectionControlStrength = 0.0f;
 
 
     //=========================================================================

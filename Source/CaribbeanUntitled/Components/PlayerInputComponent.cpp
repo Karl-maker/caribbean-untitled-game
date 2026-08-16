@@ -22,10 +22,14 @@ void UPlayerInputComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    Control =
-        GetOwner()
-        ? GetOwner()->FindComponentByClass<UControlComponent>()
-        : nullptr;
+    Control = GetOwner() ? GetOwner()->FindComponentByClass<UControlComponent>() : nullptr;
+    
+    // Force clear any look direction that might be set
+    if (Control)
+    {
+        Control->SetLookDirection(FVector::ZeroVector);
+        Control->ClearLookInput();
+    }
 }
 
 
@@ -224,17 +228,13 @@ void UPlayerInputComponent::BindInput(
     {
         EnhancedInput->BindAction(
             LookAction,
-            ETriggerEvent::Triggered,
+            ETriggerEvent::Triggered,  // Use Triggered for continuous mouse movement
             this,
             &UPlayerInputComponent::HandleLookInput
         );
-
-        EnhancedInput->BindAction(
-            LookAction,
-            ETriggerEvent::Completed,
-            this,
-            &UPlayerInputComponent::HandleLookInput
-        );
+        
+        // Don't bind to Completed for mouse - it won't trigger properly
+        // Remove the Completed binding for LookAction
     }
 
 
@@ -368,18 +368,22 @@ void UPlayerInputComponent::HandleMoveLeft(
 // ============================================================================
 // LOOK
 // ============================================================================
-
-void UPlayerInputComponent::HandleLookInput(
-    const FInputActionValue& Value
-)
+void UPlayerInputComponent::HandleLookInput(const FInputActionValue& Value)
 {
     if (!Control)
     {
         return;
     }
 
-    Control->LookInput =
-        Value.Get<FVector2D>();
+    // Apply sensitivity scaling
+    const float Sensitivity = 0.5f; // Adjust this value to taste
+    FVector2D LookValue = Value.Get<FVector2D>();
+    LookValue *= Sensitivity;
+    
+    Control->LookInput = LookValue;
+    
+    UE_LOG(LogTemp, Warning, TEXT("Look Input (Scaled): X=%f, Y=%f"),
+           Control->LookInput.X, Control->LookInput.Y);
 }
 
 

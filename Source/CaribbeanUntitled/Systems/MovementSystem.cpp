@@ -81,9 +81,28 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
 
 void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Control, float DeltaTime)
 {
-    FVector FaceDirection = FVector::ZeroVector;
-    bool bHasExplicitFaceDirection = false;
-
+    // PRIORITY 1: Mouse/Joystick Input
+    const FVector2D LookInput = Control->GetLookInput();
+    if (!FMath::IsNearlyZero(LookInput.X) || !FMath::IsNearlyZero(LookInput.Y))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("ApplyLook - Using Mouse Input: X=%f, Y=%f"),
+               LookInput.X, LookInput.Y);
+        
+        FRotator Rotation = Character->GetActorRotation();
+        
+        // Horizontal rotation (Yaw)
+        Rotation.Yaw += LookInput.X;
+        
+        // Optional: Vertical rotation (Pitch)
+        // Rotation.Pitch += LookInput.Y;
+        // Rotation.Pitch = FMath::Clamp(Rotation.Pitch, -89.0f, 89.0f);
+        
+        Character->SetActorRotation(FRotator(0.0f, Rotation.Yaw, 0.0f));
+        Control->ClearLookInput();
+        return; // Don't process other look sources
+    }
+    
+    // PRIORITY 2: Destination seeking
     if (Control->IsSeekingDestination())
     {
         FVector ToTarget = Control->GetDesiredWorldLocation() - Character->GetActorLocation();
@@ -91,20 +110,29 @@ void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Contro
 
         if (!ToTarget.IsNearlyZero())
         {
-            FaceDirection = ToTarget.GetSafeNormal();
-            bHasExplicitFaceDirection = true;
+            FVector FaceDirection = ToTarget.GetSafeNormal();
+            const float TargetYaw = FaceDirection.Rotation().Yaw;
+            const FRotator CurrentRotation = Character->GetActorRotation();
+
+            const FRotator NewRotation = FMath::RInterpTo(
+                CurrentRotation,
+                FRotator(0.0f, TargetYaw, 0.0f),
+                DeltaTime,
+                Control->LookRotationSpeed
+            );
+
+            Character->SetActorRotation(NewRotation);
+            return;
         }
     }
-    else
+    
+    // PRIORITY 3: Explicit look direction (AI control, etc.)
+    FVector LookDirection = Control->GetLookDirection();
+    LookDirection.Z = 0.0f;
+    if (!LookDirection.IsNearlyZero())
     {
-        FaceDirection = Control->GetLookDirection();
-        FaceDirection.Z = 0.0f;
-        bHasExplicitFaceDirection = !FaceDirection.IsNearlyZero();
-    }
-
-    if (bHasExplicitFaceDirection)
-    {
-        const float TargetYaw = FaceDirection.Rotation().Yaw;
+        UE_LOG(LogTemp, Warning, TEXT("ApplyLook - Using Explicit Look Direction"));
+        const float TargetYaw = LookDirection.Rotation().Yaw;
         const FRotator CurrentRotation = Character->GetActorRotation();
 
         const FRotator NewRotation = FMath::RInterpTo(
@@ -115,18 +143,8 @@ void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Contro
         );
 
         Character->SetActorRotation(NewRotation);
-        return;
-    }
-
-    const FVector2D LookInput = Control->GetLookInput();
-    if (!FMath::IsNearlyZero(LookInput.X))
-    {
-        FRotator Rotation = Character->GetActorRotation();
-        Rotation.Yaw += LookInput.X;
-        Character->SetActorRotation(FRotator(0.0f, Rotation.Yaw, 0.0f));
     }
 }
-
 
 //=========================================================================
 // Movement Direction
@@ -139,28 +157,17 @@ FVector UMovementSystem::ResolveMoveDirection(ACharacter* Character, UControlCom
 
     const bool bHasIntent = !IntentDirection.IsNearlyZero();
     const bool bHasExternal = !ExternalDirection.IsNearlyZero();
+    const float Strength = FMath::Clamp(Control->GetDirectionControlStrength(), 0.0f, 1.0f);
 
-    FVector Result = FVector::ZeroVector;
+    // If no blend needed or only one source exists
+    if (!bHasExternal) return IntentDirection;
+    if (!bHasIntent) return ExternalDirection;
+    if (Strength <= 0.0f) return ExternalDirection;  // Full mouse control
+    if (Strength >= 1.0f) return IntentDirection;     // Full keyboard control
 
-    if (bHasExternal && bHasIntent)
-    {
-        const float Strength = FMath::Clamp(Control->GetDirectionControlStrength(), 0.0f, 1.0f);
-        Result = FMath::Lerp(ExternalDirection, IntentDirection, Strength);
-    }
-    else if (bHasExternal)
-    {
-        Result = ExternalDirection;
-    }
-    else if (bHasIntent)
-    {
-        Result = IntentDirection;
-    }
-
-    if (!Result.IsNearlyZero())
-    {
-        Result.Normalize();
-    }
-
+    // Blend between both sources
+    FVector Result = FMath::Lerp(ExternalDirection, IntentDirection, Strength);
+    Result.Normalize();
     return Result;
 }
 
