@@ -304,9 +304,8 @@ void UPlayerInputComponent::BindInput(
     }
 }
 
-
 // ============================================================================
-// MOVEMENT - DISCRETE WASD HANDLERS
+// MOVEMENT
 // ============================================================================
 
 void UPlayerInputComponent::HandleMoveForward(
@@ -318,24 +317,8 @@ void UPlayerInputComponent::HandleMoveForward(
         return;
     }
 
-    const bool bIsPressed = Value.Get<bool>();
-    FVector2D CurrentIntent = Control->MoveIntent;
-    
-    // Y = +1.0 is Forward
-    if (bIsPressed)
-    {
-        CurrentIntent.Y = 1.0f;
-    }
-    else
-    {
-        // Only clear forward if we're not going backward
-        if (CurrentIntent.Y > 0.0f)
-        {
-            CurrentIntent.Y = 0.0f;
-        }
-    }
-    
-    Control->SetMoveIntent(CurrentIntent);
+    Control->MoveIntent.Y =
+        Value.Get<bool>() ? 1.0f : 0.0f;
 }
 
 
@@ -348,24 +331,8 @@ void UPlayerInputComponent::HandleMoveBackward(
         return;
     }
 
-    const bool bIsPressed = Value.Get<bool>();
-    FVector2D CurrentIntent = Control->MoveIntent;
-    
-    // Y = -1.0 is Backward
-    if (bIsPressed)
-    {
-        CurrentIntent.Y = -1.0f;
-    }
-    else
-    {
-        // Only clear backward if we're not going forward
-        if (CurrentIntent.Y < 0.0f)
-        {
-            CurrentIntent.Y = 0.0f;
-        }
-    }
-    
-    Control->SetMoveIntent(CurrentIntent);
+    Control->MoveIntent.Y =
+        Value.Get<bool>() ? -1.0f : 0.0f;
 }
 
 
@@ -378,24 +345,8 @@ void UPlayerInputComponent::HandleMoveRight(
         return;
     }
 
-    const bool bIsPressed = Value.Get<bool>();
-    FVector2D CurrentIntent = Control->MoveIntent;
-    
-    // X = +1.0 is Right
-    if (bIsPressed)
-    {
-        CurrentIntent.X = 1.0f;
-    }
-    else
-    {
-        // Only clear right if we're not going left
-        if (CurrentIntent.X > 0.0f)
-        {
-            CurrentIntent.X = 0.0f;
-        }
-    }
-    
-    Control->SetMoveIntent(CurrentIntent);
+    Control->MoveIntent.X =
+        Value.Get<bool>() ? 1.0f : 0.0f;
 }
 
 
@@ -407,25 +358,10 @@ void UPlayerInputComponent::HandleMoveLeft(
     {
         return;
     }
+    
 
-    const bool bIsPressed = Value.Get<bool>();
-    FVector2D CurrentIntent = Control->MoveIntent;
-    
-    // X = -1.0 is Left
-    if (bIsPressed)
-    {
-        CurrentIntent.X = -1.0f;
-    }
-    else
-    {
-        // Only clear left if we're not going right
-        if (CurrentIntent.X < 0.0f)
-        {
-            CurrentIntent.X = 0.0f;
-        }
-    }
-    
-    Control->SetMoveIntent(CurrentIntent);
+    Control->MoveIntent.X =
+        Value.Get<bool>() ? -1.0f : 0.0f;
 }
 
 
@@ -442,9 +378,8 @@ void UPlayerInputComponent::HandleLookInput(
         return;
     }
 
-    Control->SetLookInput(
-        Value.Get<FVector2D>()
-    );
+    Control->LookInput =
+        Value.Get<FVector2D>();
 }
 
 
@@ -461,7 +396,7 @@ void UPlayerInputComponent::HandleJumpStarted(
         return;
     }
 
-    Control->SetJumpIntent(1.0f);
+    Control->JumpIntent = 1.0f;
 }
 
 
@@ -474,10 +409,9 @@ void UPlayerInputComponent::HandleJumpCompleted(
         return;
     }
 
-    Control->SetJumpIntent(0.0f);
+    Control->JumpIntent = 0.0f;
 }
-
-
+ 
 // ============================================================================
 // SPRINT
 // ============================================================================
@@ -491,7 +425,7 @@ void UPlayerInputComponent::HandleSprintStarted(
         return;
     }
 
-    Control->SetSprintIntent(1.0f);
+    Control->SprintIntent = 1.0f;
 }
 
 
@@ -504,7 +438,7 @@ void UPlayerInputComponent::HandleSprintCompleted(
         return;
     }
 
-    Control->SetSprintIntent(0.0f);
+    Control->SprintIntent = 0.0f;
 }
 
 
@@ -521,7 +455,7 @@ void UPlayerInputComponent::HandleCrouchStarted(
         return;
     }
 
-    Control->SetCrouchIntent(1.0f);
+    Control->CrouchIntent = 1.0f;
 }
 
 
@@ -534,5 +468,5 @@ void UPlayerInputComponent::HandleCrouchCompleted(
         return;
     }
 
-    Control->SetCrouchIntent(0.0f);
+    Control->CrouchIntent = 0.0f;
 }

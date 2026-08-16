@@ -110,6 +110,12 @@ void UMovementAnimationSystem::OnMovementControlEvent(
             Payload.Source,
             Key
         );
+        
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("MovementAnimationSystem TRIGGERED EVENT FOR ANIMATION REQUEST")
+        );
     }
 }
 
@@ -145,6 +151,10 @@ bool UMovementAnimationSystem::MapControlIntentToAnimationKey(
 
         case ELocomotion::Fall:
             OutKey = EAnimationKey::Fall;
+            return true;
+            
+        case ELocomotion::Idle:
+            OutKey = EAnimationKey::Idle;
             return true;
 
         default:

@@ -24,6 +24,8 @@ void UAnimationSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
 
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Initializing"));
+
     BuildResolvedRules();
 
     if (UEventBusSubsystem* EventBus = GetEventBus())
@@ -32,6 +34,11 @@ void UAnimationSystem::Initialize(FSubsystemCollectionBase& Collection)
             this,
             &UAnimationSystem::OnAnimationRequest
         );
+        UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Subscribed to FAnimationRequestPayload"));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem: Failed to get EventBusSubsystem"));
     }
 }
 
@@ -60,14 +67,34 @@ void UAnimationSystem::RequestAnimationState(
     EAnimationLayer Layer
 )
 {
-    if (!Actor || NewState == EAnimationKey::None)
+    if (!Actor)
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::RequestAnimationState - Actor is null"));
         return;
     }
+
+    if (NewState == EAnimationKey::None)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::RequestAnimationState - NewState is None for %s"),
+               *Actor->GetName());
+        return;
+    }
+
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem::RequestAnimationState - Actor: %s, NewState: %d (%s), bForce: %d, Layer: %d"),
+           *Actor->GetName(),
+           (int32)NewState,
+           *UEnum::GetValueAsString(NewState),
+           bForce,
+           (int32)Layer);
 
     // Every layer has its own independent animation state.
     FActorAnimationState& State =
         GetOrCreateActorState(Actor, Layer);
+
+    UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: Current state for %s is %d (%s)"),
+           *Actor->GetName(),
+           (int32)State.CurrentState,
+           *UEnum::GetValueAsString(State.CurrentState));
 
     const bool bAlreadyThere =
         !bForce &&
@@ -77,13 +104,14 @@ void UAnimationSystem::RequestAnimationState(
     if (bAlreadyThere)
     {
         // Same state re-requested.
-        //
-        // Example:
-        // Movement system broadcasts Sprint every tick.
-        //
         // Don't restart the animation.
+        UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: Skipping duplicate state %d for %s"),
+               (int32)NewState, *Actor->GetName());
         return;
     }
+
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Processing state change from %d to %d for %s (bForce=%d)"),
+           (int32)State.CurrentState, (int32)NewState, *Actor->GetName(), bForce);
 
     const UWorld* World = GetWorld();
 
@@ -102,6 +130,17 @@ void UAnimationSystem::RequestAnimationState(
                 TimeInFromState
             );
 
+    if (Rule && !bForce)
+    {
+        UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Found transition rule for %s from %d to %d"),
+               *Actor->GetName(), (int32)State.CurrentState, (int32)NewState);
+    }
+    else if (bForce)
+    {
+        UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Bypassing transition rules due to bForce=true for %s"),
+               *Actor->GetName());
+    }
+
     EAnimationKey ResolvedTarget = NewState;
 
     TArray<EAnimationKey> Chain;
@@ -111,12 +150,18 @@ void UAnimationSystem::RequestAnimationState(
         if (Rule->OverrideResultState != EAnimationKey::None)
         {
             ResolvedTarget = Rule->OverrideResultState;
+            UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Override result state to %d for %s"),
+                   (int32)ResolvedTarget, *Actor->GetName());
         }
 
         Chain = Rule->IntermediateStates;
+        UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Added %d intermediate states"), Chain.Num());
     }
 
     Chain.Add(ResolvedTarget);
+    
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Final chain has %d states for %s"),
+           Chain.Num(), *Actor->GetName());
 
     State.PendingQueue = Chain;
 
@@ -222,6 +267,7 @@ UAnimationSystem::GetOrCreateActorState(
         // This should never happen because callers validate Actor.
         // Returning a static state avoids undefined behavior.
         static FActorAnimationState InvalidState;
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::GetOrCreateActorState - Actor is null"));
         return InvalidState;
     }
 
@@ -230,6 +276,7 @@ UAnimationSystem::GetOrCreateActorState(
 
     if (!ActorLayers)
     {
+        UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: Creating new state for actor %s"), *Actor->GetName());
         PruneStaleActors();
 
         ActorLayers = &ActorStates.Add(
@@ -298,6 +345,8 @@ void UAnimationSystem::BuildResolvedRules()
             Rows
         );
 
+        UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Found %d transition rules in DataTable"), Rows.Num());
+
         for (const FActorAnimTransitionRule* Row : Rows)
         {
             if (Row)
@@ -308,6 +357,8 @@ void UAnimationSystem::BuildResolvedRules()
     }
 
     ResolvedRules.Append(TransitionRules);
+    
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Total %d transition rules"), ResolvedRules.Num());
 }
 
 
@@ -337,12 +388,16 @@ UAnimationSystem::FindTransitionRule(
                 static_cast<double>(Rule.ComboWindowSeconds)
         )
         {
+            UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: Combo window expired for rule from %d to %d"),
+                   (int32)FromState, (int32)ToState);
             continue;
         }
 
         if (Rule.FromState == FromState)
         {
             // Exact match wins.
+            UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: Found exact transition rule from %d to %d"),
+                   (int32)FromState, (int32)ToState);
             return &Rule;
         }
 
@@ -351,11 +406,21 @@ UAnimationSystem::FindTransitionRule(
             !WildcardMatch
         )
         {
+            UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: Found wildcard transition rule to %d"),
+                   (int32)ToState);
             WildcardMatch = &Rule;
         }
     }
 
-    return WildcardMatch;
+    if (WildcardMatch)
+    {
+        return WildcardMatch;
+    }
+
+    UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem: No transition rule found from %d to %d"),
+           (int32)FromState, (int32)ToState);
+    
+    return nullptr;
 }
 
 
@@ -371,11 +436,14 @@ void UAnimationSystem::AdvanceQueue(
 {
     if (!Actor)
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::AdvanceQueue - Actor is null"));
         return;
     }
 
     if (State.PendingQueue.Num() == 0)
     {
+        UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::AdvanceQueue - No pending states for %s"),
+               *Actor->GetName());
         return;
     }
 
@@ -383,6 +451,9 @@ void UAnimationSystem::AdvanceQueue(
         State.PendingQueue[0];
 
     State.PendingQueue.RemoveAt(0);
+
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem::AdvanceQueue - Playing animation %d for %s (remaining: %d)"),
+           (int32)NextKey, *Actor->GetName(), State.PendingQueue.Num());
 
     UAnimMontage* Montage =
         PlayStateAnimation(
@@ -400,11 +471,15 @@ void UAnimationSystem::AdvanceQueue(
 
     if (!Montage)
     {
+        UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::AdvanceQueue - Failed to play animation %d for %s"),
+               (int32)NextKey, *Actor->GetName());
+        
         // Missing animation / AnimInstance / asset.
-        //
         // Don't stall a transition chain.
         if (State.PendingQueue.Num() > 0)
         {
+            UE_LOG(LogTemp, Log, TEXT("AnimationSystem::AdvanceQueue - Advancing to next state in queue for %s"),
+                   *Actor->GetName());
             AdvanceQueue(
                 Actor,
                 State,
@@ -415,11 +490,16 @@ void UAnimationSystem::AdvanceQueue(
         return;
     }
 
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem::AdvanceQueue - Successfully played animation %d for %s"),
+           (int32)NextKey, *Actor->GetName());
+
     USkeletalMeshComponent* Mesh =
         Actor->FindComponentByClass<USkeletalMeshComponent>();
 
     if (!Mesh)
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::AdvanceQueue - No SkeletalMeshComponent found on %s"),
+               *Actor->GetName());
         return;
     }
 
@@ -428,6 +508,8 @@ void UAnimationSystem::AdvanceQueue(
 
     if (!AnimInstance)
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::AdvanceQueue - No AnimInstance found on %s"),
+               *Actor->GetName());
         return;
     }
 
@@ -459,17 +541,22 @@ UAnimationSystem::PlayStateAnimation(
 {
     if (!Actor)
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - Actor is null"));
         return nullptr;
     }
+
+    UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::PlayStateAnimation - Playing key %d for %s"),
+           (int32)Key, *Actor->GetName());
 
     UAnimationRegistryComponent* Registry =
         FindAnimationRegistry(Actor);
 
     if (!Registry)
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - No AnimationRegistryComponent found on %s"),
+               *Actor->GetName());
         return nullptr;
     }
-    
 
     FAnimationDefinition Definition;
 
@@ -481,14 +568,21 @@ UAnimationSystem::PlayStateAnimation(
         !Definition.Animation
     )
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - Animation not found for key %d on %s"),
+               (int32)Key, *Actor->GetName());
         return nullptr;
     }
+
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Found animation for key %d on %s"),
+           (int32)Key, *Actor->GetName());
 
     USkeletalMeshComponent* Mesh =
         Actor->FindComponentByClass<USkeletalMeshComponent>();
 
     if (!Mesh)
     {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::PlayStateAnimation - No SkeletalMeshComponent found on %s"),
+               *Actor->GetName());
         return nullptr;
     }
 
@@ -501,6 +595,8 @@ UAnimationSystem::PlayStateAnimation(
 
     if (AnimInstance)
     {
+        UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Using AnimInstance for %s"),
+               *Actor->GetName());
         
         AnimInstance->SetRootMotionMode(
             ERootMotionMode::IgnoreRootMotion
@@ -524,7 +620,7 @@ UAnimationSystem::PlayStateAnimation(
                         Definition.LoopCount
                     );
 
-            return AnimInstance
+            UAnimMontage* Montage = AnimInstance
                 ->PlaySlotAnimationAsDynamicMontage(
                     SequenceBase,
 
@@ -541,7 +637,30 @@ UAnimationSystem::PlayStateAnimation(
 
                     Definition.StartPosition
                 );
+
+            if (Montage)
+            {
+                UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Successfully created dynamic montage for %s"),
+                       *Actor->GetName());
+            }
+            else
+            {
+                UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::PlayStateAnimation - Failed to create dynamic montage for %s"),
+                       *Actor->GetName());
+            }
+
+            return Montage;
         }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::PlayStateAnimation - Animation is not a SequenceBase for %s"),
+                   *Actor->GetName());
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::PlayStateAnimation - No AnimInstance found for %s, using fallback"),
+               *Actor->GetName());
     }
 
     //=========================================================================
@@ -551,6 +670,9 @@ UAnimationSystem::PlayStateAnimation(
     const bool bLooping =
         Definition.PlaybackMode ==
         EAnimationPlaybackMode::Loop;
+
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Using fallback playback for %s (looping: %d)"),
+           *Actor->GetName(), bLooping);
 
     Mesh->PlayAnimation(
         Definition.Animation,
@@ -578,8 +700,15 @@ void UAnimationSystem::OnStateAnimationEnded(
         !Montage
     )
     {
+        if (bInterrupted)
+        {
+            UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::OnStateAnimationEnded - Animation interrupted"));
+        }
         return;
     }
+
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem::OnStateAnimationEnded - Animation ended for %s, checking queue"),
+           *Actor->GetName());
 
     FActorAnimationState* State =
         FindActorAnimationState(
@@ -589,6 +718,8 @@ void UAnimationSystem::OnStateAnimationEnded(
 
     if (!State)
     {
+        UE_LOG(LogTemp, Warning, TEXT("AnimationSystem::OnStateAnimationEnded - No state found for %s"),
+               *Actor->GetName());
         return;
     }
 
@@ -596,16 +727,25 @@ void UAnimationSystem::OnStateAnimationEnded(
     // this montage on this specific layer.
     if (State->ActiveMontage.Get() != Montage)
     {
+        UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::OnStateAnimationEnded - Montage has been replaced for %s"),
+               *Actor->GetName());
         return;
     }
 
     if (State->PendingQueue.Num() > 0)
     {
+        UE_LOG(LogTemp, Log, TEXT("AnimationSystem::OnStateAnimationEnded - Advancing to next state for %s"),
+               *Actor->GetName());
         AdvanceQueue(
             Actor.Get(),
             *State,
             Layer
         );
+    }
+    else
+    {
+        UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::OnStateAnimationEnded - No pending states for %s"),
+               *Actor->GetName());
     }
 }
 
@@ -656,12 +796,27 @@ UAnimationSystem::GetActorRegistry() const
 // Event Bus
 //=============================================================================
 
+
 void UAnimationSystem::OnAnimationRequest(
     const FAnimationRequestPayload& Payload
 )
 {
+    // Check if the actor is valid using Get() and IsValid()
+    AActor* Actor = Payload.Actor.Get();
+    if (!Actor || !IsValid(Actor))
+    {
+        UE_LOG(LogTemp, Error, TEXT("AnimationSystem::OnAnimationRequest - Invalid Actor in payload"));
+        return;
+    }
+
+    UE_LOG(LogTemp, Log, TEXT("AnimationSystem::OnAnimationRequest - Received request for %s: State=%d, bForce=%d, Layer=%d"),
+           *Actor->GetName(),
+           (int32)Payload.RequestedState,
+           Payload.bForce,
+           (int32)Payload.Layer);
+
     RequestAnimationState(
-        Payload.Actor,
+        Actor,
         Payload.RequestedState,
         Payload.bForce,
         Payload.Layer

@@ -163,74 +163,57 @@ private:
 template<typename PayloadType>
 uint32 UEventBusSubsystem::GetEventTypeId()
 {
-    static const uint32 TypeId = GetTypeHash(
-        FString(TEXT("PayloadType_")) +
-        FString::FromInt(GetTypeHash(FString(__FUNCTION__)))
-    );
+    using DecayedType = typename TDecay<PayloadType>::Type;
+    static const uint32 TypeId = GetTypeHash(DecayedType::StaticStruct());
     return TypeId;
+}
+
+template<typename PayloadType>
+void UEventBusSubsystem::Publish(const PayloadType& Payload)
+{
+    using DecayedType = typename TDecay<PayloadType>::Type;
+
+    const uint32 TypeId = GetEventTypeId<DecayedType>();
+
+    TUniquePtr<IEventChannel>* ExistingChannel = EventChannels.Find(TypeId);
+    if (!ExistingChannel)
+    {
+        return;
+    }
+
+    TEventChannel<DecayedType>& Channel =
+        static_cast<TEventChannel<DecayedType>&>(**ExistingChannel);
+
+    Channel.Delegate.Broadcast(Payload);
+}
+
+template<typename PayloadType>
+void UEventBusSubsystem::Publish(PayloadType&& Payload)
+{
+    using DecayedType = typename TDecay<PayloadType>::Type;
+    Publish<DecayedType>(static_cast<const DecayedType&>(Payload));
 }
 
 template<typename PayloadType>
 UEventBusSubsystem::TEventChannel<PayloadType>&
 UEventBusSubsystem::GetOrCreateChannel()
 {
-    const uint32 TypeId = GetEventTypeId<PayloadType>();
+    using DecayedType = typename TDecay<PayloadType>::Type;
 
-    TUniquePtr<IEventChannel>* ExistingChannel =
-        EventChannels.Find(TypeId);
+    const uint32 TypeId = GetEventTypeId<DecayedType>();
 
+    TUniquePtr<IEventChannel>* ExistingChannel = EventChannels.Find(TypeId);
     if (ExistingChannel)
     {
-        return static_cast<
-            TEventChannel<PayloadType>&
-        >(**ExistingChannel);
+        return static_cast<TEventChannel<DecayedType>&>(**ExistingChannel);
     }
 
-    TUniquePtr<TEventChannel<PayloadType>> NewChannel =
-        MakeUnique<TEventChannel<PayloadType>>();
+    TUniquePtr<TEventChannel<DecayedType>> NewChannel = MakeUnique<TEventChannel<DecayedType>>();
+    TEventChannel<DecayedType>* ChannelPtr = NewChannel.Get();
 
-    TEventChannel<PayloadType>* ChannelPtr =
-        NewChannel.Get();
-
-    EventChannels.Add(
-        TypeId,
-        MoveTemp(NewChannel)
-    );
+    EventChannels.Add(TypeId, MoveTemp(NewChannel));
 
     return *ChannelPtr;
-}
-
-
-template<typename PayloadType>
-void UEventBusSubsystem::Publish(
-    const PayloadType& Payload
-)
-{
-    const uint32 TypeId = GetEventTypeId<PayloadType>();
-
-    TUniquePtr<IEventChannel>* ExistingChannel =
-        EventChannels.Find(TypeId);
-
-    if (!ExistingChannel)
-    {
-        return;
-    }
-
-    TEventChannel<PayloadType>& Channel =
-        static_cast<TEventChannel<PayloadType>&>(
-            **ExistingChannel
-        );
-
-    Channel.Delegate.Broadcast(Payload);
-}
-
-
-template<typename PayloadType>
-void UEventBusSubsystem::Publish(
-    PayloadType&& Payload
-)
-{
-    Publish<PayloadType>(Payload);
 }
 
 
