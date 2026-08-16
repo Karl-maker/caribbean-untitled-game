@@ -376,7 +376,7 @@ void UPlayerInputComponent::HandleLookInput(const FInputActionValue& Value)
     }
 
     // Apply sensitivity scaling
-    const float Sensitivity = 0.5f; // Adjust this value to taste
+    const float Sensitivity = 2.0f; // Adjust this value to taste
     FVector2D LookValue = Value.Get<FVector2D>();
     LookValue *= Sensitivity;
     

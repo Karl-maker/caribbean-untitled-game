@@ -37,10 +37,10 @@ APlayableActor::APlayableActor()
     CameraBoom->TargetArmLength = 1000.0f;
 
     // Mouse/controller rotates the camera boom.
-    CameraBoom->bUsePawnControlRotation = true;
+    CameraBoom->bUsePawnControlRotation = false;
 
     // Camera moves closer when blocked by geometry.
-    CameraBoom->bDoCollisionTest = true;
+    CameraBoom->bDoCollisionTest = false;
 
 
     FollowCamera =

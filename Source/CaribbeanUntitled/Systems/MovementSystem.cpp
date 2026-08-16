@@ -4,6 +4,7 @@
 #include "../Events/MovementPayload.h"
 
 #include "../Components/StatsComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 
 void UMovementSystem::Tick(float DeltaTime)
@@ -60,9 +61,12 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
         return;
     }
 
-    ApplyLook(Character, Control, DeltaTime);
-
+    // Move direction must be resolved before ApplyLook now, since facing
+    // is derived from where the character is actually moving.
     const FVector MoveDirection = ResolveMoveDirection(Character, Control);
+
+    ApplyLook(Character, Control, MoveDirection, DeltaTime);
+
     const bool bWantsToSprint = Control->WantsToSprint();
     const bool bWantsToCrouch = Control->WantsToCrouch();
 
@@ -79,30 +83,9 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
 // Look
 //=========================================================================
 
-void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Control, float DeltaTime)
+void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Control, const FVector& MoveDirection, float DeltaTime)
 {
-    // PRIORITY 1: Mouse/Joystick Input
-    const FVector2D LookInput = Control->GetLookInput();
-    if (!FMath::IsNearlyZero(LookInput.X) || !FMath::IsNearlyZero(LookInput.Y))
-    {
-        UE_LOG(LogTemp, Warning, TEXT("ApplyLook - Using Mouse Input: X=%f, Y=%f"),
-               LookInput.X, LookInput.Y);
-        
-        FRotator Rotation = Character->GetActorRotation();
-        
-        // Horizontal rotation (Yaw)
-        Rotation.Yaw += LookInput.X;
-        
-        // Optional: Vertical rotation (Pitch)
-        // Rotation.Pitch += LookInput.Y;
-        // Rotation.Pitch = FMath::Clamp(Rotation.Pitch, -89.0f, 89.0f);
-        
-        Character->SetActorRotation(FRotator(0.0f, Rotation.Yaw, 0.0f));
-        Control->ClearLookInput();
-        return; // Don't process other look sources
-    }
-    
-    // PRIORITY 2: Destination seeking
+    // PRIORITY 1: Destination seeking
     if (Control->IsSeekingDestination())
     {
         FVector ToTarget = Control->GetDesiredWorldLocation() - Character->GetActorLocation();
@@ -125,14 +108,36 @@ void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Contro
             return;
         }
     }
-    
-    // PRIORITY 3: Explicit look direction (AI control, etc.)
+
+    // PRIORITY 2: Explicit look direction (AI control, etc.)
     FVector LookDirection = Control->GetLookDirection();
     LookDirection.Z = 0.0f;
     if (!LookDirection.IsNearlyZero())
     {
-        UE_LOG(LogTemp, Warning, TEXT("ApplyLook - Using Explicit Look Direction"));
         const float TargetYaw = LookDirection.Rotation().Yaw;
+        const FRotator CurrentRotation = Character->GetActorRotation();
+
+        const FRotator NewRotation = FMath::RInterpTo(
+            CurrentRotation,
+            FRotator(0.0f, TargetYaw, 0.0f),
+            DeltaTime,
+            Control->LookRotationSpeed
+        );
+
+        Character->SetActorRotation(NewRotation);
+        return;
+    }
+
+    // PRIORITY 3: Face movement direction.
+    // Mouse look is now owned entirely by CameraSystem - the character no
+    // longer turns to match raw mouse delta directly (that was fighting
+    // the camera's own orbit and rotating the mesh far faster than the
+    // camera could track). Instead, a player-controlled character turns
+    // to face wherever it's actually moving, so the mesh always visibly
+    // matches the direction you're running/acting in.
+    if (Control->ControlType == EControlType::Player && !MoveDirection.IsNearlyZero())
+    {
+        const float TargetYaw = MoveDirection.Rotation().Yaw;
         const FRotator CurrentRotation = Character->GetActorRotation();
 
         const FRotator NewRotation = FMath::RInterpTo(
@@ -202,7 +207,19 @@ FVector UMovementSystem::ComputeIntentDirection(ACharacter* Character, const FVe
         return FVector::ZeroVector;
     }
 
-    const FRotator YawRotation(0.0f, Character->GetActorRotation().Yaw, 0.0f);
+    // Movement is camera-relative: forward/right are derived from the
+    // camera boom's current yaw, not the character's own facing. The
+    // character's own rotation is now an OUTPUT of movement (see
+    // ApplyLook's Priority 3), not an input to it - basing this on the
+    // character's own rotation would create a feedback loop where facing
+    // and movement direction chase each other.
+    float BasisYaw = Character->GetActorRotation().Yaw;
+    if (const USpringArmComponent* CameraBoom = Character->FindComponentByClass<USpringArmComponent>())
+    {
+        BasisYaw = CameraBoom->GetComponentRotation().Yaw;
+    }
+
+    const FRotator YawRotation(0.0f, BasisYaw, 0.0f);
     const FVector Forward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
     const FVector Right = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
@@ -418,13 +435,6 @@ void UMovementSystem::DetermineAndPublishLocomotion(
             ELocomotion::Idle,
             IsJumpInProgress(Actor)
         );
-
-    UE_LOG(
-        LogTemp,
-        Warning,
-        TEXT("MOVEMENT -> %d"),
-        static_cast<uint8>(CurrentState)
-    );
 
     FMovementPayload Payload;
     Payload.Source = Actor;
