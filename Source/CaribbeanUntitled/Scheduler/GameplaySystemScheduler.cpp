@@ -6,6 +6,7 @@
 #include "GameplaySystemScheduler.h"
 
 #include "../Systems/MovementSystem.h"
+#include "../Systems/CameraSystem.h"
 
 #include "Engine/World.h"
 
@@ -28,6 +29,7 @@ void UGameplaySystemScheduler::Initialize(
     );
 
     MovementSystem = NewObject<UMovementSystem>(this);
+    CameraSystem = NewObject<UCameraSystem>(this);
 
 }
 
@@ -115,7 +117,7 @@ void UGameplaySystemScheduler::TickMovement(float DeltaTime)
     // ------------------------------------------------------------
 
     if (MovementSystem) MovementSystem->Tick(DeltaTime);
-
+    if (CameraSystem) CameraSystem->Tick(GetWorld(), DeltaTime);
 }
 
 

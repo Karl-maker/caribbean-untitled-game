@@ -11,7 +11,7 @@
 #include "GameplaySystemScheduler.generated.h"
 
 class UMovementSystem;
-
+class UCameraSystem;
 /**
  * Central scheduler for gameplay systems.
  *
@@ -88,6 +88,8 @@ private:
     UPROPERTY()
     TObjectPtr<UMovementSystem> MovementSystem;
 
+    UPROPERTY()
+    TObjectPtr<UCameraSystem> CameraSystem;
     // ------------------------------------------------------------
     // PHASES
     // ------------------------------------------------------------
