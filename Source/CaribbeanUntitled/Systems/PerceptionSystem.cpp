@@ -37,10 +37,10 @@ FIntVector UPerceptionSystem::LocationToCell(const FVector& Location) const
 }
 
 const TArray<TWeakObjectPtr<AActor>>& UPerceptionSystem::GetNearbyActors(
+    UWorld* World,
     const FVector& Location,
     float QueryRadius)
 {
-    UWorld* World = GetWorld();
 
     checkf(
         World,
@@ -369,6 +369,7 @@ void UPerceptionSystem::EvaluatePerceiver(
 
     const TArray<TWeakObjectPtr<AActor>>& NearbyActors =
         GetNearbyActors(
+            World,
             EyeLocation,
             SightRange
         );

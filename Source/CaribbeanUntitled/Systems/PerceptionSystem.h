@@ -90,7 +90,7 @@ private:
     FIntVector LocationToCell(const FVector& Location) const;
 
     /** Shared/cached "what's physically nearby" query - the grouping piece. */
-    const TArray<TWeakObjectPtr<AActor>>& GetNearbyActors(const FVector& Location, float QueryRadius);
+    const TArray<TWeakObjectPtr<AActor>>& GetNearbyActors(UWorld* World, const FVector& Location, float QueryRadius);
 
     /** Evaluates one perceiver against the shared nearby list and writes results onto its component. */
     void EvaluatePerceiver(

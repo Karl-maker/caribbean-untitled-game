@@ -96,7 +96,7 @@ ACharacterActor::ACharacterActor()
         Idle.LoopCount = -1;
         Idle.BlendInTime = 0.15f;
         Idle.BlendOutTime = 0.15f;
-        Idle.SlotName = "full-body";
+        Idle.SlotName = "locomotion";
         Idle.Description = FText::FromString(TEXT("Character idle animation."));
         AnimationRegistryComponent->Animations.Add(Idle);
         
@@ -107,7 +107,7 @@ ACharacterActor::ACharacterActor()
         Walk.LoopCount = -1;
         Walk.BlendInTime = 0.15f;
         Walk.BlendOutTime = 0.15f;
-        Walk.SlotName = "lower-body";
+        Walk.SlotName = "locomotion";
         Walk.Description = FText::FromString(TEXT("Character walk animation."));
         AnimationRegistryComponent->Animations.Add(Walk);
         
@@ -118,7 +118,7 @@ ACharacterActor::ACharacterActor()
         Run.LoopCount = -1;
         Run.BlendInTime = 0.15f;
         Run.BlendOutTime = 0.15f;
-        Run.SlotName = "lower-body";
+        Run.SlotName = "locomotion";
         Run.Description = FText::FromString(TEXT("Character run animation."));
         AnimationRegistryComponent->Animations.Add(Run);
         
@@ -129,7 +129,7 @@ ACharacterActor::ACharacterActor()
         Sprint.LoopCount = -1;
         Sprint.BlendInTime = 0.15f;
         Sprint.BlendOutTime = 0.15f;
-        Sprint.SlotName = "lower-body";
+        Sprint.SlotName = "locomotion";
         Sprint.Description = FText::FromString(TEXT("Character sprint animation."));
         AnimationRegistryComponent->Animations.Add(Sprint);
         
@@ -144,7 +144,7 @@ ACharacterActor::ACharacterActor()
         Jump.LoopCount = 1;
         Jump.BlendInTime = 0.05f;
         Jump.BlendOutTime = 0.1f;
-        Jump.SlotName = "full-body";
+        Jump.SlotName = "locomotion";
         Jump.Description = FText::FromString(TEXT("Character jump animation."));
         AnimationRegistryComponent->Animations.Add(Jump);
         
@@ -155,7 +155,7 @@ ACharacterActor::ACharacterActor()
         Fall.LoopCount = -1;
         Fall.BlendInTime = 0.1f;
         Fall.BlendOutTime = 0.1f;
-        Fall.SlotName = "full-body";
+        Fall.SlotName = "locomotion";
         Fall.Description = FText::FromString(TEXT("Character fall animation."));
         AnimationRegistryComponent->Animations.Add(Fall);
         
@@ -166,7 +166,7 @@ ACharacterActor::ACharacterActor()
         Land.LoopCount = 1;
         Land.BlendInTime = 0.05f;
         Land.BlendOutTime = 0.1f;
-        Land.SlotName = "full-body";
+        Land.SlotName = "locomotion";
         Land.Description = FText::FromString(TEXT("Character land animation."));
         AnimationRegistryComponent->Animations.Add(Land);
         
@@ -181,7 +181,7 @@ ACharacterActor::ACharacterActor()
         Attack1.LoopCount = 1;
         Attack1.BlendInTime = 0.05f;
         Attack1.BlendOutTime = 0.1f;
-        Attack1.SlotName = "upper-body";
+        Attack1.SlotName = "combat";
         Attack1.Description = FText::FromString(TEXT("Character attack 1 animation."));
         AnimationRegistryComponent->Animations.Add(Attack1);
         
@@ -192,7 +192,7 @@ ACharacterActor::ACharacterActor()
         Attack2.LoopCount = 1;
         Attack2.BlendInTime = 0.05f;
         Attack2.BlendOutTime = 0.1f;
-        Attack2.SlotName = "upper-body";
+        Attack2.SlotName = "combat";
         Attack2.Description = FText::FromString(TEXT("Character attack 2 animation."));
         AnimationRegistryComponent->Animations.Add(Attack2);
         
@@ -203,7 +203,7 @@ ACharacterActor::ACharacterActor()
         Attack3.LoopCount = 1;
         Attack3.BlendInTime = 0.05f;
         Attack3.BlendOutTime = 0.1f;
-        Attack3.SlotName = "upper-body";
+        Attack3.SlotName = "combat";
         Attack3.Description = FText::FromString(TEXT("Character attack 3 animation."));
         AnimationRegistryComponent->Animations.Add(Attack3);
         
@@ -214,7 +214,7 @@ ACharacterActor::ACharacterActor()
         Hit.LoopCount = 1;
         Hit.BlendInTime = 0.05f;
         Hit.BlendOutTime = 0.1f;
-        Hit.SlotName = "upper-body";
+        Hit.SlotName = "combat";
         Hit.Description = FText::FromString(TEXT("Character hit reaction animation."));
         AnimationRegistryComponent->Animations.Add(Hit);
         
@@ -225,7 +225,7 @@ ACharacterActor::ACharacterActor()
         Death.LoopCount = 1;
         Death.BlendInTime = 0.05f;
         Death.BlendOutTime = 0.2f;
-        Death.SlotName = "full-body";
+        Death.SlotName = "combat";
         Death.Description = FText::FromString(TEXT("Character death animation."));
         AnimationRegistryComponent->Animations.Add(Death);
         
@@ -240,7 +240,7 @@ ACharacterActor::ACharacterActor()
         Interact.LoopCount = 1;
         Interact.BlendInTime = 0.1f;
         Interact.BlendOutTime = 0.1f;
-        Interact.SlotName = "upper-body";  // Reaching/interacting with objects
+        Interact.SlotName = "combat";  // Reaching/interacting with objects
         Interact.Description = FText::FromString(TEXT("Character interact animation."));
         AnimationRegistryComponent->Animations.Add(Interact);
         
@@ -251,7 +251,7 @@ ACharacterActor::ACharacterActor()
         Mount.LoopCount = 1;
         Mount.BlendInTime = 0.1f;
         Mount.BlendOutTime = 0.1f;
-        Mount.SlotName = "full-body";  // Full body movement to mount
+        Mount.SlotName = "combat";  // Full body movement to mount
         Mount.Description = FText::FromString(TEXT("Character mount animation."));
         AnimationRegistryComponent->Animations.Add(Mount);
         
@@ -262,7 +262,7 @@ ACharacterActor::ACharacterActor()
         Dismount.LoopCount = 1;
         Dismount.BlendInTime = 0.1f;
         Dismount.BlendOutTime = 0.1f;
-        Dismount.SlotName = "full-body";  // Full body movement to dismount
+        Dismount.SlotName = "combat";  // Full body movement to dismount
         Dismount.Description = FText::FromString(TEXT("Character dismount animation."));
         AnimationRegistryComponent->Animations.Add(Dismount);
     }

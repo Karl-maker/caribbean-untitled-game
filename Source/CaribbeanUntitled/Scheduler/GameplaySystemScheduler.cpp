@@ -9,6 +9,7 @@
 #include "../Systems/CameraSystem.h"
 #include "../Systems/PerceptionSystem.h"
 #include "../Systems/BrainSystem.h"
+#include "../Systems/ActionSystem.h"
 
 #include "Engine/World.h"
 
@@ -34,6 +35,7 @@ void UGameplaySystemScheduler::Initialize(
     CameraSystem = NewObject<UCameraSystem>(this);
     PerceptionSystem = NewObject<UPerceptionSystem>(this);
     BrainSystem = NewObject<UBrainSystem>(this);
+    ActionSystem = NewObject<UActionSystem>(this);
 
 }
 
@@ -90,6 +92,7 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 
     if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
     if (BrainSystem) BrainSystem->Tick(DeltaTime);
+    if (ActionSystem) ActionSystem->Tick(DeltaTime);
 }
 
 

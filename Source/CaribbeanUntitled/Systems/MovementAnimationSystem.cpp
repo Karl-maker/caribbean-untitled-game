@@ -76,6 +76,10 @@ void UMovementAnimationSystem::OnMovementControlEvent(
         case ELocomotion::Crouch:
             Key = EAnimationKey::Crouch;
             break;
+            
+        default:
+            Key = EAnimationKey::Idle;
+            break;
     }
 
     GetWorld()

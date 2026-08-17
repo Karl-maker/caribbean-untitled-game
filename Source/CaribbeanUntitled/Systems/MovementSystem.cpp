@@ -424,6 +424,9 @@ void UMovementSystem::DetermineAndPublishLocomotion(
     bool bWantsToSprint,
     bool bWantsToCrouch)
 {
+    // Check if we're currently in the landing state with an active timer
+    bool bIsLanding = LandingTimers.Contains(Actor);
+    
     ELocomotion CurrentState =
         DetermineLocomotionState(
             Character,
@@ -432,17 +435,89 @@ void UMovementSystem::DetermineAndPublishLocomotion(
             MoveDirection,
             bWantsToSprint,
             bWantsToCrouch,
-            ELocomotion::Idle,
+            GetCurrentLocomotionState(Actor),
             IsJumpInProgress(Actor)
         );
 
-    FMovementPayload Payload;
-    Payload.Source = Actor;
-    Payload.Type = CurrentState;
+    // Only publish if the state actually changed
+    ELocomotion PreviousState = GetCurrentLocomotionState(Actor);
+    if (CurrentState != PreviousState)
+    {
+        // If we're transitioning INTO the Land state, start the timer
+        if (CurrentState == ELocomotion::Land && PreviousState == ELocomotion::Fall)
+        {
+            // Clear any existing timer
+            if (FTimerHandle* ExistingTimer = LandingTimers.Find(Actor))
+            {
+                if (UWorld* World = GetWorld())
+                {
+                    World->GetTimerManager().ClearTimer(*ExistingTimer);
+                }
+                LandingTimers.Remove(Actor);
+            }
 
-    GetWorld()
-        ->GetSubsystem<UEventBusSubsystem>()
-        ->Publish(Payload);
+            // Set new timer
+            if (UWorld* World = GetWorld())
+            {
+                TWeakObjectPtr<AActor> WeakActor(Actor);
+                FTimerHandle Handle;
+                World->GetTimerManager().SetTimer(
+                    Handle,
+                    FTimerDelegate::CreateUObject(this, &UMovementSystem::ClearLandingState, WeakActor),
+                    LandingDuration,
+                    false
+                );
+                LandingTimers.Add(Actor, Handle);
+            }
+        }
+
+        // Update the stored state
+        PreviousLocomotionStates.Add(Actor, CurrentState);
+
+        // Publish the event
+        FMovementPayload Payload;
+        Payload.Source = Actor;
+        Payload.Type = CurrentState;
+
+        UEventBusSubsystem* EventBus = GetEventBus();
+        if (EventBus)
+        {
+            EventBus->Publish(Payload);
+        }
+    }
+}
+
+void UMovementSystem::ClearLandingState(TWeakObjectPtr<AActor> WeakActor)
+{
+    AActor* Actor = WeakActor.Get();
+    if (Actor)
+    {
+        LandingTimers.Remove(Actor);
+    }
+}
+
+void UMovementSystem::ClearAllTimersForActor(AActor* Actor)
+{
+    if (!Actor) return;
+    
+    UWorld* World = GetWorld();
+    if (!World) return;
+    
+    FTimerManager& TimerManager = World->GetTimerManager();
+    
+    // Clear landing timer
+    if (FTimerHandle* Handle = LandingTimers.Find(Actor))
+    {
+        TimerManager.ClearTimer(*Handle);
+        LandingTimers.Remove(Actor);
+    }
+    
+    // Clear jump timers (existing code)
+    if (FTimerHandle* Handle = PendingJumpTimers.Find(Actor))
+    {
+        TimerManager.ClearTimer(*Handle);
+        PendingJumpTimers.Remove(Actor);
+    }
 }
 
 ELocomotion UMovementSystem::DetermineLocomotionState(
@@ -465,10 +540,6 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
         return ELocomotion::Land;
     }
 
-    // While anticipating (delayed) or ascending a jump, hold the Jump
-    // state — the character may still be grounded during the
-    // anticipation delay, but we don't want that to fall through to
-    // Idle/Walk/etc. and interrupt the jump animation.
     if (bJumpInProgress)
     {
         return ELocomotion::Jump;
@@ -491,7 +562,10 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
         return ELocomotion::Crouch;
     }
 
-    const bool bIsMoving = !MoveDirection.IsNearlyZero();
+    // ✅ FIX: Use actual velocity to determine if moving
+    const float Speed = Movement->Velocity.Size();
+    const bool bIsMoving = Speed > 10.0f;  // Small threshold for floating point
+    
     if (bIsMoving)
     {
         UStatsComponent* Stats = Character->FindComponentByClass<UStatsComponent>();

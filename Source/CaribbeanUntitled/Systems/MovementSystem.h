@@ -48,9 +48,13 @@ public:
     bool IsJumpInProgress(AActor* Actor) const;
 private:
     TMap<TWeakObjectPtr<AActor>, ELocomotion> PreviousLocomotionStates;
-
+    TMap<TWeakObjectPtr<AActor>, FTimerHandle> LandingTimers;
     TMap<TWeakObjectPtr<AActor>, FTimerHandle> PendingJumpTimers;
 
+    float LandingDuration = 1.0f;
+    
+    void ClearLandingState(TWeakObjectPtr<AActor> WeakActor);
+    void ClearAllTimersForActor(AActor* Actor);
     void ProcessActor(AActor* Actor, float DeltaTime);
     void PerformDelayedJump(TWeakObjectPtr<AActor> WeakActor, float AscentGravityScale);
 

@@ -14,6 +14,7 @@ class UMovementSystem;
 class UCameraSystem;
 class UPerceptionSystem;
 class UBrainSystem;
+class UActionSystem;
 
 /**
  * Central scheduler for gameplay systems.
@@ -99,6 +100,9 @@ private:
     
     UPROPERTY()
     TObjectPtr<UBrainSystem> BrainSystem;
+    
+    UPROPERTY()
+    TObjectPtr<UActionSystem> ActionSystem;
     // ------------------------------------------------------------
     // PHASES
     // ------------------------------------------------------------
