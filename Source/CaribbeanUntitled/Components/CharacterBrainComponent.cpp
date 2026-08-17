@@ -1,4 +1,6 @@
 #include "CharacterBrainComponent.h"
+#include "../Systems/BrainSystem.h"
+#include "Engine/World.h"
 
 UCharacterBrainComponent::UCharacterBrainComponent()
 {
@@ -32,3 +34,4 @@ void UCharacterBrainComponent::ClearIntent()
 {
     CurrentIntent.Clear();
 }
+

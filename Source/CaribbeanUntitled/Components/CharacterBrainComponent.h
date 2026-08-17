@@ -15,12 +15,9 @@ enum class EBrainIntent : uint8
     GoTo,
     Investigate,
     Interact,
-    Talk,
     Flee,
     Defend,
-    Attack,
-    Search,
-    UseTool
+    Attack
 };
 
 
@@ -144,4 +141,5 @@ public:
     {
         return CurrentIntent.Feeling;
     }
+    
 };
