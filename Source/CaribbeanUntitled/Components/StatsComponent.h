@@ -246,7 +246,18 @@ public:
     )
     float DashCooldown = 0.5f;
 
-
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category="Stats|Sight",
+        meta=(ClampMin="0.0")
+    )
+    float SightRange = 100.0f;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Sight", meta=(ClampMin="0.0", ClampMax="360.0"))
+    float SightAngle = 90.0f;
+    
+    
     // ============================================================
     // GETTERS
     // ============================================================
@@ -274,7 +285,12 @@ public:
 
     UFUNCTION(BlueprintPure, Category="Stats|Movement|Dash")
     float GetDashDuration() const;
+    
+    UFUNCTION(BlueprintPure, Category="Stats|Sight")
+    float GetSightRange() const;
 
+    UFUNCTION(BlueprintPure, Category="Stats|Sight")
+    float GetSightAngle() const;
 
 protected:
 

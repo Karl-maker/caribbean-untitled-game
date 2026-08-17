@@ -168,3 +168,15 @@ float UStatsComponent::GetDashDuration() const
 {
     return DashDuration;
 }
+
+// Sight
+
+float UStatsComponent::GetSightRange() const
+{
+    return SightRange;
+}
+
+float UStatsComponent::GetSightAngle() const
+{
+    return SightAngle;
+}
