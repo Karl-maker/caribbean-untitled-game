@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "CharacterActor.h"
 #include "../Components/CharacterBrainComponent.h"
+#include "../Components/PerceptionComponent.h"
 #include "NonPlayableCharacter.generated.h"
 
 
@@ -33,4 +34,11 @@ protected:
         Category="NPC|Components"
     )
     TObjectPtr<UCharacterBrainComponent> BrainComponent;
+    
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="NPC|Components"
+    )
+    TObjectPtr<UCharacterPerceptionComponent> CharacterPerceptionComponent;
 };

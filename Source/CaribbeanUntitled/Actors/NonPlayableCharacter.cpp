@@ -26,4 +26,9 @@ ANonPlayableCharacter::ANonPlayableCharacter()
         BrainComponent->SetFeeling(EBrainFeeling::Neutral);
         BrainComponent->SetIntent(EBrainIntent::Idle, 0.0f);
     }
+    
+    CharacterPerceptionComponent =
+        CreateDefaultSubobject<UCharacterPerceptionComponent>(
+            TEXT("PerceptionComponent")
+        );
 }
