@@ -7,6 +7,7 @@
 
 #include "../Systems/MovementSystem.h"
 #include "../Systems/CameraSystem.h"
+#include "../Systems/PerceptionSystem.h"
 
 #include "Engine/World.h"
 
@@ -30,6 +31,7 @@ void UGameplaySystemScheduler::Initialize(
 
     MovementSystem = NewObject<UMovementSystem>(this);
     CameraSystem = NewObject<UCameraSystem>(this);
+    PerceptionSystem = NewObject<UPerceptionSystem>(this);
 
 }
 
@@ -84,8 +86,7 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
 void UGameplaySystemScheduler::TickInput(float DeltaTime)
 {
 
-
-    // Input systems.
+    if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
 }
 
 
@@ -111,11 +112,6 @@ void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 
 void UGameplaySystemScheduler::TickMovement(float DeltaTime)
 {
-
-    // ------------------------------------------------------------
-    // CONTROL TEST SYSTEM
-    // ------------------------------------------------------------
-
     if (MovementSystem) MovementSystem->Tick(DeltaTime);
     if (CameraSystem) CameraSystem->Tick(GetWorld(), DeltaTime);
 }
