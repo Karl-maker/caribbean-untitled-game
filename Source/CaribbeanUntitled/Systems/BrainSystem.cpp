@@ -176,10 +176,21 @@ FBrainIntentData UBrainSystem::DecideIntent(
 
     if (!BrainComponent)
     {
+        UE_LOG(LogTemp, Warning, TEXT("[Brain] NO BRAIN COMPONENT"));
         return Result;
     }
 
     const FBrainPersonality& P = BrainComponent->Personality;
+
+    // --- Log what perception sees ---
+    if (PerceptionComponent)
+    {
+        UE_LOG(LogTemp, Log, TEXT("[Brain] PERCEPTION DATA | HasPlayer=%s | PlayerVisible=%s | Player=%s"),
+            PerceptionComponent->HasPerceivedPlayer() ? TEXT("true") : TEXT("false"),
+            PerceptionComponent->CanSeePlayer() ? TEXT("true") : TEXT("false"),
+            PerceptionComponent->GetPerceivedPlayer() ? *PerceptionComponent->GetPerceivedPlayer()->GetName() : TEXT("NULL")
+        );
+    }
 
     // No perception component at all - hold still, low-key idle.
     if (!PerceptionComponent)
@@ -187,77 +198,92 @@ FBrainIntentData UBrainSystem::DecideIntent(
         Result.Intent = EBrainIntent::Idle;
         Result.Effort = 0.1f;
         Result.Feeling = EBrainFeeling::Neutral;
+        UE_LOG(LogTemp, Log, TEXT("[Brain] NO PERCEPTION → IDLE"));
         return Result;
     }
 
-    // --- Threats take priority, weighted by Bravery/Aggression. ---
-    if (PerceptionComponent->IsUnderThreat() && PerceptionComponent->GetThreats().Num() > 0)
-    {
-        const FPerceivedActor& Threat = PerceptionComponent->GetThreats()[0];
-
-        // Aggressive + brave characters fight; timid ones flee.
-        const float FightScore = (P.Aggression * 0.6f) + (P.Bravery * 0.4f);
-
-        if (FightScore >= 0.5f)
-        {
-            Result.Intent = EBrainIntent::Attack;
-            Result.Feeling = EBrainFeeling::Angry;
-            Result.Effort = FMath::Clamp(0.5f + P.Aggression * 0.5f, 0.0f, 1.0f);
-        }
-        else
-        {
-            Result.Intent = EBrainIntent::Flee;
-            Result.Feeling = EBrainFeeling::Afraid;
-            Result.Effort = FMath::Clamp(1.0f - P.Bravery * 0.4f, 0.3f, 1.0f);
-        }
-
-        Result.TargetActor = Threat.Actor;
-        Result.TargetLocation = (Threat.bVisible && Threat.Actor)
-            ? Threat.Actor->GetActorLocation()
-            : Threat.LastKnownLocation;
-        return Result;
-    }
-
-    // --- Player perception, weighted by Sociability/Curiosity. ---
+    // --- PLAYER IS PERCEIVED - ALWAYS DO SOMETHING ---
     if (PerceptionComponent->HasPerceivedPlayer())
     {
         AActor* Player = PerceptionComponent->GetPerceivedPlayer();
         const bool bVisible = PerceptionComponent->CanSeePlayer();
 
-        if (bVisible && Player && P.Sociability >= 0.4f)
+        UE_LOG(LogTemp, Warning, TEXT("[Brain] PLAYER DETECTED! | Visible=%s | Player=%s | Personality: Sociability=%.2f, Curiosity=%.2f"),
+            bVisible ? TEXT("true") : TEXT("false"),
+            Player ? *Player->GetName() : TEXT("NULL"),
+            P.Sociability,
+            P.Curiosity
+        );
+
+        // If visible, always follow or at least look at the player
+        if (bVisible && Player)
         {
-            Result.Intent = EBrainIntent::Follow;
-            Result.Feeling = EBrainFeeling::Happy;
-            Result.Effort = FMath::Clamp(0.3f + P.Sociability * 0.4f, 0.0f, 1.0f);
+            // Different behaviors based on personality, but ALWAYS react
+            if (P.Sociability >= 0.4f)
+            {
+                Result.Intent = EBrainIntent::Follow;
+                Result.Feeling = EBrainFeeling::Happy;
+                Result.Effort = FMath::Clamp(0.3f + P.Sociability * 0.4f, 0.0f, 1.0f);
+                UE_LOG(LogTemp, Warning, TEXT("[Brain] → FOLLOW (Sociable)"));
+            }
+            else if (P.Aggression >= 0.4f)
+            {
+                Result.Intent = EBrainIntent::Attack;
+                Result.Feeling = EBrainFeeling::Angry;
+                Result.Effort = FMath::Clamp(0.5f + P.Aggression * 0.5f, 0.0f, 1.0f);
+                UE_LOG(LogTemp, Warning, TEXT("[Brain] → ATTACK (Aggressive)"));
+            }
+            else if (P.Curiosity >= 0.4f)
+            {
+                Result.Intent = EBrainIntent::Investigate;
+                Result.Feeling = EBrainFeeling::Curious;
+                Result.Effort = FMath::Clamp(0.2f + P.Curiosity * 0.5f, 0.0f, 1.0f);
+                UE_LOG(LogTemp, Warning, TEXT("[Brain] → INVESTIGATE (Curious)"));
+            }
+            else
+            {
+                // DEFAULT: Always at least acknowledge the player
+                Result.Intent = EBrainIntent::Follow; // Or Wander, or Idle - just DO something
+                Result.Feeling = EBrainFeeling::Neutral;
+                Result.Effort = 0.5f;
+                UE_LOG(LogTemp, Warning, TEXT("[Brain] → FOLLOW (Default)"));
+            }
+
             Result.TargetActor = Player;
             Result.TargetLocation = Player->GetActorLocation();
             return Result;
         }
 
+        // Player was seen but now lost - investigate last known location
         if (!bVisible)
         {
-            // Lost sight - go check the last known spot, curious
-            // characters more insistently than others.
             Result.Intent = EBrainIntent::Investigate;
             Result.Feeling = EBrainFeeling::Suspicious;
             Result.Effort = FMath::Clamp(0.2f + P.Curiosity * 0.5f, 0.0f, 1.0f);
             Result.TargetLocation = PerceptionComponent->LastKnownPlayerLocation;
+            UE_LOG(LogTemp, Warning, TEXT("[Brain] → INVESTIGATE (Lost Player) | Location=(%.1f,%.1f,%.1f)"),
+                Result.TargetLocation.X,
+                Result.TargetLocation.Y,
+                Result.TargetLocation.Z
+            );
             return Result;
         }
     }
 
-    // --- Nothing urgent: curious characters wander, others idle. ---
+    // --- No player detected - wander or idle ---
     if (P.Curiosity >= 0.5f)
     {
         Result.Intent = EBrainIntent::Wander;
         Result.Feeling = EBrainFeeling::Curious;
         Result.Effort = FMath::Clamp(P.Curiosity * 0.4f, 0.1f, 0.6f);
+        UE_LOG(LogTemp, Log, TEXT("[Brain] → WANDER"));
     }
     else
     {
         Result.Intent = EBrainIntent::Idle;
         Result.Feeling = EBrainFeeling::Neutral;
         Result.Effort = 0.1f;
+        UE_LOG(LogTemp, Log, TEXT("[Brain] → IDLE"));
     }
 
     return Result;

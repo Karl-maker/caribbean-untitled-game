@@ -341,88 +341,94 @@ void UPerceptionSystem::EvaluatePerceiver(
     UCharacterPerceptionComponent* Perception,
     UStatsComponent* Stats)
 {
-    const float SightRange =
-        Stats->GetSightRange();
+    // --- SAFETY CHECKS ---
+    if (!IsValid(Owner) || !IsValid(Perception) || !IsValid(Stats))
+    {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("[Perception] EVALUATE SKIPPED | Invalid components")
+        );
+        return;
+    }
 
-    const float SightAngle =
-        Stats->GetSightAngle();
-
-    const FVector EyeLocation =
-        Owner->GetActorLocation();
-
-    const FVector Forward =
-        Owner->GetActorForwardVector();
+    const float SightRange = Stats->GetSightRange();
+    const float SightAngle = Stats->GetSightAngle();
+    const FVector EyeLocation = Owner->GetActorLocation();
+    const FVector Forward = Owner->GetActorForwardVector();
 
     UE_LOG(
         LogTemp,
         Log,
-        TEXT(
-            "[Perception] SETTINGS | "
-            "Owner=%s | "
-            "Range=%.1f | "
-            "Angle=%.1f"
-        ),
+        TEXT("[Perception] SETTINGS | Owner=%s | Range=%.1f | Angle=%.1f"),
         *Owner->GetName(),
         SightRange,
         SightAngle
     );
 
     const TArray<TWeakObjectPtr<AActor>>& NearbyActors =
-        GetNearbyActors(
-            World,
-            EyeLocation,
-            SightRange
-        );
+        GetNearbyActors(World, EyeLocation, SightRange);
 
     UE_LOG(
         LogTemp,
         Log,
-        TEXT(
-            "[Perception] NEARBY | "
-            "Owner=%s | "
-            "Candidates=%d"
-        ),
+        TEXT("[Perception] NEARBY | Owner=%s | Candidates=%d"),
         *Owner->GetName(),
         NearbyActors.Num()
     );
 
-    APawn* PlayerPawn =
-        UGameplayStatics::GetPlayerPawn(World, 0);
+    // --- FIND THE PLAYER (IMPROVED) ---
+    APlayerController* PlayerController = UGameplayStatics::GetPlayerController(World, 0);
+    AActor* PlayerActor = nullptr;
 
-    const TArray<FPerceivedActor>& PreviousActors =
-        Perception->GetPerceivedActors();
+    if (PlayerController)
+    {
+        // Try to get the controlled pawn first
+        if (APawn* ControlledPawn = PlayerController->GetPawn())
+        {
+            PlayerActor = ControlledPawn;
+        }
+        else
+        {
+            // If no pawn, the controller itself might be the player entity
+            PlayerActor = PlayerController;
+        }
+    }
+
+    // If no player found via controller, try fallback methods (optional)
+    if (!PlayerActor)
+    {
+        // Option 1: Check for actors with "Player" tag
+        for (const TWeakObjectPtr<AActor>& WeakActor : NearbyActors)
+        {
+            AActor* Actor = WeakActor.Get();
+            if (Actor && Actor->ActorHasTag("Player"))
+            {
+                PlayerActor = Actor;
+                break;
+            }
+        }
+    }
+
+    // --- PROCESS PERCEIVED ACTORS ---
+    const TArray<FPerceivedActor>& PreviousActors = Perception->GetPerceivedActors();
 
     TMap<AActor*, int32> OldIndexByActor;
+    OldIndexByActor.Reserve(PreviousActors.Num());
 
-    OldIndexByActor.Reserve(
-        PreviousActors.Num()
-    );
-
-    for (int32 Index = 0;
-         Index < PreviousActors.Num();
-         ++Index)
+    for (int32 Index = 0; Index < PreviousActors.Num(); ++Index)
     {
-        if (AActor* PrevActor =
-                PreviousActors[Index].Actor)
+        if (AActor* PrevActor = PreviousActors[Index].Actor)
         {
-            OldIndexByActor.Add(
-                PrevActor,
-                Index
-            );
+            OldIndexByActor.Add(PrevActor, Index);
         }
     }
 
     TArray<FPerceivedActor> NewPerceived;
-
-    NewPerceived.Reserve(
-        PreviousActors.Num()
-    );
+    NewPerceived.Reserve(PreviousActors.Num());
 
     TSet<AActor*> HandledThisPass;
-
-    HandledThisPass.Reserve(
-        NearbyActors.Num()
-    );
+    HandledThisPass.Reserve(NearbyActors.Num());
 
     int32 VisibleCount = 0;
     int32 OutsideConeCount = 0;
@@ -430,12 +436,11 @@ void UPerceptionSystem::EvaluatePerceiver(
     int32 CarriedCount = 0;
     int32 ForgottenCount = 0;
 
-    for (const TWeakObjectPtr<AActor>& WeakActor :
-         NearbyActors)
+    for (const TWeakObjectPtr<AActor>& WeakActor : NearbyActors)
     {
-        AActor* Actor =
-            WeakActor.Get();
+        AActor* Actor = WeakActor.Get();
 
+        // --- SELF-PERCEPTION CHECK (IMPROVED) ---
         if (!Actor || Actor == Owner)
         {
             continue;
@@ -443,35 +448,22 @@ void UPerceptionSystem::EvaluatePerceiver(
 
         HandledThisPass.Add(Actor);
 
-        const int32* OldIndex =
-            OldIndexByActor.Find(Actor);
-
-        const FVector ActorLocation =
-            Actor->GetActorLocation();
+        const int32* OldIndex = OldIndexByActor.Find(Actor);
+        const FVector ActorLocation = Actor->GetActorLocation();
 
         /*
          * Cached visible actor.
          */
         if (OldIndex)
         {
-            const FPerceivedActor& OldEntry =
-                PreviousActors[*OldIndex];
+            const FPerceivedActor& OldEntry = PreviousActors[*OldIndex];
 
-            const float Moved =
-                FVector::Dist(
-                    OldEntry.LastKnownLocation,
-                    ActorLocation
-                );
+            const float Moved = FVector::Dist(OldEntry.LastKnownLocation, ActorLocation);
 
-            if (OldEntry.bVisible &&
-                Moved <
-                    Perception->MinMovementToRecheck)
+            if (OldEntry.bVisible && Moved < Perception->MinMovementToRecheck)
             {
-                FPerceivedActor Carried =
-                    OldEntry;
-
+                FPerceivedActor Carried = OldEntry;
                 Carried.TimeSinceLastSeen = 0.0f;
-
                 NewPerceived.Add(Carried);
 
                 ++CarriedCount;
@@ -479,11 +471,7 @@ void UPerceptionSystem::EvaluatePerceiver(
                 UE_LOG(
                     LogTemp,
                     Verbose,
-                    TEXT(
-                        "[Perception] CARRIED | "
-                        "Owner=%s | Target=%s | "
-                        "Moved=%.1f"
-                    ),
+                    TEXT("[Perception] CARRIED | Owner=%s | Target=%s | Moved=%.1f"),
                     *Owner->GetName(),
                     *Actor->GetName(),
                     Moved
@@ -495,15 +483,14 @@ void UPerceptionSystem::EvaluatePerceiver(
 
         float Distance = 0.0f;
 
-        const bool bInCone =
-            IsInSightCone(
-                EyeLocation,
-                Forward,
-                ActorLocation,
-                SightRange,
-                SightAngle,
-                Distance
-            );
+        const bool bInCone = IsInSightCone(
+            EyeLocation,
+            Forward,
+            ActorLocation,
+            SightRange,
+            SightAngle,
+            Distance
+        );
 
         if (!bInCone)
         {
@@ -512,33 +499,26 @@ void UPerceptionSystem::EvaluatePerceiver(
             UE_LOG(
                 LogTemp,
                 Verbose,
-                TEXT(
-                    "[Perception] NOT SEEN | "
-                    "Owner=%s | Target=%s | "
-                    "Reason=OutsideCone | Distance=%.1f"
-                ),
+                TEXT("[Perception] NOT SEEN | Owner=%s | Target=%s | Reason=OutsideCone | Distance=%.1f"),
                 *Owner->GetName(),
                 *Actor->GetName(),
                 Distance
             );
         }
 
-        const bool bVisible =
-            bInCone &&
-            HasLineOfSight(
-                World,
-                Owner,
-                EyeLocation,
-                Actor,
-                Perception->SightTraceChannel
-            );
+        const bool bVisible = bInCone && HasLineOfSight(
+            World,
+            Owner,
+            EyeLocation,
+            Actor,
+            Perception->SightTraceChannel
+        );
 
         if (bVisible)
         {
             ++VisibleCount;
 
             FPerceivedActor NewEntry;
-
             NewEntry.Actor = Actor;
             NewEntry.Distance = Distance;
             NewEntry.bVisible = true;
@@ -550,11 +530,7 @@ void UPerceptionSystem::EvaluatePerceiver(
             UE_LOG(
                 LogTemp,
                 Log,
-                TEXT(
-                    "[Perception] PERCEIVED | "
-                    "Owner=%s | Target=%s | "
-                    "Distance=%.1f | Visible=true"
-                ),
+                TEXT("[Perception] PERCEIVED | Owner=%s | Target=%s | Distance=%.1f | Visible=true"),
                 *Owner->GetName(),
                 *Actor->GetName(),
                 Distance
@@ -564,27 +540,13 @@ void UPerceptionSystem::EvaluatePerceiver(
         {
             ++BlockedCount;
 
-            FPerceivedActor Kept =
-                PreviousActors[*OldIndex];
-
+            FPerceivedActor Kept = PreviousActors[*OldIndex];
             Kept.bVisible = false;
+            Kept.TimeSinceLastSeen += Perception->PerceptionUpdateInterval;
 
-            Kept.TimeSinceLastSeen +=
-                Perception->PerceptionUpdateInterval;
-
-            const float MovedFromLastKnown =
-                FVector::Dist(
-                    Kept.LastKnownLocation,
-                    ActorLocation
-                );
-
-            const bool bMovedTooFar =
-                MovedFromLastKnown >
-                Perception->ForgetDistance;
-
-            const bool bTooOld =
-                Kept.TimeSinceLastSeen >
-                Perception->ForgetTime;
+            const float MovedFromLastKnown = FVector::Dist(Kept.LastKnownLocation, ActorLocation);
+            const bool bMovedTooFar = MovedFromLastKnown > Perception->ForgetDistance;
+            const bool bTooOld = Kept.TimeSinceLastSeen > Perception->ForgetTime;
 
             if (!(bMovedTooFar || bTooOld))
             {
@@ -593,12 +555,7 @@ void UPerceptionSystem::EvaluatePerceiver(
                 UE_LOG(
                     LogTemp,
                     Verbose,
-                    TEXT(
-                        "[Perception] MEMORY | "
-                        "Owner=%s | Target=%s | "
-                        "Visible=false | "
-                        "TimeSinceSeen=%.2f"
-                    ),
+                    TEXT("[Perception] MEMORY | Owner=%s | Target=%s | Visible=false | TimeSinceSeen=%.2f"),
                     *Owner->GetName(),
                     *Actor->GetName(),
                     Kept.TimeSinceLastSeen
@@ -611,11 +568,7 @@ void UPerceptionSystem::EvaluatePerceiver(
                 UE_LOG(
                     LogTemp,
                     Log,
-                    TEXT(
-                        "[Perception] FORGOTTEN | "
-                        "Owner=%s | Target=%s | "
-                        "MovedTooFar=%s | TooOld=%s"
-                    ),
+                    TEXT("[Perception] FORGOTTEN | Owner=%s | Target=%s | MovedTooFar=%s | TooOld=%s"),
                     *Owner->GetName(),
                     *Actor->GetName(),
                     bMovedTooFar ? TEXT("true") : TEXT("false"),
@@ -632,11 +585,7 @@ void UPerceptionSystem::EvaluatePerceiver(
                 UE_LOG(
                     LogTemp,
                     Verbose,
-                    TEXT(
-                        "[Perception] NOT SEEN | "
-                        "Owner=%s | Target=%s | "
-                        "Reason=BlockedByLOS"
-                    ),
+                    TEXT("[Perception] NOT SEEN | Owner=%s | Target=%s | Reason=BlockedByLOS"),
                     *Owner->GetName(),
                     *Actor->GetName()
                 );
@@ -648,40 +597,27 @@ void UPerceptionSystem::EvaluatePerceiver(
      * Preserve remembered actors that are no longer inside
      * this pass's nearby cache.
      */
-    for (int32 Index = 0;
-         Index < PreviousActors.Num();
-         ++Index)
+    for (int32 Index = 0; Index < PreviousActors.Num(); ++Index)
     {
-        AActor* PrevActor =
-            PreviousActors[Index].Actor;
+        AActor* PrevActor = PreviousActors[Index].Actor;
 
-        if (!PrevActor ||
-            HandledThisPass.Contains(PrevActor))
+        if (!PrevActor || HandledThisPass.Contains(PrevActor))
         {
             continue;
         }
 
-        FPerceivedActor Kept =
-            PreviousActors[Index];
-
+        FPerceivedActor Kept = PreviousActors[Index];
         Kept.bVisible = false;
+        Kept.TimeSinceLastSeen += Perception->PerceptionUpdateInterval;
 
-        Kept.TimeSinceLastSeen +=
-            Perception->PerceptionUpdateInterval;
-
-        if (Kept.TimeSinceLastSeen <=
-            Perception->ForgetTime)
+        if (Kept.TimeSinceLastSeen <= Perception->ForgetTime)
         {
             NewPerceived.Add(Kept);
 
             UE_LOG(
                 LogTemp,
                 Verbose,
-                TEXT(
-                    "[Perception] MEMORY OUTSIDE CACHE | "
-                    "Owner=%s | Target=%s | "
-                    "TimeSinceSeen=%.2f"
-                ),
+                TEXT("[Perception] MEMORY OUTSIDE CACHE | Owner=%s | Target=%s | TimeSinceSeen=%.2f"),
                 *Owner->GetName(),
                 *PrevActor->GetName(),
                 Kept.TimeSinceLastSeen
@@ -694,10 +630,7 @@ void UPerceptionSystem::EvaluatePerceiver(
             UE_LOG(
                 LogTemp,
                 Log,
-                TEXT(
-                    "[Perception] FORGOTTEN OUTSIDE CACHE | "
-                    "Owner=%s | Target=%s"
-                ),
+                TEXT("[Perception] FORGOTTEN OUTSIDE CACHE | Owner=%s | Target=%s"),
                 *Owner->GetName(),
                 *PrevActor->GetName()
             );
@@ -705,37 +638,27 @@ void UPerceptionSystem::EvaluatePerceiver(
     }
 
     /*
-     * Player-specific perception.
+     * PLAYER-SPECIFIC PERCEPTION (IMPROVED)
      */
     bool bCanSeePlayer = false;
     AActor* PerceivedPlayer = nullptr;
+    FVector LastKnownPlayerLocation = Perception->LastKnownPlayerLocation;
 
-    FVector LastKnownPlayerLocation =
-        Perception->LastKnownPlayerLocation;
-
-    if (PlayerPawn)
+    if (PlayerActor)
     {
-        for (const FPerceivedActor& Entry :
-             NewPerceived)
+        for (const FPerceivedActor& Entry : NewPerceived)
         {
-            if (Entry.Actor == PlayerPawn)
+            if (Entry.Actor == PlayerActor)
             {
-                PerceivedPlayer = PlayerPawn;
-                LastKnownPlayerLocation =
-                    Entry.LastKnownLocation;
-
-                bCanSeePlayer =
-                    Entry.bVisible;
-
+                PerceivedPlayer = PlayerActor;
+                LastKnownPlayerLocation = Entry.LastKnownLocation;
+                bCanSeePlayer = Entry.bVisible;
                 break;
             }
         }
     }
 
-    Perception->SetPerceivedActors(
-        NewPerceived
-    );
-
+    Perception->SetPerceivedActors(NewPerceived);
     Perception->SetPlayerPerception(
         PerceivedPlayer,
         bCanSeePlayer,
@@ -748,18 +671,7 @@ void UPerceptionSystem::EvaluatePerceiver(
     UE_LOG(
         LogTemp,
         Log,
-        TEXT(
-            "[Perception] RESULT | "
-            "Owner=%s | "
-            "Candidates=%d | "
-            "Visible=%d | "
-            "OutsideCone=%d | "
-            "Blocked=%d | "
-            "Carried=%d | "
-            "Forgotten=%d | "
-            "PerceivedTotal=%d | "
-            "PlayerVisible=%s"
-        ),
+        TEXT("[Perception] RESULT | Owner=%s | Candidates=%d | Visible=%d | OutsideCone=%d | Blocked=%d | Carried=%d | Forgotten=%d | PerceivedTotal=%d | PlayerVisible=%s"),
         *Owner->GetName(),
         NearbyActors.Num(),
         VisibleCount,
@@ -768,33 +680,23 @@ void UPerceptionSystem::EvaluatePerceiver(
         CarriedCount,
         ForgottenCount,
         NewPerceived.Num(),
-        bCanSeePlayer
-            ? TEXT("true")
-            : TEXT("false")
+        bCanSeePlayer ? TEXT("true") : TEXT("false")
     );
 
     /*
      * Explicit list of everything currently perceived.
      */
-    for (const FPerceivedActor& Entry :
-         NewPerceived)
+    for (const FPerceivedActor& Entry : NewPerceived)
     {
         if (AActor* Actor = Entry.Actor)
         {
             UE_LOG(
                 LogTemp,
                 Log,
-                TEXT(
-                    "[Perception] CURRENTLY PERCEIVED | "
-                    "Owner=%s | Target=%s | "
-                    "Visible=%s | Distance=%.1f | "
-                    "LastKnown=(%.1f, %.1f, %.1f)"
-                ),
+                TEXT("[Perception] CURRENTLY PERCEIVED | Owner=%s | Target=%s | Visible=%s | Distance=%.1f | LastKnown=(%.1f, %.1f, %.1f)"),
                 *Owner->GetName(),
                 *Actor->GetName(),
-                Entry.bVisible
-                    ? TEXT("true")
-                    : TEXT("false"),
+                Entry.bVisible ? TEXT("true") : TEXT("false"),
                 Entry.Distance,
                 Entry.LastKnownLocation.X,
                 Entry.LastKnownLocation.Y,
