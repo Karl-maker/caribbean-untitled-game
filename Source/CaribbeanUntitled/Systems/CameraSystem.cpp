@@ -31,24 +31,26 @@ UCameraSystem::UCameraSystem()
     NormalOffset = FVector(0.0f, 120.0f, 70.0f);
     NormalArmLength = 220.0f;
 
-    RunningOffset = FVector(0.0f, 0.0f, 50.0f);
-    RunningArmLength = 280.0f;
+    RunningOffset = FVector(0.0f, 25.0f, 55.0f);
+    RunningArmLength = 245.0f;
 
     ActionOffset = FVector(0.0f, 80.0f, 45.0f);
-    ActionArmLength = 250.0f;
+    ActionArmLength = 240.0f;
 
     MinArmLength = 180.0f;
-    MaxArmLength = 350.0f;
-    SpeedZoomThreshold = 100.0f;
-    MaxSpeedForZoom = 800.0f;
+    MaxArmLength = 290.0f;
 
-    PositionDamping = 10.0f;
-    ArmLengthDamping = 8.0f;
-    RotationDamping = 12.0f;
+    SpeedZoomThreshold = 150.0f;
+    MaxSpeedForZoom = 700.0f;
 
-    JumpSmoothTime = 0.3f;
+    // Lower = slower / smoother camera movement
+    PositionDamping = 5.0f;
+    ArmLengthDamping = 4.0f;
+    RotationDamping = 7.0f;
+
+    JumpSmoothTime = 0.4f;
     LastJumpTime = -1.0f;
-    MouseSensitivity = 0.05f;
+    MouseSensitivity = 0.5f;
 
     UpdateInterval = 1;
     TickCounter = 0;

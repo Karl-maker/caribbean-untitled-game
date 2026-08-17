@@ -53,6 +53,13 @@ void UGameplaySystemScheduler::Deinitialize()
 
     MovementSystem = nullptr;
 
+    if (MovementSystem)
+    {
+        MovementSystem->Cleanup();
+    }
+    
+    MovementSystem = nullptr;
+    
     Super::Deinitialize();
 }
 

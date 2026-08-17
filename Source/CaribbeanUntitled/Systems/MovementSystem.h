@@ -22,7 +22,7 @@ class CARIBBEANUNTITLED_API UMovementSystem : public UObject
 public:
 
     void Tick(float DeltaTime);
-
+    void Cleanup();
     void DetermineAndPublishLocomotion(
         AActor* Actor,
         ACharacter* Character,
@@ -51,7 +51,7 @@ private:
     TMap<TWeakObjectPtr<AActor>, FTimerHandle> LandingTimers;
     TMap<TWeakObjectPtr<AActor>, FTimerHandle> PendingJumpTimers;
 
-    float LandingDuration = 1.0f;
+    float LandingDuration = 0.7f;
     
     void ClearLandingState(TWeakObjectPtr<AActor> WeakActor);
     void ClearAllTimersForActor(AActor* Actor);
@@ -85,4 +85,5 @@ private:
 
     void ApplyCrouch(class ACharacter* Character, bool bWantsToCrouch);
     ELocomotion GetCurrentLocomotionState(AActor* Actor) const;
+    
 };

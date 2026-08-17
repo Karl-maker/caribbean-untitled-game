@@ -387,6 +387,27 @@ void UMovementSystem::PerformDelayedJump(TWeakObjectPtr<AActor> WeakActor, float
 
 void UMovementSystem::ApplyMovement(ACharacter* Character, const FVector& MoveDirection)
 {
+    if (!Character)
+    {
+        return;
+    }
+
+    // During jump anticipation, the character is winding up.
+    // Temporarily stop horizontal movement so the wind-up feels deliberate.
+    if (PendingJumpTimers.Contains(Character))
+    {
+        if (UCharacterMovementComponent* Movement =
+            Character->FindComponentByClass<UCharacterMovementComponent>())
+        {
+            FVector Velocity = Movement->Velocity;
+            Velocity.X = 0.0f;
+            Velocity.Y = 0.0f;
+            Movement->Velocity = Velocity;
+        }
+
+        return;
+    }
+
     if (!MoveDirection.IsNearlyZero())
     {
         Character->AddMovementInput(MoveDirection, 1.0f);
@@ -530,16 +551,40 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
     ELocomotion PreviousState,
     bool bJumpInProgress) const
 {
+    if (!Character || !Movement || !Control)
+    {
+        return ELocomotion::Idle;
+    }
+
+    // ------------------------------------------------------------
+    // LANDING
+    // ------------------------------------------------------------
+    // LandingTimers is the authoritative hold period for the landing
+    // animation. Keep returning Land until the timer expires.
+    if (LandingTimers.Contains(Character))
+    {
+        return ELocomotion::Land;
+    }
+
+    // ------------------------------------------------------------
+    // AIRBORNE
+    // ------------------------------------------------------------
     if (Movement->IsFalling())
     {
         return ELocomotion::Fall;
     }
 
+    // We have just transitioned from airborne -> grounded.
+    // Enter the landing state and let DetermineAndPublishLocomotion()
+    // create the landing timer.
     if (PreviousState == ELocomotion::Fall)
     {
         return ELocomotion::Land;
     }
 
+    // ------------------------------------------------------------
+    // JUMP
+    // ------------------------------------------------------------
     if (bJumpInProgress)
     {
         return ELocomotion::Jump;
@@ -557,22 +602,32 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
         return ELocomotion::Jump;
     }
 
+    // ------------------------------------------------------------
+    // CROUCH
+    // ------------------------------------------------------------
     if (bWantsToCrouch || Character->bIsCrouched)
     {
         return ELocomotion::Crouch;
     }
 
-    // ✅ FIX: Use actual velocity to determine if moving
+    // ------------------------------------------------------------
+    // LOCOMOTION
+    // ------------------------------------------------------------
     const float Speed = Movement->Velocity.Size();
-    const bool bIsMoving = Speed > 10.0f;  // Small threshold for floating point
-    
+    const bool bIsMoving = Speed > 10.0f;
+
     if (bIsMoving)
     {
-        UStatsComponent* Stats = Character->FindComponentByClass<UStatsComponent>();
-        if (bWantsToSprint && Movement->MaxWalkSpeed >= Stats->GetSprintSpeed())
+        UStatsComponent* Stats =
+            Character->FindComponentByClass<UStatsComponent>();
+
+        if (Stats &&
+            bWantsToSprint &&
+            Movement->MaxWalkSpeed >= Stats->GetSprintSpeed())
         {
             return ELocomotion::Sprint;
         }
+
         return ELocomotion::Walk;
     }
 
@@ -594,4 +649,29 @@ ELocomotion UMovementSystem::GetCurrentLocomotionState(AActor* Actor) const
 bool UMovementSystem::IsJumpInProgress(AActor* Actor) const
 {
     return PendingJumpTimers.Contains(Actor) || AscendingJumpers.Contains(Actor);
+}
+
+void UMovementSystem::Cleanup()
+{
+    UWorld* World = GetWorld();
+
+    if (World)
+    {
+        FTimerManager& TimerManager = World->GetTimerManager();
+
+        for (auto& Pair : PendingJumpTimers)
+        {
+            TimerManager.ClearTimer(Pair.Value);
+        }
+
+        for (auto& Pair : LandingTimers)
+        {
+            TimerManager.ClearTimer(Pair.Value);
+        }
+    }
+
+    PendingJumpTimers.Empty();
+    LandingTimers.Empty();
+    AscendingJumpers.Empty();
+    PreviousLocomotionStates.Empty();
 }
