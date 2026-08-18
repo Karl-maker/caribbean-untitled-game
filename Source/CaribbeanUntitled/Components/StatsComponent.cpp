@@ -1,6 +1,6 @@
 #include "StatsComponent.h"
 #include "TimerManager.h"
-
+#include "Net/UnrealNetwork.h"
 
 UStatsComponent::UStatsComponent()
 {
@@ -413,4 +413,14 @@ float UStatsComponent::GetDodgeCooldown() const
 float UStatsComponent::GetDodgeInvulnerabilityDuration() const
 {
     return DodgeInvulnerabilityDuration;
+}
+
+void UStatsComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+    DOREPLIFETIME(UStatsComponent, Health);
+    DOREPLIFETIME(UStatsComponent, Stamina);
+    DOREPLIFETIME(UStatsComponent, MaxStamina);
+    DOREPLIFETIME(UStatsComponent, MaxHealth);
 }

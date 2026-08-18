@@ -5,10 +5,12 @@
 
 #include "../Components/StatsComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Pawn.h"
 
 
 void UMovementSystem::Tick(float DeltaTime)
 {
+    UE_LOG(LogTemp, Warning, TEXT("MovementSystem::Tick - Running"));
     if (DeltaTime <= 0.0f)
     {
         return;
@@ -57,6 +59,22 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
     ACharacter* Character = Cast<ACharacter>(Actor);
 
     if (!Control || !Stats || !Movement || !Character)
+    {
+        return;
+    }
+
+    const UWorld* World = Actor->GetWorld();
+    const bool bHasAuthority = World && World->GetNetMode() != NM_Client;
+
+    if (Control->ControlType == EControlType::Player)
+    {
+        const APawn* Pawn = Cast<APawn>(Actor);
+        if (!Pawn || !Pawn->IsLocallyControlled())
+        {
+            return;
+        }
+    }
+    else if (!bHasAuthority)
     {
         return;
     }
@@ -494,6 +512,7 @@ void UMovementSystem::DetermineAndPublishLocomotion(
 
         // Update the stored state
         PreviousLocomotionStates.Add(Actor, CurrentState);
+        Control->SetReplicatedLocomotion(CurrentState);
 
         // Publish the event
         FMovementPayload Payload;

@@ -118,6 +118,7 @@ public:
     UPROPERTY(
         EditAnywhere,
         BlueprintReadWrite,
+        Replicated,
         Category="Stats|Stamina",
         meta=(ClampMin="0.0")
     )
@@ -130,6 +131,7 @@ public:
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
+        Replicated,
         Category="Stats|Stamina",
         meta=(ClampMin="0.0")
     )
@@ -195,6 +197,7 @@ public:
     UPROPERTY(
         EditAnywhere,
         BlueprintReadWrite,
+        Replicated,
         Category="Stats|Health",
         meta=(ClampMin="0.0")
     )
@@ -206,6 +209,7 @@ public:
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
+        Replicated,
         Category="Stats|Health",
         meta=(ClampMin="0.0")
     )
@@ -524,7 +528,7 @@ protected:
 
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     // ============================================================
     // STAMINA REGENERATION
     // ============================================================

@@ -7,6 +7,10 @@
 
 #include "ControlComponent.h"
 #include "../Actors/K98Actor.h"
+// Add this include at the top
+#include "Net/UnrealNetwork.h"
+#include "../EventBus/EventBusSubsystem.h"
+#include "../Events/MovementPayload.h"
 
 UControlComponent::UControlComponent()
 {
@@ -265,6 +269,21 @@ void UControlComponent::ClearLookInput()
     LookInput = FVector2D::ZeroVector;
 }
 
+void UControlComponent::SetReplicatedLocomotion(ELocomotion NewLocomotion)
+{
+    if (ReplicatedLocomotion == NewLocomotion)
+    {
+        return;
+    }
+
+    ReplicatedLocomotion = NewLocomotion;
+
+    if (GetOwner() && GetOwner()->HasAuthority())
+    {
+        OnRep_ReplicatedLocomotion();
+    }
+}
+
 //=========================================================================
 // Clearing Functions
 //=========================================================================
@@ -317,6 +336,53 @@ void UControlComponent::SetLookAtLocation(const FVector& WorldLocation)
         if (!Direction.IsNearlyZero())
         {
             SetLookDirection(Direction);
+        }
+    }
+}
+
+void UControlComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+    // Replicate movement intent
+    DOREPLIFETIME(UControlComponent, MoveIntent);
+    DOREPLIFETIME(UControlComponent, ReplicatedLocomotion);
+    
+    // Replicate action intents
+    DOREPLIFETIME(UControlComponent, JumpIntent);
+    DOREPLIFETIME(UControlComponent, InteractIntent);
+    DOREPLIFETIME(UControlComponent, SprintIntent);
+    DOREPLIFETIME(UControlComponent, CrouchIntent);
+    DOREPLIFETIME(UControlComponent, DashIntent);
+    DOREPLIFETIME(UControlComponent, AimIntent);
+    DOREPLIFETIME(UControlComponent, FireIntent);
+    DOREPLIFETIME(UControlComponent, ReloadIntent);
+    
+    // Replicate combat intents
+    DOREPLIFETIME(UControlComponent, LightAttackIntent);
+    DOREPLIFETIME(UControlComponent, HeavyAttackIntent);
+    DOREPLIFETIME(UControlComponent, BlockIntent);
+    DOREPLIFETIME(UControlComponent, DodgeIntent);
+    DOREPLIFETIME(UControlComponent, LockOnIntent);
+    DOREPLIFETIME(UControlComponent, WeaponAbilityIntent);
+    DOREPLIFETIME(UControlComponent, WeaponSwitchIntent);
+    
+    UE_LOG(LogTemp, Warning, TEXT("ControlComponent: Replication setup complete"));
+}
+
+void UControlComponent::OnRep_ReplicatedLocomotion()
+{
+    if (AActor* Owner = GetOwner())
+    {
+        if (UWorld* World = GetWorld())
+        {
+            if (UEventBusSubsystem* EventBus = World->GetSubsystem<UEventBusSubsystem>())
+            {
+                FMovementPayload Payload;
+                Payload.Source = Owner;
+                Payload.Type = ReplicatedLocomotion;
+                EventBus->Publish(Payload);
+            }
         }
     }
 }

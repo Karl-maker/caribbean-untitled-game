@@ -121,6 +121,11 @@ void UPlayerInputComponent::BindInput(
         return;
     }
 
+    if (!PC->IsLocalController())
+    {
+        return;
+    }
+
 
     // ============================================================
     // ADD MAPPING CONTEXT
@@ -479,6 +484,7 @@ void UPlayerInputComponent::HandleMoveForward(
     const FInputActionValue& Value
 )
 {
+    UE_LOG(LogTemp, Warning, TEXT("MoveIntent.Y = %f"), Control->MoveIntent.Y);
     if (!Control)
     {
         return;

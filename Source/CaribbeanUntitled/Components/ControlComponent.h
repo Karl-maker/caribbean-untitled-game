@@ -9,6 +9,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "../Enums/Locomotion.h"
 #include "ControlComponent.generated.h"
 
 
@@ -136,6 +137,7 @@ public:
     UPROPERTY(
         EditAnywhere,
         BlueprintReadWrite,
+        Replicated,
         Category = "Control|Movement",
         meta = (ClampMin = "-1.0", ClampMax = "1.0")
     )
@@ -197,58 +199,66 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Look")
     FVector2D LookInput = FVector2D::ZeroVector;
 
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        ReplicatedUsing=OnRep_ReplicatedLocomotion,
+        Category = "Control|Movement"
+    )
+    ELocomotion ReplicatedLocomotion = ELocomotion::Stand;
+
 
     //=========================================================================
     // Action Intents
     //=========================================================================
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float JumpIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float InteractIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float SprintIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float CrouchIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float DashIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float AimIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float FireIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float ReloadIntent = 0.0f;
 
     //=========================================================================
     // Combat Intents
     //=========================================================================
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float LightAttackIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float HeavyAttackIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float BlockIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float DodgeIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float LockOnIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float WeaponAbilityIntent = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float WeaponSwitchIntent = 0.0f;
 
     //=========================================================================
@@ -425,6 +435,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Control|Look")
     void ClearLookInput();
 
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    ELocomotion GetReplicatedLocomotion() const { return ReplicatedLocomotion; }
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Movement")
+    void SetReplicatedLocomotion(ELocomotion NewLocomotion);
+
 
     //=========================================================================
     // Clearing Functions
@@ -450,12 +466,17 @@ public:
 protected:
 
     virtual void BeginPlay() override;
-
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     virtual void TickComponent(
         float DeltaTime,
         ELevelTick TickType,
         FActorComponentTickFunction* ThisTickFunction
     ) override;
+
+private:
+
+    UFUNCTION()
+    void OnRep_ReplicatedLocomotion();
 
 
     bool bSeekingDestination = false;

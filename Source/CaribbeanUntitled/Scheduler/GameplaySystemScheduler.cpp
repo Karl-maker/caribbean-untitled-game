@@ -34,10 +34,10 @@ void UGameplaySystemScheduler::Initialize(
 
     MovementSystem = NewObject<UMovementSystem>(this);
     CameraSystem = NewObject<UCameraSystem>(this);
-    PerceptionSystem = NewObject<UPerceptionSystem>(this);
-    BrainSystem = NewObject<UBrainSystem>(this);
-    ActionSystem = NewObject<UActionSystem>(this);
-    StaminaRegenerationSystem = NewObject<UStaminaRegenerationSystem>(this);
+    PerceptionSystem = GetWorld() ? GetWorld()->GetSubsystem<UPerceptionSystem>() : nullptr;
+    BrainSystem = GetWorld() ? GetWorld()->GetSubsystem<UBrainSystem>() : nullptr;
+    ActionSystem = GetWorld() ? GetWorld()->GetSubsystem<UActionSystem>() : nullptr;
+    StaminaRegenerationSystem = GetWorld() ? GetWorld()->GetSubsystem<UStaminaRegenerationSystem>() : nullptr;
 
 }
 
@@ -83,9 +83,11 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
     const ENetMode NetMode = World->GetNetMode();
 
     const bool bIsClient =
-        NetMode == NM_Client;
+        NetMode == NM_Client ||
+        NetMode == NM_Standalone;
 
     const bool bIsServer =
+        NetMode == NM_Standalone ||
         NetMode == NM_DedicatedServer ||
         NetMode == NM_ListenServer;
 
@@ -93,7 +95,7 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
 
     if (bIsServer) TickGameplay(DeltaTime);
 
-    if (bIsServer) TickMovement(DeltaTime);
+    if (bIsServer || bIsClient) TickMovement(DeltaTime);
     
     if (bIsClient)
         if (CameraSystem) CameraSystem->Tick(GetWorld(), DeltaTime);
@@ -123,9 +125,6 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 {
     if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
-    if (BrainSystem) BrainSystem->Tick(DeltaTime);
-    if (ActionSystem) ActionSystem->Tick(DeltaTime);
-    if (StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(DeltaTime);
 }
 
 
