@@ -12,6 +12,7 @@ UControlComponent::UControlComponent()
 {
     PrimaryComponentTick.bCanEverTick = true;
     PrimaryComponentTick.TickGroup = TG_PrePhysics;
+    SetIsReplicatedByDefault(true);
 }
 
 void UControlComponent::BeginPlay()

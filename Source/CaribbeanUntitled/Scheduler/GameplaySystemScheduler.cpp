@@ -73,22 +73,36 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
         return;
     }
 
+    UWorld* World = GetWorld();
 
-    // ============================================================
-    // EXPLICIT EXECUTION ORDER
-    // ============================================================
+    if (!World)
+    {
+        return;
+    }
 
-    TickInput(DeltaTime);
+    const ENetMode NetMode = World->GetNetMode();
 
-    TickGameplay(DeltaTime);
+    const bool bIsClient =
+        NetMode == NM_Client;
 
-    TickMovement(DeltaTime);
+    const bool bIsServer =
+        NetMode == NM_DedicatedServer ||
+        NetMode == NM_ListenServer;
 
-    TickPhysics(DeltaTime);
+    if (bIsClient) TickInput(DeltaTime);
 
-    TickPostPhysics(DeltaTime);
+    if (bIsServer) TickGameplay(DeltaTime);
 
-    TickTransform(DeltaTime);
+    if (bIsServer) TickMovement(DeltaTime);
+    
+    if (bIsClient)
+        if (CameraSystem) CameraSystem->Tick(GetWorld(), DeltaTime);
+    
+    if (bIsServer) TickPhysics(DeltaTime);
+
+    if (bIsServer) TickPostPhysics(DeltaTime);
+
+    if (bIsServer) TickTransform(DeltaTime);
 }
 
 
@@ -99,9 +113,6 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
 void UGameplaySystemScheduler::TickInput(float DeltaTime)
 {
 
-    if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
-    if (BrainSystem) BrainSystem->Tick(DeltaTime);
-    if (ActionSystem) ActionSystem->Tick(DeltaTime);
 }
 
 
@@ -111,15 +122,10 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 
 void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 {
-
-    // Gameplay systems.
-    //
-    // Stamina
-    // Health
-    // Abilities
-    // Status effects
-    
-    if(StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(DeltaTime);
+    if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
+    if (BrainSystem) BrainSystem->Tick(DeltaTime);
+    if (ActionSystem) ActionSystem->Tick(DeltaTime);
+    if (StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(DeltaTime);
 }
 
 
@@ -130,7 +136,6 @@ void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 void UGameplaySystemScheduler::TickMovement(float DeltaTime)
 {
     if (MovementSystem) MovementSystem->Tick(DeltaTime);
-    if (CameraSystem) CameraSystem->Tick(GetWorld(), DeltaTime);
 }
 
 

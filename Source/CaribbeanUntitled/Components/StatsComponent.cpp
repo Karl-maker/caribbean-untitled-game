@@ -5,6 +5,7 @@
 UStatsComponent::UStatsComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
+    SetIsReplicatedByDefault(true);
 }
 
 

@@ -6,6 +6,7 @@ UCharacterPerceptionComponent::UCharacterPerceptionComponent()
     // pure data. UPerceptionSystem does all the evaluation and
     // writes results here through the setters below.
     PrimaryComponentTick.bCanEverTick = false;
+    SetIsReplicatedByDefault(true);
 }
 
 void UCharacterPerceptionComponent::Clear()

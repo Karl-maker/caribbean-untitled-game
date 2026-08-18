@@ -5,6 +5,7 @@
 UCharacterBrainComponent::UCharacterBrainComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
+    SetIsReplicatedByDefault(true);
 }
 
 void UCharacterBrainComponent::SetIntent(
