@@ -174,38 +174,6 @@ ACharacterActor::ACharacterActor()
         // Combat (Upper Body)
         // --------------------------------------------------------
         
-        FAnimationDefinition Attack1;
-        Attack1.Key = EAnimationKey::Attack_1;
-        Attack1.PlaybackMode = EAnimationPlaybackMode::Once;
-        Attack1.PlayRate = 1.0f;
-        Attack1.LoopCount = 1;
-        Attack1.BlendInTime = 0.05f;
-        Attack1.BlendOutTime = 0.1f;
-        Attack1.SlotName = "combat";
-        Attack1.Description = FText::FromString(TEXT("Character attack 1 animation."));
-        AnimationRegistryComponent->Animations.Add(Attack1);
-        
-        FAnimationDefinition Attack2;
-        Attack2.Key = EAnimationKey::Attack_2;
-        Attack2.PlaybackMode = EAnimationPlaybackMode::Once;
-        Attack2.PlayRate = 1.0f;
-        Attack2.LoopCount = 1;
-        Attack2.BlendInTime = 0.05f;
-        Attack2.BlendOutTime = 0.1f;
-        Attack2.SlotName = "combat";
-        Attack2.Description = FText::FromString(TEXT("Character attack 2 animation."));
-        AnimationRegistryComponent->Animations.Add(Attack2);
-        
-        FAnimationDefinition Attack3;
-        Attack3.Key = EAnimationKey::Attack_3;
-        Attack3.PlaybackMode = EAnimationPlaybackMode::Once;
-        Attack3.PlayRate = 1.0f;
-        Attack3.LoopCount = 1;
-        Attack3.BlendInTime = 0.05f;
-        Attack3.BlendOutTime = 0.1f;
-        Attack3.SlotName = "combat";
-        Attack3.Description = FText::FromString(TEXT("Character attack 3 animation."));
-        AnimationRegistryComponent->Animations.Add(Attack3);
         
         FAnimationDefinition Hit;
         Hit.Key = EAnimationKey::Hit;

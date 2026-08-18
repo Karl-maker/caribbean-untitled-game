@@ -40,9 +40,7 @@ enum class EAnimationKey : uint8
     Land        UMETA(DisplayName = "Land"),
 
     // Combat
-    Attack_1    UMETA(DisplayName = "Attack 1"),
-    Attack_2    UMETA(DisplayName = "Attack 2"),
-    Attack_3    UMETA(DisplayName = "Attack 3"),
+ 
 
     Hit         UMETA(DisplayName = "Hit"),
     Death       UMETA(DisplayName = "Death"),
