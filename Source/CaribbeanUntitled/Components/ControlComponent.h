@@ -207,6 +207,12 @@ public:
     )
     ELocomotion ReplicatedLocomotion = ELocomotion::Stand;
 
+    /**
+     * Authoritative view yaw shared from the owning client so the
+     * server can resolve camera-relative movement.
+     */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Control|Look")
+    float ViewYaw = 0.0f;
 
     //=========================================================================
     // Action Intents
@@ -426,6 +432,9 @@ public:
     UFUNCTION(BlueprintPure, Category = "Control|Look")
     FVector2D GetLookInput() const { return LookInput; }
 
+    UFUNCTION(Server, Unreliable)
+    void ServerSetLookInput(FVector2D Input);
+
     UFUNCTION(BlueprintCallable, Category = "Control|Look")
     void SetLookDirection(const FVector& Direction);
 
@@ -440,6 +449,15 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Control|Movement")
     void SetReplicatedLocomotion(ELocomotion NewLocomotion);
+
+    UFUNCTION(BlueprintPure, Category = "Control|Look")
+    float GetViewYaw() const { return ViewYaw; }
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Look")
+    void SetViewYaw(float NewYaw);
+
+    UFUNCTION(Server, Unreliable)
+    void ServerSetViewYaw(float NewYaw);
 
 
     //=========================================================================
@@ -477,7 +495,6 @@ private:
 
     UFUNCTION()
     void OnRep_ReplicatedLocomotion();
-
 
     bool bSeekingDestination = false;
 };

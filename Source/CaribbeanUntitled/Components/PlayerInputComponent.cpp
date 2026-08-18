@@ -553,10 +553,10 @@ void UPlayerInputComponent::HandleLookInput(const FInputActionValue& Value)
     FVector2D LookValue = Value.Get<FVector2D>();
     LookValue *= Sensitivity;
     
-    Control->LookInput = LookValue;
+    Control->SetLookInput(LookValue);
     
     UE_LOG(LogTemp, Warning, TEXT("Look Input (Scaled): X=%f, Y=%f"),
-           Control->LookInput.X, Control->LookInput.Y);
+           LookValue.X, LookValue.Y);
 }
 
 

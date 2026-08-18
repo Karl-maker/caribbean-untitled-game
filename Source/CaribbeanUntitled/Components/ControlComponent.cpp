@@ -22,6 +22,11 @@ UControlComponent::UControlComponent()
 void UControlComponent::BeginPlay()
 {
     Super::BeginPlay();
+
+    if (AActor* Owner = GetOwner())
+    {
+        ViewYaw = Owner->GetActorRotation().Yaw;
+    }
 }
 
 void UControlComponent::TickComponent(
@@ -257,6 +262,11 @@ bool UControlComponent::HasCombatIntent() const
 void UControlComponent::SetLookInput(const FVector2D& Input)
 {
     LookInput = Input;
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetLookInput(Input);
+    }
 }
 
 void UControlComponent::SetLookDirection(const FVector& Direction)
@@ -267,6 +277,31 @@ void UControlComponent::SetLookDirection(const FVector& Direction)
 void UControlComponent::ClearLookInput()
 {
     LookInput = FVector2D::ZeroVector;
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetLookInput(FVector2D::ZeroVector);
+    }
+}
+
+void UControlComponent::SetViewYaw(float NewYaw)
+{
+    ViewYaw = FRotator::NormalizeAxis(NewYaw);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetViewYaw(ViewYaw);
+    }
+}
+
+void UControlComponent::ServerSetViewYaw_Implementation(float NewYaw)
+{
+    ViewYaw = FRotator::NormalizeAxis(NewYaw);
+}
+
+void UControlComponent::ServerSetLookInput_Implementation(FVector2D Input)
+{
+    LookInput = Input.ClampAxes(-1.0f, 1.0f);
 }
 
 void UControlComponent::SetReplicatedLocomotion(ELocomotion NewLocomotion)

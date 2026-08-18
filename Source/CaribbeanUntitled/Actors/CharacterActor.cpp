@@ -267,14 +267,14 @@ ACharacterActor::ACharacterActor()
     if (Movement)
     {
         Movement->bOrientRotationToMovement = true;
+        Movement->bUseControllerDesiredRotation = false;
         Movement->RotationRate = FRotator(
             0.0f,
             720.0f,
             0.0f
         );
     }
-    
-    GetCharacterMovement()->bOrientRotationToMovement = false;
+
     bUseControllerRotationYaw = false;
     bUseControllerRotationPitch = false;
     bUseControllerRotationRoll = false;

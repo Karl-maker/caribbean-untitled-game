@@ -6,6 +6,7 @@
 
 #include "../Components/AnimationRegistryComponent.h"
 #include "../Components/PlayerInputComponent.h"
+#include "../Settings/CaribbeanAssetSettings.h"
 
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimSequence.h"
@@ -16,15 +17,15 @@
 #include "Curves/CurveFloat.h"
 #include "InputAction.h"
 #include "InputMappingContext.h"
-#include "UObject/ConstructorHelpers.h"
 
 namespace
 {
     template<typename TObjectType>
-    TObjectType* LoadAssetOrNull(const TCHAR* AssetPath)
+    TObjectType* LoadAssetOrNull(const FSoftObjectPath& AssetPath)
     {
-        ConstructorHelpers::FObjectFinder<TObjectType> AssetFinder(AssetPath);
-        return AssetFinder.Succeeded() ? AssetFinder.Object : nullptr;
+        return AssetPath.IsValid()
+            ? Cast<TObjectType>(AssetPath.TryLoad())
+            : nullptr;
     }
 
     void ConfigureAnimationDefinition(
@@ -101,185 +102,110 @@ APlayableActor::APlayableActor()
     // The boom handles rotation.
     FollowCamera->bUsePawnControlRotation = false;
 
+    const UCaribbeanAssetSettings& AssetSettings =
+        UCaribbeanAssetSettings::Get();
+
     if (USkeletalMeshComponent* Mesh = GetMesh())
     {
-        if (USkeletalMesh* SkeletalMesh = LoadAssetOrNull<USkeletalMesh>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/X_Bot.X_Bot")
-        ))
+        if (const FCharacterVisualProfile* CharacterProfile =
+            AssetSettings.FindCharacterVisualProfile(
+                CharacterVisualProfileKey
+            ))
         {
-            Mesh->SetSkeletalMesh(SkeletalMesh);
-        }
+            if (USkeletalMesh* SkeletalMesh =
+                LoadAssetOrNull<USkeletalMesh>(
+                    CharacterProfile->SkeletalMesh
+                ))
+            {
+                Mesh->SetSkeletalMesh(SkeletalMesh);
+            }
 
-        static ConstructorHelpers::FClassFinder<UAnimInstance> AnimBlueprintClass(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/X_Bot_Skeleton_AnimBlueprint")
-        );
-
-        if (AnimBlueprintClass.Succeeded())
-        {
-            Mesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-            Mesh->SetAnimInstanceClass(AnimBlueprintClass.Class);
+            if (UClass* AnimBlueprintClass =
+                CharacterProfile->AnimBlueprintClass.TryLoadClass<UAnimInstance>())
+            {
+                Mesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+                Mesh->SetAnimInstanceClass(AnimBlueprintClass);
+            }
         }
     }
 
     if (PlayerInputComponent)
     {
-        PlayerInputComponent->DefaultMappingContext =
-            LoadAssetOrNull<UInputMappingContext>(
-                TEXT("/Game/Input/IMC_Player.IMC_Player")
-            );
+        if (const FControlMappingProfile* ControlProfile =
+            AssetSettings.FindControlMappingProfile(
+                ControlMappingProfileKey
+            ))
+        {
+            PlayerInputComponent->DefaultMappingContext =
+                LoadAssetOrNull<UInputMappingContext>(
+                    ControlProfile->DefaultMappingContext
+                );
 
-        PlayerInputComponent->MoveForwardAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_MoveForward.IA_MoveForward")
-            );
+            PlayerInputComponent->MoveForwardAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveForwardAction
+                );
 
-        PlayerInputComponent->MoveBackwardAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_MoveBackward.IA_MoveBackward")
-            );
+            PlayerInputComponent->MoveBackwardAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveBackwardAction
+                );
 
-        PlayerInputComponent->MoveLeftAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_MoveLeft.IA_MoveLeft")
-            );
+            PlayerInputComponent->MoveLeftAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveLeftAction
+                );
 
-        PlayerInputComponent->MoveRightAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_MoveRight.IA_MoveRight")
-            );
+            PlayerInputComponent->MoveRightAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveRightAction
+                );
 
-        PlayerInputComponent->LookAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_Look.IA_Look")
-            );
+            PlayerInputComponent->LookAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->LookAction
+                );
 
-        PlayerInputComponent->JumpAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_Jump.IA_Jump")
-            );
+            PlayerInputComponent->JumpAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->JumpAction
+                );
 
-        PlayerInputComponent->SprintAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_Sprint.IA_Sprint")
-            );
+            PlayerInputComponent->SprintAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->SprintAction
+                );
 
-        PlayerInputComponent->CrouchAction =
-            LoadAssetOrNull<UInputAction>(
-                TEXT("/Game/Input/IA_Crouch.IA_Crouch")
-            );
+            PlayerInputComponent->CrouchAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->CrouchAction
+                );
+        }
     }
 
     if (AnimationRegistryComponent)
     {
-        UAnimSequence* IdleAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Standing_Idle.Standing_Idle")
-        );
-        UAnimSequence* WalkAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Walking.Walking")
-        );
-        UAnimSequence* RunAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Medium_Run.Medium_Run")
-        );
-        UAnimSequence* JumpAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Jumping_Up.Jumping_Up")
-        );
-        UAnimSequence* FallAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Falling_Idle.Falling_Idle")
-        );
-        UAnimSequence* LandAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Falling_To_Landing.Falling_To_Landing")
-        );
-        UAnimSequence* HitAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Reaction_Body_Left.Reaction_Body_Left")
-        );
-        UAnimSequence* LightPunchAnimation = LoadAssetOrNull<UAnimSequence>(
-            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Light_Left_Punch.Light_Left_Punch")
-        );
-
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Idle,
-            IdleAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Walk,
-            WalkAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Run,
-            RunAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Sprint,
-            RunAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Jump,
-            JumpAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Fall,
-            FallAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Land,
-            LandAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Crouch,
-            IdleAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::LightRightPunch,
-            LightPunchAnimation,
-            EAnimationBlendMode::UpperBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Hit,
-            HitAnimation,
-            EAnimationBlendMode::UpperBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Death,
-            HitAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Interact,
-            LightPunchAnimation,
-            EAnimationBlendMode::UpperBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Mount,
-            JumpAnimation,
-            EAnimationBlendMode::FullBody
-        );
-        ConfigureAnimationDefinition(
-            AnimationRegistryComponent,
-            EAnimationKey::Dismount,
-            LandAnimation,
-            EAnimationBlendMode::FullBody
-        );
+        if (const FAnimationProfile* AnimationProfile =
+            AssetSettings.FindAnimationProfile(
+                AnimationProfileKey
+            ))
+        {
+            for (const FAnimationAssetEntry& Entry :
+                AnimationProfile->Entries)
+            {
+                ConfigureAnimationDefinition(
+                    AnimationRegistryComponent,
+                    Entry.Key,
+                    LoadAssetOrNull<UAnimSequence>(
+                        Entry.Animation
+                    ),
+                    Entry.BlendMode,
+                    LoadAssetOrNull<UCurveFloat>(
+                        Entry.BlendCurve
+                    )
+                );
+            }
+        }
     }
 
 

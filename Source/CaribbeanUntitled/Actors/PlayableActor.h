@@ -24,6 +24,15 @@ public:
 
 protected:
 
+    UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
+    FName CharacterVisualProfileKey = TEXT("DEMO_FEMALE");
+
+    UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
+    FName AnimationProfileKey = TEXT("HUMANOID_ANIMATIONS");
+
+    UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
+    FName ControlMappingProfileKey = TEXT("CONTROL_MAPPINGS_DESKTOP");
+
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,

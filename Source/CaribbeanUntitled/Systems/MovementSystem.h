@@ -58,11 +58,6 @@ private:
     void ProcessActor(AActor* Actor, float DeltaTime);
     void PerformDelayedJump(TWeakObjectPtr<AActor> WeakActor, float AscentGravityScale);
 
-    // Now takes the resolved MoveDirection: mouse look is owned entirely
-    // by the camera, so the character faces where it's actually moving
-    // (or an explicit look-at / seek target) instead of raw mouse delta.
-    void ApplyLook(class ACharacter* Character, class UControlComponent* Control, const FVector& MoveDirection, float DeltaTime);
-
     FVector ResolveMoveDirection(class ACharacter* Character, class UControlComponent* Control) const;
     FVector ComputeIntentDirection(class ACharacter* Character, const FVector2D& MoveIntent) const;
     FVector ResolveExternalDirection(class ACharacter* Character, class UControlComponent* Control) const;

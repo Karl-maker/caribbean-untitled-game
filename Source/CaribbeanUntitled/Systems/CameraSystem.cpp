@@ -86,6 +86,20 @@ void UCameraSystem::Tick(UWorld* World, float DeltaTime)
         AActor* Actor = WeakActor.Get();
         if (IsValid(Actor))
         {
+            // Only drive the local player's camera. Remote actors should
+            // never affect the owning client's camera state.
+            if (const APawn* Pawn = Cast<APawn>(Actor))
+            {
+                if (!Pawn->IsLocallyControlled())
+                {
+                    continue;
+                }
+            }
+            else if (CameraTarget.IsValid() && CameraTarget.Get() != Actor)
+            {
+                continue;
+            }
+
             ProcessActor(Actor, DeltaTime);
         }
     }
@@ -259,6 +273,10 @@ void UCameraSystem::UpdateCameraOrbit(ACharacter* Character, UControlComponent* 
         State.TargetPitch = FMath::Clamp(State.TargetPitch + LookDelta.Y * MouseSensitivity, MinPitch, MaxPitch);
 
         State.TimeSinceLastLookInput = 0.0f;
+        if (Control)
+        {
+            Control->SetViewYaw(State.TargetYaw);
+        }
         return;
     }
 
@@ -278,6 +296,10 @@ void UCameraSystem::UpdateCameraOrbit(ACharacter* Character, UControlComponent* 
     {
         const float CharacterYaw = Character->GetActorRotation().Yaw;
         State.TargetYaw = SmoothAngleTo(State.TargetYaw, CharacterYaw, DeltaTime, RecenterSpeed);
+        if (Control)
+        {
+            Control->SetViewYaw(State.TargetYaw);
+        }
     }
 }
 
