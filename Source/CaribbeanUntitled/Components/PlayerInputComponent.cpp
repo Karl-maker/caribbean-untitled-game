@@ -302,6 +302,173 @@ void UPlayerInputComponent::BindInput(
             &UPlayerInputComponent::HandleCrouchCompleted
         );
     }
+
+
+    // ============================================================
+    // COMBAT INPUTS
+    // ============================================================
+
+    // AIM
+    if (AimAction)
+    {
+        EnhancedInput->BindAction(
+            AimAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleAimStarted
+        );
+
+        EnhancedInput->BindAction(
+            AimAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleAimCompleted
+        );
+    }
+
+    // RELOAD
+    if (ReloadAction)
+    {
+        EnhancedInput->BindAction(
+            ReloadAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleReloadStarted
+        );
+
+        EnhancedInput->BindAction(
+            ReloadAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleReloadCompleted
+        );
+    }
+
+    // LIGHT ATTACK
+    if (LightAttackAction)
+    {
+        EnhancedInput->BindAction(
+            LightAttackAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleLightAttackStarted
+        );
+
+        EnhancedInput->BindAction(
+            LightAttackAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleLightAttackCompleted
+        );
+    }
+
+    // HEAVY ATTACK
+    if (HeavyAttackAction)
+    {
+        EnhancedInput->BindAction(
+            HeavyAttackAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleHeavyAttackStarted
+        );
+
+        EnhancedInput->BindAction(
+            HeavyAttackAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleHeavyAttackCompleted
+        );
+    }
+
+    // BLOCK
+    if (BlockAction)
+    {
+        EnhancedInput->BindAction(
+            BlockAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleBlockStarted
+        );
+
+        EnhancedInput->BindAction(
+            BlockAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleBlockCompleted
+        );
+    }
+
+    // DODGE
+    if (DodgeAction)
+    {
+        EnhancedInput->BindAction(
+            DodgeAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleDodgeStarted
+        );
+
+        EnhancedInput->BindAction(
+            DodgeAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleDodgeCompleted
+        );
+    }
+
+    // LOCK ON
+    if (LockOnAction)
+    {
+        EnhancedInput->BindAction(
+            LockOnAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleLockOnStarted
+        );
+
+        EnhancedInput->BindAction(
+            LockOnAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleLockOnCompleted
+        );
+    }
+
+    // WEAPON ABILITY
+    if (WeaponAbilityAction)
+    {
+        EnhancedInput->BindAction(
+            WeaponAbilityAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleWeaponAbilityStarted
+        );
+
+        EnhancedInput->BindAction(
+            WeaponAbilityAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleWeaponAbilityCompleted
+        );
+    }
+
+    // WEAPON SWITCH
+    if (WeaponSwitchAction)
+    {
+        EnhancedInput->BindAction(
+            WeaponSwitchAction,
+            ETriggerEvent::Started,
+            this,
+            &UPlayerInputComponent::HandleWeaponSwitchStarted
+        );
+
+        EnhancedInput->BindAction(
+            WeaponSwitchAction,
+            ETriggerEvent::Completed,
+            this,
+            &UPlayerInputComponent::HandleWeaponSwitchCompleted
+        );
+    }
 }
 
 // ============================================================================
@@ -473,4 +640,234 @@ void UPlayerInputComponent::HandleCrouchCompleted(
     }
 
     Control->CrouchIntent = 0.0f;
+}
+
+
+// ============================================================================
+// COMBAT INPUT HANDLERS
+// ============================================================================
+
+// AIM
+void UPlayerInputComponent::HandleAimStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->AimIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleAimCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->AimIntent = 0.0f;
+}
+
+// RELOAD
+void UPlayerInputComponent::HandleReloadStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->ReloadIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleReloadCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->ReloadIntent = 0.0f;
+}
+
+// LIGHT ATTACK
+void UPlayerInputComponent::HandleLightAttackStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->LightAttackIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleLightAttackCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->LightAttackIntent = 0.0f;
+}
+
+// HEAVY ATTACK
+void UPlayerInputComponent::HandleHeavyAttackStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->HeavyAttackIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleHeavyAttackCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->HeavyAttackIntent = 0.0f;
+}
+
+// BLOCK
+void UPlayerInputComponent::HandleBlockStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->BlockIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleBlockCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->BlockIntent = 0.0f;
+}
+
+// DODGE
+void UPlayerInputComponent::HandleDodgeStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->DodgeIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleDodgeCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->DodgeIntent = 0.0f;
+}
+
+// LOCK ON
+void UPlayerInputComponent::HandleLockOnStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->LockOnIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleLockOnCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->LockOnIntent = 0.0f;
+}
+
+// WEAPON ABILITY
+void UPlayerInputComponent::HandleWeaponAbilityStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->WeaponAbilityIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleWeaponAbilityCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->WeaponAbilityIntent = 0.0f;
+}
+
+// WEAPON SWITCH
+void UPlayerInputComponent::HandleWeaponSwitchStarted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->WeaponSwitchIntent = 1.0f;
+}
+
+void UPlayerInputComponent::HandleWeaponSwitchCompleted(
+    const FInputActionValue& Value
+)
+{
+    if (!Control)
+    {
+        return;
+    }
+
+    Control->WeaponSwitchIntent = 0.0f;
 }

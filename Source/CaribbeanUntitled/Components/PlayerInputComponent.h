@@ -58,6 +58,37 @@ public:
     UPROPERTY(EditAnywhere, Category="Input")
     TObjectPtr<UInputAction> CrouchAction;
 
+    // ============================================================
+    // COMBAT INPUT ASSETS
+    // ============================================================
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> AimAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> ReloadAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> LightAttackAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> HeavyAttackAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> BlockAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> DodgeAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> LockOnAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> WeaponAbilityAction;
+
+    UPROPERTY(EditAnywhere, Category="Input|Combat")
+    TObjectPtr<UInputAction> WeaponSwitchAction;
+
 
 protected:
 
@@ -115,6 +146,82 @@ private:
     );
 
     void HandleCrouchCompleted(
+        const FInputActionValue& Value
+    );
+
+    // ============================================================
+    // COMBAT INPUT HANDLERS
+    // ============================================================
+
+    void HandleAimStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleAimCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleReloadStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleReloadCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleLightAttackStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleLightAttackCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleHeavyAttackStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleHeavyAttackCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleBlockStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleBlockCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleDodgeStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleDodgeCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleLockOnStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleLockOnCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleWeaponAbilityStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleWeaponAbilityCompleted(
+        const FInputActionValue& Value
+    );
+
+    void HandleWeaponSwitchStarted(
+        const FInputActionValue& Value
+    );
+
+    void HandleWeaponSwitchCompleted(
         const FInputActionValue& Value
     );
 };
