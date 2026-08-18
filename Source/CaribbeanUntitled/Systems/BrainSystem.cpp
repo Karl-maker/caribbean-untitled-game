@@ -185,10 +185,16 @@ FBrainIntentData UBrainSystem::DecideIntent(
     // --- Log what perception sees ---
     if (PerceptionComponent)
     {
-        UE_LOG(LogTemp, Log, TEXT("[Brain] PERCEPTION DATA | HasPlayer=%s | PlayerVisible=%s | Player=%s"),
-            PerceptionComponent->HasPerceivedPlayer() ? TEXT("true") : TEXT("false"),
-            PerceptionComponent->CanSeePlayer() ? TEXT("true") : TEXT("false"),
-            PerceptionComponent->GetPerceivedPlayer() ? *PerceptionComponent->GetPerceivedPlayer()->GetName() : TEXT("NULL")
+        const TArray<FPerceivedActor>& PerceivedActors =
+            PerceptionComponent->GetPerceivedActors();
+
+        const FPerceivedActor* FirstActor =
+            PerceivedActors.Num() > 0 ? &PerceivedActors[0] : nullptr;
+
+        UE_LOG(LogTemp, Log, TEXT("[Brain] PERCEPTION DATA | Perceived=%d | FirstTarget=%s | FirstVisible=%s"),
+            PerceivedActors.Num(),
+            FirstActor && FirstActor->Actor ? *FirstActor->Actor->GetName() : TEXT("NULL"),
+            FirstActor && FirstActor->bVisible ? TEXT("true") : TEXT("false")
         );
     }
 
@@ -202,21 +208,29 @@ FBrainIntentData UBrainSystem::DecideIntent(
         return Result;
     }
 
-    // --- PLAYER IS PERCEIVED - ALWAYS DO SOMETHING ---
-    if (PerceptionComponent->HasPerceivedPlayer())
-    {
-        AActor* Player = PerceptionComponent->GetPerceivedPlayer();
-        const bool bVisible = PerceptionComponent->CanSeePlayer();
+    // --- A TARGET IS PERCEIVED - ALWAYS DO SOMETHING ---
+    const TArray<FPerceivedActor>& PerceivedActors =
+        PerceptionComponent->GetPerceivedActors();
 
-        UE_LOG(LogTemp, Warning, TEXT("[Brain] PLAYER DETECTED! | Visible=%s | Player=%s | Personality: Sociability=%.2f, Curiosity=%.2f"),
+    for (const FPerceivedActor& Perceived : PerceivedActors)
+    {
+        AActor* Target = Perceived.Actor;
+        const bool bVisible = Perceived.bVisible;
+
+        if (!Target)
+        {
+            continue;
+        }
+
+        UE_LOG(LogTemp, Warning, TEXT("[Brain] TARGET DETECTED! | Visible=%s | Target=%s | Personality: Sociability=%.2f, Curiosity=%.2f"),
             bVisible ? TEXT("true") : TEXT("false"),
-            Player ? *Player->GetName() : TEXT("NULL"),
+            *Target->GetName(),
             P.Sociability,
             P.Curiosity
         );
 
-        // If visible, always follow or at least look at the player
-        if (bVisible && Player)
+        // If visible, always follow or at least look at the target
+        if (bVisible && Target)
         {
             // Different behaviors based on personality, but ALWAYS react
             if (P.Sociability >= 0.4f)
@@ -249,19 +263,19 @@ FBrainIntentData UBrainSystem::DecideIntent(
                 UE_LOG(LogTemp, Warning, TEXT("[Brain] → FOLLOW (Default)"));
             }
 
-            Result.TargetActor = Player;
-            Result.TargetLocation = Player->GetActorLocation();
+            Result.TargetActor = Target;
+            Result.TargetLocation = Target->GetActorLocation();
             return Result;
         }
 
-        // Player was seen but now lost - investigate last known location
+        // Target was seen but now lost - investigate last known location
         if (!bVisible)
         {
             Result.Intent = EBrainIntent::Investigate;
             Result.Feeling = EBrainFeeling::Suspicious;
             Result.Effort = FMath::Clamp(0.2f + P.Curiosity * 0.5f, 0.0f, 1.0f);
-            Result.TargetLocation = PerceptionComponent->LastKnownPlayerLocation;
-            UE_LOG(LogTemp, Warning, TEXT("[Brain] → INVESTIGATE (Lost Player) | Location=(%.1f,%.1f,%.1f)"),
+            Result.TargetLocation = Perceived.LastKnownLocation;
+            UE_LOG(LogTemp, Warning, TEXT("[Brain] → INVESTIGATE (Lost Target) | Location=(%.1f,%.1f,%.1f)"),
                 Result.TargetLocation.X,
                 Result.TargetLocation.Y,
                 Result.TargetLocation.Z
@@ -270,7 +284,7 @@ FBrainIntentData UBrainSystem::DecideIntent(
         }
     }
 
-    // --- No player detected - wander or idle ---
+    // --- No target detected - wander or idle ---
     if (P.Curiosity >= 0.5f)
     {
         Result.Intent = EBrainIntent::Wander;

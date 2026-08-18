@@ -5,10 +5,12 @@
 
 #include "../Components/StatsComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Pawn.h"
 
 
 void UMovementSystem::Tick(float DeltaTime)
 {
+    UE_LOG(LogTemp, Warning, TEXT("MovementSystem::Tick - Running"));
     if (DeltaTime <= 0.0f)
     {
         return;
@@ -61,11 +63,29 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
         return;
     }
 
-    // Move direction must be resolved before ApplyLook now, since facing
-    // is derived from where the character is actually moving.
-    const FVector MoveDirection = ResolveMoveDirection(Character, Control);
+    const UWorld* World = Actor->GetWorld();
+    const bool bHasAuthority = World && World->GetNetMode() != NM_Client;
 
-    ApplyLook(Character, Control, MoveDirection, DeltaTime);
+    if (Control->ControlType == EControlType::Player)
+    {
+        const APawn* Pawn = Cast<APawn>(Actor);
+
+        // Player-controlled actors still need server-side processing so
+        // the authoritative locomotion state can replicate to the other
+        // clients. Only skip them on non-authoritative worlds when this
+        // pawn is not locally controlled.
+        if (!bHasAuthority && (!Pawn || !Pawn->IsLocallyControlled()))
+        {
+            return;
+        }
+    }
+    else if (!bHasAuthority)
+    {
+        return;
+    }
+
+    // Move direction must be resolved before movement is applied.
+    const FVector MoveDirection = ResolveMoveDirection(Character, Control);
 
     const bool bWantsToSprint = Control->WantsToSprint();
     const bool bWantsToCrouch = Control->WantsToCrouch();
@@ -78,78 +98,6 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
     DetermineAndPublishLocomotion(Actor, Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch);
 }
 
-
-//=========================================================================
-// Look
-//=========================================================================
-
-void UMovementSystem::ApplyLook(ACharacter* Character, UControlComponent* Control, const FVector& MoveDirection, float DeltaTime)
-{
-    // PRIORITY 1: Destination seeking
-    if (Control->IsSeekingDestination())
-    {
-        FVector ToTarget = Control->GetDesiredWorldLocation() - Character->GetActorLocation();
-        ToTarget.Z = 0.0f;
-
-        if (!ToTarget.IsNearlyZero())
-        {
-            FVector FaceDirection = ToTarget.GetSafeNormal();
-            const float TargetYaw = FaceDirection.Rotation().Yaw;
-            const FRotator CurrentRotation = Character->GetActorRotation();
-
-            const FRotator NewRotation = FMath::RInterpTo(
-                CurrentRotation,
-                FRotator(0.0f, TargetYaw, 0.0f),
-                DeltaTime,
-                Control->LookRotationSpeed
-            );
-
-            Character->SetActorRotation(NewRotation);
-            return;
-        }
-    }
-
-    // PRIORITY 2: Explicit look direction (AI control, etc.)
-    FVector LookDirection = Control->GetLookDirection();
-    LookDirection.Z = 0.0f;
-    if (!LookDirection.IsNearlyZero())
-    {
-        const float TargetYaw = LookDirection.Rotation().Yaw;
-        const FRotator CurrentRotation = Character->GetActorRotation();
-
-        const FRotator NewRotation = FMath::RInterpTo(
-            CurrentRotation,
-            FRotator(0.0f, TargetYaw, 0.0f),
-            DeltaTime,
-            Control->LookRotationSpeed
-        );
-
-        Character->SetActorRotation(NewRotation);
-        return;
-    }
-
-    // PRIORITY 3: Face movement direction.
-    // Mouse look is now owned entirely by CameraSystem - the character no
-    // longer turns to match raw mouse delta directly (that was fighting
-    // the camera's own orbit and rotating the mesh far faster than the
-    // camera could track). Instead, a player-controlled character turns
-    // to face wherever it's actually moving, so the mesh always visibly
-    // matches the direction you're running/acting in.
-    if (Control->ControlType == EControlType::Player && !MoveDirection.IsNearlyZero())
-    {
-        const float TargetYaw = MoveDirection.Rotation().Yaw;
-        const FRotator CurrentRotation = Character->GetActorRotation();
-
-        const FRotator NewRotation = FMath::RInterpTo(
-            CurrentRotation,
-            FRotator(0.0f, TargetYaw, 0.0f),
-            DeltaTime,
-            Control->LookRotationSpeed
-        );
-
-        Character->SetActorRotation(NewRotation);
-    }
-}
 
 //=========================================================================
 // Movement Direction
@@ -208,15 +156,12 @@ FVector UMovementSystem::ComputeIntentDirection(ACharacter* Character, const FVe
     }
 
     // Movement is camera-relative: forward/right are derived from the
-    // camera boom's current yaw, not the character's own facing. The
-    // character's own rotation is now an OUTPUT of movement (see
-    // ApplyLook's Priority 3), not an input to it - basing this on the
-    // character's own rotation would create a feedback loop where facing
-    // and movement direction chase each other.
+    // synced view yaw, not the character's current facing. That lets the
+    // server resolve the exact same movement direction as the owning client.
     float BasisYaw = Character->GetActorRotation().Yaw;
-    if (const USpringArmComponent* CameraBoom = Character->FindComponentByClass<USpringArmComponent>())
+    if (const UControlComponent* Control = Character->FindComponentByClass<UControlComponent>())
     {
-        BasisYaw = CameraBoom->GetComponentRotation().Yaw;
+        BasisYaw = Control->GetViewYaw();
     }
 
     const FRotator YawRotation(0.0f, BasisYaw, 0.0f);
@@ -335,6 +280,10 @@ void UMovementSystem::ApplyJump(
 
     TWeakObjectPtr<AActor> WeakActor(Character);
     const float AscentGravityScale = Stats->JumpAscentGravityScale;
+
+    // Publish the jump state immediately so remote clients receive the
+    // start-jump animation before the character transitions into Fall.
+    Control->SetReplicatedLocomotion(ELocomotion::Jump);
 
     FTimerHandle Handle;
     World->GetTimerManager().SetTimer(
@@ -494,6 +443,7 @@ void UMovementSystem::DetermineAndPublishLocomotion(
 
         // Update the stored state
         PreviousLocomotionStates.Add(Actor, CurrentState);
+        Control->SetReplicatedLocomotion(CurrentState);
 
         // Publish the event
         FMovementPayload Payload;

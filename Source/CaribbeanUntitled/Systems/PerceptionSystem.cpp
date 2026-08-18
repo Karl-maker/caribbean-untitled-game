@@ -3,8 +3,6 @@
 #include "../Components/StatsComponent.h"
 
 #include "GameFramework/Actor.h"
-#include "GameFramework/Pawn.h"
-#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
@@ -377,39 +375,6 @@ void UPerceptionSystem::EvaluatePerceiver(
         NearbyActors.Num()
     );
 
-    // --- FIND THE PLAYER (IMPROVED) ---
-    APlayerController* PlayerController = UGameplayStatics::GetPlayerController(World, 0);
-    AActor* PlayerActor = nullptr;
-
-    if (PlayerController)
-    {
-        // Try to get the controlled pawn first
-        if (APawn* ControlledPawn = PlayerController->GetPawn())
-        {
-            PlayerActor = ControlledPawn;
-        }
-        else
-        {
-            // If no pawn, the controller itself might be the player entity
-            PlayerActor = PlayerController;
-        }
-    }
-
-    // If no player found via controller, try fallback methods (optional)
-    if (!PlayerActor)
-    {
-        // Option 1: Check for actors with "Player" tag
-        for (const TWeakObjectPtr<AActor>& WeakActor : NearbyActors)
-        {
-            AActor* Actor = WeakActor.Get();
-            if (Actor && Actor->ActorHasTag("Player"))
-            {
-                PlayerActor = Actor;
-                break;
-            }
-        }
-    }
-
     // --- PROCESS PERCEIVED ACTORS ---
     const TArray<FPerceivedActor>& PreviousActors = Perception->GetPerceivedActors();
 
@@ -637,33 +602,7 @@ void UPerceptionSystem::EvaluatePerceiver(
         }
     }
 
-    /*
-     * PLAYER-SPECIFIC PERCEPTION (IMPROVED)
-     */
-    bool bCanSeePlayer = false;
-    AActor* PerceivedPlayer = nullptr;
-    FVector LastKnownPlayerLocation = Perception->LastKnownPlayerLocation;
-
-    if (PlayerActor)
-    {
-        for (const FPerceivedActor& Entry : NewPerceived)
-        {
-            if (Entry.Actor == PlayerActor)
-            {
-                PerceivedPlayer = PlayerActor;
-                LastKnownPlayerLocation = Entry.LastKnownLocation;
-                bCanSeePlayer = Entry.bVisible;
-                break;
-            }
-        }
-    }
-
     Perception->SetPerceivedActors(NewPerceived);
-    Perception->SetPlayerPerception(
-        PerceivedPlayer,
-        bCanSeePlayer,
-        LastKnownPlayerLocation
-    );
 
     /*
      * Final summary for this perceiver.
@@ -671,7 +610,7 @@ void UPerceptionSystem::EvaluatePerceiver(
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("[Perception] RESULT | Owner=%s | Candidates=%d | Visible=%d | OutsideCone=%d | Blocked=%d | Carried=%d | Forgotten=%d | PerceivedTotal=%d | PlayerVisible=%s"),
+        TEXT("[Perception] RESULT | Owner=%s | Candidates=%d | Visible=%d | OutsideCone=%d | Blocked=%d | Carried=%d | Forgotten=%d | PerceivedTotal=%d"),
         *Owner->GetName(),
         NearbyActors.Num(),
         VisibleCount,
@@ -679,8 +618,7 @@ void UPerceptionSystem::EvaluatePerceiver(
         BlockedCount,
         CarriedCount,
         ForgottenCount,
-        NewPerceived.Num(),
-        bCanSeePlayer ? TEXT("true") : TEXT("false")
+        NewPerceived.Num()
     );
 
     /*

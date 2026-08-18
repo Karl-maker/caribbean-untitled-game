@@ -21,7 +21,13 @@ public:
 
     APlayableActor();
 
+
 protected:
+    UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
+    FName AnimationProfileKey = TEXT("HUMANOID_ANIMATIONS");
+
+    UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
+    FName ControlMappingProfileKey = TEXT("CONTROL_MAPPINGS_DESKTOP");
 
     UPROPERTY(
         VisibleAnywhere,
@@ -47,4 +53,5 @@ protected:
     virtual void SetupPlayerInputComponent(
         UInputComponent* PlayerInput
     ) override;
+
 };

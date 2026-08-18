@@ -11,6 +11,7 @@
 UInteractiveComponent::UInteractiveComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
+    SetIsReplicatedByDefault(true);
 }
 
 

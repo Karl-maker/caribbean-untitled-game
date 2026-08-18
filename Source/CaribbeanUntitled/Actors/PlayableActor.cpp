@@ -4,14 +4,62 @@
 
 #include "PlayableActor.h"
 
+#include "../Components/AnimationRegistryComponent.h"
 #include "../Components/PlayerInputComponent.h"
+#include "../Settings/CaribbeanAssetSettings.h"
 
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimSequence.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Curves/CurveFloat.h"
+#include "Net/UnrealNetwork.h"
+#include "InputAction.h"
+#include "InputMappingContext.h"
+
+namespace
+{
+    template<typename TObjectType>
+    TObjectType* LoadAssetOrNull(const FSoftObjectPath& AssetPath)
+    {
+        return AssetPath.IsValid()
+            ? Cast<TObjectType>(AssetPath.TryLoad())
+            : nullptr;
+    }
+
+    void ConfigureAnimationDefinition(
+        UAnimationRegistryComponent* Registry,
+        EAnimationKey Key,
+        UAnimSequence* Animation,
+        EAnimationBlendMode BlendMode,
+        UCurveFloat* BlendCurve = nullptr
+    )
+    {
+        if (!Registry)
+        {
+            return;
+        }
+
+        for (FAnimationDefinition& Definition : Registry->Animations)
+        {
+            if (Definition.Key != Key)
+            {
+                continue;
+            }
+
+            Definition.Animation = Animation;
+            Definition.BlendMode = BlendMode;
+            Definition.BlendCurve = BlendCurve;
+            return;
+        }
+    }
+}
 
 APlayableActor::APlayableActor()
 {
+    const UCaribbeanAssetSettings& AssetSettings = UCaribbeanAssetSettings::Get();
     
     // ============================================================
     // PLAYER INPUT
@@ -56,18 +104,89 @@ APlayableActor::APlayableActor()
     // The boom handles rotation.
     FollowCamera->bUsePawnControlRotation = false;
 
+    if (PlayerInputComponent)
+    {
+        if (const FControlMappingProfile* ControlProfile =
+            AssetSettings.FindControlMappingProfile(
+                ControlMappingProfileKey
+            ))
+        {
+            PlayerInputComponent->DefaultMappingContext =
+                LoadAssetOrNull<UInputMappingContext>(
+                    ControlProfile->DefaultMappingContext
+                );
 
-    // ============================================================
-    // AUTOMATIC PLAYER 0 POSSESSION
-    // ============================================================
-    //
-    // When this actor is placed in the level, Unreal will
-    // automatically possess it with Player 0.
-    //
+            PlayerInputComponent->MoveForwardAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveForwardAction
+                );
 
-    AutoPossessPlayer = EAutoReceiveInput::Player0;
+            PlayerInputComponent->MoveBackwardAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveBackwardAction
+                );
+
+            PlayerInputComponent->MoveLeftAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveLeftAction
+                );
+
+            PlayerInputComponent->MoveRightAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->MoveRightAction
+                );
+
+            PlayerInputComponent->LookAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->LookAction
+                );
+
+            PlayerInputComponent->JumpAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->JumpAction
+                );
+
+            PlayerInputComponent->SprintAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->SprintAction
+                );
+
+            PlayerInputComponent->CrouchAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->CrouchAction
+                );
+        }
+    }
+
+    if (AnimationRegistryComponent)
+    {
+        if (const FAnimationProfile* AnimationProfile =
+            AssetSettings.FindAnimationProfile(
+                AnimationProfileKey
+            ))
+        {
+            for (const FAnimationAssetEntry& Entry :
+                AnimationProfile->Entries)
+            {
+                ConfigureAnimationDefinition(
+                    AnimationRegistryComponent,
+                    Entry.Key,
+                    LoadAssetOrNull<UAnimSequence>(
+                        Entry.Animation
+                    ),
+                    Entry.BlendMode,
+                    LoadAssetOrNull<UCurveFloat>(
+                        Entry.BlendCurve
+                    )
+                );
+            }
+        }
+    }
+
+
+    // Networked games should let GameMode/GameFramework own possession.
+    AutoPossessPlayer = EAutoReceiveInput::Disabled;
 }
-
 
 void APlayableActor::SetupPlayerInputComponent(
     UInputComponent* PlayerInput

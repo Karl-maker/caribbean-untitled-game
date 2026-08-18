@@ -12,9 +12,6 @@ void UCharacterPerceptionComponent::Clear()
 {
     PerceivedActors.Reset();
     Threats.Reset();
-    PerceivedPlayer = nullptr;
-    LastKnownPlayerLocation = FVector::ZeroVector;
-    bCanSeePlayer = false;
     bUnderThreat = false;
 }
 
@@ -26,11 +23,4 @@ void UCharacterPerceptionComponent::SetPerceivedActors(const TArray<FPerceivedAc
 void UCharacterPerceptionComponent::SetThreats(const TArray<FPerceivedActor>& NewThreats)
 {
     Threats = NewThreats;
-}
-
-void UCharacterPerceptionComponent::SetPlayerPerception(AActor* Player, bool bVisible, const FVector& LastKnownLocation)
-{
-    PerceivedPlayer = Player;
-    bCanSeePlayer = bVisible;
-    LastKnownPlayerLocation = LastKnownLocation;
 }

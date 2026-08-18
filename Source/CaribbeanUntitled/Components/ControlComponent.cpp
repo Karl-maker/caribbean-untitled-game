@@ -7,16 +7,26 @@
 
 #include "ControlComponent.h"
 #include "../Actors/K98Actor.h"
+// Add this include at the top
+#include "Net/UnrealNetwork.h"
+#include "../EventBus/EventBusSubsystem.h"
+#include "../Events/MovementPayload.h"
 
 UControlComponent::UControlComponent()
 {
     PrimaryComponentTick.bCanEverTick = true;
     PrimaryComponentTick.TickGroup = TG_PrePhysics;
+    SetIsReplicatedByDefault(true);
 }
 
 void UControlComponent::BeginPlay()
 {
     Super::BeginPlay();
+
+    if (AActor* Owner = GetOwner())
+    {
+        ViewYaw = Owner->GetActorRotation().Yaw;
+    }
 }
 
 void UControlComponent::TickComponent(
@@ -38,6 +48,16 @@ void UControlComponent::TickComponent(
 //=========================================================================
 
 void UControlComponent::SetMoveIntent(const FVector2D& Intent)
+{
+    MoveIntent = Intent.ClampAxes(-1.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetMoveIntent(MoveIntent);
+    }
+}
+
+void UControlComponent::ServerSetMoveIntent_Implementation(FVector2D Intent)
 {
     MoveIntent = Intent.ClampAxes(-1.0f, 1.0f);
 }
@@ -90,9 +110,26 @@ void UControlComponent::ClearDestination()
 // Individual Action Setters
 //=========================================================================
 
-void UControlComponent::SetJumpIntent(float Weight)      { JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetJumpIntent(float Weight)
+{
+    JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetJumpIntent(JumpIntent);
+    }
+}
+
 void UControlComponent::SetInteractIntent(float Weight)  { InteractIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
-void UControlComponent::SetSprintIntent(float Weight)    { SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetSprintIntent(float Weight)
+{
+    SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetSprintIntent(SprintIntent);
+    }
+}
 void UControlComponent::SetCrouchIntent(float Weight)    { CrouchIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetDashIntent(float Weight)      { DashIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetAimIntent(float Weight)       { AimIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
@@ -110,6 +147,16 @@ void UControlComponent::SetDodgeIntent(float Weight)         { DodgeIntent = FMa
 void UControlComponent::SetLockOnIntent(float Weight)        { LockOnIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetWeaponAbilityIntent(float Weight) { WeaponAbilityIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetWeaponSwitchIntent(float Weight)  { WeaponSwitchIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+
+void UControlComponent::ServerSetJumpIntent_Implementation(float Weight)
+{
+    JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
+
+void UControlComponent::ServerSetSprintIntent_Implementation(float Weight)
+{
+    SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
 
 //=========================================================================
 // Generic Intent Functions
@@ -252,6 +299,11 @@ bool UControlComponent::HasCombatIntent() const
 void UControlComponent::SetLookInput(const FVector2D& Input)
 {
     LookInput = Input;
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetLookInput(Input);
+    }
 }
 
 void UControlComponent::SetLookDirection(const FVector& Direction)
@@ -262,6 +314,46 @@ void UControlComponent::SetLookDirection(const FVector& Direction)
 void UControlComponent::ClearLookInput()
 {
     LookInput = FVector2D::ZeroVector;
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetLookInput(FVector2D::ZeroVector);
+    }
+}
+
+void UControlComponent::SetViewYaw(float NewYaw)
+{
+    ViewYaw = FRotator::NormalizeAxis(NewYaw);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetViewYaw(ViewYaw);
+    }
+}
+
+void UControlComponent::ServerSetViewYaw_Implementation(float NewYaw)
+{
+    ViewYaw = FRotator::NormalizeAxis(NewYaw);
+}
+
+void UControlComponent::ServerSetLookInput_Implementation(FVector2D Input)
+{
+    LookInput = Input.ClampAxes(-1.0f, 1.0f);
+}
+
+void UControlComponent::SetReplicatedLocomotion(ELocomotion NewLocomotion)
+{
+    if (ReplicatedLocomotion == NewLocomotion)
+    {
+        return;
+    }
+
+    ReplicatedLocomotion = NewLocomotion;
+
+    if (GetOwner() && GetOwner()->HasAuthority())
+    {
+        OnRep_ReplicatedLocomotion();
+    }
 }
 
 //=========================================================================
@@ -316,6 +408,52 @@ void UControlComponent::SetLookAtLocation(const FVector& WorldLocation)
         if (!Direction.IsNearlyZero())
         {
             SetLookDirection(Direction);
+        }
+    }
+}
+
+void UControlComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+    // Replicate movement intent
+    DOREPLIFETIME(UControlComponent, MoveIntent);
+    DOREPLIFETIME(UControlComponent, ReplicatedLocomotion);
+    
+    // Replicate action intents
+    DOREPLIFETIME(UControlComponent, JumpIntent);
+    DOREPLIFETIME(UControlComponent, InteractIntent);
+    DOREPLIFETIME(UControlComponent, SprintIntent);
+    DOREPLIFETIME(UControlComponent, CrouchIntent);
+    DOREPLIFETIME(UControlComponent, DashIntent);
+    DOREPLIFETIME(UControlComponent, AimIntent);
+    DOREPLIFETIME(UControlComponent, FireIntent);
+    DOREPLIFETIME(UControlComponent, ReloadIntent);
+    
+    // Replicate combat intents
+    DOREPLIFETIME(UControlComponent, LightAttackIntent);
+    DOREPLIFETIME(UControlComponent, HeavyAttackIntent);
+    DOREPLIFETIME(UControlComponent, BlockIntent);
+    DOREPLIFETIME(UControlComponent, DodgeIntent);
+    DOREPLIFETIME(UControlComponent, LockOnIntent);
+    DOREPLIFETIME(UControlComponent, WeaponAbilityIntent);
+    DOREPLIFETIME(UControlComponent, WeaponSwitchIntent);
+    
+}
+
+void UControlComponent::OnRep_ReplicatedLocomotion()
+{
+    if (AActor* Owner = GetOwner())
+    {
+        if (UWorld* World = GetWorld())
+        {
+            if (UEventBusSubsystem* EventBus = World->GetSubsystem<UEventBusSubsystem>())
+            {
+                FMovementPayload Payload;
+                Payload.Source = Owner;
+                Payload.Type = ReplicatedLocomotion;
+                EventBus->Publish(Payload);
+            }
         }
     }
 }

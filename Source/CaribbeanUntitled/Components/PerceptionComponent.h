@@ -71,39 +71,6 @@ public:
 
 
     /**
-     * The player currently perceived by this character.
-     */
-    UPROPERTY(
-        VisibleAnywhere,
-        BlueprintReadOnly,
-        Category="Perception"
-    )
-    TObjectPtr<AActor> PerceivedPlayer = nullptr;
-
-
-    /**
-     * Last known location of the perceived player.
-     */
-    UPROPERTY(
-        VisibleAnywhere,
-        BlueprintReadOnly,
-        Category="Perception"
-    )
-    FVector LastKnownPlayerLocation = FVector::ZeroVector;
-
-
-    /**
-     * Whether the player is currently visible.
-     */
-    UPROPERTY(
-        VisibleAnywhere,
-        BlueprintReadOnly,
-        Category="Perception"
-    )
-    bool bCanSeePlayer = false;
-
-
-    /**
      * Whether this character currently perceives a threat.
      */
     UPROPERTY(
@@ -161,12 +128,6 @@ public:
         const TArray<FPerceivedActor>& NewThreats
     );
 
-    void SetPlayerPerception(
-        AActor* Player,
-        bool bVisible,
-        const FVector& LastKnownLocation
-    );
-
     const TArray<FPerceivedActor>& GetPerceivedActors() const
     {
         return PerceivedActors;
@@ -175,21 +136,6 @@ public:
     const TArray<FPerceivedActor>& GetThreats() const
     {
         return Threats;
-    }
-
-    AActor* GetPerceivedPlayer() const
-    {
-        return PerceivedPlayer;
-    }
-
-    bool HasPerceivedPlayer() const
-    {
-        return PerceivedPlayer != nullptr;
-    }
-
-    bool CanSeePlayer() const
-    {
-        return bCanSeePlayer;
     }
 
     bool IsUnderThreat() const

@@ -13,6 +13,7 @@ class UControlComponent;
 class UStatsComponent;
 class UAnimationRegistryComponent;
 class UActorRegistry;
+class UAnimInstance;
 
 UCLASS(Config=Game)
 class CARIBBEANUNTITLED_API ACharacterActor : public ACharacter
@@ -81,4 +82,28 @@ protected:
         Category="Actor|Components"
     )
     TObjectPtr<UAnimationRegistryComponent> AnimationRegistryComponent;
+
+    UPROPERTY(
+        EditDefaultsOnly,
+        ReplicatedUsing=OnRep_CharacterVisualProfileKey,
+        Category="Actor|Assets"
+    )
+    FName CharacterVisualProfileKey = TEXT("DEMO_FEMALE");
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        ReplicatedUsing=OnRep_CharacterVisualProfileKey,
+        Category="Actor|Assets"
+    )
+    FName ReplicatedCharacterVisualProfileKey = TEXT("DEMO_FEMALE");
+
+    virtual void GetLifetimeReplicatedProps(
+        TArray<FLifetimeProperty>& OutLifetimeProps
+    ) const override;
+
+    UFUNCTION()
+    void OnRep_CharacterVisualProfileKey();
+
+    void ApplyCharacterVisualProfile();
 };
