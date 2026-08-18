@@ -20,6 +20,12 @@ void UStatsComponent::BeginPlay()
         0.0f,
         MaxStamina
     );
+
+    Health = FMath::Clamp(
+        Health,
+        0.0f,
+        MaxHealth
+    );
 }
 
 
@@ -149,6 +155,83 @@ void UStatsComponent::RestoreFullStamina()
 
 
 // ============================================================
+// HEALTH
+// ============================================================
+
+float UStatsComponent::GetHealth() const
+{
+    return Health;
+}
+
+float UStatsComponent::GetMaxHealth() const
+{
+    return MaxHealth;
+}
+
+float UStatsComponent::GetHealthPercent() const
+{
+    if (MaxHealth <= 0.0f)
+    {
+        return 0.0f;
+    }
+
+    return Health / MaxHealth;
+}
+
+bool UStatsComponent::ApplyDamage(float DamageAmount)
+{
+    if (DamageAmount <= 0.0f || IsDead())
+    {
+        return false;
+    }
+
+    // Apply defense reduction
+    float ReducedDamage = FMath::Max(0.0f, DamageAmount - Defense);
+    
+    Health = FMath::Clamp(
+        Health - ReducedDamage,
+        0.0f,
+        MaxHealth
+    );
+
+    return true;
+}
+
+void UStatsComponent::Heal(float HealAmount)
+{
+    if (HealAmount <= 0.0f)
+    {
+        return;
+    }
+
+    Health = FMath::Clamp(
+        Health + HealAmount,
+        0.0f,
+        MaxHealth
+    );
+}
+
+void UStatsComponent::SetHealth(float NewHealth)
+{
+    Health = FMath::Clamp(
+        NewHealth,
+        0.0f,
+        MaxHealth
+    );
+}
+
+void UStatsComponent::RestoreFullHealth()
+{
+    Health = MaxHealth;
+}
+
+bool UStatsComponent::IsDead() const
+{
+    return Health <= 0.0f;
+}
+
+
+// ============================================================
 // DASH
 // ============================================================
 
@@ -169,7 +252,10 @@ float UStatsComponent::GetDashDuration() const
     return DashDuration;
 }
 
-// Sight
+
+// ============================================================
+// SIGHT
+// ============================================================
 
 float UStatsComponent::GetSightRange() const
 {
@@ -179,4 +265,74 @@ float UStatsComponent::GetSightRange() const
 float UStatsComponent::GetSightAngle() const
 {
     return SightAngle;
+}
+
+
+// ============================================================
+// COMBAT STATS
+// ============================================================
+
+float UStatsComponent::GetStrength() const
+{
+    return Strength;
+}
+
+float UStatsComponent::GetDefense() const
+{
+    return Defense;
+}
+
+float UStatsComponent::GetPoise() const
+{
+    return Poise;
+}
+
+
+// ============================================================
+// BLOCK
+// ============================================================
+
+float UStatsComponent::GetBlockDamageReduction() const
+{
+    return BlockDamageReduction;
+}
+
+float UStatsComponent::GetBlockStaminaCost() const
+{
+    return BlockStaminaCost;
+}
+
+float UStatsComponent::GetBlockAngle() const
+{
+    return BlockAngle;
+}
+
+
+// ============================================================
+// DODGE
+// ============================================================
+
+float UStatsComponent::GetDodgeDistance() const
+{
+    return DodgeDistance;
+}
+
+float UStatsComponent::GetDodgeDuration() const
+{
+    return DodgeDuration;
+}
+
+float UStatsComponent::GetDodgeStaminaCost() const
+{
+    return DodgeStaminaCost;
+}
+
+float UStatsComponent::GetDodgeCooldown() const
+{
+    return DodgeCooldown;
+}
+
+float UStatsComponent::GetDodgeInvulnerabilityDuration() const
+{
+    return DodgeInvulnerabilityDuration;
 }
