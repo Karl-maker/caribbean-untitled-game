@@ -7,8 +7,12 @@
 #include "../Components/ControlComponent.h"
 #include "../Components/StatsComponent.h"
 #include "../Components/AnimationRegistryComponent.h"
+#include "../Settings/CaribbeanAssetSettings.h"
 #include "../Systems/ActorRegistry.h"
+#include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Curves/CurveFloat.h"
+#include "Net/UnrealNetwork.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -70,6 +74,9 @@ ACharacterActor::ACharacterActor()
         CreateDefaultSubobject<UAnimationRegistryComponent>(
             TEXT("AnimationRegistryComponent")
         );
+
+    ReplicatedCharacterVisualProfileKey = CharacterVisualProfileKey;
+    ApplyCharacterVisualProfile();
 
     
     // ============================================================
@@ -278,6 +285,49 @@ ACharacterActor::ACharacterActor()
     bUseControllerRotationYaw = false;
     bUseControllerRotationPitch = false;
     bUseControllerRotationRoll = false;
+}
+
+void ACharacterActor::ApplyCharacterVisualProfile()
+{
+    const UCaribbeanAssetSettings& AssetSettings = UCaribbeanAssetSettings::Get();
+    USkeletalMeshComponent* Mesh = GetMesh();
+    if (!Mesh)
+    {
+        return;
+    }
+
+    const FCharacterVisualProfile* CharacterProfile =
+        AssetSettings.FindCharacterVisualProfile(ReplicatedCharacterVisualProfileKey);
+    if (!CharacterProfile)
+    {
+        return;
+    }
+
+    if (USkeletalMesh* SkeletalMesh =
+        CharacterProfile->SkeletalMesh.IsValid()
+            ? Cast<USkeletalMesh>(CharacterProfile->SkeletalMesh.TryLoad())
+            : nullptr)
+    {
+        Mesh->SetSkeletalMesh(SkeletalMesh);
+    }
+
+    if (UClass* AnimBlueprintClass =
+        CharacterProfile->AnimBlueprintClass.TryLoadClass<UAnimInstance>())
+    {
+        Mesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+        Mesh->SetAnimInstanceClass(AnimBlueprintClass);
+    }
+}
+
+void ACharacterActor::OnRep_CharacterVisualProfileKey()
+{
+    ApplyCharacterVisualProfile();
+}
+
+void ACharacterActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(ACharacterActor, ReplicatedCharacterVisualProfileKey);
 }
 
 

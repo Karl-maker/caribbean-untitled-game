@@ -15,6 +15,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Curves/CurveFloat.h"
+#include "Net/UnrealNetwork.h"
 #include "InputAction.h"
 #include "InputMappingContext.h"
 
@@ -58,6 +59,7 @@ namespace
 
 APlayableActor::APlayableActor()
 {
+    const UCaribbeanAssetSettings& AssetSettings = UCaribbeanAssetSettings::Get();
     
     // ============================================================
     // PLAYER INPUT
@@ -101,33 +103,6 @@ APlayableActor::APlayableActor()
 
     // The boom handles rotation.
     FollowCamera->bUsePawnControlRotation = false;
-
-    const UCaribbeanAssetSettings& AssetSettings =
-        UCaribbeanAssetSettings::Get();
-
-    if (USkeletalMeshComponent* Mesh = GetMesh())
-    {
-        if (const FCharacterVisualProfile* CharacterProfile =
-            AssetSettings.FindCharacterVisualProfile(
-                CharacterVisualProfileKey
-            ))
-        {
-            if (USkeletalMesh* SkeletalMesh =
-                LoadAssetOrNull<USkeletalMesh>(
-                    CharacterProfile->SkeletalMesh
-                ))
-            {
-                Mesh->SetSkeletalMesh(SkeletalMesh);
-            }
-
-            if (UClass* AnimBlueprintClass =
-                CharacterProfile->AnimBlueprintClass.TryLoadClass<UAnimInstance>())
-            {
-                Mesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-                Mesh->SetAnimInstanceClass(AnimBlueprintClass);
-            }
-        }
-    }
 
     if (PlayerInputComponent)
     {
@@ -212,7 +187,6 @@ APlayableActor::APlayableActor()
     // Networked games should let GameMode/GameFramework own possession.
     AutoPossessPlayer = EAutoReceiveInput::Disabled;
 }
-
 
 void APlayableActor::SetupPlayerInputComponent(
     UInputComponent* PlayerInput

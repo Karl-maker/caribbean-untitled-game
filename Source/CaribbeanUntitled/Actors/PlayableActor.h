@@ -23,10 +23,6 @@ public:
 
 
 protected:
-
-    UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
-    FName CharacterVisualProfileKey = TEXT("DEMO_FEMALE");
-
     UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
     FName AnimationProfileKey = TEXT("HUMANOID_ANIMATIONS");
 
@@ -57,4 +53,5 @@ protected:
     virtual void SetupPlayerInputComponent(
         UInputComponent* PlayerInput
     ) override;
+
 };

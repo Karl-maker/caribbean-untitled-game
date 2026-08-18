@@ -484,7 +484,6 @@ void UPlayerInputComponent::HandleMoveForward(
     const FInputActionValue& Value
 )
 {
-    UE_LOG(LogTemp, Warning, TEXT("MoveIntent.Y = %f"), Control->MoveIntent.Y);
     if (!Control)
     {
         return;
@@ -561,9 +560,6 @@ void UPlayerInputComponent::HandleLookInput(const FInputActionValue& Value)
     LookValue *= Sensitivity;
     
     Control->SetLookInput(LookValue);
-    
-    UE_LOG(LogTemp, Warning, TEXT("Look Input (Scaled): X=%f, Y=%f"),
-           LookValue.X, LookValue.Y);
 }
 
 

@@ -439,7 +439,6 @@ void UControlComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
     DOREPLIFETIME(UControlComponent, WeaponAbilityIntent);
     DOREPLIFETIME(UControlComponent, WeaponSwitchIntent);
     
-    UE_LOG(LogTemp, Warning, TEXT("ControlComponent: Replication setup complete"));
 }
 
 void UControlComponent::OnRep_ReplicatedLocomotion()
