@@ -10,6 +10,7 @@
 #include "../Systems/PerceptionSystem.h"
 #include "../Systems/BrainSystem.h"
 #include "../Systems/ActionSystem.h"
+#include "../Systems/StaminaRegenerationSystem.h"
 
 #include "Engine/World.h"
 
@@ -36,6 +37,7 @@ void UGameplaySystemScheduler::Initialize(
     PerceptionSystem = NewObject<UPerceptionSystem>(this);
     BrainSystem = NewObject<UBrainSystem>(this);
     ActionSystem = NewObject<UActionSystem>(this);
+    StaminaRegenerationSystem = NewObject<UStaminaRegenerationSystem>(this);
 
 }
 
@@ -116,6 +118,8 @@ void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
     // Health
     // Abilities
     // Status effects
+    
+    if(StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(DeltaTime);
 }
 
 
