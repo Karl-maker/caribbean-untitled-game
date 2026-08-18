@@ -1,4 +1,5 @@
 #include "StatsComponent.h"
+#include "TimerManager.h"
 
 
 UStatsComponent::UStatsComponent()
@@ -26,6 +27,79 @@ void UStatsComponent::BeginPlay()
         0.0f,
         MaxHealth
     );
+
+    // Start stamina regeneration timer
+    StartStaminaRegenerationTimer();
+}
+
+void UStatsComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    Super::EndPlay(EndPlayReason);
+    
+    // Stop the timer when the component is destroyed
+    StopStaminaRegenerationTimer();
+}
+
+
+// ============================================================
+// STAMINA REGENERATION
+// ============================================================
+
+void UStatsComponent::StartStaminaRegenerationTimer()
+{
+    // Clear any existing timer
+    StopStaminaRegenerationTimer();
+    
+    // Start the periodic timer
+    if (GetWorld())
+    {
+        GetWorld()->GetTimerManager().SetTimer(
+            StaminaRegenTimerHandle,
+            this,
+            &UStatsComponent::TickStaminaRegeneration,
+            StaminaRegenCheckInterval,
+            true, // Loop
+            0.0f  // Start immediately
+        );
+    }
+}
+
+void UStatsComponent::StopStaminaRegenerationTimer()
+{
+    if (GetWorld() && StaminaRegenTimerHandle.IsValid())
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaRegenTimerHandle);
+    }
+}
+
+void UStatsComponent::ResetStaminaRegenDelay()
+{
+    // Reset the delay timer whenever stamina is consumed
+    StaminaRegenTimeRemaining = StaminaRegenDelay;
+}
+
+void UStatsComponent::TickStaminaRegeneration()
+{
+    // Don't regenerate if at max stamina
+    if (Stamina >= MaxStamina)
+    {
+        return;
+    }
+
+    // Check if we're still in the delay window after stamina consumption
+    if (StaminaRegenTimeRemaining > 0.0f)
+    {
+        // Decrease the remaining time by the check interval
+        StaminaRegenTimeRemaining = FMath::Max(
+            0.0f,
+            StaminaRegenTimeRemaining - StaminaRegenCheckInterval
+        );
+        return; // Wait until delay expires
+    }
+
+    // Regenerate stamina
+    float RegenerationAmount = StaminaRegenRate * StaminaRegenCheckInterval;
+    RestoreStamina(RegenerationAmount);
 }
 
 
@@ -118,6 +192,9 @@ bool UStatsComponent::ConsumeStamina(float Amount)
         0.0f,
         MaxStamina
     );
+
+    // Reset the regeneration delay when stamina is consumed
+    ResetStaminaRegenDelay();
 
     return true;
 }

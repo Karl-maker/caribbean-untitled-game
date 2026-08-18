@@ -523,4 +523,52 @@ public:
 protected:
 
     virtual void BeginPlay() override;
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+    // ============================================================
+    // STAMINA REGENERATION
+    // ============================================================
+
+    /**
+     * Periodically checks whether stamina should regenerate.
+     *
+     * This is intentionally NOT a per-frame tick.
+     */
+    void TickStaminaRegeneration();
+
+    /**
+     * Time remaining before stamina regeneration is allowed.
+     *
+     * This is reset whenever stamina is consumed.
+     */
+    float StaminaRegenTimeRemaining = 0.0f;
+
+    /**
+     * Timer used to periodically check stamina regeneration.
+     */
+    FTimerHandle StaminaRegenTimerHandle;
+
+    /**
+     * How often stamina regeneration is checked.
+     *
+     * This is deliberately low-frequency because stamina
+     * does not need frame-by-frame processing.
+     */
+    static constexpr float StaminaRegenCheckInterval = 0.5f;
+
+    /**
+     * Starts the stamina regeneration timer.
+     */
+    void StartStaminaRegenerationTimer();
+
+    /**
+     * Stops the stamina regeneration timer.
+     */
+    void StopStaminaRegenerationTimer();
+
+    /**
+     * Resets the stamina regeneration delay timer.
+     * Called whenever stamina is consumed.
+     */
+    void ResetStaminaRegenDelay();
 };
