@@ -100,6 +100,18 @@ void UControlComponent::SetFireIntent(float Weight)      { FireIntent = FMath::C
 void UControlComponent::SetReloadIntent(float Weight)    { ReloadIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 
 //=========================================================================
+// Individual Combat Setters
+//=========================================================================
+
+void UControlComponent::SetLightAttackIntent(float Weight)   { LightAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetHeavyAttackIntent(float Weight)   { HeavyAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetBlockIntent(float Weight)         { BlockIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetDodgeIntent(float Weight)         { DodgeIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetLockOnIntent(float Weight)        { LockOnIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetWeaponAbilityIntent(float Weight) { WeaponAbilityIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetWeaponSwitchIntent(float Weight)  { WeaponSwitchIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+
+//=========================================================================
 // Generic Intent Functions
 //=========================================================================
 
@@ -123,6 +135,14 @@ float UControlComponent::GetIntentWeight(EControlIntent Intent) const
         case EControlIntent::Aim:       return AimIntent;
         case EControlIntent::Fire:      return FireIntent;
         case EControlIntent::Reload:    return ReloadIntent;
+
+        case EControlIntent::LightAttack:   return LightAttackIntent;
+        case EControlIntent::HeavyAttack:   return HeavyAttackIntent;
+        case EControlIntent::Block:         return BlockIntent;
+        case EControlIntent::Dodge:         return DodgeIntent;
+        case EControlIntent::LockOn:        return LockOnIntent;
+        case EControlIntent::WeaponAbility: return WeaponAbilityIntent;
+        case EControlIntent::WeaponSwitch:  return WeaponSwitchIntent;
 
         default:
             return 0.0f;
@@ -156,6 +176,14 @@ void UControlComponent::SetIntentWeight(EControlIntent Intent, float Weight)
         case EControlIntent::Aim:       AimIntent = ClampedWeight;      break;
         case EControlIntent::Fire:      FireIntent = ClampedWeight;     break;
         case EControlIntent::Reload:    ReloadIntent = ClampedWeight;   break;
+
+        case EControlIntent::LightAttack:   LightAttackIntent = ClampedWeight;   break;
+        case EControlIntent::HeavyAttack:   HeavyAttackIntent = ClampedWeight;   break;
+        case EControlIntent::Block:         BlockIntent = ClampedWeight;         break;
+        case EControlIntent::Dodge:         DodgeIntent = ClampedWeight;         break;
+        case EControlIntent::LockOn:        LockOnIntent = ClampedWeight;        break;
+        case EControlIntent::WeaponAbility: WeaponAbilityIntent = ClampedWeight; break;
+        case EControlIntent::WeaponSwitch:  WeaponSwitchIntent = ClampedWeight;  break;
 
         default:
             break;
@@ -195,6 +223,29 @@ bool UControlComponent::WantsToAim() const    { return AimIntent > 0.01f; }
 bool UControlComponent::WantsToFire() const   { return FireIntent > 0.01f; }
 
 //=========================================================================
+// Combat Query Functions
+//=========================================================================
+
+bool UControlComponent::WantsToLightAttack() const { return LightAttackIntent > 0.01f; }
+bool UControlComponent::WantsToHeavyAttack() const { return HeavyAttackIntent > 0.01f; }
+bool UControlComponent::WantsToBlock() const       { return BlockIntent > 0.01f; }
+bool UControlComponent::WantsToDodge() const       { return DodgeIntent > 0.01f; }
+bool UControlComponent::WantsToLockOn() const      { return LockOnIntent > 0.01f; }
+bool UControlComponent::WantsToUseWeaponAbility() const { return WeaponAbilityIntent > 0.01f; }
+bool UControlComponent::WantsToSwitchWeapon() const { return WeaponSwitchIntent > 0.01f; }
+
+bool UControlComponent::HasCombatIntent() const
+{
+    return LightAttackIntent > 0.0f ||
+           HeavyAttackIntent > 0.0f ||
+           BlockIntent > 0.0f ||
+           DodgeIntent > 0.0f ||
+           LockOnIntent > 0.0f ||
+           WeaponAbilityIntent > 0.0f ||
+           WeaponSwitchIntent > 0.0f;
+}
+
+//=========================================================================
 // Look Functions
 //=========================================================================
 
@@ -221,6 +272,7 @@ void UControlComponent::ClearIntents()
 {
     ClearMovementIntent();
     ClearActionIntent();
+    ClearCombatIntent();
     ClearLookInput();
 }
 
@@ -241,6 +293,17 @@ void UControlComponent::ClearActionIntent()
     AimIntent = 0.0f;
     FireIntent = 0.0f;
     ReloadIntent = 0.0f;
+}
+
+void UControlComponent::ClearCombatIntent()
+{
+    LightAttackIntent = 0.0f;
+    HeavyAttackIntent = 0.0f;
+    BlockIntent = 0.0f;
+    DodgeIntent = 0.0f;
+    LockOnIntent = 0.0f;
+    WeaponAbilityIntent = 0.0f;
+    WeaponSwitchIntent = 0.0f;
 }
 
 void UControlComponent::SetLookAtLocation(const FVector& WorldLocation)

@@ -41,9 +41,19 @@ enum class EControlIntent : uint8
     Sprint,
     Crouch,
     Dash,
+    
     Aim,
     Fire,
-    Reload
+    Reload,
+    
+    LightAttack,
+    HeavyAttack,
+    Block,
+    Dodge,
+    LockOn,
+
+    WeaponAbility,
+    WeaponSwitch,
 };
 
 /**
@@ -216,6 +226,30 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Actions", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float ReloadIntent = 0.0f;
 
+    //=========================================================================
+    // Combat Intents
+    //=========================================================================
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float LightAttackIntent = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float HeavyAttackIntent = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float BlockIntent = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float DodgeIntent = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float LockOnIntent = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float WeaponAbilityIntent = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control|Combat", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float WeaponSwitchIntent = 0.0f;
 
     //=========================================================================
     // Movement Direction Setters / Getters
@@ -291,6 +325,17 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetFireIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetReloadIntent(float Weight);
 
+    //=========================================================================
+    // Combat Intent Setters
+    //=========================================================================
+
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetLightAttackIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetHeavyAttackIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetBlockIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetDodgeIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetLockOnIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetWeaponAbilityIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetWeaponSwitchIntent(float Weight);
 
     //=========================================================================
     // Intent Getters
@@ -304,6 +349,18 @@ public:
     UFUNCTION(BlueprintPure, Category = "Control|Actions") float GetAimIntent() const { return AimIntent; }
     UFUNCTION(BlueprintPure, Category = "Control|Actions") float GetFireIntent() const { return FireIntent; }
     UFUNCTION(BlueprintPure, Category = "Control|Actions") float GetReloadIntent() const { return ReloadIntent; }
+
+    //=========================================================================
+    // Combat Intent Getters
+    //=========================================================================
+
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") float GetLightAttackIntent() const { return LightAttackIntent; }
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") float GetHeavyAttackIntent() const { return HeavyAttackIntent; }
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") float GetBlockIntent() const { return BlockIntent; }
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") float GetDodgeIntent() const { return DodgeIntent; }
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") float GetLockOnIntent() const { return LockOnIntent; }
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") float GetWeaponAbilityIntent() const { return WeaponAbilityIntent; }
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") float GetWeaponSwitchIntent() const { return WeaponSwitchIntent; }
 
     /** Gets the weight associated with any intent. */
     UFUNCTION(BlueprintPure, Category = "Control")
@@ -332,6 +389,21 @@ public:
     UFUNCTION(BlueprintPure, Category = "Control|Actions") bool WantsToDash() const;
     UFUNCTION(BlueprintPure, Category = "Control|Actions") bool WantsToAim() const;
     UFUNCTION(BlueprintPure, Category = "Control|Actions") bool WantsToFire() const;
+
+    //=========================================================================
+    // Combat Query Functions
+    //=========================================================================
+
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") bool WantsToLightAttack() const;
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") bool WantsToHeavyAttack() const;
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") bool WantsToBlock() const;
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") bool WantsToDodge() const;
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") bool WantsToLockOn() const;
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") bool WantsToUseWeaponAbility() const;
+    UFUNCTION(BlueprintPure, Category = "Control|Combat") bool WantsToSwitchWeapon() const;
+    
+    UFUNCTION(BlueprintPure, Category = "Control|Combat")
+    bool HasCombatIntent() const;
 
 
     //=========================================================================
@@ -369,6 +441,10 @@ public:
     /** Clears all action intents. */
     UFUNCTION(BlueprintCallable, Category = "Control|Actions")
     void ClearActionIntent();
+
+    /** Clears all combat intents. */
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat")
+    void ClearCombatIntent();
 
 
 protected:
