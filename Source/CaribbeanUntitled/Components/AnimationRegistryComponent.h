@@ -39,8 +39,8 @@ enum class EAnimationKey : uint8
     Fall        UMETA(DisplayName = "Fall"),
     Land        UMETA(DisplayName = "Land"),
 
-    // Combat
- 
+    // Combat - Animations for all different attacks
+    LightRightPunch UMETA(DisplayName = "Light Right Punch"),
 
     Hit         UMETA(DisplayName = "Hit"),
     Death       UMETA(DisplayName = "Death"),

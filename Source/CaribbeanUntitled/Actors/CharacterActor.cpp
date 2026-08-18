@@ -173,7 +173,16 @@ ACharacterActor::ACharacterActor()
         // --------------------------------------------------------
         // Combat (Upper Body)
         // --------------------------------------------------------
-        
+        FAnimationDefinition LightRightPunch;
+        LightRightPunch.Key = EAnimationKey::LightRightPunch;
+        LightRightPunch.PlaybackMode = EAnimationPlaybackMode::Once;
+        LightRightPunch.PlayRate = 1.0f;
+        LightRightPunch.LoopCount = 1;
+        LightRightPunch.BlendInTime = 0.05f;
+        LightRightPunch.BlendOutTime = 0.2f;
+        LightRightPunch.SlotName = "combat";
+        LightRightPunch.Description = FText::FromString(TEXT("Character light right punch animation."));
+        AnimationRegistryComponent->Animations.Add(LightRightPunch);
         
         FAnimationDefinition Hit;
         Hit.Key = EAnimationKey::Hit;
