@@ -50,7 +50,7 @@ UCameraSystem::UCameraSystem()
 
     JumpSmoothTime = 0.4f;
     LastJumpTime = -1.0f;
-    MouseSensitivity = 0.5f;
+    MouseSensitivity = 0.2f;
 
     UpdateInterval = 1;
     TickCounter = 0;

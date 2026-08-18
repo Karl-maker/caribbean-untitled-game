@@ -281,6 +281,10 @@ void UMovementSystem::ApplyJump(
     TWeakObjectPtr<AActor> WeakActor(Character);
     const float AscentGravityScale = Stats->JumpAscentGravityScale;
 
+    // Publish the jump state immediately so remote clients receive the
+    // start-jump animation before the character transitions into Fall.
+    Control->SetReplicatedLocomotion(ELocomotion::Jump);
+
     FTimerHandle Handle;
     World->GetTimerManager().SetTimer(
         Handle,

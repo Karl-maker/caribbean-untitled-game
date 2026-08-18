@@ -281,6 +281,11 @@ public:
     
     UFUNCTION(BlueprintCallable, Category = "Control|Movement")
     void SetMoveIntent(const FVector2D& Intent);
+    UFUNCTION(Server, Unreliable)
+    void ServerSetMoveIntent(FVector2D Intent);
+
+    UFUNCTION(BlueprintPure, Category = "Control|Movement")
+    FVector2D GetMoveIntent() const { return MoveIntent; }
 
     UFUNCTION(BlueprintCallable, Category = "Control|Movement")
     void SetWorldMoveDirection(const FVector& WorldDirection);
@@ -333,8 +338,10 @@ public:
     //=========================================================================
 
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetJumpIntent(float Weight);
+    UFUNCTION(Server, Unreliable) void ServerSetJumpIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetInteractIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetSprintIntent(float Weight);
+    UFUNCTION(Server, Unreliable) void ServerSetSprintIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetCrouchIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetDashIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Actions") void SetAimIntent(float Weight);

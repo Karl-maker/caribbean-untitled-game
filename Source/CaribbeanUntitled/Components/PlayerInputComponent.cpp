@@ -490,8 +490,10 @@ void UPlayerInputComponent::HandleMoveForward(
         return;
     }
 
-    Control->MoveIntent.Y =
-        Value.Get<bool>() ? 1.0f : 0.0f;
+    Control->SetMoveIntent(FVector2D(
+        Control->GetMoveIntent().X,
+        Value.Get<bool>() ? 1.0f : 0.0f
+    ));
 }
 
 
@@ -504,8 +506,10 @@ void UPlayerInputComponent::HandleMoveBackward(
         return;
     }
 
-    Control->MoveIntent.Y =
-        Value.Get<bool>() ? -1.0f : 0.0f;
+    Control->SetMoveIntent(FVector2D(
+        Control->GetMoveIntent().X,
+        Value.Get<bool>() ? -1.0f : 0.0f
+    ));
 }
 
 
@@ -518,8 +522,10 @@ void UPlayerInputComponent::HandleMoveRight(
         return;
     }
 
-    Control->MoveIntent.X =
-        Value.Get<bool>() ? 1.0f : 0.0f;
+    Control->SetMoveIntent(FVector2D(
+        Value.Get<bool>() ? 1.0f : 0.0f,
+        Control->GetMoveIntent().Y
+    ));
 }
 
 
@@ -531,10 +537,11 @@ void UPlayerInputComponent::HandleMoveLeft(
     {
         return;
     }
-    
 
-    Control->MoveIntent.X =
-        Value.Get<bool>() ? -1.0f : 0.0f;
+    Control->SetMoveIntent(FVector2D(
+        Value.Get<bool>() ? -1.0f : 0.0f,
+        Control->GetMoveIntent().Y
+    ));
 }
 
 
@@ -549,7 +556,7 @@ void UPlayerInputComponent::HandleLookInput(const FInputActionValue& Value)
     }
 
     // Apply sensitivity scaling
-    const float Sensitivity = 10.0f; // Adjust this value to taste
+    const float Sensitivity = 2.5f; // Lower = less twitchy look input
     FVector2D LookValue = Value.Get<FVector2D>();
     LookValue *= Sensitivity;
     
@@ -573,7 +580,7 @@ void UPlayerInputComponent::HandleJumpStarted(
         return;
     }
 
-    Control->JumpIntent = 1.0f;
+    Control->SetJumpIntent(1.0f);
 }
 
 
@@ -586,7 +593,7 @@ void UPlayerInputComponent::HandleJumpCompleted(
         return;
     }
 
-    Control->JumpIntent = 0.0f;
+    Control->SetJumpIntent(0.0f);
 }
  
 // ============================================================================
@@ -602,7 +609,7 @@ void UPlayerInputComponent::HandleSprintStarted(
         return;
     }
 
-    Control->SprintIntent = 1.0f;
+    Control->SetSprintIntent(1.0f);
 }
 
 
@@ -615,7 +622,7 @@ void UPlayerInputComponent::HandleSprintCompleted(
         return;
     }
 
-    Control->SprintIntent = 0.0f;
+    Control->SetSprintIntent(0.0f);
 }
 
 

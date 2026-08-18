@@ -50,6 +50,16 @@ void UControlComponent::TickComponent(
 void UControlComponent::SetMoveIntent(const FVector2D& Intent)
 {
     MoveIntent = Intent.ClampAxes(-1.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetMoveIntent(MoveIntent);
+    }
+}
+
+void UControlComponent::ServerSetMoveIntent_Implementation(FVector2D Intent)
+{
+    MoveIntent = Intent.ClampAxes(-1.0f, 1.0f);
 }
 
 void UControlComponent::SetWorldMoveDirection(const FVector& WorldDirection)
@@ -100,9 +110,26 @@ void UControlComponent::ClearDestination()
 // Individual Action Setters
 //=========================================================================
 
-void UControlComponent::SetJumpIntent(float Weight)      { JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetJumpIntent(float Weight)
+{
+    JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetJumpIntent(JumpIntent);
+    }
+}
+
 void UControlComponent::SetInteractIntent(float Weight)  { InteractIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
-void UControlComponent::SetSprintIntent(float Weight)    { SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetSprintIntent(float Weight)
+{
+    SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetSprintIntent(SprintIntent);
+    }
+}
 void UControlComponent::SetCrouchIntent(float Weight)    { CrouchIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetDashIntent(float Weight)      { DashIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetAimIntent(float Weight)       { AimIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
@@ -120,6 +147,16 @@ void UControlComponent::SetDodgeIntent(float Weight)         { DodgeIntent = FMa
 void UControlComponent::SetLockOnIntent(float Weight)        { LockOnIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetWeaponAbilityIntent(float Weight) { WeaponAbilityIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetWeaponSwitchIntent(float Weight)  { WeaponSwitchIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+
+void UControlComponent::ServerSetJumpIntent_Implementation(float Weight)
+{
+    JumpIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
+
+void UControlComponent::ServerSetSprintIntent_Implementation(float Weight)
+{
+    SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
 
 //=========================================================================
 // Generic Intent Functions
