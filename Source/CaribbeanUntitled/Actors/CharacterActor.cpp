@@ -17,7 +17,10 @@
 ACharacterActor::ACharacterActor()
 {
     PrimaryActorTick.bCanEverTick = false;
-
+    
+    bReplicates = true;
+    SetReplicateMovement(true);
+    
     USkeletalMeshComponent* Mesh = GetMesh();
     UCapsuleComponent* Capsule = GetCapsuleComponent();
 
