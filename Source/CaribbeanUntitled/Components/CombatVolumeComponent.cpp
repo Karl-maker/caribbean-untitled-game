@@ -158,6 +158,10 @@ void UCombatVolumeComponent::ConfigureCollisionShape()
     {
         return;
     }
+    
+    CollisionShape->SetSimulatePhysics(false);
+    CollisionShape->SetEnableGravity(false);
+    CollisionShape->SetCanEverAffectNavigation(false);
 
     /*
      * Combat volumes are query-only.

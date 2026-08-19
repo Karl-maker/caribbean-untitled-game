@@ -17,6 +17,7 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/ShapeComponent.h"
 
 
 ACharacterActor::ACharacterActor()
@@ -102,7 +103,7 @@ ACharacterActor::ACharacterActor()
     HeadCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
     HeadCombatVolume->BodyPart = EBodyPart::Head;
     HeadCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
-    HeadCombatVolume->SphereRadius = 12.0f;
+    HeadCombatVolume->SphereRadius = 20.0f;
     HeadCombatVolume->bStartEnabled = true;
     HeadCombatVolume->bAttackActive = false;
 
@@ -155,9 +156,9 @@ ACharacterActor::ACharacterActor()
     LeftFootCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
     LeftFootCombatVolume->BodyPart = EBodyPart::LeftFoot;
     LeftFootCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
-    LeftFootCombatVolume->SphereRadius = 12.0f;
+    LeftFootCombatVolume->SphereRadius = 20.0f;
     LeftFootCombatVolume->bStartEnabled = true;
-    LeftFootCombatVolume->bAttackActive = true;
+    LeftFootCombatVolume->bAttackActive = false;
 
 
     RightFootCombatVolume =
@@ -168,9 +169,9 @@ ACharacterActor::ACharacterActor()
     RightFootCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
     RightFootCombatVolume->BodyPart = EBodyPart::RightFoot;
     RightFootCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
-    RightFootCombatVolume->SphereRadius = 12.0f;
+    RightFootCombatVolume->SphereRadius = 20.0f;
     RightFootCombatVolume->bStartEnabled = true;
-    RightFootCombatVolume->bAttackActive = true;
+    RightFootCombatVolume->bAttackActive = false;
 
     if (AnimationRegistryComponent)
     {
@@ -424,58 +425,96 @@ void ACharacterActor::PostInitializeComponents()
      * At this point the Actor's default components have been
      * initialized and are available.
      */
+    
     USkeletalMeshComponent* Mesh = GetMesh();
 
-    if (Mesh)
+    auto AttachCombatVolume = [Mesh](UCombatVolumeComponent* CombatVolume, const TCHAR* SocketName)
     {
-        if (HeadCombatVolume)
+        if (!CombatVolume)
         {
-            HeadCombatVolume->AttachToComponent(
-                Mesh,
-                TEXT("mixamorig:Head")
+            return;
+        }
+
+        if (!Mesh)
+        {
+            UE_LOG(
+                LogTemp,
+                Error,
+                TEXT("Failed to attach %s: mesh is null."),
+                *GetNameSafe(CombatVolume)
+            );
+            return;
+        }
+
+        if (!Mesh->DoesSocketExist(SocketName) &&
+            Mesh->GetBoneIndex(SocketName) == INDEX_NONE)
+        {
+            UE_LOG(
+                LogTemp,
+                Warning,
+                TEXT(
+                    "Attaching %s to '%s', but the mesh has no matching socket or bone."
+                ),
+                *GetNameSafe(CombatVolume),
+                SocketName
             );
         }
 
-        if (TorsoCombatVolume)
-        {
-            TorsoCombatVolume->AttachToComponent(
+        const bool bAttached =
+            CombatVolume->AttachToComponent(
                 Mesh,
-                TEXT("mixamorig:Spine2")
+                SocketName
             );
+
+        if (!bAttached)
+        {
+            UE_LOG(
+                LogTemp,
+                Error,
+                TEXT(
+                    "Failed to attach %s to '%s'."
+                ),
+                *GetNameSafe(CombatVolume),
+                SocketName
+            );
+            return;
         }
 
-        if (LeftHandCombatVolume)
+        UShapeComponent* CollisionShape = CombatVolume->GetCollisionShape();
+        if (!IsValid(CollisionShape))
         {
-            LeftHandCombatVolume->AttachToComponent(
-                Mesh,
-                TEXT("mixamorig:LeftHand")
+            UE_LOG(
+                LogTemp,
+                Error,
+                TEXT(
+                    "%s attached to '%s', but CollisionShape is invalid."
+                ),
+                *GetNameSafe(CombatVolume),
+                SocketName
             );
+            return;
         }
 
-        if (RightHandCombatVolume)
-        {
-            RightHandCombatVolume->AttachToComponent(
-                Mesh,
-                TEXT("mixamorig:RightHand")
-            );
-        }
+        UE_LOG(
+            LogTemp,
+            Log,
+            TEXT(
+                "Attached %s to '%s' | Parent: %s | WorldLocation: %s | WorldRotation: %s"
+            ),
+            *GetNameSafe(CombatVolume),
+            SocketName,
+            *GetNameSafe(CollisionShape->GetAttachParent()),
+            *CollisionShape->GetComponentLocation().ToString(),
+            *CollisionShape->GetComponentRotation().ToString()
+        );
+    };
 
-        if (LeftFootCombatVolume)
-        {
-            LeftFootCombatVolume->AttachToComponent(
-                Mesh,
-                TEXT("mixamorig:LeftFoot")
-            );
-        }
-
-        if (RightFootCombatVolume)
-        {
-            RightFootCombatVolume->AttachToComponent(
-                Mesh,
-                TEXT("mixamorig:RightFoot")
-            );
-        }
-    }
+    AttachCombatVolume(HeadCombatVolume, TEXT("Head"));
+    AttachCombatVolume(TorsoCombatVolume, TEXT("Spine2"));
+    AttachCombatVolume(LeftHandCombatVolume, TEXT("LeftHand"));
+    AttachCombatVolume(RightHandCombatVolume, TEXT("RightHand"));
+    AttachCombatVolume(LeftFootCombatVolume, TEXT("LeftFoot"));
+    AttachCombatVolume(RightFootCombatVolume, TEXT("RightFoot"));
 
     if (UWorld* World = GetWorld())
     {
@@ -484,6 +523,14 @@ void ACharacterActor::PostInitializeComponents()
         {
             Registry->RegisterActor(this);
         }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("Failed to register %s: ActorRegistry subsystem not found."), *GetName());
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("Failed to register %s: world is null."), *GetName());
     }
 }
 

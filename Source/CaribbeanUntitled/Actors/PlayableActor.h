@@ -23,6 +23,7 @@ public:
 
 
 protected:
+    
     UPROPERTY(EditDefaultsOnly, Config, Category="Actor|Assets")
     FName AnimationProfileKey = TEXT("HUMANOID_ANIMATIONS");
 
