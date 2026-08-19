@@ -7,6 +7,7 @@
 #include "../Components/ControlComponent.h"
 #include "../Components/StatsComponent.h"
 #include "../Components/AnimationRegistryComponent.h"
+#include "../Components/CombatVolumeComponent.h"
 #include "../Settings/CaribbeanAssetSettings.h"
 #include "../Systems/ActorRegistry.h"
 #include "Animation/AnimInstance.h"
@@ -92,6 +93,84 @@ ACharacterActor::ACharacterActor()
      * The actual animation assets can be assigned in the
      * Unreal Editor through the AnimationRegistryComponent.
      */
+    
+    HeadCombatVolume =
+        CreateDefaultSubobject<UCombatVolumeComponent>(
+            TEXT("HeadCombatVolume")
+        );
+
+    HeadCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
+    HeadCombatVolume->BodyPart = EBodyPart::Head;
+    HeadCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
+    HeadCombatVolume->SphereRadius = 12.0f;
+    HeadCombatVolume->bStartEnabled = true;
+    HeadCombatVolume->bAttackActive = false;
+
+
+    TorsoCombatVolume =
+        CreateDefaultSubobject<UCombatVolumeComponent>(
+            TEXT("TorsoCombatVolume")
+        );
+
+    TorsoCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
+    TorsoCombatVolume->BodyPart = EBodyPart::Torso;
+    TorsoCombatVolume->ShapeType = ECombatVolumeShape::Capsule;
+    TorsoCombatVolume->CapsuleRadius = 25.0f;
+    TorsoCombatVolume->CapsuleHalfHeight = 45.0f;
+    TorsoCombatVolume->bStartEnabled = true;
+    TorsoCombatVolume->bAttackActive = false;
+
+
+    LeftHandCombatVolume =
+        CreateDefaultSubobject<UCombatVolumeComponent>(
+            TEXT("LeftHandCombatVolume")
+        );
+
+    LeftHandCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
+    LeftHandCombatVolume->BodyPart = EBodyPart::LeftHand;
+    LeftHandCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
+    LeftHandCombatVolume->SphereRadius = 10.0f;
+    LeftHandCombatVolume->bStartEnabled = true;
+    LeftHandCombatVolume->bAttackActive = false;
+
+
+    RightHandCombatVolume =
+        CreateDefaultSubobject<UCombatVolumeComponent>(
+            TEXT("RightHandCombatVolume")
+        );
+
+    RightHandCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
+    RightHandCombatVolume->BodyPart = EBodyPart::RightHand;
+    RightHandCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
+    RightHandCombatVolume->SphereRadius = 10.0f;
+    RightHandCombatVolume->bStartEnabled = true;
+    RightHandCombatVolume->bAttackActive = false;
+
+
+    LeftFootCombatVolume =
+        CreateDefaultSubobject<UCombatVolumeComponent>(
+            TEXT("LeftFootCombatVolume")
+        );
+
+    LeftFootCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
+    LeftFootCombatVolume->BodyPart = EBodyPart::LeftFoot;
+    LeftFootCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
+    LeftFootCombatVolume->SphereRadius = 12.0f;
+    LeftFootCombatVolume->bStartEnabled = true;
+    LeftFootCombatVolume->bAttackActive = true;
+
+
+    RightFootCombatVolume =
+        CreateDefaultSubobject<UCombatVolumeComponent>(
+            TEXT("RightFootCombatVolume")
+        );
+
+    RightFootCombatVolume->OwnerType = ECombatVolumeOwnerType::Body;
+    RightFootCombatVolume->BodyPart = EBodyPart::RightFoot;
+    RightFootCombatVolume->ShapeType = ECombatVolumeShape::Sphere;
+    RightFootCombatVolume->SphereRadius = 12.0f;
+    RightFootCombatVolume->bStartEnabled = true;
+    RightFootCombatVolume->bAttackActive = true;
 
     if (AnimationRegistryComponent)
     {
@@ -345,6 +424,58 @@ void ACharacterActor::PostInitializeComponents()
      * At this point the Actor's default components have been
      * initialized and are available.
      */
+    USkeletalMeshComponent* Mesh = GetMesh();
+
+    if (Mesh)
+    {
+        if (HeadCombatVolume)
+        {
+            HeadCombatVolume->AttachToComponent(
+                Mesh,
+                TEXT("mixamorig:Head")
+            );
+        }
+
+        if (TorsoCombatVolume)
+        {
+            TorsoCombatVolume->AttachToComponent(
+                Mesh,
+                TEXT("mixamorig:Spine2")
+            );
+        }
+
+        if (LeftHandCombatVolume)
+        {
+            LeftHandCombatVolume->AttachToComponent(
+                Mesh,
+                TEXT("mixamorig:LeftHand")
+            );
+        }
+
+        if (RightHandCombatVolume)
+        {
+            RightHandCombatVolume->AttachToComponent(
+                Mesh,
+                TEXT("mixamorig:RightHand")
+            );
+        }
+
+        if (LeftFootCombatVolume)
+        {
+            LeftFootCombatVolume->AttachToComponent(
+                Mesh,
+                TEXT("mixamorig:LeftFoot")
+            );
+        }
+
+        if (RightFootCombatVolume)
+        {
+            RightFootCombatVolume->AttachToComponent(
+                Mesh,
+                TEXT("mixamorig:RightFoot")
+            );
+        }
+    }
 
     if (UWorld* World = GetWorld())
     {

@@ -14,6 +14,7 @@ class UStatsComponent;
 class UAnimationRegistryComponent;
 class UActorRegistry;
 class UAnimInstance;
+class UCombatVolumeComponent;
 
 UCLASS(Config=Game)
 class CARIBBEANUNTITLED_API ACharacterActor : public ACharacter
@@ -97,6 +98,24 @@ protected:
         Category="Actor|Assets"
     )
     FName ReplicatedCharacterVisualProfileKey = TEXT("DEMO_FEMALE");
+    
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+    TObjectPtr<UCombatVolumeComponent> HeadCombatVolume;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+    TObjectPtr<UCombatVolumeComponent> TorsoCombatVolume;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+    TObjectPtr<UCombatVolumeComponent> LeftHandCombatVolume;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+    TObjectPtr<UCombatVolumeComponent> RightHandCombatVolume;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+    TObjectPtr<UCombatVolumeComponent> LeftFootCombatVolume;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+    TObjectPtr<UCombatVolumeComponent> RightFootCombatVolume;
 
     virtual void GetLifetimeReplicatedProps(
         TArray<FLifetimeProperty>& OutLifetimeProps
