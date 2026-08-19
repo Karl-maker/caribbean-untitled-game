@@ -69,6 +69,9 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat Volume")
     EBodyPart BodyPart = EBodyPart::None;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat Volume")
+    bool bAttackActive = false;
 
 
     // ---------------------------------------------------------
@@ -142,6 +145,11 @@ public:
     UFUNCTION(BlueprintPure, Category="Combat Volume|Collision")
     bool IsEnabled() const;
 
+    UFUNCTION(BlueprintCallable, Category="Combat Volume")
+    void SetAttackActive(bool bActive);
+
+    UFUNCTION(BlueprintPure, Category="Combat Volume")
+    bool IsAttackActive() const;
 
     // ---------------------------------------------------------
     // Access

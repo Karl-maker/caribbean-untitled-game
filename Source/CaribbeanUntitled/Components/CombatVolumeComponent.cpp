@@ -267,3 +267,13 @@ bool UCombatVolumeComponent::IsEnabled() const
     return CollisionShape->GetCollisionEnabled()
         != ECollisionEnabled::NoCollision;
 }
+
+void UCombatVolumeComponent::SetAttackActive(bool bActive)
+{
+    bAttackActive = bActive;
+}
+
+bool UCombatVolumeComponent::IsAttackActive() const
+{
+    return bAttackActive;
+}
