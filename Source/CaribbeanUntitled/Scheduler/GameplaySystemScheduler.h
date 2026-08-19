@@ -16,7 +16,7 @@ class UPerceptionSystem;
 class UBrainSystem;
 class UActionSystem;
 class UStaminaRegenerationSystem;
-
+class UCombatDetectionSystem;
 /**
  * Central scheduler for gameplay systems.
  *
@@ -107,6 +107,10 @@ private:
     
     UPROPERTY()
     TObjectPtr<UStaminaRegenerationSystem> StaminaRegenerationSystem;
+    
+    UPROPERTY()
+    TObjectPtr<UCombatDetectionSystem> CombatDetectionSystem;
+    
     // ------------------------------------------------------------
     // PHASES
     // ------------------------------------------------------------

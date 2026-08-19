@@ -11,6 +11,7 @@
 #include "../Systems/BrainSystem.h"
 #include "../Systems/ActionSystem.h"
 #include "../Systems/StaminaRegenerationSystem.h"
+#include "../Systems/CombatDetectionSystem.h"
 
 #include "Engine/World.h"
 
@@ -34,6 +35,8 @@ void UGameplaySystemScheduler::Initialize(
 
     MovementSystem = NewObject<UMovementSystem>(this);
     CameraSystem = NewObject<UCameraSystem>(this);
+    CombatDetectionSystem = NewObject<UCombatDetectionSystem>(this);
+    
     PerceptionSystem = GetWorld() ? GetWorld()->GetSubsystem<UPerceptionSystem>() : nullptr;
     BrainSystem = GetWorld() ? GetWorld()->GetSubsystem<UBrainSystem>() : nullptr;
     ActionSystem = GetWorld() ? GetWorld()->GetSubsystem<UActionSystem>() : nullptr;
@@ -125,6 +128,9 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 {
     if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
+    if (BrainSystem) BrainSystem->Tick(DeltaTime);
+    if (ActionSystem) ActionSystem->Tick(DeltaTime);
+    if (CombatDetectionSystem) CombatDetectionSystem->Tick(DeltaTime);
 }
 
 
