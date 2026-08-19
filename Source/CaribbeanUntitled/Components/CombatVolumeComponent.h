@@ -160,6 +160,36 @@ public:
     {
         return CollisionShape;
     }
+    
+    UFUNCTION(BlueprintPure, Category="Combat Volume|Shape")
+    ECombatVolumeShape GetShapeType() const
+    {
+        return ShapeType;
+    }
+
+    UFUNCTION(BlueprintPure, Category="Combat Volume|Shape")
+    FVector GetBoxExtent() const
+    {
+        return BoxExtent;
+    }
+
+    UFUNCTION(BlueprintPure, Category="Combat Volume|Shape")
+    float GetSphereRadius() const
+    {
+        return SphereRadius;
+    }
+
+    UFUNCTION(BlueprintPure, Category="Combat Volume|Shape")
+    float GetCapsuleRadius() const
+    {
+        return CapsuleRadius;
+    }
+
+    UFUNCTION(BlueprintPure, Category="Combat Volume|Shape")
+    float GetCapsuleHalfHeight() const
+    {
+        return CapsuleHalfHeight;
+    }
 
 private:
 

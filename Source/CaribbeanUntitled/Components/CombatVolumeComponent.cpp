@@ -5,19 +5,37 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/ShapeComponent.h"
 
+// ============================================================================
+// Combat Collision Channel
+// ============================================================================
+//
+// Create this object channel in:
+// Project Settings -> Collision -> Object Channels
+//
+// Make sure GameTraceChannel1 is named "CombatVolume".
+// ============================================================================
+
+#define ECC_CombatVolume ECC_GameTraceChannel1
+
 
 UCombatVolumeComponent::UCombatVolumeComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
 
     /*
-     * The combat volume is a query object, not a physics body.
+     * The combat volume itself does not tick.
      *
-     * The actual collision shape will be created when the
-     * component is registered with its owning Actor.
+     * CombatDetectionSystem is responsible for performing
+     * collision queries at the desired frequency.
+     *
+     * This keeps individual combat volumes extremely cheap.
      */
 }
 
+
+// ============================================================================
+// Registration
+// ============================================================================
 
 void UCombatVolumeComponent::OnRegister()
 {
@@ -38,6 +56,10 @@ void UCombatVolumeComponent::OnUnregister()
     Super::OnUnregister();
 }
 
+
+// ============================================================================
+// Shape Creation
+// ============================================================================
 
 void UCombatVolumeComponent::CreateCollisionShape()
 {
@@ -65,7 +87,6 @@ void UCombatVolumeComponent::CreateCollisionShape()
                 );
 
             CollisionShape = BoxComponent;
-
             break;
         }
 
@@ -79,7 +100,6 @@ void UCombatVolumeComponent::CreateCollisionShape()
                 );
 
             CollisionShape = SphereComponent;
-
             break;
         }
 
@@ -93,7 +113,6 @@ void UCombatVolumeComponent::CreateCollisionShape()
                 );
 
             CollisionShape = CapsuleComponent;
-
             break;
         }
 
@@ -108,14 +127,19 @@ void UCombatVolumeComponent::CreateCollisionShape()
         return;
     }
 
-    CollisionShape->CreationMethod = EComponentCreationMethod::Instance;
+    CollisionShape->CreationMethod =
+        EComponentCreationMethod::Instance;
 
     Owner->AddInstanceComponent(CollisionShape);
 
-    CollisionShape->RegisterComponent();
-
     ConfigureCollisionShape();
 
+    CollisionShape->RegisterComponent();
+
+    /*
+     * ConfigureCollisionShape() sets the collision mode based
+     * on bStartEnabled.
+     */
     CollisionShape->SetCollisionEnabled(
         bStartEnabled
             ? ECollisionEnabled::QueryOnly
@@ -123,6 +147,10 @@ void UCombatVolumeComponent::CreateCollisionShape()
     );
 }
 
+
+// ============================================================================
+// Collision Configuration
+// ============================================================================
 
 void UCombatVolumeComponent::ConfigureCollisionShape()
 {
@@ -134,20 +162,51 @@ void UCombatVolumeComponent::ConfigureCollisionShape()
     /*
      * Combat volumes are query-only.
      *
-     * They should not participate in physics simulation.
+     * They should never participate in physics simulation.
      */
     CollisionShape->SetCollisionEnabled(
         ECollisionEnabled::QueryOnly
     );
 
-    CollisionShape->SetGenerateOverlapEvents(true);
+    /*
+     * Put every combat volume onto the dedicated
+     * CombatVolume object channel.
+     */
+    CollisionShape->SetCollisionObjectType(
+        ECC_CombatVolume
+    );
 
     /*
-     * We will eventually give combat volumes their own
-     * collision object type/channel.
+     * CombatDetectionSystem performs explicit collision
+     * queries using OverlapMultiByChannel().
      *
-     * For now, QueryOnly keeps the volume out of physics.
+     * Therefore we do NOT need UE's automatic overlap events.
+     *
+     * This avoids unnecessary overlap event processing.
      */
+    CollisionShape->SetGenerateOverlapEvents(false);
+
+    /*
+     * Ignore everything by default.
+     *
+     * Combat detection only cares about other combat volumes.
+     */
+    CollisionShape->SetCollisionResponseToAllChannels(
+        ECR_Ignore
+    );
+
+    /*
+     * Combat volumes overlap other combat volumes.
+     */
+    CollisionShape->SetCollisionResponseToChannel(
+        ECC_CombatVolume,
+        ECR_Overlap
+    );
+
+
+    // ------------------------------------------------------------------------
+    // Configure Shape Size
+    // ------------------------------------------------------------------------
 
     switch (ShapeType)
     {
@@ -158,7 +217,9 @@ void UCombatVolumeComponent::ConfigureCollisionShape()
 
             if (BoxComponent)
             {
-                BoxComponent->SetBoxExtent(BoxExtent);
+                BoxComponent->SetBoxExtent(
+                    BoxExtent
+                );
             }
 
             break;
@@ -171,7 +232,9 @@ void UCombatVolumeComponent::ConfigureCollisionShape()
 
             if (SphereComponent)
             {
-                SphereComponent->SetSphereRadius(SphereRadius);
+                SphereComponent->SetSphereRadius(
+                    SphereRadius
+                );
             }
 
             break;
@@ -201,6 +264,10 @@ void UCombatVolumeComponent::ConfigureCollisionShape()
 }
 
 
+// ============================================================================
+// Attachment
+// ============================================================================
+
 bool UCombatVolumeComponent::AttachToComponent(
     USceneComponent* Parent,
     FName SocketName
@@ -218,14 +285,11 @@ bool UCombatVolumeComponent::AttachToComponent(
         false
     );
 
-    const bool bAttached =
-        CollisionShape->AttachToComponent(
-            Parent,
-            AttachRules,
-            SocketName
-        );
-
-    return bAttached;
+    return CollisionShape->AttachToComponent(
+        Parent,
+        AttachRules,
+        SocketName
+    );
 }
 
 
@@ -241,6 +305,10 @@ void UCombatVolumeComponent::Detach()
     );
 }
 
+
+// ============================================================================
+// Enable / Disable
+// ============================================================================
 
 void UCombatVolumeComponent::SetEnabled(bool bEnabled)
 {
@@ -268,10 +336,16 @@ bool UCombatVolumeComponent::IsEnabled() const
         != ECollisionEnabled::NoCollision;
 }
 
+
+// ============================================================================
+// Attack State
+// ============================================================================
+
 void UCombatVolumeComponent::SetAttackActive(bool bActive)
 {
     bAttackActive = bActive;
 }
+
 
 bool UCombatVolumeComponent::IsAttackActive() const
 {
