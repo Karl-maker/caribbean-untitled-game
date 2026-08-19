@@ -12,12 +12,12 @@
 #include "../Systems/ActorRegistry.h"
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/ShapeComponent.h"
 #include "Curves/CurveFloat.h"
 #include "Net/UnrealNetwork.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/ShapeComponent.h"
 
 
 ACharacterActor::ACharacterActor()
@@ -428,12 +428,60 @@ void ACharacterActor::PostInitializeComponents()
     
     USkeletalMeshComponent* Mesh = GetMesh();
 
-    auto AttachCombatVolume = [Mesh](UCombatVolumeComponent* CombatVolume, const TCHAR* SocketName)
+    const UCaribbeanAssetSettings& AssetSettings = UCaribbeanAssetSettings::Get();
+    const FCombatAttachmentProfile* CombatAttachmentProfile =
+        AssetSettings.FindCombatAttachmentProfile(CombatAttachmentProfileKey);
+
+    if (!CombatAttachmentProfile)
+    {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT(
+                "Character '%s' has no CombatAttachmentProfile for key '%s'. Using default bone names."
+            ),
+            *GetName(),
+            *CombatAttachmentProfileKey.ToString()
+        );
+    }
+
+    auto ResolveBoneName = [CombatAttachmentProfile](EBodyPart BodyPart) -> TOptional<FName>
+    {
+        if (CombatAttachmentProfile)
+        {
+            if (const FName* BoneName = CombatAttachmentProfile->BoneNamesByBodyPart.Find(BodyPart))
+            {
+                return *BoneName;
+            }
+        }
+
+        return TOptional<FName>();
+    };
+
+    auto AttachCombatVolume = [Mesh, ResolveBoneName](UCombatVolumeComponent* CombatVolume, EBodyPart BodyPart)
     {
         if (!CombatVolume)
         {
             return;
         }
+
+        const TOptional<FName> BoneNameOpt = ResolveBoneName(BodyPart);
+
+        if (!BoneNameOpt.IsSet())
+        {
+            UE_LOG(
+                LogTemp,
+                Error,
+                TEXT(
+                    "No combat attachment bone is defined for body part '%s' in profile '%s'."
+                ),
+                *StaticEnum<EBodyPart>()->GetValueAsString(BodyPart),
+                *CombatAttachmentProfileKey.ToString()
+            );
+            return;
+        }
+
+        const FName BoneName = BoneNameOpt.GetValue();
 
         if (!Mesh)
         {
@@ -446,8 +494,8 @@ void ACharacterActor::PostInitializeComponents()
             return;
         }
 
-        if (!Mesh->DoesSocketExist(SocketName) &&
-            Mesh->GetBoneIndex(SocketName) == INDEX_NONE)
+        if (!Mesh->DoesSocketExist(BoneName) &&
+            Mesh->GetBoneIndex(BoneName) == INDEX_NONE)
         {
             UE_LOG(
                 LogTemp,
@@ -456,14 +504,14 @@ void ACharacterActor::PostInitializeComponents()
                     "Attaching %s to '%s', but the mesh has no matching socket or bone."
                 ),
                 *GetNameSafe(CombatVolume),
-                SocketName
+                *BoneName.ToString()
             );
         }
 
         const bool bAttached =
             CombatVolume->AttachToComponent(
                 Mesh,
-                SocketName
+                BoneName
             );
 
         if (!bAttached)
@@ -475,7 +523,7 @@ void ACharacterActor::PostInitializeComponents()
                     "Failed to attach %s to '%s'."
                 ),
                 *GetNameSafe(CombatVolume),
-                SocketName
+                *BoneName.ToString()
             );
             return;
         }
@@ -490,7 +538,7 @@ void ACharacterActor::PostInitializeComponents()
                     "%s attached to '%s', but CollisionShape is invalid."
                 ),
                 *GetNameSafe(CombatVolume),
-                SocketName
+                *BoneName.ToString()
             );
             return;
         }
@@ -502,19 +550,19 @@ void ACharacterActor::PostInitializeComponents()
                 "Attached %s to '%s' | Parent: %s | WorldLocation: %s | WorldRotation: %s"
             ),
             *GetNameSafe(CombatVolume),
-            SocketName,
+            *BoneName.ToString(),
             *GetNameSafe(CollisionShape->GetAttachParent()),
             *CollisionShape->GetComponentLocation().ToString(),
             *CollisionShape->GetComponentRotation().ToString()
         );
     };
 
-    AttachCombatVolume(HeadCombatVolume, TEXT("Head"));
-    AttachCombatVolume(TorsoCombatVolume, TEXT("Spine2"));
-    AttachCombatVolume(LeftHandCombatVolume, TEXT("LeftHand"));
-    AttachCombatVolume(RightHandCombatVolume, TEXT("RightHand"));
-    AttachCombatVolume(LeftFootCombatVolume, TEXT("LeftFoot"));
-    AttachCombatVolume(RightFootCombatVolume, TEXT("RightFoot"));
+    AttachCombatVolume(HeadCombatVolume, EBodyPart::Head);
+    AttachCombatVolume(TorsoCombatVolume, EBodyPart::Torso);
+    AttachCombatVolume(LeftHandCombatVolume, EBodyPart::LeftHand);
+    AttachCombatVolume(RightHandCombatVolume, EBodyPart::RightHand);
+    AttachCombatVolume(LeftFootCombatVolume, EBodyPart::LeftFoot);
+    AttachCombatVolume(RightFootCombatVolume, EBodyPart::RightFoot);
 
     if (UWorld* World = GetWorld())
     {

@@ -29,6 +29,18 @@ const FAnimationProfile* UCaribbeanAssetSettings::FindAnimationProfile(
     );
 }
 
+const FCombatAttachmentProfile* UCaribbeanAssetSettings::FindCombatAttachmentProfile(
+    FName ProfileKey
+) const
+{
+    return CombatAttachmentProfiles.FindByPredicate(
+        [ProfileKey](const FCombatAttachmentProfile& Profile)
+        {
+            return Profile.ProfileKey == ProfileKey;
+        }
+    );
+}
+
 const FControlMappingProfile* UCaribbeanAssetSettings::FindControlMappingProfile(
     FName ProfileKey
 ) const

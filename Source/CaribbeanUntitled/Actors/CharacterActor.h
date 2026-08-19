@@ -92,6 +92,12 @@ protected:
     FName CharacterVisualProfileKey = TEXT("DEMO_FEMALE");
 
     UPROPERTY(
+        EditDefaultsOnly,
+        Category="Actor|Assets"
+    )
+    FName CombatAttachmentProfileKey = TEXT("DEMO_FEMALE");
+
+    UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
         ReplicatedUsing=OnRep_CharacterVisualProfileKey,
