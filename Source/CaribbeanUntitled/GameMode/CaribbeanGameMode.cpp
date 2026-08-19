@@ -10,6 +10,7 @@
 ACaribbeanGameMode::ACaribbeanGameMode()
 {
     DefaultPawnClass = APlayableActor::StaticClass();
+    PlayerControllerClass = APlayerHudController::StaticClass();
 }
 
 UClass* ACaribbeanGameMode::GetDefaultPawnClassForController_Implementation(

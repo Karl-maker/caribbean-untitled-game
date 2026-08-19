@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "../Actors/PlayableActor.h"
+#include "../UI/PlayerHudController.h"
 #include "CaribbeanGameMode.generated.h"
 
 UCLASS()

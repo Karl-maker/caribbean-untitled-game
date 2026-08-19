@@ -431,6 +431,7 @@ void ACharacterActor::PostInitializeComponents()
     const UCaribbeanAssetSettings& AssetSettings = UCaribbeanAssetSettings::Get();
     const FCombatAttachmentProfile* CombatAttachmentProfile =
         AssetSettings.FindCombatAttachmentProfile(CombatAttachmentProfileKey);
+    const FString CombatAttachmentProfileKeyString = CombatAttachmentProfileKey.ToString();
 
     if (!CombatAttachmentProfile)
     {
@@ -441,7 +442,7 @@ void ACharacterActor::PostInitializeComponents()
                 "Character '%s' has no CombatAttachmentProfile for key '%s'. Using default bone names."
             ),
             *GetName(),
-            *CombatAttachmentProfileKey.ToString()
+            *CombatAttachmentProfileKeyString
         );
     }
 
@@ -458,7 +459,7 @@ void ACharacterActor::PostInitializeComponents()
         return TOptional<FName>();
     };
 
-    auto AttachCombatVolume = [Mesh, ResolveBoneName](UCombatVolumeComponent* CombatVolume, EBodyPart BodyPart)
+    auto AttachCombatVolume = [Mesh, ResolveBoneName, CombatAttachmentProfileKeyString](UCombatVolumeComponent* CombatVolume, EBodyPart BodyPart)
     {
         if (!CombatVolume)
         {
@@ -476,7 +477,7 @@ void ACharacterActor::PostInitializeComponents()
                     "No combat attachment bone is defined for body part '%s' in profile '%s'."
                 ),
                 *StaticEnum<EBodyPart>()->GetValueAsString(BodyPart),
-                *CombatAttachmentProfileKey.ToString()
+                *CombatAttachmentProfileKeyString
             );
             return;
         }
