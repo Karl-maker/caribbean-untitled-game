@@ -8,6 +8,12 @@
 #include "Engine/EngineTypes.h"
 #include "UObject/UObjectIterator.h"
 
+
+void UPerceptionSystem::Cleanup()
+{
+    Cells.Reset();
+}
+
 UPerceptionSystem::UPerceptionSystem()
 {
     PerceivableObjectTypes.Add(

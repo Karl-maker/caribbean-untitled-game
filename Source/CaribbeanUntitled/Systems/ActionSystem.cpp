@@ -184,24 +184,15 @@ public:
 // UActionSystem
 //=============================================================================
 
-void UActionSystem::Initialize(FSubsystemCollectionBase& Collection)
-{
-    Super::Initialize(Collection);
-    ActionStates.Reset();
-    Behaviors.Reset();
-    BuildDefaultBehaviors();
-}
-
-void UActionSystem::Deinitialize()
-{
-    ActionStates.Reset();
-    Behaviors.Reset();
-    Super::Deinitialize();
-}
-
 TStatId UActionSystem::GetStatId() const
 {
     RETURN_QUICK_DECLARE_CYCLE_STAT(UActionSystem, STATGROUP_Tickables);
+}
+
+void UActionSystem::Cleanup()
+{
+    ActionStates.Reset();
+    Behaviors.Reset();
 }
 
 void UActionSystem::BuildDefaultBehaviors()

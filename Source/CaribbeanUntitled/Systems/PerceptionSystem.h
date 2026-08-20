@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Subsystems/WorldSubsystem.h"
+#include "UObject/Object.h"
 #include "PerceptionSystem.generated.h"
 
 class UCharacterPerceptionComponent;
@@ -23,11 +23,12 @@ struct FPerceivedActor;
  *     UCharacterPerceptionComponent.
  */
 UCLASS()
-class CARIBBEANUNTITLED_API UPerceptionSystem : public UWorldSubsystem
+class CARIBBEANUNTITLED_API UPerceptionSystem : public UObject
 {
     GENERATED_BODY()
 
 public:
+    void Cleanup();
 
     // ---- grouping / caching config ----
 

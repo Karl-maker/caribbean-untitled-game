@@ -5,21 +5,14 @@
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 
-void UBrainSystem::Initialize(FSubsystemCollectionBase& Collection)
-{
-    Super::Initialize(Collection);
-    ThinkStates.Reset();
-}
-
-void UBrainSystem::Deinitialize()
-{
-    ThinkStates.Reset();
-    Super::Deinitialize();
-}
-
 bool UBrainSystem::IsTickable() const
 {
     return true; // cheap: registry lookup is a map find, not a world scan
+}
+
+void UBrainSystem::Cleanup()
+{
+    ThinkStates.Reset();
 }
 
 TStatId UBrainSystem::GetStatId() const

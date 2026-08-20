@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Subsystems/WorldSubsystem.h"
+#include "UObject/Object.h"
 #include "Tickable.h"
 #include "Math/RandomStream.h"
 #include "../Components/CharacterBrainComponent.h"
@@ -126,18 +126,15 @@ struct FActionState
  * subsystem, etc) - UActionSystem itself never needs to change.
  */
 UCLASS()
-class CARIBBEANUNTITLED_API UActionSystem : public UTickableWorldSubsystem
+class CARIBBEANUNTITLED_API UActionSystem : public UObject
 {
     GENERATED_BODY()
 
 public:
-
-    virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-    virtual void Deinitialize() override;
-
-    virtual void Tick(float DeltaTime) override;
-    virtual TStatId GetStatId() const override;
-    virtual bool IsTickable() const override { return true; }
+    void Cleanup();
+    virtual void Tick(float DeltaTime);
+    TStatId GetStatId() const;
+    bool IsTickable() const { return true; }
 
     /** Registers a behavior to run whenever an actor's brain intent equals Intent. Multiple behaviors may stack on one intent. */
     void AddBehavior(EBrainIntent Intent, TSharedPtr<IActionBehavior> Behavior);

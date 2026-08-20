@@ -11,6 +11,7 @@
 #include "GameplaySystemScheduler.generated.h"
 
 class UMovementSystem;
+class UStaminaSystem;
 class UCameraSystem;
 class UPerceptionSystem;
 class UBrainSystem;
@@ -92,6 +93,9 @@ private:
 
     UPROPERTY()
     TObjectPtr<UMovementSystem> MovementSystem;
+
+    UPROPERTY()
+    TObjectPtr<UStaminaSystem> StaminaSystem;
 
     UPROPERTY()
     TObjectPtr<UCameraSystem> CameraSystem;

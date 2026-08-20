@@ -7,22 +7,6 @@
 
 
 // ============================================================
-// INITIALIZE / DEINITIALIZE
-// ============================================================
-
-void UStaminaRegenerationSystem::Initialize(FSubsystemCollectionBase& Collection)
-{
-    Super::Initialize(Collection);
-}
-
-void UStaminaRegenerationSystem::Deinitialize()
-{
-    Cleanup();
-    Super::Deinitialize();
-}
-
-
-// ============================================================
 // TICK
 // ============================================================
 

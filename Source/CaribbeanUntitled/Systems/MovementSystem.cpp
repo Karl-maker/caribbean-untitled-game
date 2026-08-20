@@ -90,7 +90,7 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
     const bool bWantsToSprint = Control->WantsToSprint();
     const bool bWantsToCrouch = Control->WantsToCrouch();
 
-    ApplySpeed(Stats, Movement, DeltaTime, bWantsToSprint, bWantsToCrouch, !MoveDirection.IsNearlyZero());
+    ApplySpeed(Stats, Movement, bWantsToSprint, bWantsToCrouch);
     ApplyJump(Character, Stats, Movement, Control);
     ApplyMovement(Character, MoveDirection);
     ApplyCrouch(Character, bWantsToCrouch);
@@ -182,10 +182,8 @@ FVector UMovementSystem::ComputeIntentDirection(ACharacter* Character, const FVe
 void UMovementSystem::ApplySpeed(
     UStatsComponent* Stats,
     UCharacterMovementComponent* Movement,
-    float DeltaTime,
     bool bWantsToSprint,
-    bool bWantsToCrouch,
-    bool bIsMoving)
+    bool bWantsToCrouch)
 {
     float TargetSpeed = Stats->GetWalkSpeed();
 
@@ -196,16 +194,6 @@ void UMovementSystem::ApplySpeed(
     else if (bWantsToSprint)
     {
         TargetSpeed = Stats->GetSprintSpeed();
-
-        if (bIsMoving)
-        {
-            const float Cost = Stats->GetSprintStaminaCostPerSecond() * DeltaTime;
-
-            if (!Stats->ConsumeStamina(Cost))
-            {
-                TargetSpeed = Stats->GetWalkSpeed();
-            }
-        }
     }
 
     Movement->MaxWalkSpeed = TargetSpeed;

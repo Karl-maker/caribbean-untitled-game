@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Subsystems/WorldSubsystem.h"
+#include "UObject/Object.h"
 #include "Tickable.h"
 #include "../Components/CharacterBrainComponent.h"
 #include "BrainSystem.generated.h"
@@ -62,18 +62,15 @@ struct FBrainThinkState
  * think, so a room full of NPCs doesn't think in lockstep.
  */
 UCLASS()
-class CARIBBEANUNTITLED_API UBrainSystem : public UTickableWorldSubsystem
+class CARIBBEANUNTITLED_API UBrainSystem : public UObject
 {
     GENERATED_BODY()
 
 public:
-
-    virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-    virtual void Deinitialize() override;
-
-    virtual void Tick(float DeltaTime) override;
-    virtual TStatId GetStatId() const override;
-    virtual bool IsTickable() const override;
+    void Cleanup();
+    virtual void Tick(float DeltaTime);
+    TStatId GetStatId() const;
+    bool IsTickable() const;
 
     UPROPERTY(EditAnywhere, Category="Brain")
     float BaseThinkInterval = 0.5f;

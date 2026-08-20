@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Subsystems/WorldSubsystem.h"
+#include "UObject/Object.h"
 #include "TimerManager.h"
+#include "Tickable.h"
 
 #include "StaminaRegenerationSystem.generated.h"
 
@@ -20,16 +21,14 @@ class UActorRegistry;
  * - Gets actors from ActorRegistry with StatsComponent.
  */
 UCLASS()
-class CARIBBEANUNTITLED_API UStaminaRegenerationSystem : public UTickableWorldSubsystem
+class CARIBBEANUNTITLED_API UStaminaRegenerationSystem : public UObject
 {
     GENERATED_BODY()
 
 public:
-
-    virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-    virtual void Deinitialize() override;
     virtual void Tick(float DeltaTime);
-    virtual TStatId GetStatId() const override;
+    TStatId GetStatId() const;
+    bool IsTickable() const { return true; }
 
     /**
      * Called when an actor consumes stamina.

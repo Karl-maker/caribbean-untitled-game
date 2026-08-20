@@ -11,6 +11,7 @@
 #include "../Systems/BrainSystem.h"
 #include "../Systems/ActionSystem.h"
 #include "../Systems/StaminaRegenerationSystem.h"
+#include "../Systems/StaminaSystem.h"
 #include "../Systems/CombatDetectionSystem.h"
 
 #include "Engine/World.h"
@@ -34,13 +35,13 @@ void UGameplaySystemScheduler::Initialize(
     );
 
     MovementSystem = NewObject<UMovementSystem>(this);
+    StaminaSystem = NewObject<UStaminaSystem>(this);
     CameraSystem = NewObject<UCameraSystem>(this);
+    PerceptionSystem = NewObject<UPerceptionSystem>(this);
+    BrainSystem = NewObject<UBrainSystem>(this);
+    ActionSystem = NewObject<UActionSystem>(this);
+    StaminaRegenerationSystem = NewObject<UStaminaRegenerationSystem>(this);
     CombatDetectionSystem = NewObject<UCombatDetectionSystem>(this);
-    
-    PerceptionSystem = GetWorld() ? GetWorld()->GetSubsystem<UPerceptionSystem>() : nullptr;
-    BrainSystem = GetWorld() ? GetWorld()->GetSubsystem<UBrainSystem>() : nullptr;
-    ActionSystem = GetWorld() ? GetWorld()->GetSubsystem<UActionSystem>() : nullptr;
-    StaminaRegenerationSystem = GetWorld() ? GetWorld()->GetSubsystem<UStaminaRegenerationSystem>() : nullptr;
 
 }
 
@@ -56,14 +57,41 @@ void UGameplaySystemScheduler::Deinitialize()
         *GetNameSafe(GetWorld())
     );
 
-    MovementSystem = nullptr;
-
     if (MovementSystem)
     {
         MovementSystem->Cleanup();
     }
-    
     MovementSystem = nullptr;
+
+    if (StaminaSystem)
+    {
+        StaminaSystem->Cleanup();
+    }
+    StaminaSystem = nullptr;
+
+    if (PerceptionSystem)
+    {
+        PerceptionSystem->Cleanup();
+    }
+    PerceptionSystem = nullptr;
+
+    if (BrainSystem)
+    {
+        BrainSystem->Cleanup();
+    }
+    BrainSystem = nullptr;
+
+    if (ActionSystem)
+    {
+        ActionSystem->Cleanup();
+    }
+    ActionSystem = nullptr;
+
+    if (StaminaRegenerationSystem)
+    {
+        StaminaRegenerationSystem->Cleanup();
+    }
+    StaminaRegenerationSystem = nullptr;
     
     Super::Deinitialize();
 }
@@ -140,6 +168,8 @@ void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 
 void UGameplaySystemScheduler::TickMovement(float DeltaTime)
 {
+    if (StaminaSystem) StaminaSystem->Tick(DeltaTime);
+    if (StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(DeltaTime);
     if (MovementSystem) MovementSystem->Tick(DeltaTime);
 }
 

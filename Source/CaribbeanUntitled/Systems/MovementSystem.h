@@ -65,10 +65,8 @@ private:
     void ApplySpeed(
         class UStatsComponent* Stats,
         class UCharacterMovementComponent* Movement,
-        float DeltaTime,
         bool bWantsToSprint,
-        bool bWantsToCrouch,
-        bool bIsMoving);
+        bool bWantsToCrouch);
 
     void ApplyJump(
         class ACharacter* Character,
