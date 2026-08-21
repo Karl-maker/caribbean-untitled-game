@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "../Components/AnimationRegistryComponent.h"
+#include "../Components/CombatVolumeComponent.h"
 #include "GameplayCombatMoveTypes.generated.h"
 
 USTRUCT(BlueprintType)
@@ -30,5 +31,8 @@ struct FGameplayCombatMove
     UPROPERTY(EditAnywhere)
     float Stamina = 10.0f;
     
+    // Combat volumes used by this move.
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+    TArray<TObjectPtr<class UCombatVolumeComponent>> CombatVolumes;
     // Stat damage as well ...
 };
