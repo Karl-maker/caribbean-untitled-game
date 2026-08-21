@@ -10,6 +10,7 @@
 // Add this include at the top
 #include "Net/UnrealNetwork.h"
 #include "../EventBus/EventBusSubsystem.h"
+#include "CombatComponent.h"
 #include "../Events/MovementPayload.h"
 
 UControlComponent::UControlComponent()
@@ -140,8 +141,72 @@ void UControlComponent::SetReloadIntent(float Weight)    { ReloadIntent = FMath:
 // Individual Combat Setters
 //=========================================================================
 
-void UControlComponent::SetLightAttackIntent(float Weight)   { LightAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
-void UControlComponent::SetHeavyAttackIntent(float Weight)   { HeavyAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetLightAttackIntent(float Weight)
+{
+    LightAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetLightAttackIntent(LightAttackIntent);
+    }
+}
+
+void UControlComponent::SetHeavyAttackIntent(float Weight)
+{
+    HeavyAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetHeavyAttackIntent(HeavyAttackIntent);
+    }
+}
+void UControlComponent::RequestLightAttack()
+{
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerRequestLightAttack();
+        return;
+    }
+
+    if (AActor* Owner = GetOwner())
+    {
+        if (UCombatComponent* Combat = Owner->FindComponentByClass<UCombatComponent>())
+        {
+            UE_LOG(LogTemp, Log, TEXT("ControlComponent: RequestLightAttack on server for %s"), *GetNameSafe(Owner));
+            Combat->RequestAttack(ECombatAction::LightAttack);
+        }
+    }
+}
+
+void UControlComponent::ServerRequestLightAttack_Implementation()
+{
+    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerRequestLightAttack on %s"), *GetNameSafe(GetOwner()));
+    RequestLightAttack();
+}
+
+void UControlComponent::RequestHeavyAttack()
+{
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerRequestHeavyAttack();
+        return;
+    }
+
+    if (AActor* Owner = GetOwner())
+    {
+        if (UCombatComponent* Combat = Owner->FindComponentByClass<UCombatComponent>())
+        {
+            UE_LOG(LogTemp, Log, TEXT("ControlComponent: RequestHeavyAttack on server for %s"), *GetNameSafe(Owner));
+            Combat->RequestAttack(ECombatAction::HeavyAttack);
+        }
+    }
+}
+
+void UControlComponent::ServerRequestHeavyAttack_Implementation()
+{
+    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerRequestHeavyAttack on %s"), *GetNameSafe(GetOwner()));
+    RequestHeavyAttack();
+}
 void UControlComponent::SetBlockIntent(float Weight)         { BlockIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetDodgeIntent(float Weight)         { DodgeIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetLockOnIntent(float Weight)        { LockOnIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
@@ -156,6 +221,18 @@ void UControlComponent::ServerSetJumpIntent_Implementation(float Weight)
 void UControlComponent::ServerSetSprintIntent_Implementation(float Weight)
 {
     SprintIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+}
+
+void UControlComponent::ServerSetLightAttackIntent_Implementation(float Weight)
+{
+    LightAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerSetLightAttackIntent = %f on %s"), LightAttackIntent, *GetNameSafe(GetOwner()));
+}
+
+void UControlComponent::ServerSetHeavyAttackIntent_Implementation(float Weight)
+{
+    HeavyAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerSetHeavyAttackIntent = %f on %s"), HeavyAttackIntent, *GetNameSafe(GetOwner()));
 }
 
 //=========================================================================

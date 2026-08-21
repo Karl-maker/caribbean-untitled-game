@@ -129,6 +129,16 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
         NetMode == NM_DedicatedServer ||
         NetMode == NM_ListenServer;
 
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT("[Scheduler] Tick | World=%s | NetMode=%d | Client=%d | Server=%d"),
+        *GetNameSafe(World),
+        static_cast<int32>(NetMode),
+        bIsClient,
+        bIsServer
+    );
+
     if (bIsClient) TickInput(DeltaTime);
 
     if (bIsServer) TickGameplay(DeltaTime);
@@ -162,6 +172,8 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 
 void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 {
+    UE_LOG(LogTemp, Verbose, TEXT("[Scheduler] TickGameplay"));
+
     if (CombatInputSystem) CombatInputSystem->Tick(DeltaTime);
     if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
     if (BrainSystem) BrainSystem->Tick(DeltaTime);

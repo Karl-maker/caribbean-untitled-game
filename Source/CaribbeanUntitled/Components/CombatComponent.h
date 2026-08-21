@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "../Components/AnimationRegistryComponent.h"
 #include "CombatComponent.generated.h"
 
 UENUM(BlueprintType)
@@ -34,19 +35,32 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Combat")
     ECombatAction GetRequestedAction() const;
 
+    UFUNCTION(BlueprintCallable, Category = "Combat")
+    EAnimationKey GetCurrentAttackAnimationKey() const;
+
     // Set whether the component can attack
     UFUNCTION(BlueprintCallable, Category = "Combat")
     void SetCanAttack(bool bNewCanAttack);
 
+    UFUNCTION(BlueprintCallable, Category = "Combat")
+    void SetCurrentAttackAnimationKey(EAnimationKey NewAnimationKey);
+
 protected:
     virtual void BeginPlay() override;
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 private:
     // The currently requested combat action
     UPROPERTY(VisibleAnywhere, Category = "Combat")
     ECombatAction RequestedAction = ECombatAction::None;
 
+    UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_CurrentAttackAnimationKey, Category = "Combat")
+    EAnimationKey CurrentAttackAnimationKey = EAnimationKey::None;
+
     // Flag indicating if the component can perform attacks
     UPROPERTY(VisibleAnywhere, Category = "Combat")
     bool bCanAttack = true;
+
+    UFUNCTION()
+    void OnRep_CurrentAttackAnimationKey();
 };

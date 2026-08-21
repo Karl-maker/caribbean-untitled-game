@@ -353,7 +353,13 @@ public:
     //=========================================================================
 
     UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetLightAttackIntent(float Weight);
+    UFUNCTION(Server, Unreliable) void ServerSetLightAttackIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void RequestLightAttack();
+    UFUNCTION(Server, Unreliable) void ServerRequestLightAttack();
     UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetHeavyAttackIntent(float Weight);
+    UFUNCTION(Server, Unreliable) void ServerSetHeavyAttackIntent(float Weight);
+    UFUNCTION(BlueprintCallable, Category = "Control|Combat") void RequestHeavyAttack();
+    UFUNCTION(Server, Unreliable) void ServerRequestHeavyAttack();
     UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetBlockIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetDodgeIntent(float Weight);
     UFUNCTION(BlueprintCallable, Category = "Control|Combat") void SetLockOnIntent(float Weight);

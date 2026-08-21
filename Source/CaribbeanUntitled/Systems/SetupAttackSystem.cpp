@@ -100,6 +100,12 @@ void USetupAttackSystem::ProcessActor(AActor* Actor)
 
     if (!IsValid(Combat) || !IsValid(MoveSet) || !IsValid(AttackState))
     {
+        UE_LOG(
+            LogTemp,
+            Verbose,
+            TEXT("SetupAttackSystem: Missing combat/moveset/attackstate on %s"),
+            *GetNameSafe(Actor)
+        );
         return;
     }
 
@@ -112,6 +118,13 @@ void USetupAttackSystem::ProcessActor(AActor* Actor)
     EMoveSetTypeKey MoveKey = EMoveSetTypeKey::None;
     if (!ResolveMoveKey(RequestedAction, MoveKey))
     {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("SetupAttackSystem: Could not resolve move key for %s action %d"),
+            *Actor->GetName(),
+            static_cast<int32>(RequestedAction)
+        );
         return;
     }
 
@@ -122,7 +135,19 @@ void USetupAttackSystem::ProcessActor(AActor* Actor)
         return;
     }
 
+    UE_LOG(
+        LogTemp,
+        Log,
+        TEXT("SetupAttackSystem: Starting attack on %s | Action=%d MoveKey=%d AnimKey=%d MoveId=%s"),
+        *Actor->GetName(),
+        static_cast<int32>(RequestedAction),
+        static_cast<int32>(MoveKey),
+        static_cast<int32>(Move.Animation),
+        *Move.MoveId.ToString()
+    );
+
     Combat->SetCanAttack(false);
+    Combat->SetCurrentAttackAnimationKey(Move.Animation);
     AttackState->SetPhaseTime(0.0f);
     AttackState->StartAnticipationWithMove(static_cast<int32>(MoveKey), MoveKey, Move.MoveId);
 
@@ -133,6 +158,21 @@ void USetupAttackSystem::ProcessActor(AActor* Actor)
         Payload.CombatAction = RequestedAction;
         Payload.MoveKey = MoveKey;
         Payload.Move = Move;
+        UE_LOG(
+            LogTemp,
+            Log,
+            TEXT("SetupAttackSystem: Publishing FAttackStartedPayload for %s"),
+            *Actor->GetName()
+        );
         EventBus->Publish<FAttackStartedPayload>(Payload);
+    }
+    else
+    {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("SetupAttackSystem: No EventBus available when starting attack on %s"),
+            *Actor->GetName()
+        );
     }
 }

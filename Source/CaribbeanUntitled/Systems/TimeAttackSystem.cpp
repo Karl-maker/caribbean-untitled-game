@@ -8,7 +8,6 @@
 #include "../Components/AttackStateComponent.h"
 #include "../Components/CombatComponent.h"
 #include "../EventBus/EventBusSubsystem.h"
-#include "../Events/AnimationRequestPayload.h"
 #include "ActorRegistry.h"
 
 #include "Engine/World.h"
@@ -108,22 +107,22 @@ void UTimeAttackSystem::OnAttackStarted(const FAttackStartedPayload& Payload)
 {
     if (!IsValid(Payload.SourceActor))
     {
+        UE_LOG(LogTemp, Warning, TEXT("TimeAttackSystem: Invalid attack start payload"));
         return;
     }
+
+    UE_LOG(
+        LogTemp,
+        Log,
+        TEXT("TimeAttackSystem: Tracking attack timing for %s | MoveId=%s"),
+        *Payload.SourceActor->GetName(),
+        *Payload.Move.MoveId.ToString()
+    );
 
     FActiveAttackState& State = ActiveAttacks.FindOrAdd(Payload.SourceActor);
     State.Move = Payload.Move;
     State.bCombatVolumeActive = false;
     State.bRecoveryComplete = false;
-
-    if (UEventBusSubsystem* EventBus = GetEventBus())
-    {
-        FAnimationRequestPayload AnimationPayload(
-            Payload.SourceActor,
-            Payload.Move.Animation
-        );
-        EventBus->Publish<FAnimationRequestPayload>(AnimationPayload);
-    }
 }
 
 void UTimeAttackSystem::SetMoveVolumesActive(const FGameplayCombatMove& Move, bool bActive) const

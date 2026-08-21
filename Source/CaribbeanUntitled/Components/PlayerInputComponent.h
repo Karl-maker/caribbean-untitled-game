@@ -100,6 +100,8 @@ private:
     UPROPERTY()
     TObjectPtr<UControlComponent> Control;
 
+    bool bInputBound = false;
+
 
     // ============================================================
     // INPUT HANDLERS

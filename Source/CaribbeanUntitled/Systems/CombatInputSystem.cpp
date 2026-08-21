@@ -25,10 +25,18 @@ void UCombatInputSystem::Tick(float DeltaTime)
         return;
     }
 
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT("CombatInputSystem: Tick | World=%s"),
+        *GetNameSafe(World)
+    );
+
     UActorRegistry* Registry = GetActorRegistry();
 
     if (!Registry)
     {
+        UE_LOG(LogTemp, Warning, TEXT("CombatInputSystem: No ActorRegistry"));
         return;
     }
 
@@ -37,6 +45,7 @@ void UCombatInputSystem::Tick(float DeltaTime)
 
     if (!Actors)
     {
+        UE_LOG(LogTemp, Verbose, TEXT("CombatInputSystem: No actors with ControlComponent"));
         return;
     }
 
@@ -84,6 +93,12 @@ void UCombatInputSystem::ProcessActor(AActor* Actor)
 
     if (!IsValid(Control) || !IsValid(Combat))
     {
+        UE_LOG(
+            LogTemp,
+            Verbose,
+            TEXT("CombatInputSystem: Missing Control or Combat on %s"),
+            *GetNameSafe(Actor)
+        );
         return;
     }
 
@@ -96,6 +111,15 @@ void UCombatInputSystem::ProcessActor(AActor* Actor)
 
     bool& bWasLightAttackPressed =
         PreviousLightAttackState.FindOrAdd(Control, false);
+
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT("CombatInputSystem: %s LightAttack=%d Prev=%d"),
+        *GetNameSafe(Actor),
+        bLightAttackPressed,
+        bWasLightAttackPressed
+    );
 
     if (bLightAttackPressed && !bWasLightAttackPressed)
     {
@@ -119,6 +143,15 @@ void UCombatInputSystem::ProcessActor(AActor* Actor)
 
     bool& bWasHeavyAttackPressed =
         PreviousHeavyAttackState.FindOrAdd(Control, false);
+
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT("CombatInputSystem: %s HeavyAttack=%d Prev=%d"),
+        *GetNameSafe(Actor),
+        bHeavyAttackPressed,
+        bWasHeavyAttackPressed
+    );
 
     if (bHeavyAttackPressed && !bWasHeavyAttackPressed)
     {

@@ -37,6 +37,17 @@ void UPlayerInputComponent::BindInput(
     UInputComponent* PlayerInputComponent
 )
 {
+    if (bInputBound)
+    {
+        UE_LOG(
+            LogTemp,
+            Verbose,
+            TEXT("PlayerInputComponent: BindInput skipped, already bound on %s"),
+            *GetNameSafe(GetOwner())
+        );
+        return;
+    }
+
     // ============================================================
     // FIND CONTROL COMPONENT
     // ============================================================
@@ -474,6 +485,8 @@ void UPlayerInputComponent::BindInput(
             &UPlayerInputComponent::HandleWeaponSwitchCompleted
         );
     }
+
+    bInputBound = true;
 }
 
 // ============================================================================
@@ -723,7 +736,7 @@ void UPlayerInputComponent::HandleLightAttackStarted(
         *GetOwner()->GetName()
     );
 
-    Control->LightAttackIntent = Value.Get<bool>() ? 1.0f : 0.0f;
+    Control->RequestLightAttack();
 }
 
 void UPlayerInputComponent::HandleLightAttackCompleted(
@@ -735,7 +748,12 @@ void UPlayerInputComponent::HandleLightAttackCompleted(
         return;
     }
 
-    Control->LightAttackIntent = 0.0f;
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT("PlayerInputComponent: Light attack completed on %s"),
+        *GetOwner()->GetName()
+    );
 }
 
 // HEAVY ATTACK
@@ -748,7 +766,7 @@ void UPlayerInputComponent::HandleHeavyAttackStarted(
         return;
     }
 
-    Control->HeavyAttackIntent = 1.0f;
+    Control->RequestHeavyAttack();
 }
 
 void UPlayerInputComponent::HandleHeavyAttackCompleted(
@@ -760,7 +778,7 @@ void UPlayerInputComponent::HandleHeavyAttackCompleted(
         return;
     }
 
-    Control->HeavyAttackIntent = 0.0f;
+    Control->SetHeavyAttackIntent(0.0f);
 }
 
 // BLOCK
