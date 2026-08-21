@@ -91,6 +91,8 @@ void UAttackStateComponent::ResetAttackState()
     Phase = EAttackPhase::None;
     AttackIndex = -1;
     PhaseTime = 0.0f;
+    CurrentMoveKey = EMoveSetTypeKey::None;
+    CurrentMoveId = NAME_None;
     
     // Broadcast changes
     if (OldPhase != Phase)
@@ -138,6 +140,17 @@ void UAttackStateComponent::StartAnticipation(int32 AttackID)
     InternalSetAttackIndex(AttackID);
     InternalSetPhase(EAttackPhase::Anticipation);
     PhaseTime = 0.0f;
+    CurrentMoveKey = EMoveSetTypeKey::None;
+    CurrentMoveId = NAME_None;
+}
+
+void UAttackStateComponent::StartAnticipationWithMove(int32 AttackID, EMoveSetTypeKey InMoveKey, FName InMoveId)
+{
+    InternalSetAttackIndex(AttackID);
+    InternalSetPhase(EAttackPhase::Anticipation);
+    PhaseTime = 0.0f;
+    CurrentMoveKey = InMoveKey;
+    CurrentMoveId = InMoveId;
 }
 
 void UAttackStateComponent::StartActivePhase()

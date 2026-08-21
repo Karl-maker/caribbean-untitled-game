@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "../Components/MoveSetComponent.h"
 #include "AttackStateComponent.generated.h"
 
 UENUM(BlueprintType)
@@ -70,6 +71,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Attack State")
     void StartAnticipation(int32 AttackID);
 
+    void StartAnticipationWithMove(int32 AttackID, EMoveSetTypeKey InMoveKey, FName InMoveId);
+
     UFUNCTION(BlueprintCallable, Category = "Attack State")
     void StartActivePhase();
 
@@ -102,6 +105,12 @@ private:
     // Time spent in current phase
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack State", meta = (AllowPrivateAccess = "true"))
     float PhaseTime;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack State", meta = (AllowPrivateAccess = "true"))
+    EMoveSetTypeKey CurrentMoveKey = EMoveSetTypeKey::None;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack State", meta = (AllowPrivateAccess = "true"))
+    FName CurrentMoveId = NAME_None;
 
     // Internal function to handle phase changes
     void InternalSetPhase(EAttackPhase NewPhase);
