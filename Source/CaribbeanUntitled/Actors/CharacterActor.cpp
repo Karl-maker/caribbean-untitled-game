@@ -8,9 +8,11 @@
 #include "../Components/StatsComponent.h"
 #include "../Components/AnimationRegistryComponent.h"
 #include "../Components/CombatVolumeComponent.h"
+#include "../Components/MoveSetComponent.h"
 #include "../Settings/CaribbeanAssetSettings.h"
 #include "../Systems/ActorRegistry.h"
 #include "Animation/AnimInstance.h"
+#include "Animation/AnimSequence.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/ShapeComponent.h"
 #include "Curves/CurveFloat.h"
@@ -75,6 +77,11 @@ ACharacterActor::ACharacterActor()
     AnimationRegistryComponent =
         CreateDefaultSubobject<UAnimationRegistryComponent>(
             TEXT("AnimationRegistryComponent")
+        );
+
+    MoveSetComponent =
+        CreateDefaultSubobject<UMoveSetComponent>(
+            TEXT("MoveSetComponent")
         );
 
     ReplicatedCharacterVisualProfileKey = CharacterVisualProfileKey;
@@ -273,6 +280,22 @@ ACharacterActor::ACharacterActor()
         LightRightPunch.SlotName = "combat";
         LightRightPunch.Description = FText::FromString(TEXT("Character light right punch animation."));
         AnimationRegistryComponent->Animations.Add(LightRightPunch);
+
+        FSoftObjectPath LightLeftPunchPath(
+            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Light_Left_Punch.Light_Left_Punch")
+        );
+
+        FAnimationDefinition LightLeftPunch;
+        LightLeftPunch.Key = EAnimationKey::LightLeftPunch;
+        LightLeftPunch.PlaybackMode = EAnimationPlaybackMode::Once;
+        LightLeftPunch.PlayRate = 1.0f;
+        LightLeftPunch.LoopCount = 1;
+        LightLeftPunch.BlendInTime = 0.05f;
+        LightLeftPunch.BlendOutTime = 0.2f;
+        LightLeftPunch.SlotName = "combat";
+        LightLeftPunch.Animation = Cast<UAnimSequence>(LightLeftPunchPath.TryLoad());
+        LightLeftPunch.Description = FText::FromString(TEXT("Character light left punch animation."));
+        AnimationRegistryComponent->Animations.Add(LightLeftPunch);
         
         FAnimationDefinition Hit;
         Hit.Key = EAnimationKey::Hit;
@@ -332,6 +355,24 @@ ACharacterActor::ACharacterActor()
         Dismount.SlotName = "combat";  // Full body movement to dismount
         Dismount.Description = FText::FromString(TEXT("Character dismount animation."));
         AnimationRegistryComponent->Animations.Add(Dismount);
+    }
+
+    if (MoveSetComponent)
+    {
+        FGameplayCombatMove LightAttack;
+        LightAttack.MoveId = TEXT("LightAttack1");
+        LightAttack.Animation = EAnimationKey::LightLeftPunch;
+        LightAttack.AnticipationTime = 0.10f;
+        LightAttack.ActiveTime = 0.55f;
+        LightAttack.RecoveryTime = 0.15f;
+        LightAttack.Damage = 10.0f;
+        LightAttack.Stamina = 10.0f;
+        LightAttack.CombatVolumes.Add(LeftHandCombatVolume);
+
+        MoveSetComponent->AddMove(
+            EMoveSetTypeKey::LightAttack1,
+            LightAttack
+        );
     }
 
     // ============================================================

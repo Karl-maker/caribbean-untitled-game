@@ -8,8 +8,8 @@
 #include "../Components/AttackStateComponent.h"
 #include "../Components/CombatComponent.h"
 #include "../EventBus/EventBusSubsystem.h"
+#include "../Events/AnimationRequestPayload.h"
 #include "ActorRegistry.h"
-#include "AnimationSystem.h"
 
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
@@ -116,12 +116,13 @@ void UTimeAttackSystem::OnAttackStarted(const FAttackStartedPayload& Payload)
     State.bCombatVolumeActive = false;
     State.bRecoveryComplete = false;
 
-    if (UAnimationSystem* AnimationSystem = GetWorld() ? GetWorld()->GetSubsystem<UAnimationSystem>() : nullptr)
+    if (UEventBusSubsystem* EventBus = GetEventBus())
     {
-        AnimationSystem->RequestAnimationState(
+        FAnimationRequestPayload AnimationPayload(
             Payload.SourceActor,
             Payload.Move.Animation
         );
+        EventBus->Publish<FAnimationRequestPayload>(AnimationPayload);
     }
 }
 

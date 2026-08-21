@@ -142,6 +142,9 @@ struct FControlMappingProfile
 
     UPROPERTY(EditAnywhere)
     FSoftObjectPath CrouchAction;
+
+    UPROPERTY(EditAnywhere)
+    FSoftObjectPath LightAttackAction;
 };
 
 UCLASS(Config=Game, DefaultConfig)

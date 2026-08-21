@@ -716,7 +716,14 @@ void UPlayerInputComponent::HandleLightAttackStarted(
         return;
     }
 
-    Control->LightAttackIntent = 1.0f;
+    UE_LOG(
+        LogTemp,
+        Log,
+        TEXT("PlayerInputComponent: Light attack started on %s"),
+        *GetOwner()->GetName()
+    );
+
+    Control->LightAttackIntent = Value.Get<bool>() ? 1.0f : 0.0f;
 }
 
 void UPlayerInputComponent::HandleLightAttackCompleted(

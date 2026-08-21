@@ -99,6 +99,12 @@ void UCombatInputSystem::ProcessActor(AActor* Actor)
 
     if (bLightAttackPressed && !bWasLightAttackPressed)
     {
+        UE_LOG(
+            LogTemp,
+            Log,
+            TEXT("CombatInputSystem: Light attack request detected for %s"),
+            *GetNameSafe(Actor)
+        );
         Combat->RequestAttack(ECombatAction::LightAttack);
     }
 
