@@ -13,6 +13,7 @@
 #include "../Systems/StaminaRegenerationSystem.h"
 #include "../Systems/StaminaSystem.h"
 #include "../Systems/CombatDetectionSystem.h"
+#include "../Systems/CombatInputSystem.h"
 
 #include "Engine/World.h"
 
@@ -42,7 +43,7 @@ void UGameplaySystemScheduler::Initialize(
     ActionSystem = NewObject<UActionSystem>(this);
     StaminaRegenerationSystem = NewObject<UStaminaRegenerationSystem>(this);
     CombatDetectionSystem = NewObject<UCombatDetectionSystem>(this);
-
+    CombatInputSystem = NewObject<UCombatInputSystem>(this);
 }
 
 
@@ -92,6 +93,12 @@ void UGameplaySystemScheduler::Deinitialize()
         StaminaRegenerationSystem->Cleanup();
     }
     StaminaRegenerationSystem = nullptr;
+    
+    if (CombatInputSystem)
+    {
+        CombatInputSystem->Cleanup();
+    }
+    CombatInputSystem = nullptr;
     
     Super::Deinitialize();
 }
@@ -155,6 +162,7 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 
 void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 {
+    if (CombatInputSystem) CombatInputSystem->Tick(DeltaTime);
     if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
     if (BrainSystem) BrainSystem->Tick(DeltaTime);
     if (ActionSystem) ActionSystem->Tick(DeltaTime);
