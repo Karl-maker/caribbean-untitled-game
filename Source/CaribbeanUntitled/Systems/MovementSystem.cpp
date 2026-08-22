@@ -90,6 +90,9 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
     const bool bWantsToSprint = Control->WantsToSprint();
     const bool bWantsToCrouch = Control->WantsToCrouch();
 
+    const FRotator DesiredFacing(0.0f, Control->GetViewYaw(), 0.0f);
+    Character->SetActorRotation(DesiredFacing);
+
     ApplySpeed(Stats, Movement, bWantsToSprint, bWantsToCrouch);
     ApplyJump(Character, Stats, Movement, Control);
     ApplyMovement(Character, MoveDirection);
@@ -556,6 +559,17 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
 
     if (bIsMoving)
     {
+        const FVector2D MoveIntent = Control->MoveIntent;
+        const float LateralIntent = MoveIntent.X;
+        const float ForwardIntent = MoveIntent.Y;
+
+        if (FMath::Abs(LateralIntent) > FMath::Abs(ForwardIntent) + 0.05f)
+        {
+            return LateralIntent >= 0.0f
+                ? ELocomotion::StrafeRight
+                : ELocomotion::StrafeLeft;
+        }
+
         const float ForwardAmount = MoveDirection | Character->GetActorForwardVector();
         const float RightAmount = MoveDirection | Character->GetActorRightVector();
         const float LateralAbs = FMath::Abs(RightAmount);

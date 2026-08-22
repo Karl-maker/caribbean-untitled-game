@@ -188,6 +188,27 @@ APlayableActor::APlayableActor()
         }
     }
 
+    if (AnimationRegistryComponent)
+    {
+        ConfigureAnimationDefinition(
+            AnimationRegistryComponent,
+            EAnimationKey::LeftStrafe,
+            LoadAssetOrNull<UAnimSequence>(
+                FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Left_Strafe.Left_Strafe"))
+            ),
+            EAnimationBlendMode::FullBody
+        );
+
+        ConfigureAnimationDefinition(
+            AnimationRegistryComponent,
+            EAnimationKey::RightStrafe,
+            LoadAssetOrNull<UAnimSequence>(
+                FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Right_Strafe.Right_Strafe"))
+            ),
+            EAnimationBlendMode::FullBody
+        );
+    }
+
 
     // Networked games should let GameMode/GameFramework own possession.
     AutoPossessPlayer = EAutoReceiveInput::Disabled;
