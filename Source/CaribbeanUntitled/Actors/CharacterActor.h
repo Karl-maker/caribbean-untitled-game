@@ -12,6 +12,9 @@
 class UControlComponent;
 class UStatsComponent;
 class UAnimationRegistryComponent;
+class UMoveSetComponent;
+class UCombatComponent;
+class UAttackStateComponent;
 class UActorRegistry;
 class UAnimInstance;
 class UCombatVolumeComponent;
@@ -83,6 +86,27 @@ protected:
         Category="Actor|Components"
     )
     TObjectPtr<UAnimationRegistryComponent> AnimationRegistryComponent;
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="Actor|Components"
+    )
+    TObjectPtr<UMoveSetComponent> MoveSetComponent;
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="Actor|Components"
+    )
+    TObjectPtr<UCombatComponent> CombatComponent;
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="Actor|Components"
+    )
+    TObjectPtr<UAttackStateComponent> AttackStateComponent;
 
     UPROPERTY(
         EditDefaultsOnly,

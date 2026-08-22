@@ -40,6 +40,7 @@ enum class EAnimationKey : uint8
     Land        UMETA(DisplayName = "Land"),
 
     // Combat - Animations for all different attacks
+    LightLeftPunch  UMETA(DisplayName = "Light Left Punch"),
     LightRightPunch UMETA(DisplayName = "Light Right Punch"),
 
     Hit         UMETA(DisplayName = "Hit"),
@@ -111,6 +112,13 @@ struct FAnimationDefinition
         Category = "Animation|Layering"
     )
     FName SlotName = TEXT("DefaultSlot");
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Layering"
+    )
+    EAnimationLayer Layer = EAnimationLayer::Base;
     
     UPROPERTY(EditAnywhere)
     TObjectPtr<UAnimSequence> Animation = nullptr;

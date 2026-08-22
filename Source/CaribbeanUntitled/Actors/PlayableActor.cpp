@@ -155,6 +155,11 @@ APlayableActor::APlayableActor()
                 LoadAssetOrNull<UInputAction>(
                     ControlProfile->CrouchAction
                 );
+
+            PlayerInputComponent->LightAttackAction =
+                LoadAssetOrNull<UInputAction>(
+                    ControlProfile->LightAttackAction
+                );
         }
     }
 

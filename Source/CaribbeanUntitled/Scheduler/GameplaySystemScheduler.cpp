@@ -13,6 +13,7 @@
 #include "../Systems/StaminaRegenerationSystem.h"
 #include "../Systems/StaminaSystem.h"
 #include "../Systems/CombatDetectionSystem.h"
+#include "../Systems/CombatInputSystem.h"
 
 #include "Engine/World.h"
 
@@ -42,7 +43,7 @@ void UGameplaySystemScheduler::Initialize(
     ActionSystem = NewObject<UActionSystem>(this);
     StaminaRegenerationSystem = NewObject<UStaminaRegenerationSystem>(this);
     CombatDetectionSystem = NewObject<UCombatDetectionSystem>(this);
-
+    CombatInputSystem = NewObject<UCombatInputSystem>(this);
 }
 
 
@@ -93,6 +94,12 @@ void UGameplaySystemScheduler::Deinitialize()
     }
     StaminaRegenerationSystem = nullptr;
     
+    if (CombatInputSystem)
+    {
+        CombatInputSystem->Cleanup();
+    }
+    CombatInputSystem = nullptr;
+    
     Super::Deinitialize();
 }
 
@@ -121,6 +128,16 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
         NetMode == NM_Standalone ||
         NetMode == NM_DedicatedServer ||
         NetMode == NM_ListenServer;
+
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT("[Scheduler] Tick | World=%s | NetMode=%d | Client=%d | Server=%d"),
+        *GetNameSafe(World),
+        static_cast<int32>(NetMode),
+        bIsClient,
+        bIsServer
+    );
 
     if (bIsClient) TickInput(DeltaTime);
 
@@ -155,6 +172,9 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 
 void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 {
+    UE_LOG(LogTemp, Verbose, TEXT("[Scheduler] TickGameplay"));
+
+    if (CombatInputSystem) CombatInputSystem->Tick(DeltaTime);
     if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
     if (BrainSystem) BrainSystem->Tick(DeltaTime);
     if (ActionSystem) ActionSystem->Tick(DeltaTime);

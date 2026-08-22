@@ -10,7 +10,7 @@
 
 void UMovementSystem::Tick(float DeltaTime)
 {
-    UE_LOG(LogTemp, Warning, TEXT("MovementSystem::Tick - Running"));
+
     if (DeltaTime <= 0.0f)
     {
         return;
