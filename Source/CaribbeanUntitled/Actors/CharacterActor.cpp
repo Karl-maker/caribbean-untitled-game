@@ -14,8 +14,11 @@
 #include "../Components/MoveSetComponent.h"
 #include "../Settings/CaribbeanAssetSettings.h"
 #include "../Systems/ActorRegistry.h"
+#include "../Systems/AnimationSystem.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimSequence.h"
+#include "Animation/AnimSequenceBase.h"
+#include "Components/PoseableMeshComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/ShapeComponent.h"
 #include "Curves/CurveFloat.h"
@@ -27,7 +30,8 @@
 
 ACharacterActor::ACharacterActor()
 {
-    PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bStartWithTickEnabled = true;
     
     bReplicates = true;
     SetReplicateMovement(true);
@@ -37,6 +41,7 @@ ACharacterActor::ACharacterActor()
 
     if (Mesh && Capsule)
     {
+        Mesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
         const FBoxSphereBounds Bounds = Mesh->CalcBounds(
             Mesh->GetComponentTransform()
         );
@@ -60,6 +65,26 @@ ACharacterActor::ACharacterActor()
         Mesh->AddRelativeRotation(
             FRotator(0.0f, -90.0f, 0.0f)
         );
+    }
+
+    PoseableMeshComponent =
+        CreateDefaultSubobject<UPoseableMeshComponent>(
+            TEXT("PoseableMeshComponent")
+        );
+
+    if (PoseableMeshComponent && Mesh)
+    {
+        PoseableMeshComponent->PrimaryComponentTick.bCanEverTick = true;
+        PoseableMeshComponent->PrimaryComponentTick.bStartWithTickEnabled = true;
+        PoseableMeshComponent->SetupAttachment(GetCapsuleComponent());
+        PoseableMeshComponent->SetRelativeLocation(Mesh->GetRelativeLocation());
+        PoseableMeshComponent->SetRelativeRotation(Mesh->GetRelativeRotation());
+        PoseableMeshComponent->SetRelativeScale3D(Mesh->GetRelativeScale3D());
+        PoseableMeshComponent->SetVisibility(true, true);
+        PoseableMeshComponent->SetHiddenInGame(false, true);
+        PoseableMeshComponent->AddTickPrerequisiteComponent(Mesh);
+        Mesh->SetVisibility(false, true);
+        Mesh->SetHiddenInGame(true, true);
     }
     // ============================================================
     // COMPONENTS
@@ -389,6 +414,7 @@ ACharacterActor::ACharacterActor()
         LightRightPunch.BlendOutTime = 0.18f;
         LightRightPunch.Slot = EAnimationSlot::UpperBody;
         LightRightPunch.Layer = EAnimationLayer::UpperBody;
+        LightRightPunch.Breakpoint = EAnimationBreakpoint::SpineAndDown;
         LightRightPunch.Description = FText::FromString(TEXT("Character light right punch animation."));
         AnimationRegistryComponent->Animations.Add(LightRightPunch);
 
@@ -405,6 +431,7 @@ ACharacterActor::ACharacterActor()
         LightLeftPunch.BlendOutTime = 0.18f;
         LightLeftPunch.Slot = EAnimationSlot::UpperBody;
         LightLeftPunch.Layer = EAnimationLayer::UpperBody;
+        LightLeftPunch.Breakpoint = EAnimationBreakpoint::SpineAndDown;
         LightLeftPunch.Animation = Cast<UAnimSequence>(LightLeftPunchPath.TryLoad());
         LightLeftPunch.Description = FText::FromString(TEXT("Character light left punch animation."));
         AnimationRegistryComponent->Animations.Add(LightLeftPunch);
@@ -418,6 +445,7 @@ ACharacterActor::ACharacterActor()
         Hit.BlendOutTime = 0.14f;
         Hit.Slot = EAnimationSlot::UpperBody;
         Hit.Layer = EAnimationLayer::UpperBody;
+        Hit.Breakpoint = EAnimationBreakpoint::SpineAndDown;
         Hit.Description = FText::FromString(TEXT("Character hit reaction animation."));
         AnimationRegistryComponent->Animations.Add(Hit);
         
@@ -430,6 +458,7 @@ ACharacterActor::ACharacterActor()
         Death.BlendOutTime = 0.2f;
         Death.Slot = EAnimationSlot::UpperBody;
         Death.Layer = EAnimationLayer::UpperBody;
+        Death.Breakpoint = EAnimationBreakpoint::SpineAndDown;
         Death.Description = FText::FromString(TEXT("Character death animation."));
         AnimationRegistryComponent->Animations.Add(Death);
         
@@ -446,6 +475,7 @@ ACharacterActor::ACharacterActor()
         Interact.BlendOutTime = 0.12f;
         Interact.Slot = EAnimationSlot::UpperBody;  // Reaching/interacting with objects
         Interact.Layer = EAnimationLayer::UpperBody;
+        Interact.Breakpoint = EAnimationBreakpoint::SpineAndDown;
         Interact.Description = FText::FromString(TEXT("Character interact animation."));
         AnimationRegistryComponent->Animations.Add(Interact);
         
@@ -458,6 +488,7 @@ ACharacterActor::ACharacterActor()
         Mount.BlendOutTime = 0.16f;
         Mount.Slot = EAnimationSlot::FullBody;  // Full body movement to mount
         Mount.Layer = EAnimationLayer::UpperBody;
+        Mount.Breakpoint = EAnimationBreakpoint::FullBody;
         Mount.Description = FText::FromString(TEXT("Character mount animation."));
         AnimationRegistryComponent->Animations.Add(Mount);
         
@@ -470,6 +501,7 @@ ACharacterActor::ACharacterActor()
         Dismount.BlendOutTime = 0.16f;
         Dismount.Slot = EAnimationSlot::FullBody;  // Full body movement to dismount
         Dismount.Layer = EAnimationLayer::UpperBody;
+        Dismount.Breakpoint = EAnimationBreakpoint::FullBody;
         Dismount.Description = FText::FromString(TEXT("Character dismount animation."));
         AnimationRegistryComponent->Animations.Add(Dismount);
     }
@@ -525,10 +557,35 @@ ACharacterActor::ACharacterActor()
     bUseControllerRotationRoll = false;
 }
 
+void ACharacterActor::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+
+    if (DeltaSeconds <= 0.0f)
+    {
+        return;
+    }
+
+    UWorld* World = GetWorld();
+    if (!World)
+    {
+        return;
+    }
+
+    const ENetMode NetMode = World->GetNetMode();
+    if (NetMode == NM_DedicatedServer)
+    {
+        return;
+    }
+
+    UpdatePoseableMeshFromCurrentAnimation(DeltaSeconds);
+}
+
 void ACharacterActor::ApplyCharacterVisualProfile()
 {
     const UCaribbeanAssetSettings& AssetSettings = UCaribbeanAssetSettings::Get();
     USkeletalMeshComponent* Mesh = GetMesh();
+    UPoseableMeshComponent* PoseableMesh = PoseableMeshComponent.Get();
     if (!Mesh)
     {
         return;
@@ -547,6 +604,10 @@ void ACharacterActor::ApplyCharacterVisualProfile()
             : nullptr)
     {
         Mesh->SetSkeletalMesh(SkeletalMesh);
+        if (PoseableMesh)
+        {
+            PoseableMesh->SetSkeletalMesh(SkeletalMesh);
+        }
     }
 
     if (UClass* AnimBlueprintClass =
@@ -555,6 +616,159 @@ void ACharacterActor::ApplyCharacterVisualProfile()
         Mesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
         Mesh->SetAnimInstanceClass(AnimBlueprintClass);
     }
+}
+
+void ACharacterActor::SyncPoseableMeshFromSkeletalMesh()
+{
+    USkeletalMeshComponent* Mesh = GetMesh();
+    UPoseableMeshComponent* PoseableMesh = PoseableMeshComponent.Get();
+    if (!Mesh || !PoseableMesh)
+    {
+        return;
+    }
+
+    Mesh->RefreshBoneTransforms();
+    PoseableMesh->CopyPoseFromSkeletalComponent(Mesh);
+    PoseableMesh->RefreshBoneTransforms();
+    PoseableMesh->MarkRefreshTransformDirty();
+}
+
+void ACharacterActor::UpdatePoseableMeshFromCurrentAnimation(float DeltaSeconds)
+{
+    if (DeltaSeconds <= 0.0f)
+    {
+        return;
+    }
+
+    UWorld* World = GetWorld();
+    if (!World || World->GetNetMode() == NM_DedicatedServer)
+    {
+        return;
+    }
+
+    UPoseableMeshComponent* PoseableMesh = PoseableMeshComponent.Get();
+    if (!PoseableMesh)
+    {
+        return;
+    }
+
+    UAnimationSystem* AnimationSystem = World->GetSubsystem<UAnimationSystem>();
+    if (!AnimationSystem)
+    {
+        return;
+    }
+
+    USkeletalMeshComponent* ReferenceMesh = GetMesh();
+    if (!ReferenceMesh || !ReferenceMesh->SkeletalMesh)
+    {
+        return;
+    }
+
+    const USkeleton* Skeleton = ReferenceMesh->SkeletalMesh->GetSkeleton();
+    if (!Skeleton)
+    {
+        return;
+    }
+
+    const FReferenceSkeleton& RefSkeleton = Skeleton->GetReferenceSkeleton();
+    const int32 BoneCount = RefSkeleton.GetNum();
+    TArray<FTransform> ComponentSpaceTransforms;
+    ComponentSpaceTransforms.SetNum(BoneCount);
+
+    const EAnimationLayer BaseLayer = EAnimationLayer::FullBody;
+    const UAnimSequenceBase* BaseAnimation = AnimationSystem->GetCurrentAnimation(this, BaseLayer);
+    const FAnimationDefinition* BaseDefinition =
+        BaseAnimation && AnimationRegistryComponent
+            ? AnimationRegistryComponent->FindAnimation(AnimationSystem->GetCurrentState(this))
+            : nullptr;
+    const float BaseElapsed = AnimationSystem->GetStateElapsedTime(this, BaseLayer);
+    const float BasePlayRate = BaseDefinition ? BaseDefinition->PlayRate : 1.0f;
+    const float BaseLength = BaseAnimation ? BaseAnimation->GetPlayLength() : 0.0f;
+    const float BaseSampleTime =
+        (BaseAnimation && BaseLength > 0.0f)
+            ? FMath::Fmod(BaseElapsed * BasePlayRate, BaseLength)
+            : 0.0f;
+
+    const EAnimationLayer UpperLayer = EAnimationLayer::UpperBody;
+    const UAnimSequenceBase* UpperAnimation = AnimationSystem->GetCurrentAnimation(this, UpperLayer);
+    const FAnimationDefinition* UpperDefinition =
+        UpperAnimation && AnimationRegistryComponent
+            ? AnimationRegistryComponent->FindAnimation(EAnimationKey::LightLeftPunch)
+            : nullptr;
+    const float UpperElapsed = AnimationSystem->GetStateElapsedTime(this, UpperLayer);
+    const float UpperPlayRate = UpperDefinition ? UpperDefinition->PlayRate : 1.0f;
+    const float UpperLength = UpperAnimation ? UpperAnimation->GetPlayLength() : 0.0f;
+    const float UpperSampleTime =
+        (UpperAnimation && UpperLength > 0.0f)
+            ? FMath::Fmod(UpperElapsed * UpperPlayRate, UpperLength)
+            : 0.0f;
+    const float UpperBlendIn = UpperDefinition ? FMath::Max(0.0f, UpperDefinition->BlendInTime) : 0.0f;
+    const float UpperBlendOut = UpperDefinition ? FMath::Max(0.0f, UpperDefinition->BlendOutTime) : 0.0f;
+    const float UpperBlendInAlpha =
+        UpperBlendIn > 0.0f
+            ? FMath::Clamp(UpperElapsed / UpperBlendIn, 0.0f, 1.0f)
+            : 1.0f;
+    const float UpperBlendOutAlpha =
+        (UpperBlendOut > 0.0f && UpperLength > 0.0f)
+            ? FMath::Clamp((UpperLength - UpperElapsed) / UpperBlendOut, 0.0f, 1.0f)
+            : 1.0f;
+    const float UpperBlendAlpha = FMath::Min(UpperBlendInAlpha, UpperBlendOutAlpha);
+
+    FName UpperBreakpointBoneName = NAME_None;
+    if (UpperDefinition && UpperDefinition->Breakpoint != EAnimationBreakpoint::FullBody)
+    {
+        UpperBreakpointBoneName = TEXT("Spine");
+    }
+    const int32 UpperBreakpointBoneIndex =
+        UpperBreakpointBoneName.IsNone()
+            ? INDEX_NONE
+            : RefSkeleton.FindBoneIndex(UpperBreakpointBoneName);
+
+    for (int32 BoneIndex = 0; BoneIndex < BoneCount; ++BoneIndex)
+    {
+        const FName BoneName = RefSkeleton.GetBoneName(BoneIndex);
+        FTransform BoneLocalTransform = RefSkeleton.GetRefBonePose()[BoneIndex];
+
+        if (BaseAnimation)
+        {
+            if (const UAnimSequence* Sequence = Cast<UAnimSequence>(BaseAnimation))
+            {
+                Sequence->GetBoneTransform(
+                    BoneLocalTransform,
+                    FSkeletonPoseBoneIndex(BoneIndex),
+                    BaseSampleTime,
+                    false
+                );
+            }
+        }
+
+        if (UpperAnimation && UpperBreakpointBoneIndex != INDEX_NONE && BoneIndex >= UpperBreakpointBoneIndex)
+        {
+            FTransform UpperBoneLocalTransform = RefSkeleton.GetRefBonePose()[BoneIndex];
+            if (const UAnimSequence* UpperSequence = Cast<UAnimSequence>(UpperAnimation))
+            {
+                UpperSequence->GetBoneTransform(
+                    UpperBoneLocalTransform,
+                    FSkeletonPoseBoneIndex(BoneIndex),
+                    UpperSampleTime,
+                    false
+                );
+            }
+            BoneLocalTransform.Blend(BoneLocalTransform, UpperBoneLocalTransform, UpperBlendAlpha);
+        }
+
+        const int32 ParentIndex = RefSkeleton.GetParentIndex(BoneIndex);
+        const FTransform BoneComponentTransform =
+            ParentIndex != INDEX_NONE
+                ? BoneLocalTransform * ComponentSpaceTransforms[ParentIndex]
+                : BoneLocalTransform;
+
+        ComponentSpaceTransforms[BoneIndex] = BoneComponentTransform;
+        PoseableMesh->SetBoneTransformByName(BoneName, BoneComponentTransform, EBoneSpaces::ComponentSpace);
+    }
+
+    PoseableMesh->RefreshBoneTransforms();
+    PoseableMesh->MarkRefreshTransformDirty();
 }
 
 void ACharacterActor::OnRep_CharacterVisualProfileKey()

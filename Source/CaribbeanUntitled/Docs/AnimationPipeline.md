@@ -4,12 +4,12 @@ This document explains how animation works in this project from input or gamepla
 
 ## Big Picture
 
-The animation pipeline is event-driven:
+The animation pipeline is request-driven:
 
 1. A gameplay system decides an animation key.
 2. That system publishes a request or calls the animation subsystem directly.
 3. `UAnimationSystem` resolves the request against the actor's animation registry.
-4. `UAnimationSystem` plays the animation on the actor's skeletal mesh using the actor's configured animation asset and blend settings.
+4. `UAnimationSystem` plays the animation on the actor's mesh using the actor's configured animation asset and blend settings.
 
 The animation system is the only place that actually plays animations.
 
@@ -31,7 +31,7 @@ It stores an array of `FAnimationDefinition` entries, where each entry maps:
 
 - `EAnimationKey`
 - animation asset
-- slot name
+- slot enum
 - layer
 - blend in time
 - blend out time
@@ -119,10 +119,24 @@ When a state is played, the system:
 
 1. Finds the actor's `UAnimationRegistryComponent`
 2. Looks up the requested `EAnimationKey`
-3. Uses the actor's skeletal mesh and anim instance
+3. Uses the actor's mesh and anim instance
 4. Plays the sequence as a dynamic montage using the definition's slot and blend settings
 
-If there is no `UAnimInstance`, it falls back to `USkeletalMeshComponent::PlayAnimation`.
+If there is no `UAnimInstance`, it falls back to direct mesh playback.
+
+## Poseable Mesh IK
+
+Direct bone IK is handled through `UIKSystem` and `UIKComponent` when the actor uses a `UPoseableMeshComponent`.
+
+The focus system writes target data directly into `UIKComponent`, and the IK system reads that state on tick to rotate the `Head` and `Neck` chain without going through AnimBP.
+
+The runtime target cache includes:
+
+- channel name
+- target location
+- target direction
+- blend speed
+- bone chain
 
 ## Client And Server Behavior
 

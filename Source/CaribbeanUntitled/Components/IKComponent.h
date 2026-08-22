@@ -32,6 +32,9 @@ struct CARIBBEANUNTITLED_API FIKTargetData
 
     UPROPERTY(BlueprintReadWrite, Category = "IK")
     FName BoneName = NAME_None;
+
+    UPROPERTY(BlueprintReadWrite, Category = "IK")
+    FName ParentBoneName = NAME_None;
 };
 
 USTRUCT(BlueprintType)
@@ -70,6 +73,9 @@ public:
 
     UFUNCTION(BlueprintPure, Category = "IK")
     bool HasTarget(FName Channel) const;
+
+    UFUNCTION(BlueprintCallable, Category = "IK")
+    void SetBoneChain(FName Channel, FName InBoneName, FName InParentBoneName);
 
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

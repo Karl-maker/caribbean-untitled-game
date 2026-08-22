@@ -13,6 +13,7 @@
 class UAnimationRegistryComponent;
 class UAnimInstance;
 class UAnimMontage;
+class UAnimSequenceBase;
 class UEventBusSubsystem;
 class UActorRegistry;
 struct FAnimationDefinition;
@@ -75,6 +76,7 @@ public:
 
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
     virtual void Deinitialize() override;
+    void Tick(float DeltaTime);
 
 
     //=========================================================================
@@ -108,6 +110,12 @@ public:
     UFUNCTION(BlueprintPure, Category = "Animation")
     EAnimationKey GetCurrentState(AActor* Actor) const;
 
+    UFUNCTION(BlueprintPure, Category = "Animation")
+    float GetStateElapsedTime(AActor* Actor, EAnimationLayer Layer = EAnimationLayer::FullBody) const;
+
+    UFUNCTION(BlueprintPure, Category = "Animation")
+    const UAnimSequenceBase* GetCurrentAnimation(AActor* Actor, EAnimationLayer Layer = EAnimationLayer::FullBody) const;
+
     /**
      * Stops tracking Actor. Call this from EndPlay/Destroyed if you
      * need to free state early; otherwise stale entries are pruned
@@ -137,7 +145,6 @@ public:
      */
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     TArray<FActorAnimTransitionRule> TransitionRules;
-
 
 private:
 
@@ -263,4 +270,5 @@ private:
 
     /** Bus handler — translates FAnimationRequestPayload into RequestAnimationState. */
     void OnAnimationRequest(const FAnimationRequestPayload& Payload);
+
 };

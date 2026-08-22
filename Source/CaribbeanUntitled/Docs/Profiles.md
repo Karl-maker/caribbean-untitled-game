@@ -17,7 +17,7 @@ Use the same key across related profiles when they belong to the same character 
 
 ## Visual Profiles
 
-Visual profiles control the skeletal mesh and animation blueprint used by a character.
+Visual profiles control the mesh and animation setup used by a character.
 
 ### Fields
 
@@ -31,7 +31,7 @@ Visual profiles control the skeletal mesh and animation blueprint used by a char
 2. Add a new entry under `CharacterVisualProfiles`.
 3. Set `ProfileKey` to something stable, such as `DEMO_FEMALE`.
 4. Assign the skeletal mesh asset.
-5. Assign the animation blueprint class for that mesh.
+5. Assign the animation blueprint class for that mesh if the character still uses the skeletal animation path.
 
 ### Example
 
@@ -157,6 +157,23 @@ Control mapping profiles define the input assets for a control scheme.
 - `ControlMappingProfileKey`
 
 For a new character variant, keep the keys aligned unless you intentionally want different behavior.
+
+## Poseable Mesh Refactor Notes
+
+The project is moving toward poseable-mesh driven runtime IK for characters that need direct bone edits.
+
+That means:
+
+- visual profiles still define the base mesh asset
+- animation profiles still define the request-driven locomotion and combat assets
+- IK no longer depends on an AnimBP event chain
+- direct head/neck rotation is applied on a `UPoseableMeshComponent` when present
+
+If a character uses the poseable path, the important bone references should stay stable in the combat attachment profile, especially:
+
+- `Head`
+- `Neck`
+- `Spine`
 
 ## Recommended Workflow
 

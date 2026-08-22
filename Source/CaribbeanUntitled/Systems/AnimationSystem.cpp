@@ -12,6 +12,7 @@
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "../Actors/CharacterActor.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 
@@ -72,6 +73,41 @@ void UAnimationSystem::Deinitialize()
     ActorStates.Empty();
 
     Super::Deinitialize();
+}
+
+void UAnimationSystem::Tick(float DeltaTime)
+{
+    if (DeltaTime <= 0.0f)
+    {
+        return;
+    }
+
+    UActorRegistry* Registry = GetActorRegistry();
+    if (!Registry)
+    {
+        return;
+    }
+
+    const TSet<TWeakObjectPtr<AActor>>* Actors =
+        Registry->GetActorsWithComponent<UAnimationRegistryComponent>();
+    if (!Actors)
+    {
+        return;
+    }
+
+    for (const TWeakObjectPtr<AActor>& WeakActor : *Actors)
+    {
+        AActor* Actor = WeakActor.Get();
+        if (!IsValid(Actor))
+        {
+            continue;
+        }
+
+        if (ACharacterActor* CharacterActor = Cast<ACharacterActor>(Actor))
+        {
+            CharacterActor->SyncPoseableMeshFromSkeletalMesh();
+        }
+    }
 }
 
 
@@ -237,6 +273,49 @@ EAnimationKey UAnimationSystem::GetCurrentState(
     }
 
     return EAnimationKey::None;
+}
+
+float UAnimationSystem::GetStateElapsedTime(AActor* Actor, EAnimationLayer Layer) const
+{
+    if (!Actor)
+    {
+        return 0.0f;
+    }
+
+    const FActorAnimationState* State =
+        const_cast<UAnimationSystem*>(this)->FindActorAnimationState(Actor, Layer);
+    if (!State)
+    {
+        return 0.0f;
+    }
+
+    const UWorld* World = GetWorld();
+    const double Now = World ? World->GetTimeSeconds() : 0.0;
+    return static_cast<float>(FMath::Max(0.0, Now - State->StateEnteredTime));
+}
+
+const UAnimSequenceBase* UAnimationSystem::GetCurrentAnimation(AActor* Actor, EAnimationLayer Layer) const
+{
+    if (!Actor)
+    {
+        return nullptr;
+    }
+
+    const FActorAnimationState* State =
+        const_cast<UAnimationSystem*>(this)->FindActorAnimationState(Actor, Layer);
+    if (!State)
+    {
+        return nullptr;
+    }
+
+    const UAnimationRegistryComponent* Registry = FindAnimationRegistry(Actor);
+    if (!Registry)
+    {
+        return nullptr;
+    }
+
+    const FAnimationDefinition* Definition = Registry->FindAnimation(State->CurrentState);
+    return Definition ? Cast<UAnimSequenceBase>(Definition->Animation) : nullptr;
 }
 
 
@@ -695,6 +774,10 @@ bool UAnimationSystem::PlayStateAnimation(
 
             if (OutMontage)
             {
+                if (ACharacterActor* CharacterActor = Cast<ACharacterActor>(Actor))
+                {
+                    CharacterActor->SyncPoseableMeshFromSkeletalMesh();
+                }
                 UE_LOG(LogTemp, Log, TEXT("AnimationSystem::PlayStateAnimation - Successfully created dynamic montage for %s"),
                        *Actor->GetName());
             }
@@ -732,6 +815,11 @@ bool UAnimationSystem::PlayStateAnimation(
         Definition.Animation,
         bLooping
     );
+
+    if (ACharacterActor* CharacterActor = Cast<ACharacterActor>(Actor))
+    {
+        CharacterActor->SyncPoseableMeshFromSkeletalMesh();
+    }
 
     // OutMontage stays nullptr — PlayAnimation() produces no montage to
     // track, but playback itself genuinely succeeded.

@@ -6,10 +6,9 @@
 #include "FocusSystem.h"
 
 #include "../Components/ControlComponent.h"
+#include "../Components/IKComponent.h"
 #include "../Components/InteractiveComponent.h"
 #include "../Components/StatsComponent.h"
-#include "../Events/IKEventPayload.h"
-#include "../EventBus/EventBusSubsystem.h"
 #include "ActorRegistry.h"
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
@@ -225,21 +224,17 @@ void UFocusSystem::EvaluateActor(
         {
             Control->SetLookAtLocation(Target->GetActorLocation());
 
-            if (UWorld* ActorWorld = Actor->GetWorld())
+            if (UIKComponent* IK = Actor->FindComponentByClass<UIKComponent>())
             {
-                if (UEventBusSubsystem* EventBus = ActorWorld->GetSubsystem<UEventBusSubsystem>())
-                {
-                    FIKEventPayload Payload;
-                    Payload.Source = Actor;
-                    Payload.Channel = TEXT("HeadLook");
-                    Payload.Mode = EIKMode::Set;
-                    Payload.Target.bEnabled = true;
-                    Payload.Target.TargetLocation = Target->GetActorLocation();
-                    Payload.Target.TargetDirection = State.SmoothedLookDirection;
-                    Payload.Target.Weight = 1.0f;
-                    Payload.Target.BlendSpeed = BlendSpeed;
-                    EventBus->Publish<FIKEventPayload>(Payload);
-                }
+                FIKTargetData TargetData;
+                TargetData.bEnabled = true;
+                TargetData.TargetLocation = Target->GetActorLocation();
+                TargetData.TargetDirection = State.SmoothedLookDirection;
+                TargetData.Weight = 1.0f;
+                TargetData.BlendSpeed = BlendSpeed;
+                TargetData.BoneName = TEXT("Head");
+                TargetData.ParentBoneName = TEXT("Neck");
+                IK->SetTarget(TEXT("HeadLook"), TargetData);
             }
         }
     }

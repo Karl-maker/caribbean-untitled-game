@@ -94,6 +94,14 @@ enum class EAnimationSlot : uint8
     IK          UMETA(DisplayName = "IK")
 };
 
+UENUM(BlueprintType)
+enum class EAnimationBreakpoint : uint8
+{
+    FullBody        UMETA(DisplayName = "Full Body"),
+    SpineAndDown    UMETA(DisplayName = "Spine And Down"),
+    SpineAndUp      UMETA(DisplayName = "Spine And Up")
+};
+
 
 // ============================================================================
 // Animation Definition
@@ -133,6 +141,13 @@ struct FAnimationDefinition
         Category = "Animation|Layering"
     )
     EAnimationLayer Layer = EAnimationLayer::FullBody;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Layering"
+    )
+    EAnimationBreakpoint Breakpoint = EAnimationBreakpoint::FullBody;
     
     UPROPERTY(EditAnywhere)
     TObjectPtr<UAnimSequence> Animation = nullptr;

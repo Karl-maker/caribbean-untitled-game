@@ -18,7 +18,10 @@ class UAttackStateComponent;
 class UIKComponent;
 class UActorRegistry;
 class UAnimInstance;
+class UAnimSequenceBase;
 class UCombatVolumeComponent;
+class UPoseableMeshComponent;
+class UAnimationSystem;
 
 UCLASS(Config=Game)
 class CARIBBEANUNTITLED_API ACharacterActor : public ACharacter
@@ -28,6 +31,7 @@ class CARIBBEANUNTITLED_API ACharacterActor : public ACharacter
 public:
 
     ACharacterActor();
+    virtual void Tick(float DeltaSeconds) override;
 
 
 protected:
@@ -117,6 +121,13 @@ protected:
     TObjectPtr<UIKComponent> IKComponent;
 
     UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category="Actor|Components"
+    )
+    TObjectPtr<UPoseableMeshComponent> PoseableMeshComponent;
+
+    UPROPERTY(
         EditDefaultsOnly,
         ReplicatedUsing=OnRep_CharacterVisualProfileKey,
         Category="Actor|Assets"
@@ -163,4 +174,8 @@ protected:
     void OnRep_CharacterVisualProfileKey();
 
     void ApplyCharacterVisualProfile();
+
+public:
+    void SyncPoseableMeshFromSkeletalMesh();
+    void UpdatePoseableMeshFromCurrentAnimation(float DeltaSeconds);
 };

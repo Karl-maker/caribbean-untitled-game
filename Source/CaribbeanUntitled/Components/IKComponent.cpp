@@ -34,6 +34,24 @@ void UIKComponent::ClearTarget(FName Channel)
     }
 }
 
+void UIKComponent::SetBoneChain(FName Channel, FName InBoneName, FName InParentBoneName)
+{
+    const int32 Index = FindTargetIndex(Channel);
+    if (Index == INDEX_NONE)
+    {
+        FIKTargetEntry& Entry = Targets.AddDefaulted_GetRef();
+        Entry.Channel = Channel;
+        Entry.Target.BoneName = InBoneName;
+        Entry.Target.ParentBoneName = InParentBoneName;
+        Entry.Target.bEnabled = true;
+        return;
+    }
+
+    Targets[Index].Target.BoneName = InBoneName;
+    Targets[Index].Target.ParentBoneName = InParentBoneName;
+    Targets[Index].Target.bEnabled = true;
+}
+
 bool UIKComponent::GetTarget(FName Channel, FIKTargetData& OutTarget) const
 {
     const int32 Index = FindTargetIndex(Channel);

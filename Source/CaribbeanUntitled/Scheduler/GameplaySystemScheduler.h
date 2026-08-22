@@ -16,6 +16,7 @@ class UCameraSystem;
 class UPerceptionSystem;
 class UBrainSystem;
 class UActionSystem;
+class UAnimationSystem;
 class UStaminaRegenerationSystem;
 class UCombatDetectionSystem;
 class UCombatInputSystem;
@@ -109,6 +110,9 @@ private:
     
     UPROPERTY()
     TObjectPtr<UActionSystem> ActionSystem;
+
+    UPROPERTY()
+    TObjectPtr<UAnimationSystem> AnimationSystem;
     
     UPROPERTY()
     TObjectPtr<UStaminaRegenerationSystem> StaminaRegenerationSystem;

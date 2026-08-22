@@ -1,6 +1,6 @@
 # Input Pipeline
 
-This document explains how input works in this project, including how local client input becomes replicated control state and how the server uses that state for movement and animation.
+This document explains how input works in this project, including how local client input becomes replicated control state and how the server uses that state for movement, animation, and poseable-mesh driven IK.
 
 ## Big Picture
 
@@ -188,6 +188,20 @@ Instead:
 
 That means the input pipeline and animation pipeline are connected, but not fused together.
 
+## Input To IK
+
+The input pipeline does not drive IK directly.
+
+Instead:
+
+1. input becomes control intent
+2. movement and focus systems evaluate the world state
+3. the focus system writes a target into `UIKComponent`
+4. `UIKSystem` reads the target on tick
+5. poseable-mesh bones are rotated directly for head look or similar effects
+
+That keeps camera and movement input separate from the IK solver while still allowing the character to react to nearby actors.
+
 ## Example Flow
 
 ### Move forward
@@ -240,3 +254,4 @@ To add a new movement direction:
 - Gameplay decisions are authoritative on the server.
 - Animation playback is handled by the animation subsystem.
 - The control component is the bridge between the two worlds.
+- The IK system reads direct component state instead of an IK event payload.

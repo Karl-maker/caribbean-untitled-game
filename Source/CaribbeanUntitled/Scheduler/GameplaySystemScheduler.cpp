@@ -10,6 +10,7 @@
 #include "../Systems/PerceptionSystem.h"
 #include "../Systems/BrainSystem.h"
 #include "../Systems/ActionSystem.h"
+#include "../Systems/AnimationSystem.h"
 #include "../Systems/StaminaRegenerationSystem.h"
 #include "../Systems/StaminaSystem.h"
 #include "../Systems/CombatDetectionSystem.h"
@@ -41,6 +42,7 @@ void UGameplaySystemScheduler::Initialize(
     PerceptionSystem = NewObject<UPerceptionSystem>(this);
     BrainSystem = NewObject<UBrainSystem>(this);
     ActionSystem = NewObject<UActionSystem>(this);
+    AnimationSystem = NewObject<UAnimationSystem>(this);
     StaminaRegenerationSystem = NewObject<UStaminaRegenerationSystem>(this);
     CombatDetectionSystem = NewObject<UCombatDetectionSystem>(this);
     CombatInputSystem = NewObject<UCombatInputSystem>(this);
@@ -87,6 +89,8 @@ void UGameplaySystemScheduler::Deinitialize()
         ActionSystem->Cleanup();
     }
     ActionSystem = nullptr;
+
+    AnimationSystem = nullptr;
 
     if (StaminaRegenerationSystem)
     {
@@ -152,7 +156,7 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
 
     if (bIsServer) TickPostPhysics(DeltaTime);
 
-    if (bIsServer) TickTransform(DeltaTime);
+    if (bIsServer || bIsClient) TickTransform(DeltaTime);
 }
 
 
@@ -222,7 +226,5 @@ void UGameplaySystemScheduler::TickPostPhysics(float DeltaTime)
 
 void UGameplaySystemScheduler::TickTransform(float DeltaTime)
 {
-
-
     // Synchronize MotionComponent -> UE transforms.
 }

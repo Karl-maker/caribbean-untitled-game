@@ -8,12 +8,12 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 #include "Tickable.h"
-#include "../Events/IKEventPayload.h"
+#include "../Components/IKComponent.h"
 #include "IKSystem.generated.h"
 
 class UActorRegistry;
-class UEventBusSubsystem;
 class UIKComponent;
+class UPoseableMeshComponent;
 
 UCLASS()
 class CARIBBEANUNTITLED_API UIKSystem : public UObject
@@ -29,6 +29,15 @@ public:
     UPROPERTY(EditAnywhere, Category = "IK")
     float UpdateInterval = 0.1f;
 
+    UPROPERTY(EditAnywhere, Category = "IK", meta = (ClampMin = "0.0"))
+    float BlendSpeed = 4.0f;
+
+    UPROPERTY(EditAnywhere, Category = "IK", meta = (ClampMin = "0.0", ClampMax = "180.0"))
+    float MaxYaw = 70.0f;
+
+    UPROPERTY(EditAnywhere, Category = "IK", meta = (ClampMin = "0.0", ClampMax = "180.0"))
+    float MaxPitch = 35.0f;
+
 private:
     struct FIKState
     {
@@ -36,9 +45,8 @@ private:
     };
 
     TMap<TWeakObjectPtr<AActor>, FIKState> States;
-    bool bSubscribed = false;
 
-    UEventBusSubsystem* GetEventBus() const;
     UActorRegistry* GetActorRegistry() const;
-    void OnIKEvent(const FIKEventPayload& Payload);
+    void ApplyPoseableIK(AActor* Actor, UIKComponent* IK, float DeltaTime);
+    void RotateChain(UPoseableMeshComponent* PoseableMesh, const FIKTargetData& Target, float DeltaTime);
 };
