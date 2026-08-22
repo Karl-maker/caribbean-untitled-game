@@ -1,6 +1,8 @@
 #include "BrainSystem.h"
 #include "../Components/PerceptionComponent.h"
 #include "../EventBus/EventBusSubsystem.h"
+#include "FocusSystem.h"
+#include "IKSystem.h"
 #include "ActorRegistry.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
@@ -13,6 +15,7 @@ bool UBrainSystem::IsTickable() const
 void UBrainSystem::Cleanup()
 {
     ThinkStates.Reset();
+    FocusSystem = nullptr;
 }
 
 TStatId UBrainSystem::GetStatId() const
@@ -28,6 +31,26 @@ float UBrainSystem::RollNextThinkInterval() const
 
 void UBrainSystem::Tick(float DeltaTime)
 {
+    if (!FocusSystem)
+    {
+        FocusSystem = NewObject<UFocusSystem>(this);
+    }
+
+    if (FocusSystem)
+    {
+        FocusSystem->Tick(DeltaTime);
+    }
+
+    if (!IKSystem)
+    {
+        IKSystem = NewObject<UIKSystem>(this);
+    }
+
+    if (IKSystem)
+    {
+        IKSystem->Tick(DeltaTime);
+    }
+
     UActorRegistry* Registry = GetWorld()
         ? GetWorld()->GetSubsystem<UActorRegistry>()
         : nullptr;

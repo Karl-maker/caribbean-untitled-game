@@ -309,10 +309,10 @@ public:
         Category="Stats|Sight",
         meta=(ClampMin="0.0")
     )
-    float SightRange = 100.0f;
+    float SightRange = 1000.0f;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Sight", meta=(ClampMin="0.0", ClampMax="360.0"))
-    float SightAngle = 90.0f;
+    float SightAngle = 180.0f;
     
     
     // ============================================================

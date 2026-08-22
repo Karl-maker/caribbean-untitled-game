@@ -78,9 +78,18 @@ enum class EAnimationPlaybackMode : uint8
 UENUM(BlueprintType)
 enum class EAnimationLayer : uint8
 {
-    Base        UMETA(DisplayName = "Base"),
+    FullBody    UMETA(DisplayName = "Full Body"),
     UpperBody   UMETA(DisplayName = "Upper Body"),
     Additive    UMETA(DisplayName = "Additive"),
+    Face        UMETA(DisplayName = "Face"),
+    IK          UMETA(DisplayName = "IK")
+};
+
+UENUM(BlueprintType)
+enum class EAnimationSlot : uint8
+{
+    FullBody    UMETA(DisplayName = "Full Body"),
+    UpperBody   UMETA(DisplayName = "Upper Body"),
     Face        UMETA(DisplayName = "Face"),
     IK          UMETA(DisplayName = "IK")
 };
@@ -116,14 +125,14 @@ struct FAnimationDefinition
         BlueprintReadWrite,
         Category = "Animation|Layering"
     )
-    FName SlotName = TEXT("DefaultSlot");
+    EAnimationSlot Slot = EAnimationSlot::FullBody;
 
     UPROPERTY(
         EditAnywhere,
         BlueprintReadWrite,
         Category = "Animation|Layering"
     )
-    EAnimationLayer Layer = EAnimationLayer::Base;
+    EAnimationLayer Layer = EAnimationLayer::FullBody;
     
     UPROPERTY(EditAnywhere)
     TObjectPtr<UAnimSequence> Animation = nullptr;

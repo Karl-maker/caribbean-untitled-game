@@ -15,6 +15,25 @@
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 
+namespace
+{
+    FName ResolveSlotName(EAnimationSlot Slot)
+    {
+        switch (Slot)
+        {
+            case EAnimationSlot::UpperBody:
+                return AnimationSlots::UpperBody;
+            case EAnimationSlot::Face:
+                return AnimationSlots::Face;
+            case EAnimationSlot::IK:
+                return AnimationSlots::IK;
+            case EAnimationSlot::FullBody:
+            default:
+                return AnimationSlots::FullBody;
+        }
+    }
+}
+
 
 //=============================================================================
 // USubsystem
@@ -209,7 +228,7 @@ EAnimationKey UAnimationSystem::GetCurrentState(
         const_cast<UAnimationSystem*>(this)
             ->FindActorAnimationState(
                 Actor,
-                EAnimationLayer::Base
+                EAnimationLayer::FullBody
             );
 
     if (State)
@@ -661,8 +680,7 @@ bool UAnimationSystem::PlayStateAnimation(
                 ->PlaySlotAnimationAsDynamicMontage(
                     SequenceBase,
 
-                    // Current setup still uses the subsystem's slot.
-                    Definition.SlotName,
+                    ResolveSlotName(Definition.Slot),
 
                     Definition.BlendInTime,
                     Definition.BlendOutTime,
@@ -782,7 +800,7 @@ void UAnimationSystem::OnStateAnimationEnded(
     }
     else
     {
-        if (Layer != EAnimationLayer::Base)
+        if (Layer != EAnimationLayer::FullBody)
         {
             UE_LOG(
                 LogTemp,

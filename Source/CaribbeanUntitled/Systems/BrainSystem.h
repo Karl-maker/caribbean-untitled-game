@@ -9,6 +9,8 @@
 class UCharacterBrainComponent;
 class UCharacterPerceptionComponent;
 class UActorRegistry;
+class UFocusSystem;
+class UIKSystem;
 
 USTRUCT(BlueprintType)
 struct FBrainIntentChangedPayload
@@ -101,4 +103,10 @@ private:
 
     /** Lazily-populated, pruned each tick against the registry's current set. */
     TMap<TWeakObjectPtr<AActor>, FBrainThinkState> ThinkStates;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UFocusSystem> FocusSystem;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UIKSystem> IKSystem;
 };

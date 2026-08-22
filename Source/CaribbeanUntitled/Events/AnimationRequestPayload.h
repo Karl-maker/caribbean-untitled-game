@@ -90,7 +90,7 @@ struct CARIBBEANUNTITLED_API FAnimationRequestPayload
     bool bForce = false;
     
     UPROPERTY(BlueprintReadWrite, Category = "Animation")
-    EAnimationLayer Layer = EAnimationLayer::Base;
+    EAnimationLayer Layer = EAnimationLayer::FullBody;
 };
 
 

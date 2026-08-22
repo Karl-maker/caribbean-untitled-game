@@ -17,6 +17,14 @@ class UEventBusSubsystem;
 class UActorRegistry;
 struct FAnimationDefinition;
 
+namespace AnimationSlots
+{
+    static const FName FullBody = TEXT("lower-body");
+    static const FName UpperBody = TEXT("upper-body");
+    static const FName Face = TEXT("face");
+    static const FName IK = TEXT("ik");
+}
+
 
 /**
  * Generic, event-driven animation playback system.
@@ -89,7 +97,7 @@ public:
         AActor* Actor,
         EAnimationKey NewState,
         bool bForce = false,
-        EAnimationLayer Layer = EAnimationLayer::Base
+        EAnimationLayer Layer = EAnimationLayer::FullBody
     );
 
     /**
