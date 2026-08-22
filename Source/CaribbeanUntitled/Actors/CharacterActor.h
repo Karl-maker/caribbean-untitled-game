@@ -141,6 +141,12 @@ protected:
     FName CombatAttachmentProfileKey = TEXT("DEMO_FEMALE");
 
     UPROPERTY(
+        EditDefaultsOnly,
+        Category="Actor|Animation"
+    )
+    FName UpperBodyBreakpointBoneName = TEXT("Spine");
+
+    UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
         ReplicatedUsing=OnRep_CharacterVisualProfileKey,

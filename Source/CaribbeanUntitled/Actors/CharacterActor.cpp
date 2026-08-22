@@ -415,6 +415,7 @@ ACharacterActor::ACharacterActor()
         LightRightPunch.Slot = EAnimationSlot::UpperBody;
         LightRightPunch.Layer = EAnimationLayer::UpperBody;
         LightRightPunch.Breakpoint = EAnimationBreakpoint::SpineAndDown;
+        LightRightPunch.BreakpointBoneName = TEXT("Spine");
         LightRightPunch.Description = FText::FromString(TEXT("Character light right punch animation."));
         AnimationRegistryComponent->Animations.Add(LightRightPunch);
 
@@ -432,6 +433,7 @@ ACharacterActor::ACharacterActor()
         LightLeftPunch.Slot = EAnimationSlot::UpperBody;
         LightLeftPunch.Layer = EAnimationLayer::UpperBody;
         LightLeftPunch.Breakpoint = EAnimationBreakpoint::SpineAndDown;
+        LightLeftPunch.BreakpointBoneName = TEXT("Spine");
         LightLeftPunch.Animation = Cast<UAnimSequence>(LightLeftPunchPath.TryLoad());
         LightLeftPunch.Description = FText::FromString(TEXT("Character light left punch animation."));
         AnimationRegistryComponent->Animations.Add(LightLeftPunch);
@@ -446,6 +448,7 @@ ACharacterActor::ACharacterActor()
         Hit.Slot = EAnimationSlot::UpperBody;
         Hit.Layer = EAnimationLayer::UpperBody;
         Hit.Breakpoint = EAnimationBreakpoint::SpineAndDown;
+        Hit.BreakpointBoneName = TEXT("Spine");
         Hit.Description = FText::FromString(TEXT("Character hit reaction animation."));
         AnimationRegistryComponent->Animations.Add(Hit);
         
@@ -459,6 +462,7 @@ ACharacterActor::ACharacterActor()
         Death.Slot = EAnimationSlot::UpperBody;
         Death.Layer = EAnimationLayer::UpperBody;
         Death.Breakpoint = EAnimationBreakpoint::SpineAndDown;
+        Death.BreakpointBoneName = TEXT("Spine");
         Death.Description = FText::FromString(TEXT("Character death animation."));
         AnimationRegistryComponent->Animations.Add(Death);
         
@@ -476,6 +480,7 @@ ACharacterActor::ACharacterActor()
         Interact.Slot = EAnimationSlot::UpperBody;  // Reaching/interacting with objects
         Interact.Layer = EAnimationLayer::UpperBody;
         Interact.Breakpoint = EAnimationBreakpoint::SpineAndDown;
+        Interact.BreakpointBoneName = TEXT("Spine");
         Interact.Description = FText::FromString(TEXT("Character interact animation."));
         AnimationRegistryComponent->Animations.Add(Interact);
         
@@ -721,11 +726,46 @@ void ACharacterActor::UpdatePoseableMeshFromCurrentAnimation(float DeltaSeconds)
     const FLayerSample BaseSample = SampleLayer(EAnimationLayer::FullBody);
     const FLayerSample UpperSample = SampleLayer(EAnimationLayer::UpperBody);
 
-    static const FName SpineBoneName(TEXT("Spine"));
     const int32 UpperBreakpointBoneIndex =
-        UpperSample.Breakpoint != EAnimationBreakpoint::FullBody
-            ? RefSkeleton.FindBoneIndex(SpineBoneName)
+        UpperSample.Definition &&
+        UpperSample.Breakpoint != EAnimationBreakpoint::FullBody &&
+        !UpperBodyBreakpointBoneName.IsNone()
+            ? RefSkeleton.FindBoneIndex(UpperBodyBreakpointBoneName)
             : INDEX_NONE;
+
+    if (UpperSample.Definition &&
+        UpperSample.Breakpoint != EAnimationBreakpoint::FullBody &&
+        UpperBreakpointBoneIndex == INDEX_NONE)
+    {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("Character '%s' upper-body breakpoint bone '%s' was not found on this skeleton."),
+            *GetName(),
+            *UpperBodyBreakpointBoneName.ToString()
+        );
+    }
+
+    const auto IsDescendantOfBone = [&RefSkeleton](int32 BoneIndex, int32 AncestorIndex) -> bool
+    {
+        if (BoneIndex == INDEX_NONE || AncestorIndex == INDEX_NONE)
+        {
+            return false;
+        }
+
+        int32 CurrentIndex = BoneIndex;
+        while (CurrentIndex != INDEX_NONE)
+        {
+            if (CurrentIndex == AncestorIndex)
+            {
+                return true;
+            }
+
+            CurrentIndex = RefSkeleton.GetParentIndex(CurrentIndex);
+        }
+
+        return false;
+    };
 
     for (int32 BoneIndex = 0; BoneIndex < BoneCount; ++BoneIndex)
     {
@@ -742,7 +782,7 @@ void ACharacterActor::UpdatePoseableMeshFromCurrentAnimation(float DeltaSeconds)
             );
         }
 
-        if (UpperSample.Sequence && UpperBreakpointBoneIndex != INDEX_NONE && BoneIndex >= UpperBreakpointBoneIndex)
+        if (UpperSample.Sequence && IsDescendantOfBone(BoneIndex, UpperBreakpointBoneIndex))
         {
             FTransform UpperBoneLocalTransform = RefSkeleton.GetRefBonePose()[BoneIndex];
             UpperSample.Sequence->GetBoneTransform(

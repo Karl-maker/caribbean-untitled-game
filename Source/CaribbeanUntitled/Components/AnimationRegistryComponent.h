@@ -148,6 +148,13 @@ struct FAnimationDefinition
         Category = "Animation|Layering"
     )
     EAnimationBreakpoint Breakpoint = EAnimationBreakpoint::FullBody;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Layering"
+    )
+    FName BreakpointBoneName = NAME_None;
     
     UPROPERTY(EditAnywhere)
     TObjectPtr<UAnimSequence> Animation = nullptr;
