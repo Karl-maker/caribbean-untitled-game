@@ -253,26 +253,19 @@ EAnimationKey UAnimationSystem::GetCurrentState(
     AActor* Actor
 ) const
 {
+    return GetCurrentState(Actor, EAnimationLayer::FullBody);
+}
+
+EAnimationKey UAnimationSystem::GetCurrentState(AActor* Actor, EAnimationLayer Layer) const
+{
     if (!Actor)
     {
         return EAnimationKey::None;
     }
 
-    // Backwards-compatible behavior:
-    // GetCurrentState() means Base layer.
     const FActorAnimationState* State =
-        const_cast<UAnimationSystem*>(this)
-            ->FindActorAnimationState(
-                Actor,
-                EAnimationLayer::FullBody
-            );
-
-    if (State)
-    {
-        return State->CurrentState;
-    }
-
-    return EAnimationKey::None;
+        const_cast<UAnimationSystem*>(this)->FindActorAnimationState(Actor, Layer);
+    return State ? State->CurrentState : EAnimationKey::None;
 }
 
 float UAnimationSystem::GetStateElapsedTime(AActor* Actor, EAnimationLayer Layer) const
@@ -296,6 +289,12 @@ float UAnimationSystem::GetStateElapsedTime(AActor* Actor, EAnimationLayer Layer
 
 const UAnimSequenceBase* UAnimationSystem::GetCurrentAnimation(AActor* Actor, EAnimationLayer Layer) const
 {
+    const FAnimationDefinition* Definition = GetCurrentAnimationDefinition(Actor, Layer);
+    return Definition ? Cast<UAnimSequenceBase>(Definition->Animation) : nullptr;
+}
+
+const FAnimationDefinition* UAnimationSystem::GetCurrentAnimationDefinition(AActor* Actor, EAnimationLayer Layer) const
+{
     if (!Actor)
     {
         return nullptr;
@@ -309,13 +308,7 @@ const UAnimSequenceBase* UAnimationSystem::GetCurrentAnimation(AActor* Actor, EA
     }
 
     const UAnimationRegistryComponent* Registry = FindAnimationRegistry(Actor);
-    if (!Registry)
-    {
-        return nullptr;
-    }
-
-    const FAnimationDefinition* Definition = Registry->FindAnimation(State->CurrentState);
-    return Definition ? Cast<UAnimSequenceBase>(Definition->Animation) : nullptr;
+    return Registry ? Registry->FindAnimation(State->CurrentState) : nullptr;
 }
 
 

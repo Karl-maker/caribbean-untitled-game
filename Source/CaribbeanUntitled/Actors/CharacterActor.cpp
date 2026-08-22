@@ -675,86 +675,83 @@ void ACharacterActor::UpdatePoseableMeshFromCurrentAnimation(float DeltaSeconds)
     TArray<FTransform> ComponentSpaceTransforms;
     ComponentSpaceTransforms.SetNum(BoneCount);
 
-    const EAnimationLayer BaseLayer = EAnimationLayer::FullBody;
-    const UAnimSequenceBase* BaseAnimation = AnimationSystem->GetCurrentAnimation(this, BaseLayer);
-    const FAnimationDefinition* BaseDefinition =
-        BaseAnimation && AnimationRegistryComponent
-            ? AnimationRegistryComponent->FindAnimation(AnimationSystem->GetCurrentState(this))
-            : nullptr;
-    const float BaseElapsed = AnimationSystem->GetStateElapsedTime(this, BaseLayer);
-    const float BasePlayRate = BaseDefinition ? BaseDefinition->PlayRate : 1.0f;
-    const float BaseLength = BaseAnimation ? BaseAnimation->GetPlayLength() : 0.0f;
-    const float BaseSampleTime =
-        (BaseAnimation && BaseLength > 0.0f)
-            ? FMath::Fmod(BaseElapsed * BasePlayRate, BaseLength)
-            : 0.0f;
-
-    const EAnimationLayer UpperLayer = EAnimationLayer::UpperBody;
-    const UAnimSequenceBase* UpperAnimation = AnimationSystem->GetCurrentAnimation(this, UpperLayer);
-    const FAnimationDefinition* UpperDefinition =
-        UpperAnimation && AnimationRegistryComponent
-            ? AnimationRegistryComponent->FindAnimation(EAnimationKey::LightLeftPunch)
-            : nullptr;
-    const float UpperElapsed = AnimationSystem->GetStateElapsedTime(this, UpperLayer);
-    const float UpperPlayRate = UpperDefinition ? UpperDefinition->PlayRate : 1.0f;
-    const float UpperLength = UpperAnimation ? UpperAnimation->GetPlayLength() : 0.0f;
-    const float UpperSampleTime =
-        (UpperAnimation && UpperLength > 0.0f)
-            ? FMath::Fmod(UpperElapsed * UpperPlayRate, UpperLength)
-            : 0.0f;
-    const float UpperBlendIn = UpperDefinition ? FMath::Max(0.0f, UpperDefinition->BlendInTime) : 0.0f;
-    const float UpperBlendOut = UpperDefinition ? FMath::Max(0.0f, UpperDefinition->BlendOutTime) : 0.0f;
-    const float UpperBlendInAlpha =
-        UpperBlendIn > 0.0f
-            ? FMath::Clamp(UpperElapsed / UpperBlendIn, 0.0f, 1.0f)
-            : 1.0f;
-    const float UpperBlendOutAlpha =
-        (UpperBlendOut > 0.0f && UpperLength > 0.0f)
-            ? FMath::Clamp((UpperLength - UpperElapsed) / UpperBlendOut, 0.0f, 1.0f)
-            : 1.0f;
-    const float UpperBlendAlpha = FMath::Min(UpperBlendInAlpha, UpperBlendOutAlpha);
-
-    FName UpperBreakpointBoneName = NAME_None;
-    if (UpperDefinition && UpperDefinition->Breakpoint != EAnimationBreakpoint::FullBody)
+    struct FLayerSample
     {
-        UpperBreakpointBoneName = TEXT("Spine");
-    }
+        const FAnimationDefinition* Definition = nullptr;
+        const UAnimSequence* Sequence = nullptr;
+        float SampleTime = 0.0f;
+        float BlendAlpha = 1.0f;
+        EAnimationBreakpoint Breakpoint = EAnimationBreakpoint::FullBody;
+    };
+
+    const auto SampleLayer = [AnimationSystem, this](EAnimationLayer Layer) -> FLayerSample
+    {
+        FLayerSample Sample;
+        Sample.Definition = AnimationSystem->GetCurrentAnimationDefinition(this, Layer);
+        Sample.Sequence = Sample.Definition
+            ? Cast<UAnimSequence>(Sample.Definition->Animation)
+            : nullptr;
+
+        if (!Sample.Definition || !Sample.Sequence)
+        {
+            return Sample;
+        }
+
+        const float Elapsed = AnimationSystem->GetStateElapsedTime(this, Layer);
+        const float PlayRate = Sample.Definition->PlayRate;
+        const float Length = Sample.Sequence->GetPlayLength();
+        Sample.SampleTime = Length > 0.0f ? FMath::Fmod(Elapsed * PlayRate, Length) : 0.0f;
+        Sample.Breakpoint = Sample.Definition->Breakpoint;
+
+        if (Layer == EAnimationLayer::UpperBody)
+        {
+            const float BlendIn = FMath::Max(0.0f, Sample.Definition->BlendInTime);
+            const float BlendOut = FMath::Max(0.0f, Sample.Definition->BlendOutTime);
+            const float BlendInAlpha = BlendIn > 0.0f ? FMath::Clamp(Elapsed / BlendIn, 0.0f, 1.0f) : 1.0f;
+            const float BlendOutAlpha =
+                (BlendOut > 0.0f && Length > 0.0f)
+                    ? FMath::Clamp((Length - Elapsed) / BlendOut, 0.0f, 1.0f)
+                    : 1.0f;
+            Sample.BlendAlpha = FMath::Min(BlendInAlpha, BlendOutAlpha);
+        }
+
+        return Sample;
+    };
+
+    const FLayerSample BaseSample = SampleLayer(EAnimationLayer::FullBody);
+    const FLayerSample UpperSample = SampleLayer(EAnimationLayer::UpperBody);
+
+    static const FName SpineBoneName(TEXT("Spine"));
     const int32 UpperBreakpointBoneIndex =
-        UpperBreakpointBoneName.IsNone()
-            ? INDEX_NONE
-            : RefSkeleton.FindBoneIndex(UpperBreakpointBoneName);
+        UpperSample.Breakpoint != EAnimationBreakpoint::FullBody
+            ? RefSkeleton.FindBoneIndex(SpineBoneName)
+            : INDEX_NONE;
 
     for (int32 BoneIndex = 0; BoneIndex < BoneCount; ++BoneIndex)
     {
         const FName BoneName = RefSkeleton.GetBoneName(BoneIndex);
         FTransform BoneLocalTransform = RefSkeleton.GetRefBonePose()[BoneIndex];
 
-        if (BaseAnimation)
+        if (BaseSample.Sequence)
         {
-            if (const UAnimSequence* Sequence = Cast<UAnimSequence>(BaseAnimation))
-            {
-                Sequence->GetBoneTransform(
-                    BoneLocalTransform,
-                    FSkeletonPoseBoneIndex(BoneIndex),
-                    BaseSampleTime,
-                    false
-                );
-            }
+            BaseSample.Sequence->GetBoneTransform(
+                BoneLocalTransform,
+                FSkeletonPoseBoneIndex(BoneIndex),
+                BaseSample.SampleTime,
+                false
+            );
         }
 
-        if (UpperAnimation && UpperBreakpointBoneIndex != INDEX_NONE && BoneIndex >= UpperBreakpointBoneIndex)
+        if (UpperSample.Sequence && UpperBreakpointBoneIndex != INDEX_NONE && BoneIndex >= UpperBreakpointBoneIndex)
         {
             FTransform UpperBoneLocalTransform = RefSkeleton.GetRefBonePose()[BoneIndex];
-            if (const UAnimSequence* UpperSequence = Cast<UAnimSequence>(UpperAnimation))
-            {
-                UpperSequence->GetBoneTransform(
-                    UpperBoneLocalTransform,
-                    FSkeletonPoseBoneIndex(BoneIndex),
-                    UpperSampleTime,
-                    false
-                );
-            }
-            BoneLocalTransform.Blend(BoneLocalTransform, UpperBoneLocalTransform, UpperBlendAlpha);
+            UpperSample.Sequence->GetBoneTransform(
+                UpperBoneLocalTransform,
+                FSkeletonPoseBoneIndex(BoneIndex),
+                UpperSample.SampleTime,
+                false
+            );
+            BoneLocalTransform.Blend(BoneLocalTransform, UpperBoneLocalTransform, UpperSample.BlendAlpha);
         }
 
         const int32 ParentIndex = RefSkeleton.GetParentIndex(BoneIndex);

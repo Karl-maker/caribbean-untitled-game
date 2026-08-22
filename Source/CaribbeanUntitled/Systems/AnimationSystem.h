@@ -110,11 +110,15 @@ public:
     UFUNCTION(BlueprintPure, Category = "Animation")
     EAnimationKey GetCurrentState(AActor* Actor) const;
 
+    EAnimationKey GetCurrentState(AActor* Actor, EAnimationLayer Layer) const;
+
     UFUNCTION(BlueprintPure, Category = "Animation")
     float GetStateElapsedTime(AActor* Actor, EAnimationLayer Layer = EAnimationLayer::FullBody) const;
 
     UFUNCTION(BlueprintPure, Category = "Animation")
     const UAnimSequenceBase* GetCurrentAnimation(AActor* Actor, EAnimationLayer Layer = EAnimationLayer::FullBody) const;
+
+    const FAnimationDefinition* GetCurrentAnimationDefinition(AActor* Actor, EAnimationLayer Layer = EAnimationLayer::FullBody) const;
 
     /**
      * Stops tracking Actor. Call this from EndPlay/Destroyed if you
