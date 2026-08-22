@@ -255,6 +255,40 @@ ACharacterActor::ACharacterActor()
         RightStrafe.Animation = Cast<UAnimSequence>(RightStrafePath.TryLoad());
         RightStrafe.Description = FText::FromString(TEXT("Character right strafe animation."));
         AnimationRegistryComponent->Animations.Add(RightStrafe);
+
+        FSoftObjectPath LeftStrafeRunPath(
+            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Left_Strafe_Run.Left_Strafe_Run")
+        );
+
+        FAnimationDefinition LeftStrafeRun;
+        LeftStrafeRun.Key = EAnimationKey::LeftStrafeRun;
+        LeftStrafeRun.PlaybackMode = EAnimationPlaybackMode::Loop;
+        LeftStrafeRun.PlayRate = 1.0f;
+        LeftStrafeRun.LoopCount = -1;
+        LeftStrafeRun.BlendInTime = 0.18f;
+        LeftStrafeRun.BlendOutTime = 0.18f;
+        LeftStrafeRun.SlotName = "lower-body";
+        LeftStrafeRun.Layer = EAnimationLayer::Base;
+        LeftStrafeRun.Animation = Cast<UAnimSequence>(LeftStrafeRunPath.TryLoad());
+        LeftStrafeRun.Description = FText::FromString(TEXT("Character left strafe run animation."));
+        AnimationRegistryComponent->Animations.Add(LeftStrafeRun);
+
+        FSoftObjectPath RightStrafeRunPath(
+            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Right_Strafe_Run.Right_Strafe_Run")
+        );
+
+        FAnimationDefinition RightStrafeRun;
+        RightStrafeRun.Key = EAnimationKey::RightStrafeRun;
+        RightStrafeRun.PlaybackMode = EAnimationPlaybackMode::Loop;
+        RightStrafeRun.PlayRate = 1.0f;
+        RightStrafeRun.LoopCount = -1;
+        RightStrafeRun.BlendInTime = 0.18f;
+        RightStrafeRun.BlendOutTime = 0.18f;
+        RightStrafeRun.SlotName = "lower-body";
+        RightStrafeRun.Layer = EAnimationLayer::Base;
+        RightStrafeRun.Animation = Cast<UAnimSequence>(RightStrafeRunPath.TryLoad());
+        RightStrafeRun.Description = FText::FromString(TEXT("Character right strafe run animation."));
+        AnimationRegistryComponent->Animations.Add(RightStrafeRun);
         
         FAnimationDefinition Run;
         Run.Key = EAnimationKey::Run;

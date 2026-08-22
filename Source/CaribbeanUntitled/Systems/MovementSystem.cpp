@@ -562,9 +562,22 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
         const FVector2D MoveIntent = Control->MoveIntent;
         const float LateralIntent = MoveIntent.X;
         const float ForwardIntent = MoveIntent.Y;
+        UStatsComponent* Stats =
+            Character->FindComponentByClass<UStatsComponent>();
+        const bool bCanSprint =
+            Stats &&
+            bWantsToSprint &&
+            Movement->MaxWalkSpeed >= Stats->GetSprintSpeed();
 
         if (FMath::Abs(LateralIntent) > FMath::Abs(ForwardIntent) + 0.05f)
         {
+            if (bCanSprint)
+            {
+                return LateralIntent >= 0.0f
+                    ? ELocomotion::SprintStrafeRight
+                    : ELocomotion::SprintStrafeLeft;
+            }
+
             return LateralIntent >= 0.0f
                 ? ELocomotion::StrafeRight
                 : ELocomotion::StrafeLeft;
@@ -577,17 +590,19 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
 
         if (LateralAbs > ForwardAbs + 0.05f)
         {
+            if (bCanSprint)
+            {
+                return RightAmount >= 0.0f
+                    ? ELocomotion::SprintStrafeRight
+                    : ELocomotion::SprintStrafeLeft;
+            }
+
             return RightAmount >= 0.0f
                 ? ELocomotion::StrafeRight
                 : ELocomotion::StrafeLeft;
         }
 
-        UStatsComponent* Stats =
-            Character->FindComponentByClass<UStatsComponent>();
-
-        if (Stats &&
-            bWantsToSprint &&
-            Movement->MaxWalkSpeed >= Stats->GetSprintSpeed())
+        if (bCanSprint)
         {
             return ELocomotion::Sprint;
         }

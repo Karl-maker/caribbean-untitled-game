@@ -33,6 +33,8 @@ enum class EAnimationKey : uint8
     Walk        UMETA(DisplayName = "Walk"),
     LeftStrafe  UMETA(DisplayName = "Left Strafe"),
     RightStrafe UMETA(DisplayName = "Right Strafe"),
+    LeftStrafeRun  UMETA(DisplayName = "Left Strafe Run"),
+    RightStrafeRun UMETA(DisplayName = "Right Strafe Run"),
     Run         UMETA(DisplayName = "Run"),
     Sprint      UMETA(DisplayName = "Sprint"),
 

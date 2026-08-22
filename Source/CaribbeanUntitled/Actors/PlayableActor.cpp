@@ -207,6 +207,24 @@ APlayableActor::APlayableActor()
             ),
             EAnimationBlendMode::FullBody
         );
+
+        ConfigureAnimationDefinition(
+            AnimationRegistryComponent,
+            EAnimationKey::LeftStrafeRun,
+            LoadAssetOrNull<UAnimSequence>(
+                FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Left_Strafe_Run.Left_Strafe_Run"))
+            ),
+            EAnimationBlendMode::FullBody
+        );
+
+        ConfigureAnimationDefinition(
+            AnimationRegistryComponent,
+            EAnimationKey::RightStrafeRun,
+            LoadAssetOrNull<UAnimSequence>(
+                FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Right_Strafe_Run.Right_Strafe_Run"))
+            ),
+            EAnimationBlendMode::FullBody
+        );
     }
 
 

@@ -65,6 +65,14 @@ void UMovementAnimationSystem::OnMovementControlEvent(
             Key = EAnimationKey::RightStrafe;
             break;
 
+        case ELocomotion::SprintStrafeLeft:
+            Key = EAnimationKey::LeftStrafeRun;
+            break;
+
+        case ELocomotion::SprintStrafeRight:
+            Key = EAnimationKey::RightStrafeRun;
+            break;
+
         case ELocomotion::Sprint:
             Key = EAnimationKey::Sprint;
             break;

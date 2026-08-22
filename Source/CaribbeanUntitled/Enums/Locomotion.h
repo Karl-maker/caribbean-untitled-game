@@ -8,6 +8,8 @@ enum class ELocomotion : uint8
     Walk,
     StrafeLeft,
     StrafeRight,
+    SprintStrafeLeft,
+    SprintStrafeRight,
     Sprint,
     Jump,
     Fall,
