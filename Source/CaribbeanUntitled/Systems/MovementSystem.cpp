@@ -556,6 +556,18 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
 
     if (bIsMoving)
     {
+        const float ForwardAmount = MoveDirection | Character->GetActorForwardVector();
+        const float RightAmount = MoveDirection | Character->GetActorRightVector();
+        const float LateralAbs = FMath::Abs(RightAmount);
+        const float ForwardAbs = FMath::Abs(ForwardAmount);
+
+        if (LateralAbs > ForwardAbs + 0.05f)
+        {
+            return RightAmount >= 0.0f
+                ? ELocomotion::StrafeRight
+                : ELocomotion::StrafeLeft;
+        }
+
         UStatsComponent* Stats =
             Character->FindComponentByClass<UStatsComponent>();
 

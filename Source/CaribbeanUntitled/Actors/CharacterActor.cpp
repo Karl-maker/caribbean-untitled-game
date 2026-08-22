@@ -221,6 +221,40 @@ ACharacterActor::ACharacterActor()
         Walk.Layer = EAnimationLayer::Base;
         Walk.Description = FText::FromString(TEXT("Character walk animation."));
         AnimationRegistryComponent->Animations.Add(Walk);
+
+        FSoftObjectPath LeftStrafePath(
+            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Left_Strafe.Left_Strafe")
+        );
+
+        FAnimationDefinition LeftStrafe;
+        LeftStrafe.Key = EAnimationKey::LeftStrafe;
+        LeftStrafe.PlaybackMode = EAnimationPlaybackMode::Loop;
+        LeftStrafe.PlayRate = 1.0f;
+        LeftStrafe.LoopCount = -1;
+        LeftStrafe.BlendInTime = 0.2f;
+        LeftStrafe.BlendOutTime = 0.2f;
+        LeftStrafe.SlotName = "lower-body";
+        LeftStrafe.Layer = EAnimationLayer::Base;
+        LeftStrafe.Animation = Cast<UAnimSequence>(LeftStrafePath.TryLoad());
+        LeftStrafe.Description = FText::FromString(TEXT("Character left strafe animation."));
+        AnimationRegistryComponent->Animations.Add(LeftStrafe);
+
+        FSoftObjectPath RightStrafePath(
+            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Right_Strafe.Right_Strafe")
+        );
+
+        FAnimationDefinition RightStrafe;
+        RightStrafe.Key = EAnimationKey::RightStrafe;
+        RightStrafe.PlaybackMode = EAnimationPlaybackMode::Loop;
+        RightStrafe.PlayRate = 1.0f;
+        RightStrafe.LoopCount = -1;
+        RightStrafe.BlendInTime = 0.2f;
+        RightStrafe.BlendOutTime = 0.2f;
+        RightStrafe.SlotName = "lower-body";
+        RightStrafe.Layer = EAnimationLayer::Base;
+        RightStrafe.Animation = Cast<UAnimSequence>(RightStrafePath.TryLoad());
+        RightStrafe.Description = FText::FromString(TEXT("Character right strafe animation."));
+        AnimationRegistryComponent->Animations.Add(RightStrafe);
         
         FAnimationDefinition Run;
         Run.Key = EAnimationKey::Run;

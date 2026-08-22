@@ -33,3 +33,4 @@ protected:
     );
     APlayableActor* FindAvailablePlacedPlayableActor() const;
 };
+

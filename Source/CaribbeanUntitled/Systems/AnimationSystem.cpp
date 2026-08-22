@@ -113,6 +113,23 @@ void UAnimationSystem::RequestAnimationState(
     UE_LOG(LogTemp, Log, TEXT("AnimationSystem: Processing state change from %d to %d for %s (bForce=%d)"),
            (int32)State.CurrentState, (int32)NewState, *Actor->GetName(), bForce);
 
+    USkeletalMeshComponent* Mesh =
+        Actor->FindComponentByClass<USkeletalMeshComponent>();
+
+    UAnimInstance* AnimInstance =
+        Mesh ? Mesh->GetAnimInstance() : nullptr;
+
+    if (AnimInstance)
+    {
+        if (UAnimMontage* ActiveMontage = State.ActiveMontage.Get())
+        {
+            AnimInstance->Montage_Stop(
+                FMath::Max(ActiveMontage->BlendOut.GetBlendTime(), 0.05f),
+                ActiveMontage
+            );
+        }
+    }
+
     const UWorld* World = GetWorld();
 
     const double Now =
