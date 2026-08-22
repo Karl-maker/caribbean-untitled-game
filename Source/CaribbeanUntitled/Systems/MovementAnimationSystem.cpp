@@ -57,6 +57,10 @@ void UMovementAnimationSystem::OnMovementControlEvent(
             Key = EAnimationKey::Walk;
             break;
 
+        case ELocomotion::WalkBackwards:
+            Key = EAnimationKey::WalkBackwards;
+            break;
+
         case ELocomotion::StrafeLeft:
             Key = EAnimationKey::LeftStrafe;
             break;

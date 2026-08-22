@@ -201,6 +201,15 @@ APlayableActor::APlayableActor()
 
         ConfigureAnimationDefinition(
             AnimationRegistryComponent,
+            EAnimationKey::WalkBackwards,
+            LoadAssetOrNull<UAnimSequence>(
+                FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Walk_Backwards.Walk_Backwards"))
+            ),
+            EAnimationBlendMode::FullBody
+        );
+
+        ConfigureAnimationDefinition(
+            AnimationRegistryComponent,
             EAnimationKey::RightStrafe,
             LoadAssetOrNull<UAnimSequence>(
                 FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Right_Strafe.Right_Strafe"))

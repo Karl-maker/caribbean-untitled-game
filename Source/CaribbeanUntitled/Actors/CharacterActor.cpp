@@ -222,6 +222,23 @@ ACharacterActor::ACharacterActor()
         Walk.Description = FText::FromString(TEXT("Character walk animation."));
         AnimationRegistryComponent->Animations.Add(Walk);
 
+        FSoftObjectPath WalkBackwardsPath(
+            TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Walk_Backwards.Walk_Backwards")
+        );
+
+        FAnimationDefinition WalkBackwards;
+        WalkBackwards.Key = EAnimationKey::WalkBackwards;
+        WalkBackwards.PlaybackMode = EAnimationPlaybackMode::Loop;
+        WalkBackwards.PlayRate = 1.0f;
+        WalkBackwards.LoopCount = -1;
+        WalkBackwards.BlendInTime = 0.2f;
+        WalkBackwards.BlendOutTime = 0.2f;
+        WalkBackwards.SlotName = "lower-body";
+        WalkBackwards.Layer = EAnimationLayer::Base;
+        WalkBackwards.Animation = Cast<UAnimSequence>(WalkBackwardsPath.TryLoad());
+        WalkBackwards.Description = FText::FromString(TEXT("Character walk backwards animation."));
+        AnimationRegistryComponent->Animations.Add(WalkBackwards);
+
         FSoftObjectPath LeftStrafePath(
             TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Left_Strafe.Left_Strafe")
         );

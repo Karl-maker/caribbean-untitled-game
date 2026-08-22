@@ -583,6 +583,11 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
                 : ELocomotion::StrafeLeft;
         }
 
+        if (ForwardIntent < -0.05f)
+        {
+            return ELocomotion::WalkBackwards;
+        }
+
         const float ForwardAmount = MoveDirection | Character->GetActorForwardVector();
         const float RightAmount = MoveDirection | Character->GetActorRightVector();
         const float LateralAbs = FMath::Abs(RightAmount);
@@ -600,6 +605,11 @@ ELocomotion UMovementSystem::DetermineLocomotionState(
             return RightAmount >= 0.0f
                 ? ELocomotion::StrafeRight
                 : ELocomotion::StrafeLeft;
+        }
+
+        if (ForwardAmount < -0.05f)
+        {
+            return ELocomotion::WalkBackwards;
         }
 
         if (bCanSprint)

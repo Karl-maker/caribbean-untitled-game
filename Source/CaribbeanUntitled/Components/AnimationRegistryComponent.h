@@ -31,6 +31,7 @@ enum class EAnimationKey : uint8
     // Locomotion
     Idle        UMETA(DisplayName = "Idle"),
     Walk        UMETA(DisplayName = "Walk"),
+    WalkBackwards UMETA(DisplayName = "Walk Backwards"),
     LeftStrafe  UMETA(DisplayName = "Left Strafe"),
     RightStrafe UMETA(DisplayName = "Right Strafe"),
     LeftStrafeRun  UMETA(DisplayName = "Left Strafe Run"),

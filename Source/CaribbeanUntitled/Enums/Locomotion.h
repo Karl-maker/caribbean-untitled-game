@@ -6,6 +6,7 @@ enum class ELocomotion : uint8
     Stand,
     Idle,
     Walk,
+    WalkBackwards,
     StrafeLeft,
     StrafeRight,
     SprintStrafeLeft,
