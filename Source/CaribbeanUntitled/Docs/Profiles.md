@@ -68,6 +68,11 @@ Each entry contains:
 - `HUMANOID_ANIMATIONS`
 - Idle -> idle animation
 - Walk -> walk animation
+- WalkBackwards -> walk backwards animation
+- LeftStrafe -> left strafe animation
+- RightStrafe -> right strafe animation
+- LeftStrafeRun -> left strafe run animation
+- RightStrafeRun -> right strafe run animation
 - Run -> run animation
 - Sprint -> sprint animation
 - Jump -> jump animation

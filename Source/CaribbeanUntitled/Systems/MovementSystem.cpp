@@ -90,13 +90,24 @@ void UMovementSystem::ProcessActor(AActor* Actor, float DeltaTime)
     const bool bWantsToSprint = Control->WantsToSprint();
     const bool bWantsToCrouch = Control->WantsToCrouch();
 
-    const FRotator DesiredFacing(0.0f, Control->GetViewYaw(), 0.0f);
-    Character->SetActorRotation(DesiredFacing);
-
     ApplySpeed(Stats, Movement, bWantsToSprint, bWantsToCrouch);
     ApplyJump(Character, Stats, Movement, Control);
     ApplyMovement(Character, MoveDirection);
     ApplyCrouch(Character, bWantsToCrouch);
+
+    if (Control->MoveIntent.Y > 0.05f)
+    {
+        const FRotator DesiredFacing = MoveDirection.Rotation();
+        Character->SetActorRotation(
+            FRotator(0.0f, DesiredFacing.Yaw, 0.0f)
+        );
+    }
+    else if (Control->MoveIntent.Y < -0.05f)
+    {
+        Character->SetActorRotation(
+            FRotator(0.0f, Control->GetViewYaw(), 0.0f)
+        );
+    }
 
     DetermineAndPublishLocomotion(Actor, Character, Movement, Control, MoveDirection, bWantsToSprint, bWantsToCrouch);
 }
@@ -171,7 +182,17 @@ FVector UMovementSystem::ComputeIntentDirection(ACharacter* Character, const FVe
     const FVector Forward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
     const FVector Right = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-    FVector Direction = (Forward * MoveIntent.Y) + (Right * MoveIntent.X);
+    FVector2D ClampedIntent = MoveIntent;
+    if (FMath::Abs(ClampedIntent.X) > FMath::Abs(ClampedIntent.Y) + 0.05f)
+    {
+        ClampedIntent.Y = 0.0f;
+    }
+    else if (FMath::Abs(ClampedIntent.Y) > FMath::Abs(ClampedIntent.X) + 0.05f)
+    {
+        ClampedIntent.X = 0.0f;
+    }
+
+    FVector Direction = (Forward * ClampedIntent.Y) + (Right * ClampedIntent.X);
     Direction.Z = 0.0f;
 
     return Direction;
