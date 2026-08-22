@@ -778,7 +778,12 @@ void UPlayerInputComponent::HandleHeavyAttackCompleted(
         return;
     }
 
-    Control->SetHeavyAttackIntent(0.0f);
+    UE_LOG(
+        LogTemp,
+        Verbose,
+        TEXT("PlayerInputComponent: Heavy attack completed on %s"),
+        *GetOwner()->GetName()
+    );
 }
 
 // BLOCK

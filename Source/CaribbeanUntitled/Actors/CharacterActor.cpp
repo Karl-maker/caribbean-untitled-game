@@ -7,6 +7,8 @@
 #include "../Components/ControlComponent.h"
 #include "../Components/StatsComponent.h"
 #include "../Components/AnimationRegistryComponent.h"
+#include "../Components/CombatComponent.h"
+#include "../Components/AttackStateComponent.h"
 #include "../Components/CombatVolumeComponent.h"
 #include "../Components/MoveSetComponent.h"
 #include "../Settings/CaribbeanAssetSettings.h"
@@ -82,6 +84,16 @@ ACharacterActor::ACharacterActor()
     MoveSetComponent =
         CreateDefaultSubobject<UMoveSetComponent>(
             TEXT("MoveSetComponent")
+        );
+
+    CombatComponent =
+        CreateDefaultSubobject<UCombatComponent>(
+            TEXT("CombatComponent")
+        );
+
+    AttackStateComponent =
+        CreateDefaultSubobject<UAttackStateComponent>(
+            TEXT("AttackStateComponent")
         );
 
     ReplicatedCharacterVisualProfileKey = CharacterVisualProfileKey;

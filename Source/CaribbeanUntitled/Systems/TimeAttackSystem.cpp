@@ -153,8 +153,16 @@ void UTimeAttackSystem::ProcessActor(AActor* Actor, FActiveAttackState& State, f
 
     if (Phase == EAttackPhase::Anticipation)
     {
-        if (PhaseDuration > 0.0f && PhaseTime >= PhaseDuration)
+        if (PhaseDuration <= 0.0f || PhaseTime >= PhaseDuration)
         {
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("TimeAttackSystem: Advancing %s from Anticipation to Active | PhaseTime=%.3f Duration=%.3f"),
+                *Actor->GetName(),
+                PhaseTime,
+                PhaseDuration
+            );
             AttackState->StartActivePhase();
             return;
         }
@@ -167,10 +175,18 @@ void UTimeAttackSystem::ProcessActor(AActor* Actor, FActiveAttackState& State, f
             State.bCombatVolumeActive = true;
         }
 
-        if (PhaseDuration > 0.0f && PhaseTime >= PhaseDuration)
+        if (PhaseDuration <= 0.0f || PhaseTime >= PhaseDuration)
         {
             SetMoveVolumesActive(State.Move, false);
             State.bCombatVolumeActive = false;
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("TimeAttackSystem: Advancing %s from Active to Recovery | PhaseTime=%.3f Duration=%.3f"),
+                *Actor->GetName(),
+                PhaseTime,
+                PhaseDuration
+            );
             AttackState->StartRecoveryPhase();
             return;
         }
@@ -183,8 +199,16 @@ void UTimeAttackSystem::ProcessActor(AActor* Actor, FActiveAttackState& State, f
             State.bCombatVolumeActive = false;
         }
 
-        if (PhaseDuration > 0.0f && PhaseTime >= PhaseDuration)
+        if (PhaseDuration <= 0.0f || PhaseTime >= PhaseDuration)
         {
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("TimeAttackSystem: Completing attack for %s | PhaseTime=%.3f Duration=%.3f"),
+                *Actor->GetName(),
+                PhaseTime,
+                PhaseDuration
+            );
             Combat->SetCanAttack(true);
             AttackState->ClearAttackState();
             ActiveAttacks.Remove(Actor);

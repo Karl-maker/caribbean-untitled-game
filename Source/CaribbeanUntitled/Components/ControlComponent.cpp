@@ -175,6 +175,10 @@ void UControlComponent::RequestLightAttack()
             UE_LOG(LogTemp, Log, TEXT("ControlComponent: RequestLightAttack on server for %s"), *GetNameSafe(Owner));
             Combat->RequestAttack(ECombatAction::LightAttack);
         }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("ControlComponent: RequestLightAttack could not find CombatComponent on %s"), *GetNameSafe(Owner));
+        }
     }
 }
 
@@ -198,6 +202,10 @@ void UControlComponent::RequestHeavyAttack()
         {
             UE_LOG(LogTemp, Log, TEXT("ControlComponent: RequestHeavyAttack on server for %s"), *GetNameSafe(Owner));
             Combat->RequestAttack(ECombatAction::HeavyAttack);
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("ControlComponent: RequestHeavyAttack could not find CombatComponent on %s"), *GetNameSafe(Owner));
         }
     }
 }

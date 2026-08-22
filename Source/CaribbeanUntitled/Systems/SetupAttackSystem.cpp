@@ -92,6 +92,40 @@ bool USetupAttackSystem::ResolveMoveKey(ECombatAction Action, EMoveSetTypeKey& O
     }
 }
 
+void USetupAttackSystem::RequestAttackForActor(
+    AActor* Actor,
+    ECombatAction RequestedAction)
+{
+    if (!IsValid(Actor))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("SetupAttackSystem: RequestAttackForActor called with invalid actor"));
+        return;
+    }
+
+    UCombatComponent* Combat = Actor->FindComponentByClass<UCombatComponent>();
+    UMoveSetComponent* MoveSet = Actor->FindComponentByClass<UMoveSetComponent>();
+    UAttackStateComponent* AttackState = Actor->FindComponentByClass<UAttackStateComponent>();
+
+    if (!IsValid(Combat) || !IsValid(MoveSet) || !IsValid(AttackState))
+    {
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("SetupAttackSystem: RequestAttackForActor missing combat/moveset/attackstate on %s"),
+            *GetNameSafe(Actor)
+        );
+        return;
+    }
+
+    StartAttack(
+        Actor,
+        Combat,
+        MoveSet,
+        AttackState,
+        RequestedAction
+    );
+}
+
 void USetupAttackSystem::ProcessActor(AActor* Actor)
 {
     UCombatComponent* Combat = Actor->FindComponentByClass<UCombatComponent>();
@@ -111,6 +145,27 @@ void USetupAttackSystem::ProcessActor(AActor* Actor)
 
     const ECombatAction RequestedAction = Combat->GetRequestedAction();
     if (RequestedAction == ECombatAction::None)
+    {
+        return;
+    }
+
+    StartAttack(
+        Actor,
+        Combat,
+        MoveSet,
+        AttackState,
+        RequestedAction
+    );
+}
+
+void USetupAttackSystem::StartAttack(
+    AActor* Actor,
+    UCombatComponent* Combat,
+    UMoveSetComponent* MoveSet,
+    UAttackStateComponent* AttackState,
+    ECombatAction RequestedAction)
+{
+    if (!IsValid(Actor) || !IsValid(Combat) || !IsValid(MoveSet) || !IsValid(AttackState))
     {
         return;
     }
@@ -147,7 +202,9 @@ void USetupAttackSystem::ProcessActor(AActor* Actor)
     );
 
     Combat->SetCanAttack(false);
+    Combat->ClearRequestedAction();
     Combat->SetCurrentAttackAnimationKey(Move.Animation);
+    Combat->TriggerAttackAnimationReplication();
     AttackState->SetPhaseTime(0.0f);
     AttackState->StartAnticipationWithMove(static_cast<int32>(MoveKey), MoveKey, Move.MoveId);
 

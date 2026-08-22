@@ -50,9 +50,18 @@ public:
     virtual TStatId GetStatId() const override;
     virtual bool IsTickable() const override { return true; }
 
+    void RequestAttackForActor(AActor* Actor, ECombatAction RequestedAction);
+
 private:
     UActorRegistry* GetActorRegistry() const;
     UEventBusSubsystem* GetEventBus() const;
     void ProcessActor(AActor* Actor);
+    void StartAttack(
+        AActor* Actor,
+        UCombatComponent* Combat,
+        UMoveSetComponent* MoveSet,
+        UAttackStateComponent* AttackState,
+        ECombatAction RequestedAction
+    );
     bool ResolveMoveKey(ECombatAction Action, EMoveSetTypeKey& OutMoveKey) const;
 };

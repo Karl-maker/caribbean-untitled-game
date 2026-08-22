@@ -86,14 +86,18 @@ void UCombatAnimationSystem::OnAttackStarted(const FAttackStartedPayload& Payloa
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("CombatAnimationSystem: Requesting animation %d for %s"),
+        TEXT("CombatAnimationSystem: Requesting animation %d for %s with force restart"),
         static_cast<int32>(AnimationKey),
         *Payload.SourceActor->GetName()
     );
 
     if (UAnimationSystem* AnimationSystem = GetAnimationSystem())
     {
-        AnimationSystem->RequestAnimationState(Payload.SourceActor, AnimationKey);
+        AnimationSystem->RequestAnimationState(
+            Payload.SourceActor,
+            AnimationKey,
+            true
+        );
     }
     else
     {

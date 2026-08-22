@@ -36,6 +36,9 @@ public:
     ECombatAction GetRequestedAction() const;
 
     UFUNCTION(BlueprintCallable, Category = "Combat")
+    void ClearRequestedAction();
+
+    UFUNCTION(BlueprintCallable, Category = "Combat")
     EAnimationKey GetCurrentAttackAnimationKey() const;
 
     // Set whether the component can attack
@@ -44,6 +47,9 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Combat")
     void SetCurrentAttackAnimationKey(EAnimationKey NewAnimationKey);
+
+    UFUNCTION(BlueprintCallable, Category = "Combat")
+    void TriggerAttackAnimationReplication();
 
 protected:
     virtual void BeginPlay() override;
@@ -54,13 +60,16 @@ private:
     UPROPERTY(VisibleAnywhere, Category = "Combat")
     ECombatAction RequestedAction = ECombatAction::None;
 
-    UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_CurrentAttackAnimationKey, Category = "Combat")
+    UPROPERTY(VisibleAnywhere, Replicated, Category = "Combat")
     EAnimationKey CurrentAttackAnimationKey = EAnimationKey::None;
+
+    UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_AttackAnimationTrigger, Category = "Combat")
+    int32 AttackAnimationTrigger = 0;
 
     // Flag indicating if the component can perform attacks
     UPROPERTY(VisibleAnywhere, Category = "Combat")
     bool bCanAttack = true;
 
     UFUNCTION()
-    void OnRep_CurrentAttackAnimationKey();
+    void OnRep_AttackAnimationTrigger();
 };

@@ -4,11 +4,13 @@
 #include "Net/UnrealNetwork.h"
 #include "../EventBus/EventBusSubsystem.h"
 #include "../Systems/SetupAttackSystem.h"
+#include "Engine/World.h"
 
 UCombatComponent::UCombatComponent()
 {
     // Set this component to be initialized when the game starts, and to be ticked every frame
     PrimaryComponentTick.bCanEverTick = false;
+    SetIsReplicatedByDefault(true);
 
     // Initialize variables
     RequestedAction = ECombatAction::None;
@@ -29,6 +31,15 @@ bool UCombatComponent::CanAttack() const
 
 void UCombatComponent::RequestAttack(ECombatAction Action)
 {
+    UE_LOG(
+        LogTemp,
+        Log,
+        TEXT("CombatComponent: RequestAttack called on %s | Action=%d | CanAttack=%d"),
+        *GetNameSafe(GetOwner()),
+        static_cast<int32>(Action),
+        bCanAttack
+    );
+
     // Only process the request if we can attack and the action is valid
     if (!bCanAttack)
     {
@@ -49,14 +60,40 @@ void UCombatComponent::RequestAttack(ECombatAction Action)
     FString ActionName = UEnum::GetValueAsString(Action);
     UE_LOG(LogTemp, Log, TEXT("CombatComponent: Attack requested: %s"), *ActionName);
 
-    // Here you would typically trigger the actual attack logic
-    // For example, you might call a delegate or notify the owner actor
-    // OnAttackRequested.Broadcast(Action);
+    if (AActor* Owner = GetOwner())
+    {
+        if (UWorld* World = GetWorld())
+        {
+            if (USetupAttackSystem* SetupAttackSystem =
+                World->GetSubsystem<USetupAttackSystem>())
+            {
+                UE_LOG(
+                    LogTemp,
+                    Log,
+                    TEXT("CombatComponent: Forwarding attack request immediately to SetupAttackSystem for %s"),
+                    *Owner->GetName()
+                );
+                SetupAttackSystem->RequestAttackForActor(
+                    Owner,
+                    Action
+                );
+            }
+            else
+            {
+                UE_LOG(LogTemp, Warning, TEXT("CombatComponent: SetupAttackSystem unavailable for %s"), *Owner->GetName());
+            }
+        }
+    }
 }
 
 ECombatAction UCombatComponent::GetRequestedAction() const
 {
     return RequestedAction;
+}
+
+void UCombatComponent::ClearRequestedAction()
+{
+    RequestedAction = ECombatAction::None;
 }
 
 EAnimationKey UCombatComponent::GetCurrentAttackAnimationKey() const
@@ -77,18 +114,6 @@ void UCombatComponent::SetCanAttack(bool bNewCanAttack)
 
 void UCombatComponent::SetCurrentAttackAnimationKey(EAnimationKey NewAnimationKey)
 {
-    if (CurrentAttackAnimationKey == NewAnimationKey)
-    {
-        UE_LOG(
-            LogTemp,
-            Verbose,
-            TEXT("CombatComponent: Attack animation key already %d on %s"),
-            static_cast<int32>(NewAnimationKey),
-            *GetNameSafe(GetOwner())
-        );
-        return;
-    }
-
     UE_LOG(
         LogTemp,
         Log,
@@ -98,16 +123,21 @@ void UCombatComponent::SetCurrentAttackAnimationKey(EAnimationKey NewAnimationKe
     );
 
     CurrentAttackAnimationKey = NewAnimationKey;
+}
 
+void UCombatComponent::TriggerAttackAnimationReplication()
+{
     if (GetOwner() && GetOwner()->HasAuthority())
     {
+        ++AttackAnimationTrigger;
         UE_LOG(
             LogTemp,
             Log,
-            TEXT("CombatComponent: Authority triggering OnRep_CurrentAttackAnimationKey on %s"),
+            TEXT("CombatComponent: Triggering attack animation replication %d on %s"),
+            AttackAnimationTrigger,
             *GetNameSafe(GetOwner())
         );
-        OnRep_CurrentAttackAnimationKey();
+        OnRep_AttackAnimationTrigger();
     }
 }
 
@@ -116,9 +146,10 @@ void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
     DOREPLIFETIME(UCombatComponent, CurrentAttackAnimationKey);
+    DOREPLIFETIME(UCombatComponent, AttackAnimationTrigger);
 }
 
-void UCombatComponent::OnRep_CurrentAttackAnimationKey()
+void UCombatComponent::OnRep_AttackAnimationTrigger()
 {
     if (AActor* Owner = GetOwner())
     {
@@ -129,9 +160,10 @@ void UCombatComponent::OnRep_CurrentAttackAnimationKey()
                 UE_LOG(
                     LogTemp,
                     Log,
-                    TEXT("CombatComponent: OnRep_CurrentAttackAnimationKey publishing FAttackStartedPayload for %s with key %d"),
+                    TEXT("CombatComponent: OnRep_AttackAnimationTrigger publishing FAttackStartedPayload for %s with key %d (trigger=%d)"),
                     *Owner->GetName(),
-                    static_cast<int32>(CurrentAttackAnimationKey)
+                    static_cast<int32>(CurrentAttackAnimationKey),
+                    AttackAnimationTrigger
                 );
 
                 FAttackStartedPayload Payload;
@@ -145,7 +177,7 @@ void UCombatComponent::OnRep_CurrentAttackAnimationKey()
     UE_LOG(
         LogTemp,
         Warning,
-        TEXT("CombatComponent: OnRep_CurrentAttackAnimationKey could not publish for %s"),
+        TEXT("CombatComponent: OnRep_AttackAnimationTrigger could not publish for %s"),
         *GetNameSafe(GetOwner())
     );
 }
