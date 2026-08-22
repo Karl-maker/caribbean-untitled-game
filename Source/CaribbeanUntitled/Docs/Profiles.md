@@ -175,6 +175,42 @@ If a character uses the poseable path, the important bone references should stay
 - `Neck`
 - `Spine`
 
+## Animation Breakpoints
+
+The poseable animation path now supports configurable breakpoints per animation entry.
+
+### Fields
+
+On `FAnimationDefinition`:
+
+- `Breakpoint`
+- `BreakpointBoneName`
+
+On `ACharacterActor`:
+
+- `UpperBodyBreakpointBoneName`
+
+### How It Works
+
+- `FullBody` means the animation can affect the whole skeleton.
+- `SpineAndDown` means the overlay starts at the configured breakpoint bone and affects that bone and its descendants in the hierarchy.
+- `SpineAndUp` is available for rigs that want the inverse split.
+
+The split is hierarchy-based, not index-based.
+That means you can move the breakpoint up or down the rig by changing the bone name without changing gameplay code.
+
+If an animation entry does not specify a breakpoint bone, the character default is used.
+
+### Example
+
+For the Demo Bot:
+
+- `UpperBodyBreakpointBoneName = Spine`
+- combat punches use `Breakpoint = SpineAndDown`
+- locomotion remains `FullBody`
+- bones below the breakpoint stay on the locomotion pose
+- bones above the breakpoint blend toward the upper-body animation
+
 ## Recommended Workflow
 
 1. Create or import the skeletal mesh.

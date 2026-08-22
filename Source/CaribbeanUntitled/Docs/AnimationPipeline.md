@@ -33,6 +33,8 @@ It stores an array of `FAnimationDefinition` entries, where each entry maps:
 - animation asset
 - slot enum
 - layer
+- breakpoint mode
+- breakpoint bone name
 - blend in time
 - blend out time
 - playback mode
@@ -123,6 +125,35 @@ When a state is played, the system:
 4. Plays the sequence as a dynamic montage using the definition's slot and blend settings
 
 If there is no `UAnimInstance`, it falls back to direct mesh playback.
+
+## Breakpoints And Hierarchy
+
+Upper-body playback is controlled per animation entry, not globally.
+
+Each `FAnimationDefinition` can declare:
+
+- `Breakpoint`
+- `BreakpointBoneName`
+
+The project uses those values to decide where an overlay begins on the skeleton.
+
+Rules:
+
+- `FullBody` means the animation can affect the whole skeleton.
+- `SpineAndDown` means the overlay starts at the configured breakpoint bone and applies to that bone and all of its descendants.
+- `SpineAndUp` is available for rigs that want the inverse split.
+
+The code walks the bone hierarchy from parent to child.
+It does not rely on bone index order.
+
+That means you can move the breakpoint up or down the hierarchy for any slot or animation entry by changing the breakpoint bone name in the registry or the character default.
+
+For the current character setup:
+
+- locomotion uses the full body layer
+- punches, hit reacts, and interact use the upper-body layer
+- the configurable breakpoint bone is `Spine`
+- bones below that breakpoint remain on the locomotion pose
 
 ## Poseable Mesh IK
 
