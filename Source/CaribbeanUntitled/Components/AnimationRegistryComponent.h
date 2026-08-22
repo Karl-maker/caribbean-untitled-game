@@ -112,6 +112,13 @@ struct FAnimationDefinition
         Category = "Animation|Layering"
     )
     FName SlotName = TEXT("DefaultSlot");
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadWrite,
+        Category = "Animation|Layering"
+    )
+    EAnimationLayer Layer = EAnimationLayer::Base;
     
     UPROPERTY(EditAnywhere)
     TObjectPtr<UAnimSequence> Animation = nullptr;

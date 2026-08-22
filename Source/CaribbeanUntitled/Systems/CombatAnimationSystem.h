@@ -10,6 +10,7 @@
 #include "CombatAnimationSystem.generated.h"
 
 class UAnimationSystem;
+class UAnimationRegistryComponent;
 class UEventBusSubsystem;
 struct FAttackStartedPayload;
 
@@ -32,6 +33,7 @@ public:
 private:
     UAnimationSystem* GetAnimationSystem() const;
     UEventBusSubsystem* GetEventBus() const;
+    UAnimationRegistryComponent* FindAnimationRegistry(AActor* Actor) const;
 
     void OnAttackStarted(const FAttackStartedPayload& Payload);
 };

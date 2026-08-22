@@ -765,8 +765,24 @@ void UAnimationSystem::OnStateAnimationEnded(
     }
     else
     {
-        UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::OnStateAnimationEnded - No pending states for %s"),
-               *Actor->GetName());
+        if (Layer != EAnimationLayer::Base)
+        {
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("AnimationSystem::OnStateAnimationEnded - Clearing finished overlay layer %d for %s"),
+                static_cast<int32>(Layer),
+                *Actor->GetName()
+            );
+            State->CurrentState = EAnimationKey::None;
+            State->ActiveMontage.Reset();
+            State->StateEnteredTime = 0.0;
+        }
+        else
+        {
+            UE_LOG(LogTemp, Verbose, TEXT("AnimationSystem::OnStateAnimationEnded - No pending states for %s"),
+                   *Actor->GetName());
+        }
     }
 }
 
