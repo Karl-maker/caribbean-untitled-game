@@ -8,15 +8,13 @@
 #include "GameFramework/Pawn.h"
 
 
-void UMovementSystem::Tick(float DeltaTime)
+void UMovementSystem::Tick(UWorld* World, float DeltaTime)
 {
-
     if (DeltaTime <= 0.0f)
     {
         return;
     }
 
-    UWorld* World = GetWorld();
     if (!World)
     {
         return;

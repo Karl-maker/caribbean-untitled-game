@@ -9,7 +9,6 @@
 #include "Components/ActorComponent.h"
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimTypes.h"
-#include "../Enums/AnimationBlend.h"
 #include "AnimationRegistryComponent.generated.h"
 
 
@@ -71,8 +70,7 @@ UENUM(BlueprintType)
 enum class EAnimationPlaybackMode : uint8
 {
     Loop        UMETA(DisplayName = "Loop"),
-    Once        UMETA(DisplayName = "Play Once"),
-    Hold        UMETA(DisplayName = "Hold Last Frame")
+    Once        UMETA(DisplayName = "Play Once")
 };
 
 UENUM(BlueprintType)
@@ -81,15 +79,6 @@ enum class EAnimationLayer : uint8
     FullBody    UMETA(DisplayName = "Full Body"),
     UpperBody   UMETA(DisplayName = "Upper Body"),
     Additive    UMETA(DisplayName = "Additive"),
-    Face        UMETA(DisplayName = "Face"),
-    IK          UMETA(DisplayName = "IK")
-};
-
-UENUM(BlueprintType)
-enum class EAnimationSlot : uint8
-{
-    FullBody    UMETA(DisplayName = "Full Body"),
-    UpperBody   UMETA(DisplayName = "Upper Body"),
     Face        UMETA(DisplayName = "Face"),
     IK          UMETA(DisplayName = "IK")
 };
@@ -133,13 +122,6 @@ struct FAnimationDefinition
         BlueprintReadWrite,
         Category = "Animation|Layering"
     )
-    EAnimationSlot Slot = EAnimationSlot::FullBody;
-
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Animation|Layering"
-    )
     EAnimationLayer Layer = EAnimationLayer::FullBody;
 
     UPROPERTY(
@@ -149,13 +131,6 @@ struct FAnimationDefinition
     )
     EAnimationBreakpoint Breakpoint = EAnimationBreakpoint::FullBody;
 
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Animation|Layering"
-    )
-    FName BreakpointBoneName = NAME_None;
-    
     UPROPERTY(EditAnywhere)
     TObjectPtr<UAnimSequence> Animation = nullptr;
 
@@ -201,27 +176,6 @@ struct FAnimationDefinition
 
 
     /**
-     * Number of times the animation should repeat.
-     *
-     * -1 = infinite
-     *  1 = play once
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Animation|Playback",
-        meta = (ClampMin = "-1")
-    )
-    int32 LoopCount = -1;
-
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Animation|Layering"
-    )
-    EAnimationBlendMode BlendMode = EAnimationBlendMode::FullBody;
-    
-    /**
      * Time required to blend into this animation.
      */
     UPROPERTY(
@@ -243,17 +197,6 @@ struct FAnimationDefinition
         meta = (ClampMin = "0.0")
     )
     float BlendOutTime = 0.15f;
-
-
-    /**
-     * Optional curve controlling the blend.
-     */
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadWrite,
-        Category = "Animation|Blend"
-    )
-    TObjectPtr<UCurveFloat> BlendCurve = nullptr;
 
 
     /**

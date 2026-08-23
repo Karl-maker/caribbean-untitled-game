@@ -77,6 +77,7 @@ public:
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
     virtual void Deinitialize() override;
     void Tick(float DeltaTime);
+    void Tick(UWorld* World, float DeltaTime);
 
 
     //=========================================================================
@@ -252,6 +253,7 @@ private:
     bool PlayStateAnimation(
         AActor* Actor,
         EAnimationKey Key,
+        EAnimationLayer Layer,
         UAnimMontage*& OutMontage
     );
 

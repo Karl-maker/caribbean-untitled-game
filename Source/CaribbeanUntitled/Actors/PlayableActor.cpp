@@ -14,7 +14,6 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Curves/CurveFloat.h"
 #include "Net/UnrealNetwork.h"
 #include "InputAction.h"
 #include "InputMappingContext.h"
@@ -32,9 +31,7 @@ namespace
     void ConfigureAnimationDefinition(
         UAnimationRegistryComponent* Registry,
         EAnimationKey Key,
-        UAnimSequence* Animation,
-        EAnimationBlendMode BlendMode,
-        UCurveFloat* BlendCurve = nullptr
+        UAnimSequence* Animation
     )
     {
         if (!Registry)
@@ -50,8 +47,6 @@ namespace
             }
 
             Definition.Animation = Animation;
-            Definition.BlendMode = BlendMode;
-            Definition.BlendCurve = BlendCurve;
             return;
         }
     }
@@ -178,10 +173,6 @@ APlayableActor::APlayableActor()
                     Entry.Key,
                     LoadAssetOrNull<UAnimSequence>(
                         Entry.Animation
-                    ),
-                    Entry.BlendMode,
-                    LoadAssetOrNull<UCurveFloat>(
-                        Entry.BlendCurve
                     )
                 );
             }
@@ -195,8 +186,7 @@ APlayableActor::APlayableActor()
             EAnimationKey::LeftStrafe,
             LoadAssetOrNull<UAnimSequence>(
                 FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Left_Strafe.Left_Strafe"))
-            ),
-            EAnimationBlendMode::FullBody
+            )
         );
 
         ConfigureAnimationDefinition(
@@ -204,8 +194,7 @@ APlayableActor::APlayableActor()
             EAnimationKey::WalkBackwards,
             LoadAssetOrNull<UAnimSequence>(
                 FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Walk_Backwards.Walk_Backwards"))
-            ),
-            EAnimationBlendMode::FullBody
+            )
         );
 
         ConfigureAnimationDefinition(
@@ -213,8 +202,7 @@ APlayableActor::APlayableActor()
             EAnimationKey::RightStrafe,
             LoadAssetOrNull<UAnimSequence>(
                 FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Right_Strafe.Right_Strafe"))
-            ),
-            EAnimationBlendMode::FullBody
+            )
         );
 
         ConfigureAnimationDefinition(
@@ -222,8 +210,7 @@ APlayableActor::APlayableActor()
             EAnimationKey::LeftStrafeRun,
             LoadAssetOrNull<UAnimSequence>(
                 FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Left_Strafe_Run.Left_Strafe_Run"))
-            ),
-            EAnimationBlendMode::FullBody
+            )
         );
 
         ConfigureAnimationDefinition(
@@ -231,8 +218,7 @@ APlayableActor::APlayableActor()
             EAnimationKey::RightStrafeRun,
             LoadAssetOrNull<UAnimSequence>(
                 FSoftObjectPath(TEXT("/Game/Assets/Characters/Demo/Demo-Bot/Animations/Right_Strafe_Run.Right_Strafe_Run"))
-            ),
-            EAnimationBlendMode::FullBody
+            )
         );
     }
 

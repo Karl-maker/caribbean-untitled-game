@@ -122,20 +122,19 @@ When a state is played, the system:
 1. Finds the actor's `UAnimationRegistryComponent`
 2. Looks up the requested `EAnimationKey`
 3. Uses the actor's mesh and anim instance
-4. Plays the sequence as a dynamic montage using the definition's slot and blend settings
+4. Plays the sequence as a dynamic montage using the definition's layer and blend settings
 
 If there is no `UAnimInstance`, it falls back to direct mesh playback.
 
 ## Breakpoints And Hierarchy
 
-Upper-body playback is controlled per animation entry, not globally.
+Upper-body playback is controlled per animation entry, while the actual breakpoint bone is owned by the character.
 
 Each `FAnimationDefinition` can declare:
 
 - `Breakpoint`
-- `BreakpointBoneName`
 
-The project uses those values to decide where an overlay begins on the skeleton.
+`ACharacterActor::UpperBodyBreakpointBoneName` decides which bone the split uses when an upper-body layer is active.
 
 Rules:
 
@@ -146,7 +145,7 @@ Rules:
 The code walks the bone hierarchy from parent to child.
 It does not rely on bone index order.
 
-That means you can move the breakpoint up or down the hierarchy for any slot or animation entry by changing the breakpoint bone name in the registry or the character default.
+That means you can move the breakpoint up or down the hierarchy for a character by changing its configured breakpoint bone name without touching each animation entry.
 
 For the current character setup:
 
@@ -155,19 +154,11 @@ For the current character setup:
 - the configurable breakpoint bone is `Spine`
 - bones below that breakpoint remain on the locomotion pose
 
-## Poseable Mesh IK
+## Poseable Mesh Runtime
 
-Direct bone IK is handled through `UIKSystem` and `UIKComponent` when the actor uses a `UPoseableMeshComponent`.
+`ACharacterActor` still maintains a `UPoseableMeshComponent`, but it now exists only as a runtime copy of the active animation state.
 
-The focus system writes target data directly into `UIKComponent`, and the IK system reads that state on tick to rotate the `Head` and `Neck` chain without going through AnimBP.
-
-The runtime target cache includes:
-
-- channel name
-- target location
-- target direction
-- blend speed
-- bone chain
+The animation system samples the current full-body and upper-body layers, blends them against the configured breakpoint, and writes the final bone transforms into the poseable mesh each frame.
 
 ## Client And Server Behavior
 

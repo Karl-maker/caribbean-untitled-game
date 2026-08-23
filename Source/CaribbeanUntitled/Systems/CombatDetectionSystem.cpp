@@ -43,14 +43,12 @@
 // Tick
 // ============================================================================
 
-void UCombatDetectionSystem::Tick(float DeltaTime)
+void UCombatDetectionSystem::Tick(UWorld* World, float DeltaTime)
 {
     if (DeltaTime <= 0.0f)
     {
         return;
     }
-
-    UWorld* World = GetWorld();
 
     if (!World)
     {
@@ -104,7 +102,7 @@ void UCombatDetectionSystem::Tick(float DeltaTime)
 
     DetectionTickCounter = 0;
 
-    DetectCollisions();
+    DetectCollisions(World);
 }
 
 
@@ -112,10 +110,8 @@ void UCombatDetectionSystem::Tick(float DeltaTime)
 // Detection
 // ============================================================================
 
-void UCombatDetectionSystem::DetectCollisions()
+void UCombatDetectionSystem::DetectCollisions(UWorld* World)
 {
-    UWorld* World = GetWorld();
-
     if (!World)
     {
         return;

@@ -16,14 +16,13 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-void UStaminaSystem::Tick(float DeltaTime)
+void UStaminaSystem::Tick(UWorld* World, float DeltaTime)
 {
     if (DeltaTime <= 0.0f)
     {
         return;
     }
 
-    UWorld* World = GetWorld();
     if (!World)
     {
         return;

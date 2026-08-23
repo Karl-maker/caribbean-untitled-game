@@ -109,7 +109,7 @@ public:
     /**
      * Called by UGameplaySystemScheduler.
      */
-    void Tick(float DeltaTime);
+    void Tick(UWorld* World, float DeltaTime);
 
     /**
      * Clears internal state.
@@ -122,7 +122,7 @@ private:
     // Detection
     // ---------------------------------------------------------
 
-    void DetectCollisions();
+    void DetectCollisions(UWorld* World);
 
     void ProcessActor(AActor* Actor);
 

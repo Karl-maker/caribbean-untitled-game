@@ -11,7 +11,7 @@ FGameplayCombatMove UMoveSetComponent::GetMove(EMoveSetTypeKey Key) const
 {
     if (!IsKeyValid(Key))
     {
-        UE_LOG(LogTemp, Warning, TEXT("UMoveSetComponent::GetMove - Invalid key provided"));
+        UE_LOG(LogTemp, Warning, TEXT("[MoveSetComponent]: GetMove - Invalid key provided"));
         return FGameplayCombatMove(); // Return empty move
     }
 
@@ -21,7 +21,7 @@ FGameplayCombatMove UMoveSetComponent::GetMove(EMoveSetTypeKey Key) const
         return *FoundMove;
     }
 
-    UE_LOG(LogTemp, Warning, TEXT("UMoveSetComponent::GetMove - No move found for key: %d"), static_cast<int32>(Key));
+    UE_LOG(LogTemp, Warning, TEXT("[MoveSetComponent]: GetMove - No move found for key: %d"), static_cast<int32>(Key));
     return FGameplayCombatMove();
 }
 
@@ -29,20 +29,20 @@ void UMoveSetComponent::AddMove(EMoveSetTypeKey Key, const FGameplayCombatMove& 
 {
     if (!IsKeyValid(Key))
     {
-        UE_LOG(LogTemp, Warning, TEXT("UMoveSetComponent::AddMove - Invalid key provided"));
+        UE_LOG(LogTemp, Warning, TEXT("[MoveSetComponent]: AddMove - Invalid key provided"));
         return;
     }
 
     if (Key == EMoveSetTypeKey::None)
     {
-        UE_LOG(LogTemp, Warning, TEXT("UMoveSetComponent::AddMove - Cannot add move with 'None' key"));
+        UE_LOG(LogTemp, Warning, TEXT("[MoveSetComponent]: AddMove - Cannot add move with 'None' key"));
         return;
     }
 
     // Check if move already exists and log warning if overwriting
     if (Moves.Contains(Key))
     {
-        UE_LOG(LogTemp, Warning, TEXT("UMoveSetComponent::AddMove - Overwriting existing move for key: %d"), static_cast<int32>(Key));
+        UE_LOG(LogTemp, Warning, TEXT("[MoveSetComponent]: AddMove - Overwriting existing move for key: %d"), static_cast<int32>(Key));
     }
 
     Moves.Add(Key, Move);
@@ -52,25 +52,25 @@ bool UMoveSetComponent::RemoveMove(EMoveSetTypeKey Key)
 {
     if (!IsKeyValid(Key) || Key == EMoveSetTypeKey::None)
     {
-        UE_LOG(LogTemp, Warning, TEXT("UMoveSetComponent::RemoveMove - Invalid key provided"));
+        UE_LOG(LogTemp, Warning, TEXT("[MoveSetComponent]: RemoveMove - Invalid key provided"));
         return false;
     }
 
     int32 RemovedCount = Moves.Remove(Key);
     if (RemovedCount > 0)
     {
-        UE_LOG(LogTemp, Log, TEXT("UMoveSetComponent::RemoveMove - Successfully removed move for key: %d"), static_cast<int32>(Key));
+        UE_LOG(LogTemp, Log, TEXT("[MoveSetComponent]: RemoveMove - Successfully removed move for key: %d"), static_cast<int32>(Key));
         return true;
     }
 
-    UE_LOG(LogTemp, Warning, TEXT("UMoveSetComponent::RemoveMove - No move found for key: %d"), static_cast<int32>(Key));
+    UE_LOG(LogTemp, Warning, TEXT("[MoveSetComponent]: RemoveMove - No move found for key: %d"), static_cast<int32>(Key));
     return false;
 }
 
 void UMoveSetComponent::ClearAllMoves()
 {
     Moves.Empty();
-    UE_LOG(LogTemp, Log, TEXT("UMoveSetComponent::ClearAllMoves - All moves cleared"));
+    UE_LOG(LogTemp, Log, TEXT("[MoveSetComponent]: ClearAllMoves - All moves cleared"));
 }
 
 bool UMoveSetComponent::HasMove(EMoveSetTypeKey Key) const

@@ -9,7 +9,6 @@
 #include "../Components/AnimationRegistryComponent.h"
 #include "../Components/CombatComponent.h"
 #include "../Components/AttackStateComponent.h"
-#include "../Components/IKComponent.h"
 #include "../Components/CombatVolumeComponent.h"
 #include "../Components/MoveSetComponent.h"
 #include "../Settings/CaribbeanAssetSettings.h"
@@ -122,11 +121,6 @@ ACharacterActor::ACharacterActor()
             TEXT("AttackStateComponent")
         );
 
-    IKComponent =
-        CreateDefaultSubobject<UIKComponent>(
-            TEXT("IKComponent")
-        );
-
     ReplicatedCharacterVisualProfileKey = CharacterVisualProfileKey;
     ApplyCharacterVisualProfile();
 
@@ -233,10 +227,8 @@ ACharacterActor::ACharacterActor()
         Idle.Key = EAnimationKey::Idle;
         Idle.PlaybackMode = EAnimationPlaybackMode::Loop;
         Idle.PlayRate = 1.0f;
-        Idle.LoopCount = -1;
         Idle.BlendInTime = 0.2f;
         Idle.BlendOutTime = 0.2f;
-        Idle.Slot = EAnimationSlot::FullBody;
         Idle.Layer = EAnimationLayer::FullBody;
         Idle.Description = FText::FromString(TEXT("Character idle animation."));
         AnimationRegistryComponent->Animations.Add(Idle);
@@ -245,10 +237,8 @@ ACharacterActor::ACharacterActor()
         Walk.Key = EAnimationKey::Walk;
         Walk.PlaybackMode = EAnimationPlaybackMode::Loop;
         Walk.PlayRate = 1.0f;
-        Walk.LoopCount = -1;
         Walk.BlendInTime = 0.2f;
         Walk.BlendOutTime = 0.2f;
-        Walk.Slot = EAnimationSlot::FullBody;
         Walk.Layer = EAnimationLayer::FullBody;
         Walk.Description = FText::FromString(TEXT("Character walk animation."));
         AnimationRegistryComponent->Animations.Add(Walk);
@@ -261,10 +251,8 @@ ACharacterActor::ACharacterActor()
         WalkBackwards.Key = EAnimationKey::WalkBackwards;
         WalkBackwards.PlaybackMode = EAnimationPlaybackMode::Loop;
         WalkBackwards.PlayRate = 1.0f;
-        WalkBackwards.LoopCount = -1;
         WalkBackwards.BlendInTime = 0.2f;
         WalkBackwards.BlendOutTime = 0.2f;
-        WalkBackwards.Slot = EAnimationSlot::FullBody;
         WalkBackwards.Layer = EAnimationLayer::FullBody;
         WalkBackwards.Animation = Cast<UAnimSequence>(WalkBackwardsPath.TryLoad());
         WalkBackwards.Description = FText::FromString(TEXT("Character walk backwards animation."));
@@ -278,10 +266,8 @@ ACharacterActor::ACharacterActor()
         LeftStrafe.Key = EAnimationKey::LeftStrafe;
         LeftStrafe.PlaybackMode = EAnimationPlaybackMode::Loop;
         LeftStrafe.PlayRate = 1.0f;
-        LeftStrafe.LoopCount = -1;
         LeftStrafe.BlendInTime = 0.2f;
         LeftStrafe.BlendOutTime = 0.2f;
-        LeftStrafe.Slot = EAnimationSlot::FullBody;
         LeftStrafe.Layer = EAnimationLayer::FullBody;
         LeftStrafe.Animation = Cast<UAnimSequence>(LeftStrafePath.TryLoad());
         LeftStrafe.Description = FText::FromString(TEXT("Character left strafe animation."));
@@ -295,10 +281,8 @@ ACharacterActor::ACharacterActor()
         RightStrafe.Key = EAnimationKey::RightStrafe;
         RightStrafe.PlaybackMode = EAnimationPlaybackMode::Loop;
         RightStrafe.PlayRate = 1.0f;
-        RightStrafe.LoopCount = -1;
         RightStrafe.BlendInTime = 0.2f;
         RightStrafe.BlendOutTime = 0.2f;
-        RightStrafe.Slot = EAnimationSlot::FullBody;
         RightStrafe.Layer = EAnimationLayer::FullBody;
         RightStrafe.Animation = Cast<UAnimSequence>(RightStrafePath.TryLoad());
         RightStrafe.Description = FText::FromString(TEXT("Character right strafe animation."));
@@ -312,10 +296,8 @@ ACharacterActor::ACharacterActor()
         LeftStrafeRun.Key = EAnimationKey::LeftStrafeRun;
         LeftStrafeRun.PlaybackMode = EAnimationPlaybackMode::Loop;
         LeftStrafeRun.PlayRate = 1.0f;
-        LeftStrafeRun.LoopCount = -1;
         LeftStrafeRun.BlendInTime = 0.18f;
         LeftStrafeRun.BlendOutTime = 0.18f;
-        LeftStrafeRun.Slot = EAnimationSlot::FullBody;
         LeftStrafeRun.Layer = EAnimationLayer::FullBody;
         LeftStrafeRun.Animation = Cast<UAnimSequence>(LeftStrafeRunPath.TryLoad());
         LeftStrafeRun.Description = FText::FromString(TEXT("Character left strafe run animation."));
@@ -329,10 +311,8 @@ ACharacterActor::ACharacterActor()
         RightStrafeRun.Key = EAnimationKey::RightStrafeRun;
         RightStrafeRun.PlaybackMode = EAnimationPlaybackMode::Loop;
         RightStrafeRun.PlayRate = 1.0f;
-        RightStrafeRun.LoopCount = -1;
         RightStrafeRun.BlendInTime = 0.18f;
         RightStrafeRun.BlendOutTime = 0.18f;
-        RightStrafeRun.Slot = EAnimationSlot::FullBody;
         RightStrafeRun.Layer = EAnimationLayer::FullBody;
         RightStrafeRun.Animation = Cast<UAnimSequence>(RightStrafeRunPath.TryLoad());
         RightStrafeRun.Description = FText::FromString(TEXT("Character right strafe run animation."));
@@ -342,10 +322,8 @@ ACharacterActor::ACharacterActor()
         Run.Key = EAnimationKey::Run;
         Run.PlaybackMode = EAnimationPlaybackMode::Loop;
         Run.PlayRate = 1.0f;
-        Run.LoopCount = -1;
         Run.BlendInTime = 0.18f;
         Run.BlendOutTime = 0.18f;
-        Run.Slot = EAnimationSlot::FullBody;
         Run.Layer = EAnimationLayer::FullBody;
         Run.Description = FText::FromString(TEXT("Character run animation."));
         AnimationRegistryComponent->Animations.Add(Run);
@@ -354,10 +332,8 @@ ACharacterActor::ACharacterActor()
         Sprint.Key = EAnimationKey::Sprint;
         Sprint.PlaybackMode = EAnimationPlaybackMode::Loop;
         Sprint.PlayRate = 1.0f;
-        Sprint.LoopCount = -1;
         Sprint.BlendInTime = 0.18f;
         Sprint.BlendOutTime = 0.18f;
-        Sprint.Slot = EAnimationSlot::FullBody;
         Sprint.Layer = EAnimationLayer::FullBody;
         Sprint.Description = FText::FromString(TEXT("Character sprint animation."));
         AnimationRegistryComponent->Animations.Add(Sprint);
@@ -370,10 +346,8 @@ ACharacterActor::ACharacterActor()
         Jump.Key = EAnimationKey::Jump;
         Jump.PlaybackMode = EAnimationPlaybackMode::Once;
         Jump.PlayRate = 1.0f;
-        Jump.LoopCount = 1;
         Jump.BlendInTime = 0.08f;
         Jump.BlendOutTime = 0.12f;
-        Jump.Slot = EAnimationSlot::FullBody;
         Jump.Layer = EAnimationLayer::FullBody;
         Jump.Description = FText::FromString(TEXT("Character jump animation."));
         AnimationRegistryComponent->Animations.Add(Jump);
@@ -382,10 +356,8 @@ ACharacterActor::ACharacterActor()
         Fall.Key = EAnimationKey::Fall;
         Fall.PlaybackMode = EAnimationPlaybackMode::Loop;
         Fall.PlayRate = 1.0f;
-        Fall.LoopCount = -1;
         Fall.BlendInTime = 0.12f;
         Fall.BlendOutTime = 0.12f;
-        Fall.Slot = EAnimationSlot::FullBody;
         Fall.Layer = EAnimationLayer::FullBody;
         Fall.Description = FText::FromString(TEXT("Character fall animation."));
         AnimationRegistryComponent->Animations.Add(Fall);
@@ -394,10 +366,8 @@ ACharacterActor::ACharacterActor()
         Land.Key = EAnimationKey::Land;
         Land.PlaybackMode = EAnimationPlaybackMode::Once;
         Land.PlayRate = 1.0f;
-        Land.LoopCount = 1;
         Land.BlendInTime = 0.08f;
         Land.BlendOutTime = 0.12f;
-        Land.Slot = EAnimationSlot::FullBody;
         Land.Layer = EAnimationLayer::FullBody;
         Land.Description = FText::FromString(TEXT("Character land animation."));
         AnimationRegistryComponent->Animations.Add(Land);
@@ -409,13 +379,10 @@ ACharacterActor::ACharacterActor()
         LightRightPunch.Key = EAnimationKey::LightRightPunch;
         LightRightPunch.PlaybackMode = EAnimationPlaybackMode::Once;
         LightRightPunch.PlayRate = 1.0f;
-        LightRightPunch.LoopCount = 1;
         LightRightPunch.BlendInTime = 0.1f;
         LightRightPunch.BlendOutTime = 0.18f;
-        LightRightPunch.Slot = EAnimationSlot::UpperBody;
         LightRightPunch.Layer = EAnimationLayer::UpperBody;
         LightRightPunch.Breakpoint = EAnimationBreakpoint::SpineAndDown;
-        LightRightPunch.BreakpointBoneName = TEXT("Spine");
         LightRightPunch.Description = FText::FromString(TEXT("Character light right punch animation."));
         AnimationRegistryComponent->Animations.Add(LightRightPunch);
 
@@ -427,13 +394,10 @@ ACharacterActor::ACharacterActor()
         LightLeftPunch.Key = EAnimationKey::LightLeftPunch;
         LightLeftPunch.PlaybackMode = EAnimationPlaybackMode::Once;
         LightLeftPunch.PlayRate = 1.0f;
-        LightLeftPunch.LoopCount = 1;
         LightLeftPunch.BlendInTime = 0.1f;
         LightLeftPunch.BlendOutTime = 0.18f;
-        LightLeftPunch.Slot = EAnimationSlot::UpperBody;
         LightLeftPunch.Layer = EAnimationLayer::UpperBody;
         LightLeftPunch.Breakpoint = EAnimationBreakpoint::SpineAndDown;
-        LightLeftPunch.BreakpointBoneName = TEXT("Spine");
         LightLeftPunch.Animation = Cast<UAnimSequence>(LightLeftPunchPath.TryLoad());
         LightLeftPunch.Description = FText::FromString(TEXT("Character light left punch animation."));
         AnimationRegistryComponent->Animations.Add(LightLeftPunch);
@@ -442,13 +406,10 @@ ACharacterActor::ACharacterActor()
         Hit.Key = EAnimationKey::Hit;
         Hit.PlaybackMode = EAnimationPlaybackMode::Once;
         Hit.PlayRate = 1.0f;
-        Hit.LoopCount = 1;
         Hit.BlendInTime = 0.08f;
         Hit.BlendOutTime = 0.14f;
-        Hit.Slot = EAnimationSlot::UpperBody;
         Hit.Layer = EAnimationLayer::UpperBody;
         Hit.Breakpoint = EAnimationBreakpoint::SpineAndDown;
-        Hit.BreakpointBoneName = TEXT("Spine");
         Hit.Description = FText::FromString(TEXT("Character hit reaction animation."));
         AnimationRegistryComponent->Animations.Add(Hit);
         
@@ -456,13 +417,10 @@ ACharacterActor::ACharacterActor()
         Death.Key = EAnimationKey::Death;
         Death.PlaybackMode = EAnimationPlaybackMode::Once;
         Death.PlayRate = 1.0f;
-        Death.LoopCount = 1;
         Death.BlendInTime = 0.1f;
         Death.BlendOutTime = 0.2f;
-        Death.Slot = EAnimationSlot::UpperBody;
-        Death.Layer = EAnimationLayer::UpperBody;
+        Death.Layer = EAnimationLayer::FullBody;
         Death.Breakpoint = EAnimationBreakpoint::SpineAndDown;
-        Death.BreakpointBoneName = TEXT("Spine");
         Death.Description = FText::FromString(TEXT("Character death animation."));
         AnimationRegistryComponent->Animations.Add(Death);
         
@@ -474,13 +432,10 @@ ACharacterActor::ACharacterActor()
         Interact.Key = EAnimationKey::Interact;
         Interact.PlaybackMode = EAnimationPlaybackMode::Once;
         Interact.PlayRate = 1.0f;
-        Interact.LoopCount = 1;
         Interact.BlendInTime = 0.12f;
         Interact.BlendOutTime = 0.12f;
-        Interact.Slot = EAnimationSlot::UpperBody;  // Reaching/interacting with objects
         Interact.Layer = EAnimationLayer::UpperBody;
         Interact.Breakpoint = EAnimationBreakpoint::SpineAndDown;
-        Interact.BreakpointBoneName = TEXT("Spine");
         Interact.Description = FText::FromString(TEXT("Character interact animation."));
         AnimationRegistryComponent->Animations.Add(Interact);
         
@@ -488,11 +443,9 @@ ACharacterActor::ACharacterActor()
         Mount.Key = EAnimationKey::Mount;
         Mount.PlaybackMode = EAnimationPlaybackMode::Once;
         Mount.PlayRate = 1.0f;
-        Mount.LoopCount = 1;
         Mount.BlendInTime = 0.12f;
         Mount.BlendOutTime = 0.16f;
-        Mount.Slot = EAnimationSlot::FullBody;  // Full body movement to mount
-        Mount.Layer = EAnimationLayer::UpperBody;
+        Mount.Layer = EAnimationLayer::FullBody;
         Mount.Breakpoint = EAnimationBreakpoint::FullBody;
         Mount.Description = FText::FromString(TEXT("Character mount animation."));
         AnimationRegistryComponent->Animations.Add(Mount);
@@ -501,11 +454,9 @@ ACharacterActor::ACharacterActor()
         Dismount.Key = EAnimationKey::Dismount;
         Dismount.PlaybackMode = EAnimationPlaybackMode::Once;
         Dismount.PlayRate = 1.0f;
-        Dismount.LoopCount = 1;
         Dismount.BlendInTime = 0.12f;
         Dismount.BlendOutTime = 0.16f;
-        Dismount.Slot = EAnimationSlot::FullBody;  // Full body movement to dismount
-        Dismount.Layer = EAnimationLayer::UpperBody;
+        Dismount.Layer = EAnimationLayer::FullBody;
         Dismount.Breakpoint = EAnimationBreakpoint::FullBody;
         Dismount.Description = FText::FromString(TEXT("Character dismount animation."));
         AnimationRegistryComponent->Animations.Add(Dismount);
@@ -737,13 +688,6 @@ void ACharacterActor::UpdatePoseableMeshFromCurrentAnimation(float DeltaSeconds)
         UpperSample.Breakpoint != EAnimationBreakpoint::FullBody &&
         UpperBreakpointBoneIndex == INDEX_NONE)
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("Character '%s' upper-body breakpoint bone '%s' was not found on this skeleton."),
-            *GetName(),
-            *UpperBodyBreakpointBoneName.ToString()
-        );
     }
 
     const auto IsDescendantOfBone = [&RefSkeleton](int32 BoneIndex, int32 AncestorIndex) -> bool
@@ -844,15 +788,6 @@ void ACharacterActor::PostInitializeComponents()
 
     if (!CombatAttachmentProfile)
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT(
-                "Character '%s' has no CombatAttachmentProfile for key '%s'. Using default bone names."
-            ),
-            *GetName(),
-            *CombatAttachmentProfileKeyString
-        );
     }
 
     auto ResolveBoneName = [CombatAttachmentProfile](EBodyPart BodyPart) -> TOptional<FName>
@@ -879,15 +814,6 @@ void ACharacterActor::PostInitializeComponents()
 
         if (!BoneNameOpt.IsSet())
         {
-            UE_LOG(
-                LogTemp,
-                Error,
-                TEXT(
-                    "No combat attachment bone is defined for body part '%s' in profile '%s'."
-                ),
-                *StaticEnum<EBodyPart>()->GetValueAsString(BodyPart),
-                *CombatAttachmentProfileKeyString
-            );
             return;
         }
 
@@ -895,27 +821,12 @@ void ACharacterActor::PostInitializeComponents()
 
         if (!Mesh)
         {
-            UE_LOG(
-                LogTemp,
-                Error,
-                TEXT("Failed to attach %s: mesh is null."),
-                *GetNameSafe(CombatVolume)
-            );
             return;
         }
 
         if (!Mesh->DoesSocketExist(BoneName) &&
             Mesh->GetBoneIndex(BoneName) == INDEX_NONE)
         {
-            UE_LOG(
-                LogTemp,
-                Warning,
-                TEXT(
-                    "Attaching %s to '%s', but the mesh has no matching socket or bone."
-                ),
-                *GetNameSafe(CombatVolume),
-                *BoneName.ToString()
-            );
         }
 
         const bool bAttached =
@@ -926,45 +837,15 @@ void ACharacterActor::PostInitializeComponents()
 
         if (!bAttached)
         {
-            UE_LOG(
-                LogTemp,
-                Error,
-                TEXT(
-                    "Failed to attach %s to '%s'."
-                ),
-                *GetNameSafe(CombatVolume),
-                *BoneName.ToString()
-            );
             return;
         }
 
         UShapeComponent* CollisionShape = CombatVolume->GetCollisionShape();
         if (!IsValid(CollisionShape))
         {
-            UE_LOG(
-                LogTemp,
-                Error,
-                TEXT(
-                    "%s attached to '%s', but CollisionShape is invalid."
-                ),
-                *GetNameSafe(CombatVolume),
-                *BoneName.ToString()
-            );
             return;
         }
 
-        UE_LOG(
-            LogTemp,
-            Log,
-            TEXT(
-                "Attached %s to '%s' | Parent: %s | WorldLocation: %s | WorldRotation: %s"
-            ),
-            *GetNameSafe(CombatVolume),
-            *BoneName.ToString(),
-            *GetNameSafe(CollisionShape->GetAttachParent()),
-            *CollisionShape->GetComponentLocation().ToString(),
-            *CollisionShape->GetComponentRotation().ToString()
-        );
     };
 
     AttachCombatVolume(HeadCombatVolume, EBodyPart::Head);
@@ -983,12 +864,10 @@ void ACharacterActor::PostInitializeComponents()
         }
         else
         {
-            UE_LOG(LogTemp, Error, TEXT("Failed to register %s: ActorRegistry subsystem not found."), *GetName());
         }
     }
     else
     {
-        UE_LOG(LogTemp, Error, TEXT("Failed to register %s: world is null."), *GetName());
     }
 }
 

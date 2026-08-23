@@ -177,14 +177,13 @@ If a character uses the poseable path, the important bone references should stay
 
 ## Animation Breakpoints
 
-The poseable animation path now supports configurable breakpoints per animation entry.
+The poseable animation path supports per-animation breakpoint modes with a character-level breakpoint bone.
 
 ### Fields
 
 On `FAnimationDefinition`:
 
 - `Breakpoint`
-- `BreakpointBoneName`
 
 On `ACharacterActor`:
 
@@ -197,9 +196,7 @@ On `ACharacterActor`:
 - `SpineAndUp` is available for rigs that want the inverse split.
 
 The split is hierarchy-based, not index-based.
-That means you can move the breakpoint up or down the rig by changing the bone name without changing gameplay code.
-
-If an animation entry does not specify a breakpoint bone, the character default is used.
+That means you can move the breakpoint up or down the rig by changing the character's breakpoint bone without changing gameplay code.
 
 ### Example
 

@@ -127,15 +127,15 @@ private:
     // PHASES
     // ------------------------------------------------------------
 
-    void TickInput(float DeltaTime);
+    void TickInput(UWorld* World, float DeltaTime);
 
-    void TickGameplay(float DeltaTime);
+    void TickGameplay(UWorld* World, float DeltaTime);
 
-    void TickMovement(float DeltaTime);
+    void TickMovement(UWorld* World, float DeltaTime);
 
-    void TickPhysics(float DeltaTime);
+    void TickPhysics(UWorld* World, float DeltaTime);
 
-    void TickPostPhysics(float DeltaTime);
+    void TickPostPhysics(UWorld* World, float DeltaTime);
 
-    void TickTransform(float DeltaTime);
+    void TickTransform(UWorld* World, float DeltaTime);
 };

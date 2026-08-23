@@ -223,15 +223,12 @@ float UActionSystem::RollNextInterval(float PreferredOverride) const
     return FMath::Max(0.02f, Base + FMath::FRandRange(-Jitter, Jitter));
 }
 
-void UActionSystem::Tick(float DeltaTime)
+void UActionSystem::Tick(UWorld* World, float DeltaTime)
 {
-    // --- LOG: System is ticking ---
-    UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK START | DeltaTime=%.3f"), DeltaTime);
-
-    UActorRegistry* Registry = GetWorld() ? GetWorld()->GetSubsystem<UActorRegistry>() : nullptr;
+    UActorRegistry* Registry =
+        World ? World->GetSubsystem<UActorRegistry>() : nullptr;
     if (!Registry)
     {
-        UE_LOG(LogTemp, Warning, TEXT("[ActionSystem] TICK | NO REGISTRY FOUND"));
         return;
     }
 
@@ -240,18 +237,12 @@ void UActionSystem::Tick(float DeltaTime)
 
     if (!BrainActors || BrainActors->Num() == 0)
     {
-        UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | NO BRAIN ACTORS IN REGISTRY"));
         if (ActionStates.Num() > 0)
         {
-            UE_LOG(LogTemp, Log, TEXT("[ActionSystem] TICK | Clearing %d stale ActionStates"), ActionStates.Num());
             ActionStates.Reset();
         }
         return;
     }
-
-    // --- LOG: Found brain actors ---
-    UE_LOG(LogTemp, Log, TEXT("[ActionSystem] TICK | BrainActors=%d | ActionStates=%d"),
-        BrainActors->Num(), ActionStates.Num());
 
     // Prune state for actors no longer registered.
     int32 PrunedCount = 0;
@@ -259,15 +250,11 @@ void UActionSystem::Tick(float DeltaTime)
     {
         if (!It->Key.IsValid() || !BrainActors->Contains(It->Key))
         {
-            UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Pruning stale state for actor"));
             It.RemoveCurrent();
             PrunedCount++;
         }
     }
-    if (PrunedCount > 0)
-    {
-        UE_LOG(LogTemp, Log, TEXT("[ActionSystem] TICK | Pruned %d stale states"), PrunedCount);
-    }
+    (void)PrunedCount;
 
     int32 ActorsProcessed = 0;
     int32 ActorsSkippedNoControl = 0;
@@ -279,25 +266,18 @@ void UActionSystem::Tick(float DeltaTime)
         AActor* Actor = WeakActor.Get();
         if (!Actor)
         {
-            UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | WeakActor invalid (nullptr)"));
             continue;
         }
-
-        // --- LOG: Processing this actor ---
-        UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Processing Actor=%s"), *Actor->GetName());
 
         UControlComponent* Control = Actor->FindComponentByClass<UControlComponent>();
         if (!Control)
         {
-            UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Actor=%s | NO CONTROL COMPONENT"), *Actor->GetName());
             ActorsSkippedNoControl++;
             continue;
         }
 
         if (Control->ControlType != EControlType::AI)
         {
-            UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Actor=%s | ControlType=%d (NOT AI - skipping)"),
-                *Actor->GetName(), (int32)Control->ControlType);
             ActorsSkippedNoControl++;
             continue;
         }
@@ -309,63 +289,33 @@ void UActionSystem::Tick(float DeltaTime)
 
         if (!Brain)
         {
-            UE_LOG(LogTemp, Warning, TEXT("[ActionSystem] TICK | Actor=%s | HAS CONTROL BUT NO BRAIN COMPONENT"), *Actor->GetName());
             ActorsSkippedNoBrain++;
             continue;
         }
 
         // --- LOG: Found brain and control ---
-        UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Actor=%s | Has Control=%s | Has Brain=%s | Has Perception=%s"),
-            *Actor->GetName(),
-            Control ? TEXT("YES") : TEXT("NO"),
-            Brain ? TEXT("YES") : TEXT("NO"),
-            Perception ? TEXT("YES") : TEXT("NO")
-        );
 
         // Get current intent for logging
         EBrainIntent CurrentIntent = Brain->GetCurrentIntent();
-        UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Actor=%s | CurrentIntent=%d"),
-            *Actor->GetName(), (int32)CurrentIntent);
 
         FActionState& State = ActionStates.FindOrAdd(WeakActor);
 
         if (!State.bInitialized)
         {
-            UE_LOG(LogTemp, Log, TEXT("[ActionSystem] TICK | Actor=%s | INITIALIZING STATE | Hash=%d"),
-                *Actor->GetName(), GetTypeHash(Actor));
             State.RandomStream.Initialize(GetTypeHash(Actor));
             State.TimeUntilNextThink = RollNextInterval(-1.0f);
             State.bInitialized = true;
         }
 
         // --- LOG: State before thinking ---
-        UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Actor=%s | State: TimeUntilNextThink=%.3f | LastIntent=%d | bInitialized=%s"),
-            *Actor->GetName(),
-            State.TimeUntilNextThink,
-            (int32)State.LastIntent,
-            State.bInitialized ? TEXT("true") : TEXT("false")
-        );
 
         ThinkFor(Actor, Control, Brain, Perception, State, DeltaTime);
         ActorsProcessed++;
 
         // --- LOG: After thinking ---
-        UE_LOG(LogTemp, Verbose, TEXT("[ActionSystem] TICK | Actor=%s | After Think: New TimeUntilNextThink=%.3f | LastIntent=%d"),
-            *Actor->GetName(),
-            State.TimeUntilNextThink,
-            (int32)State.LastIntent
-        );
     }
 
     // --- LOG: Summary ---
-    UE_LOG(LogTemp, Log, TEXT("[ActionSystem] TICK SUMMARY | TotalBrainActors=%d | Processed=%d | HasControl=%d | SkippedNoControl=%d | SkippedNoBrain=%d | ActionStates=%d"),
-        BrainActors->Num(),
-        ActorsProcessed,
-        ActorsWithControl,
-        ActorsSkippedNoControl,
-        ActorsSkippedNoBrain,
-        ActionStates.Num()
-    );
 }
 
 void UActionSystem::ThinkFor(

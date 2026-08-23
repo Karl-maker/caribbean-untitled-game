@@ -172,19 +172,19 @@ void UControlComponent::RequestLightAttack()
     {
         if (UCombatComponent* Combat = Owner->FindComponentByClass<UCombatComponent>())
         {
-            UE_LOG(LogTemp, Log, TEXT("ControlComponent: RequestLightAttack on server for %s"), *GetNameSafe(Owner));
+            UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: RequestLightAttack on server for %s"), *GetNameSafe(Owner));
             Combat->RequestAttack(ECombatAction::LightAttack);
         }
         else
         {
-            UE_LOG(LogTemp, Warning, TEXT("ControlComponent: RequestLightAttack could not find CombatComponent on %s"), *GetNameSafe(Owner));
+            UE_LOG(LogTemp, Warning, TEXT("[ControlComponent]: RequestLightAttack could not find CombatComponent on %s"), *GetNameSafe(Owner));
         }
     }
 }
 
 void UControlComponent::ServerRequestLightAttack_Implementation()
 {
-    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerRequestLightAttack on %s"), *GetNameSafe(GetOwner()));
+    UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: ServerRequestLightAttack on %s"), *GetNameSafe(GetOwner()));
     RequestLightAttack();
 }
 
@@ -200,19 +200,19 @@ void UControlComponent::RequestHeavyAttack()
     {
         if (UCombatComponent* Combat = Owner->FindComponentByClass<UCombatComponent>())
         {
-            UE_LOG(LogTemp, Log, TEXT("ControlComponent: RequestHeavyAttack on server for %s"), *GetNameSafe(Owner));
+            UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: RequestHeavyAttack on server for %s"), *GetNameSafe(Owner));
             Combat->RequestAttack(ECombatAction::HeavyAttack);
         }
         else
         {
-            UE_LOG(LogTemp, Warning, TEXT("ControlComponent: RequestHeavyAttack could not find CombatComponent on %s"), *GetNameSafe(Owner));
+            UE_LOG(LogTemp, Warning, TEXT("[ControlComponent]: RequestHeavyAttack could not find CombatComponent on %s"), *GetNameSafe(Owner));
         }
     }
 }
 
 void UControlComponent::ServerRequestHeavyAttack_Implementation()
 {
-    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerRequestHeavyAttack on %s"), *GetNameSafe(GetOwner()));
+    UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: ServerRequestHeavyAttack on %s"), *GetNameSafe(GetOwner()));
     RequestHeavyAttack();
 }
 void UControlComponent::SetBlockIntent(float Weight)         { BlockIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
@@ -234,13 +234,13 @@ void UControlComponent::ServerSetSprintIntent_Implementation(float Weight)
 void UControlComponent::ServerSetLightAttackIntent_Implementation(float Weight)
 {
     LightAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerSetLightAttackIntent = %f on %s"), LightAttackIntent, *GetNameSafe(GetOwner()));
+    UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: ServerSetLightAttackIntent = %f on %s"), LightAttackIntent, *GetNameSafe(GetOwner()));
 }
 
 void UControlComponent::ServerSetHeavyAttackIntent_Implementation(float Weight)
 {
     HeavyAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
-    UE_LOG(LogTemp, Log, TEXT("ControlComponent: ServerSetHeavyAttackIntent = %f on %s"), HeavyAttackIntent, *GetNameSafe(GetOwner()));
+    UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: ServerSetHeavyAttackIntent = %f on %s"), HeavyAttackIntent, *GetNameSafe(GetOwner()));
 }
 
 //=========================================================================

@@ -29,6 +29,7 @@ public:
     virtual void Deinitialize() override;
 
     virtual void Tick(float DeltaTime) override;
+    void Tick(UWorld* World, float DeltaTime);
     virtual TStatId GetStatId() const override;
     virtual bool IsTickable() const override { return true; }
 

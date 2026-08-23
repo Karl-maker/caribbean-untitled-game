@@ -42,7 +42,7 @@ APawn* ACaribbeanGameMode::SpawnDefaultPawnFor_Implementation(
             UE_LOG(
                 LogTemp,
                 Log,
-                TEXT("CaribbeanGameMode: Reusing placed playable actor %s for %s"),
+                TEXT("[CaribbeanGameMode]: Reusing placed playable actor %s for %s"),
                 *PlacedPlayable->GetName(),
                 *PlayerController->GetName()
             );
@@ -132,7 +132,7 @@ APlayableActor* ACaribbeanGameMode::SpawnPlayerForController(
         UE_LOG(
             LogTemp,
             Warning,
-            TEXT("CaribbeanGameMode: No PlayerStart found for %s. Using world origin."),
+            TEXT("[CaribbeanGameMode]: No PlayerStart found for %s. Using world origin."),
             *PlayerController->GetName()
         );
     }
@@ -167,7 +167,7 @@ APlayableActor* ACaribbeanGameMode::SpawnPlayerForController(
         UE_LOG(
             LogTemp,
             Error,
-            TEXT("CaribbeanGameMode: Failed to spawn playable pawn for %s"),
+            TEXT("[CaribbeanGameMode]: Failed to spawn playable pawn for %s"),
             *PlayerController->GetName()
         );
 
@@ -177,7 +177,7 @@ APlayableActor* ACaribbeanGameMode::SpawnPlayerForController(
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("CaribbeanGameMode: Spawned %s for %s"),
+        TEXT("[CaribbeanGameMode]: Spawned %s for %s"),
         *Player->GetName(),
         *PlayerController->GetName()
     );

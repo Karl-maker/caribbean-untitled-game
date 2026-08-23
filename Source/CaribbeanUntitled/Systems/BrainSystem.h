@@ -9,8 +9,6 @@
 class UCharacterBrainComponent;
 class UCharacterPerceptionComponent;
 class UActorRegistry;
-class UFocusSystem;
-class UIKSystem;
 
 USTRUCT(BlueprintType)
 struct FBrainIntentChangedPayload
@@ -70,7 +68,7 @@ class CARIBBEANUNTITLED_API UBrainSystem : public UObject
 
 public:
     void Cleanup();
-    virtual void Tick(float DeltaTime);
+    void Tick(UWorld* World, float DeltaTime);
     TStatId GetStatId() const;
     bool IsTickable() const;
 
@@ -103,10 +101,4 @@ private:
 
     /** Lazily-populated, pruned each tick against the registry's current set. */
     TMap<TWeakObjectPtr<AActor>, FBrainThinkState> ThinkStates;
-
-    UPROPERTY(Transient)
-    TObjectPtr<UFocusSystem> FocusSystem;
-
-    UPROPERTY(Transient)
-    TObjectPtr<UIKSystem> IKSystem;
 };

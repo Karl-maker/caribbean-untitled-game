@@ -24,7 +24,7 @@ class CARIBBEANUNTITLED_API UStaminaSystem : public UObject
     GENERATED_BODY()
 
 public:
-    void Tick(float DeltaTime);
+    void Tick(UWorld* World, float DeltaTime);
     void Cleanup();
 
     void DrainFromSprint(

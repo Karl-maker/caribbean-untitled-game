@@ -22,14 +22,6 @@ UPerceptionSystem::UPerceptionSystem()
     PerceivableObjectTypes.Add(
         UEngineTypes::ConvertToObjectType(ECC_WorldDynamic));
 
-    UE_LOG(
-        LogTemp,
-        Log,
-        TEXT("[Perception] SYSTEM CREATED | ObjectTypes=%d | CellSize=%.1f | CacheLifetime=%.2f"),
-        PerceivableObjectTypes.Num(),
-        CellSize,
-        CacheLifetime
-    );
 }
 
 FIntVector UPerceptionSystem::LocationToCell(const FVector& Location) const
@@ -96,58 +88,16 @@ const TArray<TWeakObjectPtr<AActor>>& UPerceptionSystem::GetNearbyActors(
         Cell.LastQueryTime = Now;
         Cell.QueriedRadius = Radius;
 
-        UE_LOG(
-            LogTemp,
-            Log,
-            TEXT(
-                "[Perception] CACHE REFRESH | "
-                "Cell=(%d,%d,%d) | "
-                "QueryRadius=%.1f | "
-                "ActorsFound=%d"
-            ),
-            CellCoord.X,
-            CellCoord.Y,
-            CellCoord.Z,
-            Radius,
-            Cell.Actors.Num()
-        );
 
         for (const TWeakObjectPtr<AActor>& WeakActor : Cell.Actors)
         {
             if (AActor* Actor = WeakActor.Get())
             {
-                UE_LOG(
-                    LogTemp,
-                    Verbose,
-                    TEXT(
-                        "[Perception] CACHE ACTOR | "
-                        "Cell=(%d,%d,%d) | Actor=%s"
-                    ),
-                    CellCoord.X,
-                    CellCoord.Y,
-                    CellCoord.Z,
-                    *Actor->GetName()
-                );
             }
         }
     }
     else
     {
-        UE_LOG(
-            LogTemp,
-            VeryVerbose,
-            TEXT(
-                "[Perception] CACHE HIT | "
-                "Cell=(%d,%d,%d) | CachedActors=%d | "
-                "QueriedRadius=%.1f | RequestedRadius=%.1f"
-            ),
-            CellCoord.X,
-            CellCoord.Y,
-            CellCoord.Z,
-            Cell.Actors.Num(),
-            Cell.QueriedRadius,
-            QueryRadius
-        );
     }
 
     return Cell.Actors;
@@ -216,19 +166,6 @@ bool UPerceptionSystem::HasLineOfSight(
 
     if (bBlocked)
     {
-        UE_LOG(
-            LogTemp,
-            VeryVerbose,
-            TEXT(
-                "[Perception] LOS BLOCKED | "
-                "Owner=%s | Target=%s | Blocker=%s"
-            ),
-            *Owner->GetName(),
-            *Target->GetName(),
-            Hit.GetActor()
-                ? *Hit.GetActor()->GetName()
-                : TEXT("Unknown")
-        );
     }
 
     return !bBlocked;
@@ -265,15 +202,6 @@ void UPerceptionSystem::Tick(
 
         if (!Owner)
         {
-            UE_LOG(
-                LogTemp,
-                Warning,
-                TEXT(
-                    "[Perception] COMPONENT HAS NO OWNER | "
-                    "Component=%s"
-                ),
-                *Perception->GetName()
-            );
 
             continue;
         }
@@ -293,31 +221,12 @@ void UPerceptionSystem::Tick(
 
         if (!Stats)
         {
-            UE_LOG(
-                LogTemp,
-                Warning,
-                TEXT(
-                    "[Perception] NO STATS | "
-                    "Owner=%s | Perception skipped"
-                ),
-                *Owner->GetName()
-            );
 
             continue;
         }
 
         ++ComponentsEvaluated;
 
-        UE_LOG(
-            LogTemp,
-            Log,
-            TEXT(
-                "[Perception] EVALUATE | "
-                "Owner=%s | Interval=%.2f"
-            ),
-            *Owner->GetName(),
-            Perception->PerceptionUpdateInterval
-        );
 
         EvaluatePerceiver(
             World,
@@ -327,16 +236,6 @@ void UPerceptionSystem::Tick(
         );
     }
 
-    UE_LOG(
-        LogTemp,
-        VeryVerbose,
-        TEXT(
-            "[Perception] TICK | "
-            "ComponentsFound=%d | Evaluated=%d"
-        ),
-        ComponentsFound,
-        ComponentsEvaluated
-    );
 }
 
 void UPerceptionSystem::EvaluatePerceiver(
@@ -348,11 +247,6 @@ void UPerceptionSystem::EvaluatePerceiver(
     // --- SAFETY CHECKS ---
     if (!IsValid(Owner) || !IsValid(Perception) || !IsValid(Stats))
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("[Perception] EVALUATE SKIPPED | Invalid components")
-        );
         return;
     }
 
@@ -361,25 +255,10 @@ void UPerceptionSystem::EvaluatePerceiver(
     const FVector EyeLocation = Owner->GetActorLocation();
     const FVector Forward = Owner->GetActorForwardVector();
 
-    UE_LOG(
-        LogTemp,
-        Log,
-        TEXT("[Perception] SETTINGS | Owner=%s | Range=%.1f | Angle=%.1f"),
-        *Owner->GetName(),
-        SightRange,
-        SightAngle
-    );
 
     const TArray<TWeakObjectPtr<AActor>>& NearbyActors =
         GetNearbyActors(World, EyeLocation, SightRange);
 
-    UE_LOG(
-        LogTemp,
-        Log,
-        TEXT("[Perception] NEARBY | Owner=%s | Candidates=%d"),
-        *Owner->GetName(),
-        NearbyActors.Num()
-    );
 
     // --- PROCESS PERCEIVED ACTORS ---
     const TArray<FPerceivedActor>& PreviousActors = Perception->GetPerceivedActors();
@@ -439,14 +318,6 @@ void UPerceptionSystem::EvaluatePerceiver(
 
                 ++CarriedCount;
 
-                UE_LOG(
-                    LogTemp,
-                    Verbose,
-                    TEXT("[Perception] CARRIED | Owner=%s | Target=%s | Moved=%.1f"),
-                    *Owner->GetName(),
-                    *Actor->GetName(),
-                    Moved
-                );
 
                 continue;
             }
@@ -467,14 +338,6 @@ void UPerceptionSystem::EvaluatePerceiver(
         {
             ++OutsideConeCount;
 
-            UE_LOG(
-                LogTemp,
-                Verbose,
-                TEXT("[Perception] NOT SEEN | Owner=%s | Target=%s | Reason=OutsideCone | Distance=%.1f"),
-                *Owner->GetName(),
-                *Actor->GetName(),
-                Distance
-            );
         }
 
         const bool bVisible = bInCone && HasLineOfSight(
@@ -498,14 +361,6 @@ void UPerceptionSystem::EvaluatePerceiver(
 
             NewPerceived.Add(NewEntry);
 
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("[Perception] PERCEIVED | Owner=%s | Target=%s | Distance=%.1f | Visible=true"),
-                *Owner->GetName(),
-                *Actor->GetName(),
-                Distance
-            );
         }
         else if (OldIndex)
         {
@@ -523,28 +378,11 @@ void UPerceptionSystem::EvaluatePerceiver(
             {
                 NewPerceived.Add(Kept);
 
-                UE_LOG(
-                    LogTemp,
-                    Verbose,
-                    TEXT("[Perception] MEMORY | Owner=%s | Target=%s | Visible=false | TimeSinceSeen=%.2f"),
-                    *Owner->GetName(),
-                    *Actor->GetName(),
-                    Kept.TimeSinceLastSeen
-                );
             }
             else
             {
                 ++ForgottenCount;
 
-                UE_LOG(
-                    LogTemp,
-                    Log,
-                    TEXT("[Perception] FORGOTTEN | Owner=%s | Target=%s | MovedTooFar=%s | TooOld=%s"),
-                    *Owner->GetName(),
-                    *Actor->GetName(),
-                    bMovedTooFar ? TEXT("true") : TEXT("false"),
-                    bTooOld ? TEXT("true") : TEXT("false")
-                );
             }
         }
         else
@@ -553,13 +391,6 @@ void UPerceptionSystem::EvaluatePerceiver(
             {
                 ++BlockedCount;
 
-                UE_LOG(
-                    LogTemp,
-                    Verbose,
-                    TEXT("[Perception] NOT SEEN | Owner=%s | Target=%s | Reason=BlockedByLOS"),
-                    *Owner->GetName(),
-                    *Actor->GetName()
-                );
             }
         }
     }
@@ -585,26 +416,11 @@ void UPerceptionSystem::EvaluatePerceiver(
         {
             NewPerceived.Add(Kept);
 
-            UE_LOG(
-                LogTemp,
-                Verbose,
-                TEXT("[Perception] MEMORY OUTSIDE CACHE | Owner=%s | Target=%s | TimeSinceSeen=%.2f"),
-                *Owner->GetName(),
-                *PrevActor->GetName(),
-                Kept.TimeSinceLastSeen
-            );
         }
         else
         {
             ++ForgottenCount;
 
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("[Perception] FORGOTTEN OUTSIDE CACHE | Owner=%s | Target=%s"),
-                *Owner->GetName(),
-                *PrevActor->GetName()
-            );
         }
     }
 
@@ -613,19 +429,6 @@ void UPerceptionSystem::EvaluatePerceiver(
     /*
      * Final summary for this perceiver.
      */
-    UE_LOG(
-        LogTemp,
-        Log,
-        TEXT("[Perception] RESULT | Owner=%s | Candidates=%d | Visible=%d | OutsideCone=%d | Blocked=%d | Carried=%d | Forgotten=%d | PerceivedTotal=%d"),
-        *Owner->GetName(),
-        NearbyActors.Num(),
-        VisibleCount,
-        OutsideConeCount,
-        BlockedCount,
-        CarriedCount,
-        ForgottenCount,
-        NewPerceived.Num()
-    );
 
     /*
      * Explicit list of everything currently perceived.
@@ -634,18 +437,6 @@ void UPerceptionSystem::EvaluatePerceiver(
     {
         if (AActor* Actor = Entry.Actor)
         {
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("[Perception] CURRENTLY PERCEIVED | Owner=%s | Target=%s | Visible=%s | Distance=%.1f | LastKnown=(%.1f, %.1f, %.1f)"),
-                *Owner->GetName(),
-                *Actor->GetName(),
-                Entry.bVisible ? TEXT("true") : TEXT("false"),
-                Entry.Distance,
-                Entry.LastKnownLocation.X,
-                Entry.LastKnownLocation.Y,
-                Entry.LastKnownLocation.Z
-            );
         }
     }
 }

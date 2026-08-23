@@ -132,7 +132,7 @@ class CARIBBEANUNTITLED_API UActionSystem : public UObject
 
 public:
     void Cleanup();
-    virtual void Tick(float DeltaTime);
+    void Tick(UWorld* World, float DeltaTime);
     TStatId GetStatId() const;
     bool IsTickable() const { return true; }
 

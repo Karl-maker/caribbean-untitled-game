@@ -28,7 +28,7 @@ void UGameplaySystemScheduler::Initialize(
         LogTemp,
         Error,
         TEXT(
-            "[Scheduler] INITIALIZE | World=%s | Type=%d"
+            "[GameplaySystemScheduler]: INITIALIZE | World=%s | Type=%d"
         ),
         *GetNameSafe(GetWorld()),
         GetWorld()
@@ -55,7 +55,7 @@ void UGameplaySystemScheduler::Deinitialize()
         LogTemp,
         Error,
         TEXT(
-            "[Scheduler] DEINITIALIZE | World=%s"
+            "[GameplaySystemScheduler]: DEINITIALIZE | World=%s"
         ),
         *GetNameSafe(GetWorld())
     );
@@ -136,27 +136,27 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
     UE_LOG(
         LogTemp,
         Verbose,
-        TEXT("[Scheduler] Tick | World=%s | NetMode=%d | Client=%d | Server=%d"),
+        TEXT("[GameplaySystemScheduler]: Tick | World=%s | NetMode=%d | Client=%d | Server=%d"),
         *GetNameSafe(World),
         static_cast<int32>(NetMode),
         bIsClient,
         bIsServer
     );
 
-    if (bIsClient) TickInput(DeltaTime);
+    if (bIsClient) TickInput(World, DeltaTime);
 
-    if (bIsServer) TickGameplay(DeltaTime);
+    if (bIsServer) TickGameplay(World, DeltaTime);
 
-    if (bIsServer || bIsClient) TickMovement(DeltaTime);
+    if (bIsServer || bIsClient) TickMovement(World, DeltaTime);
     
     if (bIsClient)
-        if (CameraSystem) CameraSystem->Tick(GetWorld(), DeltaTime);
+        if (CameraSystem) CameraSystem->Tick(World, DeltaTime);
     
-    if (bIsServer) TickPhysics(DeltaTime);
+    if (bIsServer) TickPhysics(World, DeltaTime);
 
-    if (bIsServer) TickPostPhysics(DeltaTime);
+    if (bIsServer) TickPostPhysics(World, DeltaTime);
 
-    if (bIsServer || bIsClient) TickTransform(DeltaTime);
+    if (bIsServer || bIsClient) TickTransform(World, DeltaTime);
 }
 
 
@@ -164,9 +164,10 @@ void UGameplaySystemScheduler::Tick(float DeltaTime)
 // INPUT
 // ================================================================
 
-void UGameplaySystemScheduler::TickInput(float DeltaTime)
+void UGameplaySystemScheduler::TickInput(UWorld* World, float DeltaTime)
 {
-
+    (void)World;
+    (void)DeltaTime;
 }
 
 
@@ -174,15 +175,13 @@ void UGameplaySystemScheduler::TickInput(float DeltaTime)
 // GAMEPLAY
 // ================================================================
 
-void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
+void UGameplaySystemScheduler::TickGameplay(UWorld* World, float DeltaTime)
 {
-    UE_LOG(LogTemp, Verbose, TEXT("[Scheduler] TickGameplay"));
-
-    if (CombatInputSystem) CombatInputSystem->Tick(DeltaTime);
-    if (PerceptionSystem) PerceptionSystem->Tick(GetWorld(), DeltaTime);
-    if (BrainSystem) BrainSystem->Tick(DeltaTime);
-    if (ActionSystem) ActionSystem->Tick(DeltaTime);
-    if (CombatDetectionSystem) CombatDetectionSystem->Tick(DeltaTime);
+    if (CombatInputSystem) CombatInputSystem->Tick(World, DeltaTime);
+    if (PerceptionSystem) PerceptionSystem->Tick(World, DeltaTime);
+    if (BrainSystem) BrainSystem->Tick(World, DeltaTime);
+    if (ActionSystem) ActionSystem->Tick(World, DeltaTime);
+    if (CombatDetectionSystem) CombatDetectionSystem->Tick(World, DeltaTime);
 }
 
 
@@ -190,11 +189,11 @@ void UGameplaySystemScheduler::TickGameplay(float DeltaTime)
 // MOVEMENT
 // ================================================================
 
-void UGameplaySystemScheduler::TickMovement(float DeltaTime)
+void UGameplaySystemScheduler::TickMovement(UWorld* World, float DeltaTime)
 {
-    if (StaminaSystem) StaminaSystem->Tick(DeltaTime);
-    if (StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(DeltaTime);
-    if (MovementSystem) MovementSystem->Tick(DeltaTime);
+    if (StaminaSystem) StaminaSystem->Tick(World, DeltaTime);
+    if (StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(World, DeltaTime);
+    if (MovementSystem) MovementSystem->Tick(World, DeltaTime);
 }
 
 
@@ -202,9 +201,10 @@ void UGameplaySystemScheduler::TickMovement(float DeltaTime)
 // PHYSICS
 // ================================================================
 
-void UGameplaySystemScheduler::TickPhysics(float DeltaTime)
+void UGameplaySystemScheduler::TickPhysics(UWorld* World, float DeltaTime)
 {
-
+    (void)World;
+    (void)DeltaTime;
 }
 
 
@@ -212,9 +212,10 @@ void UGameplaySystemScheduler::TickPhysics(float DeltaTime)
 // POST PHYSICS
 // ================================================================
 
-void UGameplaySystemScheduler::TickPostPhysics(float DeltaTime)
+void UGameplaySystemScheduler::TickPostPhysics(UWorld* World, float DeltaTime)
 {
-
+    (void)World;
+    (void)DeltaTime;
 
     // Collision / gameplay reactions.
 }
@@ -224,7 +225,9 @@ void UGameplaySystemScheduler::TickPostPhysics(float DeltaTime)
 // TRANSFORM
 // ================================================================
 
-void UGameplaySystemScheduler::TickTransform(float DeltaTime)
+void UGameplaySystemScheduler::TickTransform(UWorld* World, float DeltaTime)
 {
+    (void)World;
+    (void)DeltaTime;
     // Synchronize MotionComponent -> UE transforms.
 }

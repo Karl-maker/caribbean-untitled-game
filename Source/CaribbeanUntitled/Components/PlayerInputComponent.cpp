@@ -42,7 +42,7 @@ void UPlayerInputComponent::BindInput(
         UE_LOG(
             LogTemp,
             Verbose,
-            TEXT("PlayerInputComponent: BindInput skipped, already bound on %s"),
+            TEXT("[PlayerInputComponent]: BindInput skipped, already bound on %s"),
             *GetNameSafe(GetOwner())
         );
         return;
@@ -65,7 +65,7 @@ void UPlayerInputComponent::BindInput(
         UE_LOG(
             LogTemp,
             Warning,
-            TEXT("PlayerInputComponent: No ControlComponent found on %s"),
+            TEXT("[PlayerInputComponent]: No ControlComponent found on %s"),
             *GetOwner()->GetName()
         );
 
@@ -95,7 +95,7 @@ void UPlayerInputComponent::BindInput(
         UE_LOG(
             LogTemp,
             Warning,
-            TEXT("PlayerInputComponent: InputComponent is not EnhancedInputComponent")
+            TEXT("[PlayerInputComponent]: InputComponent is not EnhancedInputComponent")
         );
 
         return;
@@ -125,7 +125,7 @@ void UPlayerInputComponent::BindInput(
         UE_LOG(
             LogTemp,
             Warning,
-            TEXT("PlayerInputComponent: %s has no PlayerController"),
+            TEXT("[PlayerInputComponent]: %s has no PlayerController"),
             *GetOwner()->GetName()
         );
 
@@ -732,7 +732,7 @@ void UPlayerInputComponent::HandleLightAttackStarted(
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("PlayerInputComponent: Light attack started on %s"),
+        TEXT("[PlayerInputComponent]: Light attack started on %s"),
         *GetOwner()->GetName()
     );
 
@@ -751,7 +751,7 @@ void UPlayerInputComponent::HandleLightAttackCompleted(
     UE_LOG(
         LogTemp,
         Verbose,
-        TEXT("PlayerInputComponent: Light attack completed on %s"),
+        TEXT("[PlayerInputComponent]: Light attack completed on %s"),
         *GetOwner()->GetName()
     );
 }
@@ -781,7 +781,7 @@ void UPlayerInputComponent::HandleHeavyAttackCompleted(
     UE_LOG(
         LogTemp,
         Verbose,
-        TEXT("PlayerInputComponent: Heavy attack completed on %s"),
+        TEXT("[PlayerInputComponent]: Heavy attack completed on %s"),
         *GetOwner()->GetName()
     );
 }

@@ -31,12 +31,22 @@ TStatId USetupAttackSystem::GetStatId() const
 
 void USetupAttackSystem::Tick(float DeltaTime)
 {
+    Tick(GetWorld(), DeltaTime);
+}
+
+void USetupAttackSystem::Tick(UWorld* World, float DeltaTime)
+{
     if (DeltaTime <= 0.0f)
     {
         return;
     }
 
-    UActorRegistry* Registry = GetActorRegistry();
+    if (!World)
+    {
+        return;
+    }
+
+    UActorRegistry* Registry = World->GetSubsystem<UActorRegistry>();
     if (!Registry)
     {
         return;
@@ -98,7 +108,6 @@ void USetupAttackSystem::RequestAttackForActor(
 {
     if (!IsValid(Actor))
     {
-        UE_LOG(LogTemp, Warning, TEXT("SetupAttackSystem: RequestAttackForActor called with invalid actor"));
         return;
     }
 
@@ -108,12 +117,6 @@ void USetupAttackSystem::RequestAttackForActor(
 
     if (!IsValid(Combat) || !IsValid(MoveSet) || !IsValid(AttackState))
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("SetupAttackSystem: RequestAttackForActor missing combat/moveset/attackstate on %s"),
-            *GetNameSafe(Actor)
-        );
         return;
     }
 
@@ -134,12 +137,6 @@ void USetupAttackSystem::ProcessActor(AActor* Actor)
 
     if (!IsValid(Combat) || !IsValid(MoveSet) || !IsValid(AttackState))
     {
-        UE_LOG(
-            LogTemp,
-            Verbose,
-            TEXT("SetupAttackSystem: Missing combat/moveset/attackstate on %s"),
-            *GetNameSafe(Actor)
-        );
         return;
     }
 
@@ -173,33 +170,15 @@ void USetupAttackSystem::StartAttack(
     EMoveSetTypeKey MoveKey = EMoveSetTypeKey::None;
     if (!ResolveMoveKey(RequestedAction, MoveKey))
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("SetupAttackSystem: Could not resolve move key for %s action %d"),
-            *Actor->GetName(),
-            static_cast<int32>(RequestedAction)
-        );
         return;
     }
 
     const FGameplayCombatMove Move = MoveSet->GetMove(MoveKey);
     if (Move.MoveId.IsNone())
     {
-        UE_LOG(LogTemp, Warning, TEXT("SetupAttackSystem: No move found for key %d on %s"), static_cast<int32>(MoveKey), *Actor->GetName());
         return;
     }
 
-    UE_LOG(
-        LogTemp,
-        Log,
-        TEXT("SetupAttackSystem: Starting attack on %s | Action=%d MoveKey=%d AnimKey=%d MoveId=%s"),
-        *Actor->GetName(),
-        static_cast<int32>(RequestedAction),
-        static_cast<int32>(MoveKey),
-        static_cast<int32>(Move.Animation),
-        *Move.MoveId.ToString()
-    );
 
     Combat->SetCanAttack(false);
     Combat->ClearRequestedAction();
@@ -215,21 +194,9 @@ void USetupAttackSystem::StartAttack(
         Payload.CombatAction = RequestedAction;
         Payload.MoveKey = MoveKey;
         Payload.Move = Move;
-        UE_LOG(
-            LogTemp,
-            Log,
-            TEXT("SetupAttackSystem: Publishing FAttackStartedPayload for %s"),
-            *Actor->GetName()
-        );
         EventBus->Publish<FAttackStartedPayload>(Payload);
     }
     else
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("SetupAttackSystem: No EventBus available when starting attack on %s"),
-            *Actor->GetName()
-        );
     }
 }

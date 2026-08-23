@@ -34,7 +34,7 @@ void UCombatComponent::RequestAttack(ECombatAction Action)
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("CombatComponent: RequestAttack called on %s | Action=%d | CanAttack=%d"),
+        TEXT("[CombatComponent]: RequestAttack called on %s | Action=%d | CanAttack=%d"),
         *GetNameSafe(GetOwner()),
         static_cast<int32>(Action),
         bCanAttack
@@ -43,13 +43,13 @@ void UCombatComponent::RequestAttack(ECombatAction Action)
     // Only process the request if we can attack and the action is valid
     if (!bCanAttack)
     {
-        UE_LOG(LogTemp, Warning, TEXT("CombatComponent: Cannot attack right now!"));
+        UE_LOG(LogTemp, Warning, TEXT("[CombatComponent]: Cannot attack right now!"));
         return;
     }
 
     if (Action == ECombatAction::None)
     {
-        UE_LOG(LogTemp, Warning, TEXT("CombatComponent: Invalid attack action requested!"));
+        UE_LOG(LogTemp, Warning, TEXT("[CombatComponent]: Invalid attack action requested!"));
         return;
     }
 
@@ -58,7 +58,7 @@ void UCombatComponent::RequestAttack(ECombatAction Action)
     
     // Log the attack request
     FString ActionName = UEnum::GetValueAsString(Action);
-    UE_LOG(LogTemp, Log, TEXT("CombatComponent: Attack requested: %s"), *ActionName);
+    UE_LOG(LogTemp, Log, TEXT("[CombatComponent]: Attack requested: %s"), *ActionName);
 
     if (AActor* Owner = GetOwner())
     {
@@ -70,7 +70,7 @@ void UCombatComponent::RequestAttack(ECombatAction Action)
                 UE_LOG(
                     LogTemp,
                     Log,
-                    TEXT("CombatComponent: Forwarding attack request immediately to SetupAttackSystem for %s"),
+                    TEXT("[CombatComponent]: Forwarding attack request immediately to SetupAttackSystem for %s"),
                     *Owner->GetName()
                 );
                 SetupAttackSystem->RequestAttackForActor(
@@ -80,7 +80,7 @@ void UCombatComponent::RequestAttack(ECombatAction Action)
             }
             else
             {
-                UE_LOG(LogTemp, Warning, TEXT("CombatComponent: SetupAttackSystem unavailable for %s"), *Owner->GetName());
+                UE_LOG(LogTemp, Warning, TEXT("[CombatComponent]: SetupAttackSystem unavailable for %s"), *Owner->GetName());
             }
         }
     }
@@ -117,7 +117,7 @@ void UCombatComponent::SetCurrentAttackAnimationKey(EAnimationKey NewAnimationKe
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("CombatComponent: Setting attack animation key to %d on %s"),
+        TEXT("[CombatComponent]: Setting attack animation key to %d on %s"),
         static_cast<int32>(NewAnimationKey),
         *GetNameSafe(GetOwner())
     );
@@ -133,7 +133,7 @@ void UCombatComponent::TriggerAttackAnimationReplication()
         UE_LOG(
             LogTemp,
             Log,
-            TEXT("CombatComponent: Triggering attack animation replication %d on %s"),
+            TEXT("[CombatComponent]: Triggering attack animation replication %d on %s"),
             AttackAnimationTrigger,
             *GetNameSafe(GetOwner())
         );
@@ -160,7 +160,7 @@ void UCombatComponent::OnRep_AttackAnimationTrigger()
                 UE_LOG(
                     LogTemp,
                     Log,
-                    TEXT("CombatComponent: OnRep_AttackAnimationTrigger publishing FAttackStartedPayload for %s with key %d (trigger=%d)"),
+                    TEXT("[CombatComponent]: OnRep_AttackAnimationTrigger publishing FAttackStartedPayload for %s with key %d (trigger=%d)"),
                     *Owner->GetName(),
                     static_cast<int32>(CurrentAttackAnimationKey),
                     AttackAnimationTrigger
@@ -177,7 +177,7 @@ void UCombatComponent::OnRep_AttackAnimationTrigger()
     UE_LOG(
         LogTemp,
         Warning,
-        TEXT("CombatComponent: OnRep_AttackAnimationTrigger could not publish for %s"),
+        TEXT("[CombatComponent]: OnRep_AttackAnimationTrigger could not publish for %s"),
         *GetNameSafe(GetOwner())
     );
 }

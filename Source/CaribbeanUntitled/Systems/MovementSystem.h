@@ -21,7 +21,7 @@ class CARIBBEANUNTITLED_API UMovementSystem : public UObject
 
 public:
 
-    void Tick(float DeltaTime);
+    void Tick(UWorld* World, float DeltaTime);
     void Cleanup();
     void DetermineAndPublishLocomotion(
         AActor* Actor,

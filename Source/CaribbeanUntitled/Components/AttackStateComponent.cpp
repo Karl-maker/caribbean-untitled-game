@@ -162,7 +162,7 @@ void UAttackStateComponent::StartActivePhase()
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("AttackStateComponent: Cannot start Active phase from %s"),
+        UE_LOG(LogTemp, Warning, TEXT("[AttackStateComponent]: Cannot start Active phase from %s"),
                *UEnum::GetValueAsString(Phase));
     }
 }
@@ -176,7 +176,7 @@ void UAttackStateComponent::StartRecoveryPhase()
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("AttackStateComponent: Cannot start Recovery phase from %s"),
+        UE_LOG(LogTemp, Warning, TEXT("[AttackStateComponent]: Cannot start Recovery phase from %s"),
                *UEnum::GetValueAsString(Phase));
     }
 }
@@ -203,7 +203,7 @@ void UAttackStateComponent::InternalSetPhase(EAttackPhase NewPhase)
     // Broadcast phase change
     OnAttackPhaseChanged.Broadcast(NewPhase, OldPhase);
     
-    UE_LOG(LogTemp, Log, TEXT("AttackStateComponent: Phase changed from %s to %s"),
+    UE_LOG(LogTemp, Log, TEXT("[AttackStateComponent]: Phase changed from %s to %s"),
            *UEnum::GetValueAsString(OldPhase),
            *UEnum::GetValueAsString(NewPhase));
 }
@@ -221,6 +221,6 @@ void UAttackStateComponent::InternalSetAttackIndex(int32 NewIndex)
     // Broadcast index change
     OnAttackIndexChanged.Broadcast(NewIndex, OldIndex);
     
-    UE_LOG(LogTemp, Log, TEXT("AttackStateComponent: Attack index changed from %d to %d"),
+    UE_LOG(LogTemp, Log, TEXT("[AttackStateComponent]: Attack index changed from %d to %d"),
            OldIndex, NewIndex);
 }

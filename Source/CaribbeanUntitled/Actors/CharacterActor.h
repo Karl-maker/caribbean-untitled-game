@@ -15,7 +15,6 @@ class UAnimationRegistryComponent;
 class UMoveSetComponent;
 class UCombatComponent;
 class UAttackStateComponent;
-class UIKComponent;
 class UActorRegistry;
 class UAnimInstance;
 class UAnimSequenceBase;
@@ -112,13 +111,6 @@ protected:
         Category="Actor|Components"
     )
     TObjectPtr<UAttackStateComponent> AttackStateComponent;
-
-    UPROPERTY(
-        VisibleAnywhere,
-        BlueprintReadOnly,
-        Category="Actor|Components"
-    )
-    TObjectPtr<UIKComponent> IKComponent;
 
     UPROPERTY(
         VisibleAnywhere,

@@ -188,19 +188,18 @@ Instead:
 
 That means the input pipeline and animation pipeline are connected, but not fused together.
 
-## Input To IK
+## Input To Pose
 
-The input pipeline does not drive IK directly.
+The input pipeline does not drive bone overrides directly.
 
 Instead:
 
 1. input becomes control intent
-2. movement and focus systems evaluate the world state
-3. the focus system writes a target into `UIKComponent`
-4. `UIKSystem` reads the target on tick
-5. poseable-mesh bones are rotated directly for head look or similar effects
+2. movement and gameplay systems evaluate that intent
+3. animation systems choose the active locomotion and action states
+4. `ACharacterActor` samples those states into the poseable mesh for runtime presentation
 
-That keeps camera and movement input separate from the IK solver while still allowing the character to react to nearby actors.
+That keeps control input separate from animation playback while still letting the character present the final layered pose each frame.
 
 ## Example Flow
 

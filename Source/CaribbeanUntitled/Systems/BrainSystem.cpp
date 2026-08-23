@@ -1,8 +1,6 @@
 #include "BrainSystem.h"
 #include "../Components/PerceptionComponent.h"
 #include "../EventBus/EventBusSubsystem.h"
-#include "FocusSystem.h"
-#include "IKSystem.h"
 #include "ActorRegistry.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
@@ -15,7 +13,6 @@ bool UBrainSystem::IsTickable() const
 void UBrainSystem::Cleanup()
 {
     ThinkStates.Reset();
-    FocusSystem = nullptr;
 }
 
 TStatId UBrainSystem::GetStatId() const
@@ -29,31 +26,10 @@ float UBrainSystem::RollNextThinkInterval() const
     return FMath::Max(0.05f, BaseThinkInterval + FMath::FRandRange(-Jitter, Jitter));
 }
 
-void UBrainSystem::Tick(float DeltaTime)
+void UBrainSystem::Tick(UWorld* World, float DeltaTime)
 {
-    if (!FocusSystem)
-    {
-        FocusSystem = NewObject<UFocusSystem>(this);
-    }
-
-    if (FocusSystem)
-    {
-        FocusSystem->Tick(DeltaTime);
-    }
-
-    if (!IKSystem)
-    {
-        IKSystem = NewObject<UIKSystem>(this);
-    }
-
-    if (IKSystem)
-    {
-        IKSystem->Tick(DeltaTime);
-    }
-
-    UActorRegistry* Registry = GetWorld()
-        ? GetWorld()->GetSubsystem<UActorRegistry>()
-        : nullptr;
+    UActorRegistry* Registry =
+        World ? World->GetSubsystem<UActorRegistry>() : nullptr;
 
     if (!Registry)
     {
@@ -192,7 +168,6 @@ FBrainIntentData UBrainSystem::DecideIntent(
 
     if (!BrainComponent)
     {
-        UE_LOG(LogTemp, Warning, TEXT("[Brain] NO BRAIN COMPONENT"));
         return Result;
     }
 
@@ -207,11 +182,6 @@ FBrainIntentData UBrainSystem::DecideIntent(
         const FPerceivedActor* FirstActor =
             PerceivedActors.Num() > 0 ? &PerceivedActors[0] : nullptr;
 
-        UE_LOG(LogTemp, Log, TEXT("[Brain] PERCEPTION DATA | Perceived=%d | FirstTarget=%s | FirstVisible=%s"),
-            PerceivedActors.Num(),
-            FirstActor && FirstActor->Actor ? *FirstActor->Actor->GetName() : TEXT("NULL"),
-            FirstActor && FirstActor->bVisible ? TEXT("true") : TEXT("false")
-        );
     }
 
     // No perception component at all - hold still, low-key idle.
@@ -220,7 +190,6 @@ FBrainIntentData UBrainSystem::DecideIntent(
         Result.Intent = EBrainIntent::Idle;
         Result.Effort = 0.1f;
         Result.Feeling = EBrainFeeling::Neutral;
-        UE_LOG(LogTemp, Log, TEXT("[Brain] NO PERCEPTION → IDLE"));
         return Result;
     }
 
@@ -238,12 +207,6 @@ FBrainIntentData UBrainSystem::DecideIntent(
             continue;
         }
 
-        UE_LOG(LogTemp, Warning, TEXT("[Brain] TARGET DETECTED! | Visible=%s | Target=%s | Personality: Sociability=%.2f, Curiosity=%.2f"),
-            bVisible ? TEXT("true") : TEXT("false"),
-            *Target->GetName(),
-            P.Sociability,
-            P.Curiosity
-        );
 
         // If visible, always follow or at least look at the target
         if (bVisible && Target)
@@ -254,21 +217,18 @@ FBrainIntentData UBrainSystem::DecideIntent(
                 Result.Intent = EBrainIntent::Follow;
                 Result.Feeling = EBrainFeeling::Happy;
                 Result.Effort = FMath::Clamp(0.3f + P.Sociability * 0.4f, 0.0f, 1.0f);
-                UE_LOG(LogTemp, Warning, TEXT("[Brain] → FOLLOW (Sociable)"));
             }
             else if (P.Aggression >= 0.4f)
             {
                 Result.Intent = EBrainIntent::Attack;
                 Result.Feeling = EBrainFeeling::Angry;
                 Result.Effort = FMath::Clamp(0.5f + P.Aggression * 0.5f, 0.0f, 1.0f);
-                UE_LOG(LogTemp, Warning, TEXT("[Brain] → ATTACK (Aggressive)"));
             }
             else if (P.Curiosity >= 0.4f)
             {
                 Result.Intent = EBrainIntent::Investigate;
                 Result.Feeling = EBrainFeeling::Curious;
                 Result.Effort = FMath::Clamp(0.2f + P.Curiosity * 0.5f, 0.0f, 1.0f);
-                UE_LOG(LogTemp, Warning, TEXT("[Brain] → INVESTIGATE (Curious)"));
             }
             else
             {
@@ -276,7 +236,6 @@ FBrainIntentData UBrainSystem::DecideIntent(
                 Result.Intent = EBrainIntent::Follow; // Or Wander, or Idle - just DO something
                 Result.Feeling = EBrainFeeling::Neutral;
                 Result.Effort = 0.5f;
-                UE_LOG(LogTemp, Warning, TEXT("[Brain] → FOLLOW (Default)"));
             }
 
             Result.TargetActor = Target;
@@ -291,11 +250,6 @@ FBrainIntentData UBrainSystem::DecideIntent(
             Result.Feeling = EBrainFeeling::Suspicious;
             Result.Effort = FMath::Clamp(0.2f + P.Curiosity * 0.5f, 0.0f, 1.0f);
             Result.TargetLocation = Perceived.LastKnownLocation;
-            UE_LOG(LogTemp, Warning, TEXT("[Brain] → INVESTIGATE (Lost Target) | Location=(%.1f,%.1f,%.1f)"),
-                Result.TargetLocation.X,
-                Result.TargetLocation.Y,
-                Result.TargetLocation.Z
-            );
             return Result;
         }
     }
@@ -306,14 +260,12 @@ FBrainIntentData UBrainSystem::DecideIntent(
         Result.Intent = EBrainIntent::Wander;
         Result.Feeling = EBrainFeeling::Curious;
         Result.Effort = FMath::Clamp(P.Curiosity * 0.4f, 0.1f, 0.6f);
-        UE_LOG(LogTemp, Log, TEXT("[Brain] → WANDER"));
     }
     else
     {
         Result.Intent = EBrainIntent::Idle;
         Result.Feeling = EBrainFeeling::Neutral;
         Result.Effort = 0.1f;
-        UE_LOG(LogTemp, Log, TEXT("[Brain] → IDLE"));
     }
 
     return Result;

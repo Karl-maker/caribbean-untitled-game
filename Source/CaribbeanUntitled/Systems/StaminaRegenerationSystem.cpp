@@ -10,20 +10,19 @@
 // TICK
 // ============================================================
 
-void UStaminaRegenerationSystem::Tick(float DeltaTime)
+void UStaminaRegenerationSystem::Tick(UWorld* World, float DeltaTime)
 {
     if (DeltaTime <= 0.0f)
     {
         return;
     }
 
-    UWorld* World = GetWorld();
     if (!World)
     {
         return;
     }
 
-    UActorRegistry* Registry = GetActorRegistry();
+    UActorRegistry* Registry = World->GetSubsystem<UActorRegistry>();
     if (!Registry)
     {
         return;
@@ -164,17 +163,6 @@ void UStaminaRegenerationSystem::StopRegeneration(
     }
 
     RegeneratingActors.Remove(Stats);
-}
-
-
-// ============================================================
-// GET ACTOR REGISTRY
-// ============================================================
-
-UActorRegistry* UStaminaRegenerationSystem::GetActorRegistry() const
-{
-    UWorld* World = GetWorld();
-    return World ? World->GetSubsystem<UActorRegistry>() : nullptr;
 }
 
 

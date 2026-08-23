@@ -17,16 +17,13 @@ void UCombatAnimationSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
 
-    UE_LOG(LogTemp, Log, TEXT("CombatAnimationSystem: Initializing"));
 
     if (UEventBusSubsystem* EventBus = GetEventBus())
     {
         EventBus->Subscribe<FAttackStartedPayload>(this, &UCombatAnimationSystem::OnAttackStarted);
-        UE_LOG(LogTemp, Log, TEXT("CombatAnimationSystem: Subscribed to FAttackStartedPayload"));
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("CombatAnimationSystem: EventBus unavailable during Initialize"));
     }
 }
 
@@ -61,31 +58,18 @@ void UCombatAnimationSystem::OnAttackStarted(const FAttackStartedPayload& Payloa
 {
     if (!IsValid(Payload.SourceActor))
     {
-        UE_LOG(LogTemp, Warning, TEXT("CombatAnimationSystem: Invalid SourceActor in FAttackStartedPayload"));
         return;
     }
 
     UCombatComponent* Combat = Payload.SourceActor->FindComponentByClass<UCombatComponent>();
     if (!IsValid(Combat))
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("CombatAnimationSystem: No CombatComponent on %s"),
-            *Payload.SourceActor->GetName()
-        );
         return;
     }
 
     const EAnimationKey AnimationKey = Combat->GetCurrentAttackAnimationKey();
     if (AnimationKey == EAnimationKey::None)
     {
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("CombatAnimationSystem: No attack animation key set on %s"),
-            *Payload.SourceActor->GetName()
-        );
         return;
     }
 
@@ -99,14 +83,6 @@ void UCombatAnimationSystem::OnAttackStarted(const FAttackStartedPayload& Payloa
         }
     }
 
-    UE_LOG(
-        LogTemp,
-        Log,
-        TEXT("CombatAnimationSystem: Requesting animation %d for %s with force restart on layer %d"),
-        static_cast<int32>(AnimationKey),
-        *Payload.SourceActor->GetName(),
-        static_cast<int32>(AnimationLayer)
-    );
 
     if (UAnimationSystem* AnimationSystem = GetAnimationSystem())
     {
@@ -119,6 +95,5 @@ void UCombatAnimationSystem::OnAttackStarted(const FAttackStartedPayload& Payloa
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("CombatAnimationSystem: AnimationSystem unavailable"));
     }
 }

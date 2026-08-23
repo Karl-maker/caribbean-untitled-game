@@ -38,12 +38,6 @@ void UMovementAnimationSystem::Deinitialize()
 void UMovementAnimationSystem::OnMovementControlEvent(
     const FMovementPayload& Payload)
 {
-    UE_LOG(
-        LogTemp,
-        Warning,
-        TEXT("ANIMATION RECEIVED -> %d"),
-        static_cast<uint8>(Payload.Type)
-    );
 
     EAnimationKey Key = EAnimationKey::Idle;
 

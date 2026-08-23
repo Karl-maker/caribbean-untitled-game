@@ -42,7 +42,7 @@ public:
     // Tick
     //=========================================================================
 
-    virtual void Tick(float DeltaTime);
+    void Tick(UWorld* World, float DeltaTime);
 
     virtual TStatId GetStatId() const;
 
@@ -74,11 +74,6 @@ private:
     //=========================================================================
     // Actor Registry
     //=========================================================================
-
-    /**
-     * Gets the world's ActorRegistry subsystem.
-     */
-    UActorRegistry* GetActorRegistry() const;
 
     //=========================================================================
     // Input State

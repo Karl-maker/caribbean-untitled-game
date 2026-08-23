@@ -8,7 +8,6 @@
 
 class UAnimInstance;
 class UAnimSequence;
-class UCurveFloat;
 class UInputAction;
 class UInputMappingContext;
 class USkeletalMesh;
@@ -50,12 +49,6 @@ struct FAnimationAssetEntry
 
     UPROPERTY(EditAnywhere)
     FSoftObjectPath Animation;
-
-    UPROPERTY(EditAnywhere)
-    EAnimationBlendMode BlendMode = EAnimationBlendMode::FullBody;
-
-    UPROPERTY(EditAnywhere)
-    FSoftObjectPath BlendCurve;
 };
 
 USTRUCT(BlueprintType)

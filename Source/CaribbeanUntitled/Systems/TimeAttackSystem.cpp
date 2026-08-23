@@ -51,12 +51,22 @@ TStatId UTimeAttackSystem::GetStatId() const
 
 void UTimeAttackSystem::Tick(float DeltaTime)
 {
+    Tick(GetWorld(), DeltaTime);
+}
+
+void UTimeAttackSystem::Tick(UWorld* World, float DeltaTime)
+{
     if (DeltaTime <= 0.0f || ActiveAttacks.Num() == 0)
     {
         return;
     }
 
-    UActorRegistry* Registry = GetActorRegistry();
+    if (!World)
+    {
+        return;
+    }
+
+    UActorRegistry* Registry = World->GetSubsystem<UActorRegistry>();
     if (!Registry)
     {
         return;
@@ -107,17 +117,9 @@ void UTimeAttackSystem::OnAttackStarted(const FAttackStartedPayload& Payload)
 {
     if (!IsValid(Payload.SourceActor))
     {
-        UE_LOG(LogTemp, Warning, TEXT("TimeAttackSystem: Invalid attack start payload"));
         return;
     }
 
-    UE_LOG(
-        LogTemp,
-        Log,
-        TEXT("TimeAttackSystem: Tracking attack timing for %s | MoveId=%s"),
-        *Payload.SourceActor->GetName(),
-        *Payload.Move.MoveId.ToString()
-    );
 
     FActiveAttackState& State = ActiveAttacks.FindOrAdd(Payload.SourceActor);
     State.Move = Payload.Move;
@@ -155,14 +157,6 @@ void UTimeAttackSystem::ProcessActor(AActor* Actor, FActiveAttackState& State, f
     {
         if (PhaseDuration <= 0.0f || PhaseTime >= PhaseDuration)
         {
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("TimeAttackSystem: Advancing %s from Anticipation to Active | PhaseTime=%.3f Duration=%.3f"),
-                *Actor->GetName(),
-                PhaseTime,
-                PhaseDuration
-            );
             AttackState->StartActivePhase();
             return;
         }
@@ -179,14 +173,6 @@ void UTimeAttackSystem::ProcessActor(AActor* Actor, FActiveAttackState& State, f
         {
             SetMoveVolumesActive(State.Move, false);
             State.bCombatVolumeActive = false;
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("TimeAttackSystem: Advancing %s from Active to Recovery | PhaseTime=%.3f Duration=%.3f"),
-                *Actor->GetName(),
-                PhaseTime,
-                PhaseDuration
-            );
             AttackState->StartRecoveryPhase();
             return;
         }
@@ -201,14 +187,6 @@ void UTimeAttackSystem::ProcessActor(AActor* Actor, FActiveAttackState& State, f
 
         if (PhaseDuration <= 0.0f || PhaseTime >= PhaseDuration)
         {
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("TimeAttackSystem: Completing attack for %s | PhaseTime=%.3f Duration=%.3f"),
-                *Actor->GetName(),
-                PhaseTime,
-                PhaseDuration
-            );
             Combat->SetCanAttack(true);
             AttackState->ClearAttackState();
             ActiveAttacks.Remove(Actor);
