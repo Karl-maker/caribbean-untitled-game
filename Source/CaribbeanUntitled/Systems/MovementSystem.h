@@ -39,24 +39,19 @@ public:
         const FVector& MoveDirection,
         bool bWantsToSprint,
         bool bWantsToCrouch,
-        ELocomotion PreviousState,
-        bool bJumpInProgress) const;
+        ELocomotion PreviousState) const;
 
     UEventBusSubsystem* GetEventBus() const;
 
-    TSet<TWeakObjectPtr<AActor>> AscendingJumpers;
-    bool IsJumpInProgress(AActor* Actor) const;
 private:
     TMap<TWeakObjectPtr<AActor>, ELocomotion> PreviousLocomotionStates;
     TMap<TWeakObjectPtr<AActor>, FTimerHandle> LandingTimers;
-    TMap<TWeakObjectPtr<AActor>, FTimerHandle> PendingJumpTimers;
 
     float LandingDuration = 0.7f;
     
     void ClearLandingState(TWeakObjectPtr<AActor> WeakActor);
     void ClearAllTimersForActor(AActor* Actor);
     void ProcessActor(AActor* Actor, float DeltaTime);
-    void PerformDelayedJump(TWeakObjectPtr<AActor> WeakActor, float AscentGravityScale);
 
     FVector ResolveMoveDirection(class ACharacter* Character, class UControlComponent* Control) const;
     FVector ComputeIntentDirection(class ACharacter* Character, const FVector2D& MoveIntent) const;
@@ -67,12 +62,6 @@ private:
         class UCharacterMovementComponent* Movement,
         bool bWantsToSprint,
         bool bWantsToCrouch);
-
-    void ApplyJump(
-        class ACharacter* Character,
-        class UStatsComponent* Stats,
-        class UCharacterMovementComponent* Movement,
-        class UControlComponent* Control);
 
     void ApplyMovement(class ACharacter* Character, const FVector& MoveDirection);
 
