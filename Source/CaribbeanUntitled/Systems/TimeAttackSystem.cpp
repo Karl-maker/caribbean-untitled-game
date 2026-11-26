@@ -66,6 +66,11 @@ void UTimeAttackSystem::Tick(UWorld* World, float DeltaTime)
         return;
     }
 
+    if (World->GetNetMode() == NM_Client)
+    {
+        return;
+    }
+
     UActorRegistry* Registry = World->GetSubsystem<UActorRegistry>();
     if (!Registry)
     {
@@ -116,6 +121,11 @@ void UTimeAttackSystem::UnsubscribeFromEvents()
 void UTimeAttackSystem::OnAttackStarted(const FAttackStartedPayload& Payload)
 {
     if (!IsValid(Payload.SourceActor))
+    {
+        return;
+    }
+
+    if (!Payload.SourceActor->HasAuthority())
     {
         return;
     }

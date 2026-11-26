@@ -1,6 +1,7 @@
 #include "ActionSystem.h"
 #include "ActorRegistry.h"
 #include "../Components/ControlComponent.h"
+#include "../Components/CombatComponent.h"
 #include "../Components/PerceptionComponent.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
@@ -116,6 +117,87 @@ private:
     }
 };
 
+class FFollowActionBehavior : public IActionBehavior
+{
+public:
+    virtual void Execute(FActionContext& Context) override
+    {
+        if (!Context.Actor || !Context.Control || !Context.Brain)
+        {
+            return;
+        }
+
+        AActor* Target = Context.Brain->GetIntent().TargetActor;
+        if (!IsValid(Target))
+        {
+            Context.Control->ClearMovementIntent();
+            return;
+        }
+
+        const FVector TargetLocation = Target->GetActorLocation();
+        Context.Control->MoveToWorldLocation(TargetLocation);
+        Context.Control->SetLookAtLocation(TargetLocation);
+    }
+};
+
+class FInvestigateActionBehavior : public IActionBehavior
+{
+public:
+    virtual void Execute(FActionContext& Context) override
+    {
+        if (!Context.Actor || !Context.Control || !Context.Brain)
+        {
+            return;
+        }
+
+        const FVector TargetLocation = Context.Brain->GetIntent().TargetLocation;
+        Context.Control->MoveToWorldLocation(TargetLocation);
+        Context.Control->SetLookAtLocation(TargetLocation);
+    }
+};
+
+class FAttackActionBehavior : public IActionBehavior
+{
+public:
+    virtual float GetPreferredInterval() const override { return 0.1f; }
+
+    virtual void Execute(FActionContext& Context) override
+    {
+        if (!Context.Actor || !Context.Control || !Context.Brain)
+        {
+            return;
+        }
+
+        AActor* Target = Context.Brain->GetIntent().TargetActor;
+        if (!IsValid(Target))
+        {
+            Context.Control->ClearMovementIntent();
+            return;
+        }
+
+        const FVector TargetLocation = Target->GetActorLocation();
+        Context.Control->SetLookAtLocation(TargetLocation);
+
+        constexpr float AttackRange = 175.0f;
+        if (FVector::DistSquared2D(Context.Actor->GetActorLocation(), TargetLocation) >
+            FMath::Square(AttackRange))
+        {
+            Context.Control->MoveToWorldLocation(TargetLocation);
+            return;
+        }
+
+        Context.Control->ClearMovementIntent();
+        if (UCombatComponent* Combat =
+            Context.Actor->FindComponentByClass<UCombatComponent>())
+        {
+            if (Combat->CanAttack())
+            {
+                Combat->RequestAttack(ECombatAction::LightAttack);
+            }
+        }
+    }
+};
+
 
 //=============================================================================
 // Flee
@@ -184,6 +266,11 @@ public:
 // UActionSystem
 //=============================================================================
 
+UActionSystem::UActionSystem()
+{
+    BuildDefaultBehaviors();
+}
+
 TStatId UActionSystem::GetStatId() const
 {
     RETURN_QUICK_DECLARE_CYCLE_STAT(UActionSystem, STATGROUP_Tickables);
@@ -197,13 +284,12 @@ void UActionSystem::Cleanup()
 
 void UActionSystem::BuildDefaultBehaviors()
 {
-    AddBehavior(EBrainIntent::Investigate, MakeShared<FIdleActionBehavior>());
-    AddBehavior(EBrainIntent::Follow, MakeShared<FWanderActionBehavior>());
-    AddBehavior(EBrainIntent::Attack, MakeShared<FFleeActionBehavior>());
-
-    // Everything else (Follow, GoTo, Investigate, Attack, Defend, Interact...)
-    // is unmapped for now and falls back to a movement-cleared no-op in
-    // ThinkFor below, until you add locomotion (or other) behaviors for them.
+    AddBehavior(EBrainIntent::Idle, MakeShared<FIdleActionBehavior>());
+    AddBehavior(EBrainIntent::Wander, MakeShared<FWanderActionBehavior>());
+    AddBehavior(EBrainIntent::Investigate, MakeShared<FInvestigateActionBehavior>());
+    AddBehavior(EBrainIntent::Follow, MakeShared<FFollowActionBehavior>());
+    AddBehavior(EBrainIntent::Flee, MakeShared<FFleeActionBehavior>());
+    AddBehavior(EBrainIntent::Attack, MakeShared<FAttackActionBehavior>());
 }
 
 void UActionSystem::AddBehavior(EBrainIntent Intent, TSharedPtr<IActionBehavior> Behavior)

@@ -6,6 +6,7 @@ UAttackStateComponent::UAttackStateComponent()
 {
     // Set this component to be initialized when the game starts, and to be ticked every frame
     PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.bStartWithTickEnabled = false;
     PrimaryComponentTick.TickGroup = TG_PrePhysics;
 
     // Initialize state
@@ -93,6 +94,7 @@ void UAttackStateComponent::ResetAttackState()
     PhaseTime = 0.0f;
     CurrentMoveKey = EMoveSetTypeKey::None;
     CurrentMoveId = NAME_None;
+    SetComponentTickEnabled(false);
     
     // Broadcast changes
     if (OldPhase != Phase)
@@ -196,6 +198,7 @@ void UAttackStateComponent::InternalSetPhase(EAttackPhase NewPhase)
 
     EAttackPhase OldPhase = Phase;
     Phase = NewPhase;
+    SetComponentTickEnabled(Phase != EAttackPhase::None);
     
     // Reset phase time when changing phases
     PhaseTime = 0.0f;

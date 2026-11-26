@@ -10,8 +10,6 @@
 #include "../Systems/PerceptionSystem.h"
 #include "../Systems/BrainSystem.h"
 #include "../Systems/ActionSystem.h"
-#include "../Systems/AnimationSystem.h"
-#include "../Systems/StaminaRegenerationSystem.h"
 #include "../Systems/StaminaSystem.h"
 #include "../Systems/CombatDetectionSystem.h"
 #include "../Systems/CombatInputSystem.h"
@@ -42,8 +40,6 @@ void UGameplaySystemScheduler::Initialize(
     PerceptionSystem = NewObject<UPerceptionSystem>(this);
     BrainSystem = NewObject<UBrainSystem>(this);
     ActionSystem = NewObject<UActionSystem>(this);
-    AnimationSystem = NewObject<UAnimationSystem>(this);
-    StaminaRegenerationSystem = NewObject<UStaminaRegenerationSystem>(this);
     CombatDetectionSystem = NewObject<UCombatDetectionSystem>(this);
     CombatInputSystem = NewObject<UCombatInputSystem>(this);
 }
@@ -90,14 +86,6 @@ void UGameplaySystemScheduler::Deinitialize()
     }
     ActionSystem = nullptr;
 
-    AnimationSystem = nullptr;
-
-    if (StaminaRegenerationSystem)
-    {
-        StaminaRegenerationSystem->Cleanup();
-    }
-    StaminaRegenerationSystem = nullptr;
-    
     if (CombatInputSystem)
     {
         CombatInputSystem->Cleanup();
@@ -192,7 +180,6 @@ void UGameplaySystemScheduler::TickGameplay(UWorld* World, float DeltaTime)
 void UGameplaySystemScheduler::TickMovement(UWorld* World, float DeltaTime)
 {
     if (StaminaSystem) StaminaSystem->Tick(World, DeltaTime);
-    if (StaminaRegenerationSystem) StaminaRegenerationSystem->Tick(World, DeltaTime);
     if (MovementSystem) MovementSystem->Tick(World, DeltaTime);
 }
 

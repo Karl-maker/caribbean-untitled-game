@@ -8,6 +8,7 @@
 #include "../Components/AttackStateComponent.h"
 #include "../Components/CombatComponent.h"
 #include "../Components/MoveSetComponent.h"
+#include "../Components/StatsComponent.h"
 #include "../EventBus/EventBusSubsystem.h"
 #include "ActorRegistry.h"
 
@@ -42,6 +43,11 @@ void USetupAttackSystem::Tick(UWorld* World, float DeltaTime)
     }
 
     if (!World)
+    {
+        return;
+    }
+
+    if (World->GetNetMode() == NM_Client)
     {
         return;
     }
@@ -107,6 +113,11 @@ void USetupAttackSystem::RequestAttackForActor(
     ECombatAction RequestedAction)
 {
     if (!IsValid(Actor))
+    {
+        return;
+    }
+
+    if (!Actor->HasAuthority())
     {
         return;
     }
@@ -179,6 +190,15 @@ void USetupAttackSystem::StartAttack(
         return;
     }
 
+    if (UStatsComponent* Stats =
+        Actor->FindComponentByClass<UStatsComponent>())
+    {
+        if (!Stats->ConsumeStamina(Move.Stamina))
+        {
+            Combat->ClearRequestedAction();
+            return;
+        }
+    }
 
     Combat->SetCanAttack(false);
     Combat->ClearRequestedAction();

@@ -40,7 +40,8 @@ ACharacterActor::ACharacterActor()
 
     if (Mesh && Capsule)
     {
-        Mesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+        Mesh->VisibilityBasedAnimTickOption =
+            EVisibilityBasedAnimTickOption::OnlyTickMontagesWhenNotRendered;
         const FBoxSphereBounds Bounds = Mesh->CalcBounds(
             Mesh->GetComponentTransform()
         );
@@ -73,8 +74,10 @@ ACharacterActor::ACharacterActor()
 
     if (PoseableMeshComponent && Mesh)
     {
-        PoseableMeshComponent->PrimaryComponentTick.bCanEverTick = true;
-        PoseableMeshComponent->PrimaryComponentTick.bStartWithTickEnabled = true;
+        // ACharacterActor explicitly evaluates this mesh once per actor tick.
+        // A second component tick only duplicates work.
+        PoseableMeshComponent->PrimaryComponentTick.bCanEverTick = false;
+        PoseableMeshComponent->PrimaryComponentTick.bStartWithTickEnabled = false;
         PoseableMeshComponent->SetupAttachment(GetCapsuleComponent());
         PoseableMeshComponent->SetRelativeLocation(Mesh->GetRelativeLocation());
         PoseableMeshComponent->SetRelativeRotation(Mesh->GetRelativeRotation());

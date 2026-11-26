@@ -2,6 +2,7 @@
 
 #include "ActorRegistry.h"
 
+#include "../Components/CombatComponent.h"
 #include "../Components/CombatVolumeComponent.h"
 #include "../EventBus/EventBusSubsystem.h"
 
@@ -72,35 +73,16 @@ void UCombatDetectionSystem::Tick(UWorld* World, float DeltaTime)
         return;
     }
 
-    // ========================================================================
-    // Detection Frequency
-    // ========================================================================
-    //
-    // The scheduler can tick this system frequently.
-    //
-    // We intentionally only perform collision detection every
-    // DetectionTickInterval ticks.
-    //
-    // Example:
-    //
-    // Scheduler:
-    //
-    //     Tick 1 -> skip
-    //     Tick 2 -> detect
-    //     Tick 3 -> skip
-    //     Tick 4 -> detect
-    //
-    // This reduces the number of expensive spatial queries.
-    // ========================================================================
-
-    ++DetectionTickCounter;
-
-    if (DetectionTickCounter < DetectionTickInterval)
+    DetectionAccumulator += DeltaTime;
+    if (DetectionAccumulator < DetectionIntervalSeconds)
     {
         return;
     }
 
-    DetectionTickCounter = 0;
+    DetectionAccumulator = FMath::Fmod(
+        DetectionAccumulator,
+        DetectionIntervalSeconds
+    );
 
     DetectCollisions(World);
 }
@@ -202,6 +184,8 @@ void UCombatDetectionSystem::ProcessActor(AActor* Actor)
         CombatVolumes
     );
 
+    bool bHasActiveAttackVolume = false;
+
     for (UCombatVolumeComponent* CombatVolume : CombatVolumes)
     {
         if (!IsValid(CombatVolume))
@@ -247,7 +231,13 @@ void UCombatDetectionSystem::ProcessActor(AActor* Actor)
             continue;
         }
 
+        bHasActiveAttackVolume = true;
         ProcessCombatVolume(CombatVolume);
+    }
+
+    if (!bHasActiveAttackVolume)
+    {
+        SourceHitStates.Remove(Actor);
     }
 }
 
@@ -578,6 +568,11 @@ void UCombatDetectionSystem::ProcessOverlap(
         return;
     }
 
+    if (!RegisterHitForCurrentAttack(SourceActor, TargetActor))
+    {
+        return;
+    }
+
     // ========================================================================
     // Build Payload
     // ========================================================================
@@ -655,6 +650,38 @@ void UCombatDetectionSystem::ProcessOverlap(
     PublishCollisionEvent(Payload);
 }
 
+bool UCombatDetectionSystem::RegisterHitForCurrentAttack(
+    AActor* SourceActor,
+    AActor* TargetActor)
+{
+    if (!IsValid(SourceActor) || !IsValid(TargetActor))
+    {
+        return false;
+    }
+
+    int32 AttackSequence = 0;
+    if (const UCombatComponent* Combat =
+        SourceActor->FindComponentByClass<UCombatComponent>())
+    {
+        AttackSequence = Combat->GetAttackSequence();
+    }
+
+    FSourceHitState& State = SourceHitStates.FindOrAdd(SourceActor);
+    if (State.AttackSequence != AttackSequence)
+    {
+        State.AttackSequence = AttackSequence;
+        State.HitActors.Reset();
+    }
+
+    if (State.HitActors.Contains(TargetActor))
+    {
+        return false;
+    }
+
+    State.HitActors.Add(TargetActor);
+    return true;
+}
+
 
 // ============================================================================
 // Event Bus
@@ -695,5 +722,6 @@ UEventBusSubsystem* UCombatDetectionSystem::GetEventBus() const
 
 void UCombatDetectionSystem::Cleanup()
 {
-    DetectionTickCounter = 0;
+    DetectionAccumulator = 0.0f;
+    SourceHitStates.Reset();
 }

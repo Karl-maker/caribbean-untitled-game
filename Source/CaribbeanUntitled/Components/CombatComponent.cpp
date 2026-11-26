@@ -168,6 +168,7 @@ void UCombatComponent::OnRep_AttackAnimationTrigger()
 
                 FAttackStartedPayload Payload;
                 Payload.SourceActor = Owner;
+                Payload.Move.Animation = CurrentAttackAnimationKey;
                 EventBus->Publish<FAttackStartedPayload>(Payload);
                 return;
             }

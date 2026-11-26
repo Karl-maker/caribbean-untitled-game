@@ -1,4 +1,5 @@
 #include "PerceptionSystem.h"
+#include "ActorRegistry.h"
 #include "../Components/PerceptionComponent.h"
 #include "../Components/StatsComponent.h"
 
@@ -6,7 +7,6 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
-#include "UObject/UObjectIterator.h"
 
 
 void UPerceptionSystem::Cleanup()
@@ -59,8 +59,14 @@ const TArray<TWeakObjectPtr<AActor>>& UPerceptionSystem::GetNearbyActors(
         const FVector CellCentre =
             (FVector(CellCoord) + FVector(0.5f)) * CellSize;
 
+        // The query is centered on the cell rather than this individual
+        // perceiver. Cover the farthest point in the cell so actors near an
+        // edge do not lose valid candidates.
+        const float CellCornerAllowance =
+            0.5f * CellSize * FMath::Sqrt(3.0f);
+
         const float Radius =
-            QueryRadius + QueryPadding;
+            QueryRadius + QueryPadding + CellCornerAllowance;
 
         TArray<AActor*> Overlapping;
         TArray<AActor*> IgnoreActors;
@@ -86,7 +92,7 @@ const TArray<TWeakObjectPtr<AActor>>& UPerceptionSystem::GetNearbyActors(
         }
 
         Cell.LastQueryTime = Now;
-        Cell.QueriedRadius = Radius;
+        Cell.QueriedRadius = QueryRadius;
 
 
         for (const TWeakObjectPtr<AActor>& WeakActor : Cell.Actors)
@@ -180,29 +186,31 @@ void UPerceptionSystem::Tick(
         return;
     }
 
-    int32 ComponentsFound = 0;
-    int32 ComponentsEvaluated = 0;
-
-    for (TObjectIterator<UCharacterPerceptionComponent> It;
-         It;
-         ++It)
+    UActorRegistry* Registry = World->GetSubsystem<UActorRegistry>();
+    if (!Registry)
     {
-        UCharacterPerceptionComponent* Perception = *It;
+        return;
+    }
 
-        if (!IsValid(Perception) ||
-            Perception->GetWorld() != World)
+    const TSet<TWeakObjectPtr<AActor>>* PerceptionActors =
+        Registry->GetActorsWithComponent<UCharacterPerceptionComponent>();
+    if (!PerceptionActors)
+    {
+        return;
+    }
+
+    for (const TWeakObjectPtr<AActor>& WeakActor : *PerceptionActors)
+    {
+        AActor* Owner = WeakActor.Get();
+        if (!IsValid(Owner))
         {
             continue;
         }
 
-        ++ComponentsFound;
-
-        AActor* Owner =
-            Perception->GetOwner();
-
-        if (!Owner)
+        UCharacterPerceptionComponent* Perception =
+            Owner->FindComponentByClass<UCharacterPerceptionComponent>();
+        if (!IsValid(Perception))
         {
-
             continue;
         }
 
@@ -224,9 +232,6 @@ void UPerceptionSystem::Tick(
 
             continue;
         }
-
-        ++ComponentsEvaluated;
-
 
         EvaluatePerceiver(
             World,

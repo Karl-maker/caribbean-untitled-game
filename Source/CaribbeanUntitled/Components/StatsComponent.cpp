@@ -29,8 +29,11 @@ void UStatsComponent::BeginPlay()
         MaxHealth
     );
 
-    // Start stamina regeneration timer
-    StartStaminaRegenerationTimer();
+    // Resource mutation is server-authoritative. Clients receive replication.
+    if (GetOwner() && GetOwner()->HasAuthority())
+    {
+        StartStaminaRegenerationTimer();
+    }
 }
 
 void UStatsComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)

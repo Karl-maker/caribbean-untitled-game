@@ -51,6 +51,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Combat")
     void TriggerAttackAnimationReplication();
 
+    UFUNCTION(BlueprintPure, Category = "Combat")
+    int32 GetAttackSequence() const { return AttackAnimationTrigger; }
+
 protected:
     virtual void BeginPlay() override;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

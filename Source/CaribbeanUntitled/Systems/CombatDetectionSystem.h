@@ -135,6 +135,11 @@ private:
         const FOverlapResult& Overlap
     );
 
+    bool RegisterHitForCurrentAttack(
+        AActor* SourceActor,
+        AActor* TargetActor
+    );
+
 
     // ---------------------------------------------------------
     // Event Bus
@@ -149,20 +154,16 @@ private:
 
 private:
 
-    /**
-     * Run combat detection every other scheduler tick.
-     *
-     * At 60 FPS:
-     *
-     * Game:
-     *  1 2 3 4 5 6
-     *
-     * Combat:
-     *   X   X   X
-     *
-     * ~30 detection passes per second.
-     */
-    static constexpr int32 DetectionTickInterval = 2;
+    /** Run authoritative melee detection at a stable 60 Hz budget. */
+    static constexpr float DetectionIntervalSeconds = 1.0f / 60.0f;
 
-    int32 DetectionTickCounter = 0;
+    float DetectionAccumulator = 0.0f;
+
+    struct FSourceHitState
+    {
+        int32 AttackSequence = INDEX_NONE;
+        TSet<TWeakObjectPtr<AActor>> HitActors;
+    };
+
+    TMap<TWeakObjectPtr<AActor>, FSourceHitState> SourceHitStates;
 };

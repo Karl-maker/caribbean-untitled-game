@@ -41,6 +41,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Attack State")
     float GetPhaseTimeNormalized(float TotalPhaseDuration) const;
 
+    UFUNCTION(BlueprintPure, Category = "Attack State")
+    EMoveSetTypeKey GetCurrentMoveKey() const { return CurrentMoveKey; }
+
+    UFUNCTION(BlueprintPure, Category = "Attack State")
+    FName GetCurrentMoveId() const { return CurrentMoveId; }
+
     // Setters
     UFUNCTION(BlueprintCallable, Category = "Attack State")
     void SetPhase(EAttackPhase NewPhase);

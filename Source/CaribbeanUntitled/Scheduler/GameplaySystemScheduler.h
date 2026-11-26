@@ -16,8 +16,6 @@ class UCameraSystem;
 class UPerceptionSystem;
 class UBrainSystem;
 class UActionSystem;
-class UAnimationSystem;
-class UStaminaRegenerationSystem;
 class UCombatDetectionSystem;
 class UCombatInputSystem;
 /**
@@ -77,12 +75,12 @@ public:
 
     virtual bool IsTickable() const override
     {
-        return true;
+        return GetWorld() && GetWorld()->IsGameWorld();
     }
     
     virtual bool IsTickableInEditor() const override
     {
-        return true;
+        return false;
     }
 
 
@@ -111,12 +109,6 @@ private:
     UPROPERTY()
     TObjectPtr<UActionSystem> ActionSystem;
 
-    UPROPERTY()
-    TObjectPtr<UAnimationSystem> AnimationSystem;
-    
-    UPROPERTY()
-    TObjectPtr<UStaminaRegenerationSystem> StaminaRegenerationSystem;
-    
     UPROPERTY()
     TObjectPtr<UCombatDetectionSystem> CombatDetectionSystem;
     

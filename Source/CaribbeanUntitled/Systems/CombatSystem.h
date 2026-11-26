@@ -5,14 +5,42 @@
 #include "CombatSystem.generated.h"
 
 struct FCombatCollisionPayload;
+class AActor;
 class UEventBusSubsystem;
+
+USTRUCT(BlueprintType)
+struct CARIBBEANUNTITLED_API FCombatResolvedPayload
+{
+    GENERATED_BODY()
+
+    UPROPERTY(BlueprintReadOnly, Category="Combat")
+    TObjectPtr<AActor> SourceActor = nullptr;
+
+    UPROPERTY(BlueprintReadOnly, Category="Combat")
+    TObjectPtr<AActor> TargetActor = nullptr;
+
+    UPROPERTY(BlueprintReadOnly, Category="Combat")
+    float RawDamage = 0.0f;
+
+    UPROPERTY(BlueprintReadOnly, Category="Combat")
+    float AppliedDamage = 0.0f;
+
+    UPROPERTY(BlueprintReadOnly, Category="Combat")
+    bool bBlocked = false;
+
+    UPROPERTY(BlueprintReadOnly, Category="Combat")
+    bool bKilled = false;
+
+    UPROPERTY(BlueprintReadOnly, Category="Combat")
+    FVector HitLocation = FVector::ZeroVector;
+};
 
 /**
  * Handles combat gameplay logic after combat collisions
  * have been detected by UCombatDetectionSystem.
  *
- * For now this system only listens for combat collision
- * events and logs them.
+ * Resolves authoritative combat collisions into damage, directional blocks,
+ * stamina costs, death state, and a presentation-friendly result event.
  *
  * Architecture:
  *
@@ -29,9 +57,7 @@ class UEventBusSubsystem;
  *
  * Future responsibilities can include:
  *
- *     - Damage
  *     - Hit reactions
- *     - Blocking
  *     - Parrying
  *     - Invulnerability
  *     - Knockback
@@ -89,4 +115,9 @@ private:
     void OnCombatCollision(
         const FCombatCollisionPayload& Payload
     );
+
+    bool IsBlockEffective(
+        AActor* SourceActor,
+        AActor* TargetActor
+    ) const;
 };

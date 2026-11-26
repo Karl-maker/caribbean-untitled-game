@@ -215,7 +215,15 @@ void UControlComponent::ServerRequestHeavyAttack_Implementation()
     UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: ServerRequestHeavyAttack on %s"), *GetNameSafe(GetOwner()));
     RequestHeavyAttack();
 }
-void UControlComponent::SetBlockIntent(float Weight)         { BlockIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
+void UControlComponent::SetBlockIntent(float Weight)
+{
+    BlockIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
+
+    if (GetOwner() && !GetOwner()->HasAuthority())
+    {
+        ServerSetBlockIntent(BlockIntent);
+    }
+}
 void UControlComponent::SetDodgeIntent(float Weight)         { DodgeIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetLockOnIntent(float Weight)        { LockOnIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
 void UControlComponent::SetWeaponAbilityIntent(float Weight) { WeaponAbilityIntent = FMath::Clamp(Weight, 0.0f, 1.0f); }
@@ -241,6 +249,11 @@ void UControlComponent::ServerSetHeavyAttackIntent_Implementation(float Weight)
 {
     HeavyAttackIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
     UE_LOG(LogTemp, Log, TEXT("[ControlComponent]: ServerSetHeavyAttackIntent = %f on %s"), HeavyAttackIntent, *GetNameSafe(GetOwner()));
+}
+
+void UControlComponent::ServerSetBlockIntent_Implementation(float Weight)
+{
+    BlockIntent = FMath::Clamp(Weight, 0.0f, 1.0f);
 }
 
 //=========================================================================

@@ -131,6 +131,8 @@ class CARIBBEANUNTITLED_API UActionSystem : public UObject
     GENERATED_BODY()
 
 public:
+    UActionSystem();
+
     void Cleanup();
     void Tick(UWorld* World, float DeltaTime);
     TStatId GetStatId() const;
