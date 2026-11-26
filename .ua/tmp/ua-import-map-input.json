@@ -1,0 +1,563 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "files": [
+    {
+      "path": "CaribbeanUntitled.uproject",
+      "language": "uproject",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Config/DefaultEditor.ini",
+      "language": "config",
+      "sizeLines": 6,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Config/DefaultEngine.ini",
+      "language": "config",
+      "sizeLines": 103,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Config/DefaultGame.ini",
+      "language": "config",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Config/DefaultInput.ini",
+      "language": "config",
+      "sizeLines": 84,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Source/CaribbeanUntitled.Target.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "language": "cpp",
+      "sizeLines": 719,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "language": "c",
+      "sizeLines": 182,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "language": "cpp",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "language": "c",
+      "sizeLines": 125,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "language": "cpp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "language": "c",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "language": "cpp",
+      "sizeLines": 241,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "language": "c",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "language": "cpp",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "language": "c",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 82,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "language": "c",
+      "sizeLines": 328,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 229,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "language": "c",
+      "sizeLines": 124,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "language": "c",
+      "sizeLines": 145,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 184,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "language": "c",
+      "sizeLines": 78,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 357,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "language": "c",
+      "sizeLines": 198,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 557,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "language": "c",
+      "sizeLines": 514,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 96,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "language": "c",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "language": "c",
+      "sizeLines": 145,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 912,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "language": "c",
+      "sizeLines": 229,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 429,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "language": "c",
+      "sizeLines": 578,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "language": "markdown",
+      "sizeLines": 246,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "language": "markdown",
+      "sizeLines": 44,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "language": "markdown",
+      "sizeLines": 256,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/Profiles.md",
+      "language": "markdown",
+      "sizeLines": 223,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "language": "c",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "language": "c",
+      "sizeLines": 258,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "language": "c",
+      "sizeLines": 189,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "language": "c",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "language": "cpp",
+      "sizeLines": 273,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "language": "c",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "language": "cpp",
+      "sizeLines": 220,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "language": "c",
+      "sizeLines": 133,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "language": "cpp",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "language": "c",
+      "sizeLines": 181,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 496,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "language": "c",
+      "sizeLines": 173,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "language": "cpp",
+      "sizeLines": 269,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "language": "c",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 833,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "language": "c",
+      "sizeLines": 280,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 272,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "language": "c",
+      "sizeLines": 104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 530,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "language": "c",
+      "sizeLines": 175,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "language": "c",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 727,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "language": "c",
+      "sizeLines": 169,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 138,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "language": "c",
+      "sizeLines": 90,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 213,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "language": "c",
+      "sizeLines": 123,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 105,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "language": "c",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 507,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "language": "c",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 447,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "language": "c",
+      "sizeLines": 120,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 222,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "language": "c",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 176,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "language": "c",
+      "sizeLines": 74,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 186,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "language": "c",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "language": "c",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "language": "c",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "language": "c",
+      "sizeLines": 168,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "language": "cpp",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidget.h",
+      "language": "c",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "language": "c",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "language": "c",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "language": "cpp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "language": "c",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitledEditor.Target.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    }
+  ]
+}

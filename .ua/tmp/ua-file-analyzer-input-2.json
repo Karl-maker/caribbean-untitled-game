@@ -1,0 +1,198 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 229,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "language": "c",
+      "sizeLines": 124,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 184,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "language": "c",
+      "sizeLines": 78,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 557,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 96,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "language": "c",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "language": "c",
+      "sizeLines": 258,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "language": "c",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 727,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "language": "c",
+      "sizeLines": 169,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 213,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "language": "c",
+      "sizeLines": 123,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 222,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "language": "c",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "language": "c",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "Source/CaribbeanUntitled/Components/AttackStateComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/AttackStateComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/AttackStateComponent.h": [
+      "Source/CaribbeanUntitled/Components/MoveSetComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/CombatComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Components/CombatComponent.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/ControlComponent.cpp": [
+      "Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Events/MovementPayload.h"
+    ],
+    "Source/CaribbeanUntitled/Components/MoveSetComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/MoveSetComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/MoveSetComponent.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h"
+    ],
+    "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h": [],
+    "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h": [],
+    "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h": [],
+    "Source/CaribbeanUntitled/Systems/CombatSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "Source/CaribbeanUntitled/Systems/CombatSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/CombatSystem.h": [],
+    "Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h": [
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/TimeAttackSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/TimeAttackSystem.h": [
+      "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h"
+    ]
+  }
+}

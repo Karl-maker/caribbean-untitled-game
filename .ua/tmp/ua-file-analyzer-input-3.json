@@ -1,0 +1,175 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "language": "cpp",
+      "sizeLines": 719,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "language": "cpp",
+      "sizeLines": 241,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 82,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "language": "c",
+      "sizeLines": 328,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 357,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "language": "c",
+      "sizeLines": 198,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 912,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "language": "c",
+      "sizeLines": 229,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "language": "c",
+      "sizeLines": 189,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "language": "cpp",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "language": "c",
+      "sizeLines": 181,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 833,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "language": "c",
+      "sizeLines": 280,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 105,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "language": "c",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "language": "c",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "language": "c",
+      "sizeLines": 168,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "Source/CaribbeanUntitled/Actors/CharacterActor.cpp": [
+      "Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h"
+    ],
+    "Source/CaribbeanUntitled/Actors/PlayableActor.cpp": [
+      "Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h"
+    ],
+    "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h": [],
+    "Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h": [],
+    "Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Components/PlayerInputComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/PlayerInputComponent.h": [],
+    "Source/CaribbeanUntitled/Events/AnimationRequestPayload.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp": [
+      "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h"
+    ],
+    "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/AnimationSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/AnimationSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/AnimationSystem.h": [
+      "Source/CaribbeanUntitled/Events/AnimationRequestPayload.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp": [
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Types/MovementAnimationTypes.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h"
+    ]
+  }
+}

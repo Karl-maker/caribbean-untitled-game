@@ -1,0 +1,211 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 5,
+  "filesSkipped": [
+    "CaribbeanUntitled.uproject"
+  ],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 5,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 5,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "Source/CaribbeanUntitled.Target.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "CaribbeanUntitledTarget",
+          "startLine": 8,
+          "endLine": 14,
+          "params": [
+            "Target"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CaribbeanUntitledTarget",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [
+            "CaribbeanUntitledTarget"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CaribbeanUntitledTarget",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "CaribbeanUntitledTarget",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CaribbeanUntitledTarget",
+          "callee": "ExtraModuleNames.Add",
+          "lineNumber": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 14,
+      "functions": [
+        {
+          "name": "CaribbeanUntitled",
+          "startLine": 7,
+          "endLine": 19,
+          "params": [
+            "Target"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CaribbeanUntitled",
+          "startLine": 5,
+          "endLine": 20,
+          "methods": [
+            "CaribbeanUntitled"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CaribbeanUntitled",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "CaribbeanUntitled",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CaribbeanUntitled",
+          "callee": "PublicDependencyModuleNames.AddRange",
+          "lineNumber": 11
+        },
+        {
+          "caller": "CaribbeanUntitled",
+          "callee": "PrivateDependencyModuleNames.AddRange",
+          "lineNumber": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 4,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 3,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitledEditor.Target.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "CaribbeanUntitledEditorTarget",
+          "startLine": 8,
+          "endLine": 14,
+          "params": [
+            "Target"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CaribbeanUntitledEditorTarget",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [
+            "CaribbeanUntitledEditorTarget"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CaribbeanUntitledEditorTarget",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "CaribbeanUntitledEditorTarget",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CaribbeanUntitledEditorTarget",
+          "callee": "ExtraModuleNames.Add",
+          "lineNumber": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    }
+  ]
+}

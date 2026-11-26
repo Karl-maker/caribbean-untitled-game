@@ -1,0 +1,179 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "language": "cpp",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "language": "c",
+      "sizeLines": 125,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "language": "c",
+      "sizeLines": 514,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 429,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "language": "c",
+      "sizeLines": 578,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "language": "c",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "language": "c",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "language": "cpp",
+      "sizeLines": 269,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "language": "c",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 530,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "language": "c",
+      "sizeLines": 175,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 138,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "language": "c",
+      "sizeLines": 90,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 507,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "language": "c",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 176,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "language": "c",
+      "sizeLines": 74,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 186,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "language": "c",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "Source/CaribbeanUntitled/Actors/K98Actor.cpp": [
+      "Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h"
+    ],
+    "Source/CaribbeanUntitled/Actors/K98Actor.h": [],
+    "Source/CaribbeanUntitled/Components/ControlComponent.h": [
+      "Source/CaribbeanUntitled/Enums/Locomotion.h"
+    ],
+    "Source/CaribbeanUntitled/Components/StatsComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/StatsComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/StatsComponent.h": [],
+    "Source/CaribbeanUntitled/Enums/Locomotion.h": [],
+    "Source/CaribbeanUntitled/Events/MovementPayload.h": [
+      "Source/CaribbeanUntitled/Enums/Locomotion.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/ActorRegistry.cpp": [
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/ActorRegistry.h": [],
+    "Source/CaribbeanUntitled/Systems/CameraSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/CameraSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/CameraSystem.h": [],
+    "Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/CombatInputSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/CombatInputSystem.h": [],
+    "Source/CaribbeanUntitled/Systems/MovementSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/MovementSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/MovementSystem.h": [
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h": [],
+    "Source/CaribbeanUntitled/Systems/StaminaSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/StaminaSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/StaminaSystem.h": []
+  }
+}

@@ -1,0 +1,821 @@
+{
+  "scriptCompleted": true,
+  "directoryGroups": {
+    "Actors": [
+      "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "file:Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "file:Source/CaribbeanUntitled/Actors/PlayableActor.h"
+    ],
+    "Components": [
+      "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h"
+    ],
+    "Enums": [
+      "file:Source/CaribbeanUntitled/Enums/Locomotion.h"
+    ],
+    "Events": [
+      "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h"
+    ],
+    "Systems": [
+      "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h"
+    ],
+    "EventBus": [
+      "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h"
+    ],
+    "Settings": [
+      "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h"
+    ],
+    "Types": [
+      "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h"
+    ],
+    "GameMode": [
+      "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h"
+    ],
+    "UI": [
+      "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "file:Source/CaribbeanUntitled/UI/PlayerHudController.h"
+    ],
+    "Scheduler": [
+      "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h"
+    ],
+    "Config": [
+      "config:Config/DefaultEditor.ini",
+      "config:Config/DefaultEngine.ini",
+      "config:Config/DefaultGame.ini",
+      "config:Config/DefaultInput.ini"
+    ],
+    "Docs": [
+      "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "document:Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "document:Source/CaribbeanUntitled/Docs/Profiles.md"
+    ],
+    "ProjectRoot": [
+      "file:CaribbeanUntitled.uproject"
+    ],
+    "BuildTargets": [
+      "file:Source/CaribbeanUntitled.Target.cs",
+      "file:Source/CaribbeanUntitledEditor.Target.cs"
+    ],
+    "ModuleRoot": [
+      "file:Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs",
+      "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "file:Source/CaribbeanUntitled/CaribbeanUntitled.h"
+    ]
+  },
+  "nodeTypeGroups": {
+    "file": [
+      "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "file:Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "file:Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "file:CaribbeanUntitled.uproject",
+      "file:Source/CaribbeanUntitled.Target.cs",
+      "file:Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs",
+      "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "file:Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "file:Source/CaribbeanUntitledEditor.Target.cs"
+    ],
+    "config": [
+      "config:Config/DefaultEditor.ini",
+      "config:Config/DefaultEngine.ini",
+      "config:Config/DefaultGame.ini",
+      "config:Config/DefaultInput.ini"
+    ],
+    "document": [
+      "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "document:Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "document:Source/CaribbeanUntitled/Docs/Profiles.md"
+    ]
+  },
+  "crossCategoryEdges": [
+    {
+      "fromType": "file",
+      "toType": "file",
+      "edgeType": "imports",
+      "count": 160
+    },
+    {
+      "fromType": "document",
+      "toType": "file",
+      "edgeType": "documents",
+      "count": 9
+    }
+  ],
+  "interGroupImports": [
+    {
+      "from": "Systems",
+      "to": "Components",
+      "count": 38
+    },
+    {
+      "from": "Actors",
+      "to": "Components",
+      "count": 12
+    },
+    {
+      "from": "Systems",
+      "to": "EventBus",
+      "count": 9
+    },
+    {
+      "from": "Scheduler",
+      "to": "Systems",
+      "count": 8
+    },
+    {
+      "from": "Systems",
+      "to": "Events",
+      "count": 3
+    },
+    {
+      "from": "Types",
+      "to": "Components",
+      "count": 3
+    },
+    {
+      "from": "Actors",
+      "to": "Systems",
+      "count": 2
+    },
+    {
+      "from": "Components",
+      "to": "EventBus",
+      "count": 2
+    },
+    {
+      "from": "Components",
+      "to": "Systems",
+      "count": 2
+    },
+    {
+      "from": "Actors",
+      "to": "Settings",
+      "count": 2
+    },
+    {
+      "from": "Settings",
+      "to": "Components",
+      "count": 2
+    },
+    {
+      "from": "Components",
+      "to": "Enums",
+      "count": 1
+    },
+    {
+      "from": "Events",
+      "to": "Enums",
+      "count": 1
+    },
+    {
+      "from": "Systems",
+      "to": "Enums",
+      "count": 1
+    },
+    {
+      "from": "Components",
+      "to": "Actors",
+      "count": 1
+    },
+    {
+      "from": "Components",
+      "to": "Events",
+      "count": 1
+    },
+    {
+      "from": "Components",
+      "to": "Types",
+      "count": 1
+    },
+    {
+      "from": "Systems",
+      "to": "Types",
+      "count": 1
+    },
+    {
+      "from": "Events",
+      "to": "Components",
+      "count": 1
+    },
+    {
+      "from": "GameMode",
+      "to": "Actors",
+      "count": 1
+    },
+    {
+      "from": "GameMode",
+      "to": "UI",
+      "count": 1
+    },
+    {
+      "from": "UI",
+      "to": "Components",
+      "count": 1
+    }
+  ],
+  "intraGroupDensity": {
+    "Actors": {
+      "internalEdges": 6,
+      "totalEdges": 30,
+      "density": 0.2
+    },
+    "Components": {
+      "internalEdges": 15,
+      "totalEdges": 95,
+      "density": 0.15789473684210525
+    },
+    "Enums": {
+      "internalEdges": 0,
+      "totalEdges": 3,
+      "density": 0
+    },
+    "Events": {
+      "internalEdges": 0,
+      "totalEdges": 6,
+      "density": 0
+    },
+    "Systems": {
+      "internalEdges": 33,
+      "totalEdges": 130,
+      "density": 0.25384615384615383
+    },
+    "EventBus": {
+      "internalEdges": 0,
+      "totalEdges": 11,
+      "density": 0
+    },
+    "Settings": {
+      "internalEdges": 1,
+      "totalEdges": 6,
+      "density": 0.16666666666666666
+    },
+    "Types": {
+      "internalEdges": 0,
+      "totalEdges": 5,
+      "density": 0
+    },
+    "GameMode": {
+      "internalEdges": 1,
+      "totalEdges": 4,
+      "density": 0.25
+    },
+    "UI": {
+      "internalEdges": 8,
+      "totalEdges": 18,
+      "density": 0.4444444444444444
+    },
+    "Scheduler": {
+      "internalEdges": 1,
+      "totalEdges": 10,
+      "density": 0.1
+    },
+    "Config": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    },
+    "Docs": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    },
+    "ProjectRoot": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    },
+    "BuildTargets": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    },
+    "ModuleRoot": {
+      "internalEdges": 1,
+      "totalEdges": 2,
+      "density": 0.5
+    }
+  },
+  "patternMatches": {
+    "Actors": "domain",
+    "Components": "component",
+    "Enums": "types",
+    "Events": "types",
+    "Systems": "service",
+    "EventBus": "service",
+    "Settings": "config",
+    "Types": "types",
+    "GameMode": "entry",
+    "UI": "ui",
+    "Scheduler": "service",
+    "Config": "config",
+    "Docs": "documentation",
+    "ProjectRoot": "config",
+    "BuildTargets": "config",
+    "ModuleRoot": "entry"
+  },
+  "deploymentTopology": {
+    "hasDockerfile": false,
+    "hasCompose": false,
+    "hasK8s": false,
+    "hasTerraform": false,
+    "hasCI": false,
+    "infraFiles": []
+  },
+  "dataPipeline": {
+    "schemaFiles": [],
+    "migrationFiles": [],
+    "dataModelFiles": [],
+    "apiHandlerFiles": []
+  },
+  "docCoverage": {
+    "groupsWithDocs": 1,
+    "totalGroups": 16,
+    "coverageRatio": 0.0625,
+    "undocumentedGroups": [
+      "Actors",
+      "Components",
+      "Enums",
+      "Events",
+      "Systems",
+      "EventBus",
+      "Settings",
+      "Types",
+      "GameMode",
+      "UI",
+      "Scheduler",
+      "Config",
+      "ProjectRoot",
+      "BuildTargets",
+      "ModuleRoot"
+    ]
+  },
+  "dependencyDirection": [
+    {
+      "dependent": "Systems",
+      "dependsOn": "Components",
+      "count": 38
+    },
+    {
+      "dependent": "Actors",
+      "dependsOn": "Components",
+      "count": 12
+    },
+    {
+      "dependent": "Systems",
+      "dependsOn": "EventBus",
+      "count": 9
+    },
+    {
+      "dependent": "Scheduler",
+      "dependsOn": "Systems",
+      "count": 8
+    },
+    {
+      "dependent": "Systems",
+      "dependsOn": "Events",
+      "count": 3
+    },
+    {
+      "dependent": "Types",
+      "dependsOn": "Components",
+      "count": 3
+    },
+    {
+      "dependent": "Actors",
+      "dependsOn": "Systems",
+      "count": 2
+    },
+    {
+      "dependent": "Components",
+      "dependsOn": "EventBus",
+      "count": 2
+    },
+    {
+      "dependent": "Components",
+      "dependsOn": "Systems",
+      "count": 2
+    },
+    {
+      "dependent": "Actors",
+      "dependsOn": "Settings",
+      "count": 2
+    },
+    {
+      "dependent": "Settings",
+      "dependsOn": "Components",
+      "count": 2
+    },
+    {
+      "dependent": "Components",
+      "dependsOn": "Enums",
+      "count": 1
+    },
+    {
+      "dependent": "Events",
+      "dependsOn": "Enums",
+      "count": 1
+    },
+    {
+      "dependent": "Systems",
+      "dependsOn": "Enums",
+      "count": 1
+    },
+    {
+      "dependent": "Components",
+      "dependsOn": "Actors",
+      "count": 1
+    },
+    {
+      "dependent": "Components",
+      "dependsOn": "Events",
+      "count": 1
+    },
+    {
+      "dependent": "Components",
+      "dependsOn": "Types",
+      "count": 1
+    },
+    {
+      "dependent": "Systems",
+      "dependsOn": "Types",
+      "count": 1
+    },
+    {
+      "dependent": "Events",
+      "dependsOn": "Components",
+      "count": 1
+    },
+    {
+      "dependent": "GameMode",
+      "dependsOn": "Actors",
+      "count": 1
+    },
+    {
+      "dependent": "GameMode",
+      "dependsOn": "UI",
+      "count": 1
+    },
+    {
+      "dependent": "UI",
+      "dependsOn": "Components",
+      "count": 1
+    }
+  ],
+  "fileStats": {
+    "totalFileNodes": 93,
+    "filesPerGroup": {
+      "Actors": 8,
+      "Components": 20,
+      "Enums": 1,
+      "Events": 2,
+      "Systems": 32,
+      "EventBus": 1,
+      "Settings": 2,
+      "Types": 2,
+      "GameMode": 2,
+      "UI": 7,
+      "Scheduler": 2,
+      "Config": 4,
+      "Docs": 4,
+      "ProjectRoot": 1,
+      "BuildTargets": 2,
+      "ModuleRoot": 3
+    },
+    "nodeTypeCounts": {
+      "file": 85,
+      "config": 4,
+      "document": 4
+    }
+  },
+  "fileFanIn": {
+    "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp": 0,
+    "file:Source/CaribbeanUntitled/Actors/K98Actor.h": 2,
+    "file:Source/CaribbeanUntitled/Components/ControlComponent.h": 9,
+    "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/StatsComponent.h": 10,
+    "file:Source/CaribbeanUntitled/Enums/Locomotion.h": 3,
+    "file:Source/CaribbeanUntitled/Events/MovementPayload.h": 3,
+    "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h": 15,
+    "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/CameraSystem.h": 2,
+    "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h": 2,
+    "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/MovementSystem.h": 2,
+    "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h": 2,
+    "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h": 5,
+    "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/CombatComponent.h": 11,
+    "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h": 6,
+    "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h": 11,
+    "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h": 3,
+    "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h": 4,
+    "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp": 0,
+    "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h": 13,
+    "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h": 7,
+    "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h": 2,
+    "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h": 1,
+    "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp": 0,
+    "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h": 3,
+    "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h": 3,
+    "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h": 2,
+    "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h": 0,
+    "file:Source/CaribbeanUntitled/Actors/CharacterActor.h": 3,
+    "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp": 0,
+    "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h": 1,
+    "file:Source/CaribbeanUntitled/Actors/PlayableActor.h": 2,
+    "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp": 0,
+    "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h": 1,
+    "file:Source/CaribbeanUntitled/UI/HudWidget.cpp": 0,
+    "file:Source/CaribbeanUntitled/UI/HudWidget.h": 3,
+    "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h": 2,
+    "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h": 2,
+    "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp": 0,
+    "file:Source/CaribbeanUntitled/UI/PlayerHudController.h": 2,
+    "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h": 4,
+    "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp": 0,
+    "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h": 5,
+    "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp": 0,
+    "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/ActionSystem.h": 2,
+    "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/BrainSystem.h": 3,
+    "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp": 0,
+    "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h": 2,
+    "config:Config/DefaultEditor.ini": 0,
+    "config:Config/DefaultEngine.ini": 0,
+    "config:Config/DefaultGame.ini": 0,
+    "config:Config/DefaultInput.ini": 0,
+    "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md": 0,
+    "document:Source/CaribbeanUntitled/Docs/HudWidgets.md": 0,
+    "document:Source/CaribbeanUntitled/Docs/InputPipeline.md": 0,
+    "document:Source/CaribbeanUntitled/Docs/Profiles.md": 0,
+    "file:CaribbeanUntitled.uproject": 0,
+    "file:Source/CaribbeanUntitled.Target.cs": 0,
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs": 0,
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp": 0,
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.h": 1,
+    "file:Source/CaribbeanUntitledEditor.Target.cs": 0
+  },
+  "fileFanOut": {
+    "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp": 2,
+    "file:Source/CaribbeanUntitled/Actors/K98Actor.h": 0,
+    "file:Source/CaribbeanUntitled/Components/ControlComponent.h": 1,
+    "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp": 1,
+    "file:Source/CaribbeanUntitled/Components/StatsComponent.h": 0,
+    "file:Source/CaribbeanUntitled/Enums/Locomotion.h": 0,
+    "file:Source/CaribbeanUntitled/Events/MovementPayload.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp": 1,
+    "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/CameraSystem.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/MovementSystem.h": 3,
+    "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp": 3,
+    "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h": 0,
+    "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp": 1,
+    "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h": 1,
+    "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp": 3,
+    "file:Source/CaribbeanUntitled/Components/CombatComponent.h": 1,
+    "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp": 5,
+    "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp": 1,
+    "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h": 2,
+    "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp": 6,
+    "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp": 5,
+    "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp": 9,
+    "file:Source/CaribbeanUntitled/Systems/CombatSystem.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp": 7,
+    "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h": 3,
+    "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp": 5,
+    "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h": 2,
+    "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp": 10,
+    "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp": 4,
+    "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp": 1,
+    "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h": 0,
+    "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp": 1,
+    "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h": 0,
+    "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp": 2,
+    "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h": 0,
+    "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h": 1,
+    "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp": 1,
+    "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h": 2,
+    "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h": 2,
+    "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h": 1,
+    "file:Source/CaribbeanUntitled/Actors/CharacterActor.h": 1,
+    "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp": 1,
+    "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h": 3,
+    "file:Source/CaribbeanUntitled/Actors/PlayableActor.h": 1,
+    "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp": 1,
+    "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h": 2,
+    "file:Source/CaribbeanUntitled/UI/HudWidget.cpp": 2,
+    "file:Source/CaribbeanUntitled/UI/HudWidget.h": 0,
+    "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h": 0,
+    "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp": 3,
+    "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h": 1,
+    "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp": 3,
+    "file:Source/CaribbeanUntitled/UI/PlayerHudController.h": 0,
+    "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp": 2,
+    "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h": 0,
+    "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp": 1,
+    "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h": 0,
+    "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp": 9,
+    "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h": 0,
+    "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp": 5,
+    "file:Source/CaribbeanUntitled/Systems/ActionSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/BrainSystem.h": 1,
+    "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp": 4,
+    "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h": 0,
+    "config:Config/DefaultEditor.ini": 0,
+    "config:Config/DefaultEngine.ini": 0,
+    "config:Config/DefaultGame.ini": 0,
+    "config:Config/DefaultInput.ini": 0,
+    "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md": 0,
+    "document:Source/CaribbeanUntitled/Docs/HudWidgets.md": 0,
+    "document:Source/CaribbeanUntitled/Docs/InputPipeline.md": 0,
+    "document:Source/CaribbeanUntitled/Docs/Profiles.md": 0,
+    "file:CaribbeanUntitled.uproject": 0,
+    "file:Source/CaribbeanUntitled.Target.cs": 0,
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs": 0,
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp": 1,
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.h": 0,
+    "file:Source/CaribbeanUntitledEditor.Target.cs": 0
+  }
+}

@@ -1,0 +1,2899 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 12,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 12,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 12,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 30,
+      "functions": [
+        {
+          "name": "UCharacterBrainComponent",
+          "startLine": 5,
+          "endLine": 8,
+          "params": []
+        },
+        {
+          "name": "SetIntent",
+          "startLine": 10,
+          "endLine": 16,
+          "params": [
+            "NewIntent",
+            "Effort"
+          ]
+        },
+        {
+          "name": "SetFeeling",
+          "startLine": 18,
+          "endLine": 21,
+          "params": [
+            "NewFeeling"
+          ]
+        },
+        {
+          "name": "SetTargetActor",
+          "startLine": 23,
+          "endLine": 26,
+          "params": [
+            "Target"
+          ]
+        },
+        {
+          "name": "SetTargetLocation",
+          "startLine": 28,
+          "endLine": 31,
+          "params": [
+            "Location"
+          ]
+        },
+        {
+          "name": "ClearIntent",
+          "startLine": 33,
+          "endLine": 36,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UCharacterBrainComponent",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "SetIntent",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "SetFeeling",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "SetTargetActor",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "SetTargetLocation",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "ClearIntent",
+          "line": 33,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SetIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ClearIntent",
+          "callee": "Clear",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 145,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "Clear",
+          "startLine": 82,
+          "endLine": 89,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "FBrainPersonality",
+          "startLine": 39,
+          "endLine": 58,
+          "methods": [],
+          "properties": [
+            "Bravery",
+            "Curiosity",
+            "Aggression",
+            "Sociability"
+          ]
+        },
+        {
+          "name": "FBrainIntentData",
+          "startLine": 62,
+          "endLine": 90,
+          "methods": [
+            "Clear"
+          ],
+          "properties": [
+            "Intent",
+            "Effort",
+            "Feeling",
+            "TargetActor",
+            "TargetLocation"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FBrainPersonality",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Clear",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "FBrainIntentData",
+          "line": 62,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 22,
+      "functions": [
+        {
+          "name": "UCharacterPerceptionComponent",
+          "startLine": 3,
+          "endLine": 9,
+          "params": []
+        },
+        {
+          "name": "Clear",
+          "startLine": 11,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "SetPerceivedActors",
+          "startLine": 18,
+          "endLine": 21,
+          "params": [
+            "Actors"
+          ]
+        },
+        {
+          "name": "SetThreats",
+          "startLine": 23,
+          "endLine": 26,
+          "params": [
+            "NewThreats"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UCharacterPerceptionComponent",
+          "line": 3,
+          "isDefault": false
+        },
+        {
+          "name": "Clear",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "SetPerceivedActors",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "SetThreats",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Clear",
+          "callee": "Reset",
+          "lineNumber": 13
+        },
+        {
+          "caller": "Clear",
+          "callee": "Reset",
+          "lineNumber": 14
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 145,
+      "nonEmptyLines": 111,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 220,
+      "nonEmptyLines": 170,
+      "functions": [
+        {
+          "name": "Initialize",
+          "startLine": 20,
+          "endLine": 45,
+          "params": [
+            "Collection"
+          ]
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 48,
+          "endLine": 96,
+          "params": []
+        },
+        {
+          "name": "Tick",
+          "startLine": 99,
+          "endLine": 148,
+          "params": [
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "TickInput",
+          "startLine": 155,
+          "endLine": 159,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "TickGameplay",
+          "startLine": 166,
+          "endLine": 173,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "TickMovement",
+          "startLine": 180,
+          "endLine": 184,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "TickPhysics",
+          "startLine": 191,
+          "endLine": 195,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "TickPostPhysics",
+          "startLine": 202,
+          "endLine": 208,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "TickTransform",
+          "startLine": 215,
+          "endLine": 220,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Initialize",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "TickInput",
+          "line": 155,
+          "isDefault": false
+        },
+        {
+          "name": "TickGameplay",
+          "line": 166,
+          "isDefault": false
+        },
+        {
+          "name": "TickMovement",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "TickPhysics",
+          "line": 191,
+          "isDefault": false
+        },
+        {
+          "name": "TickPostPhysics",
+          "line": 202,
+          "isDefault": false
+        },
+        {
+          "name": "TickTransform",
+          "line": 215,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Initialize",
+          "callee": "Super::Initialize",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Initialize",
+          "callee": "UE_LOG",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Initialize",
+          "callee": "TEXT",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetNameSafe",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetWorld",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetWorld",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Initialize",
+          "callee": "static_cast<int32>",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetWorld",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UMovementSystem>",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UStaminaSystem>",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UCameraSystem>",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UPerceptionSystem>",
+          "lineNumber": 40
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UBrainSystem>",
+          "lineNumber": 41
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UActionSystem>",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UCombatDetectionSystem>",
+          "lineNumber": 43
+        },
+        {
+          "caller": "Initialize",
+          "callee": "NewObject<UCombatInputSystem>",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "UE_LOG",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "TEXT",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "GetNameSafe",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "GetWorld",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Cleanup",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Cleanup",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Cleanup",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Cleanup",
+          "lineNumber": 79
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Cleanup",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Cleanup",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetWorld",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetNetMode",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Tick",
+          "callee": "UE_LOG",
+          "lineNumber": 124
+        },
+        {
+          "caller": "Tick",
+          "callee": "TEXT",
+          "lineNumber": 127
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetNameSafe",
+          "lineNumber": 128
+        },
+        {
+          "caller": "Tick",
+          "callee": "static_cast<int32>",
+          "lineNumber": 129
+        },
+        {
+          "caller": "Tick",
+          "callee": "TickInput",
+          "lineNumber": 134
+        },
+        {
+          "caller": "Tick",
+          "callee": "TickGameplay",
+          "lineNumber": 136
+        },
+        {
+          "caller": "Tick",
+          "callee": "TickMovement",
+          "lineNumber": 138
+        },
+        {
+          "caller": "Tick",
+          "callee": "Tick",
+          "lineNumber": 141
+        },
+        {
+          "caller": "Tick",
+          "callee": "TickPhysics",
+          "lineNumber": 143
+        },
+        {
+          "caller": "Tick",
+          "callee": "TickPostPhysics",
+          "lineNumber": 145
+        },
+        {
+          "caller": "Tick",
+          "callee": "TickTransform",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TickGameplay",
+          "callee": "Tick",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TickGameplay",
+          "callee": "Tick",
+          "lineNumber": 169
+        },
+        {
+          "caller": "TickGameplay",
+          "callee": "Tick",
+          "lineNumber": 170
+        },
+        {
+          "caller": "TickGameplay",
+          "callee": "Tick",
+          "lineNumber": 171
+        },
+        {
+          "caller": "TickGameplay",
+          "callee": "Tick",
+          "lineNumber": 172
+        },
+        {
+          "caller": "TickMovement",
+          "callee": "Tick",
+          "lineNumber": 182
+        },
+        {
+          "caller": "TickMovement",
+          "callee": "Tick",
+          "lineNumber": 183
+        }
+      ],
+      "metrics": {
+        "importCount": 9,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 133,
+      "nonEmptyLines": 101,
+      "classes": [
+        {
+          "name": "UMovementSystem",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UStaminaSystem",
+          "startLine": 14,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCameraSystem",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UPerceptionSystem",
+          "startLine": 16,
+          "endLine": 16,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UBrainSystem",
+          "startLine": 17,
+          "endLine": 17,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActionSystem",
+          "startLine": 18,
+          "endLine": 18,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCombatDetectionSystem",
+          "startLine": 19,
+          "endLine": 19,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCombatInputSystem",
+          "startLine": 20,
+          "endLine": 20,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "CARIBBEANUNTITLED_API",
+          "startLine": 43,
+          "endLine": 43,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UMovementSystem",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UStaminaSystem",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "UCameraSystem",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "UPerceptionSystem",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UBrainSystem",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "UActionSystem",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "UCombatDetectionSystem",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "UCombatInputSystem",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "CARIBBEANUNTITLED_API",
+          "line": 43,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 0,
+        "classCount": 9
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 496,
+      "nonEmptyLines": 407,
+      "functions": [
+        {
+          "name": "OnEnter",
+          "startLine": 18,
+          "endLine": 24,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 26,
+          "endLine": 30,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "OnEnter",
+          "startLine": 53,
+          "endLine": 62,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 64,
+          "endLine": 85,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "OnExit",
+          "startLine": 87,
+          "endLine": 94,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "PickNewTarget",
+          "startLine": 98,
+          "endLine": 117,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 123,
+          "endLine": 140,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 146,
+          "endLine": 156,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "GetPreferredInterval",
+          "startLine": 162,
+          "endLine": 162,
+          "params": []
+        },
+        {
+          "name": "Execute",
+          "startLine": 164,
+          "endLine": 198,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "GetPreferredInterval",
+          "startLine": 211,
+          "endLine": 211,
+          "params": []
+        },
+        {
+          "name": "Execute",
+          "startLine": 213,
+          "endLine": 252,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "OnExit",
+          "startLine": 254,
+          "endLine": 261,
+          "params": [
+            "Context"
+          ]
+        },
+        {
+          "name": "UActionSystem",
+          "startLine": 269,
+          "endLine": 272,
+          "params": []
+        },
+        {
+          "name": "GetStatId",
+          "startLine": 274,
+          "endLine": 277,
+          "params": []
+        },
+        {
+          "name": "Cleanup",
+          "startLine": 279,
+          "endLine": 283,
+          "params": []
+        },
+        {
+          "name": "BuildDefaultBehaviors",
+          "startLine": 285,
+          "endLine": 293,
+          "params": []
+        },
+        {
+          "name": "AddBehavior",
+          "startLine": 295,
+          "endLine": 303,
+          "params": [
+            "Intent",
+            "Behavior"
+          ]
+        },
+        {
+          "name": "RollNextInterval",
+          "startLine": 305,
+          "endLine": 310,
+          "params": [
+            "PreferredOverride"
+          ]
+        },
+        {
+          "name": "Tick",
+          "startLine": 312,
+          "endLine": 405,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "ThinkFor",
+          "startLine": 407,
+          "endLine": 468,
+          "params": [
+            "Actor",
+            "Control",
+            "Brain",
+            "Perception",
+            "State",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "RunTransition",
+          "startLine": 470,
+          "endLine": 496,
+          "params": [
+            "OldIntent",
+            "NewIntent",
+            "Context"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FIdleActionBehavior",
+          "startLine": 14,
+          "endLine": 31,
+          "methods": [
+            "OnEnter",
+            "Execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "FWanderActionBehavior",
+          "startLine": 45,
+          "endLine": 118,
+          "methods": [
+            "OnEnter",
+            "Execute",
+            "OnExit",
+            "PickNewTarget"
+          ],
+          "properties": [
+            "WanderRadius",
+            "MinPickInterval",
+            "MaxPickInterval"
+          ]
+        },
+        {
+          "name": "FFollowActionBehavior",
+          "startLine": 120,
+          "endLine": 141,
+          "methods": [
+            "Execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "FInvestigateActionBehavior",
+          "startLine": 143,
+          "endLine": 157,
+          "methods": [
+            "Execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "FAttackActionBehavior",
+          "startLine": 159,
+          "endLine": 199,
+          "methods": [
+            "GetPreferredInterval",
+            "Execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "FFleeActionBehavior",
+          "startLine": 206,
+          "endLine": 262,
+          "methods": [
+            "GetPreferredInterval",
+            "Execute",
+            "OnExit"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "OnEnter",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "FIdleActionBehavior",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "OnEnter",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "OnExit",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "FWanderActionBehavior",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 123,
+          "isDefault": false
+        },
+        {
+          "name": "FFollowActionBehavior",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "FInvestigateActionBehavior",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "GetPreferredInterval",
+          "line": 162,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 164,
+          "isDefault": false
+        },
+        {
+          "name": "FAttackActionBehavior",
+          "line": 159,
+          "isDefault": false
+        },
+        {
+          "name": "GetPreferredInterval",
+          "line": 211,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 213,
+          "isDefault": false
+        },
+        {
+          "name": "OnExit",
+          "line": 254,
+          "isDefault": false
+        },
+        {
+          "name": "FFleeActionBehavior",
+          "line": 206,
+          "isDefault": false
+        },
+        {
+          "name": "UActionSystem",
+          "line": 269,
+          "isDefault": false
+        },
+        {
+          "name": "GetStatId",
+          "line": 274,
+          "isDefault": false
+        },
+        {
+          "name": "Cleanup",
+          "line": 279,
+          "isDefault": false
+        },
+        {
+          "name": "BuildDefaultBehaviors",
+          "line": 285,
+          "isDefault": false
+        },
+        {
+          "name": "AddBehavior",
+          "line": 295,
+          "isDefault": false
+        },
+        {
+          "name": "RollNextInterval",
+          "line": 305,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 312,
+          "isDefault": false
+        },
+        {
+          "name": "ThinkFor",
+          "line": 407,
+          "isDefault": false
+        },
+        {
+          "name": "RunTransition",
+          "line": 470,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "OnEnter",
+          "callee": "ClearMovementIntent",
+          "lineNumber": 22
+        },
+        {
+          "caller": "OnEnter",
+          "callee": "SetVector",
+          "lineNumber": 60
+        },
+        {
+          "caller": "OnEnter",
+          "callee": "GetActorLocation",
+          "lineNumber": 60
+        },
+        {
+          "caller": "OnEnter",
+          "callee": "PickNewTarget",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetWorld",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetTimeSeconds",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetFloat",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetVector",
+          "lineNumber": 75
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 75
+        },
+        {
+          "caller": "Execute",
+          "callee": "FMath::Square",
+          "lineNumber": 76
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetDirectionAcceptanceRadius",
+          "lineNumber": 76
+        },
+        {
+          "caller": "Execute",
+          "callee": "FVector::DistSquared",
+          "lineNumber": 77
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 77
+        },
+        {
+          "caller": "Execute",
+          "callee": "PickNewTarget",
+          "lineNumber": 81
+        },
+        {
+          "caller": "Execute",
+          "callee": "MoveToWorldLocation",
+          "lineNumber": 84
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetVector",
+          "lineNumber": 84
+        },
+        {
+          "caller": "OnExit",
+          "callee": "ClearDestination",
+          "lineNumber": 91
+        },
+        {
+          "caller": "OnExit",
+          "callee": "ClearMovementIntent",
+          "lineNumber": 92
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "GetVector",
+          "lineNumber": 105
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "GetActorLocation",
+          "lineNumber": 105
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "FRandRange",
+          "lineNumber": 107
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "FRandRange",
+          "lineNumber": 108
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "FVector",
+          "lineNumber": 109
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "FMath::Cos",
+          "lineNumber": 109
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "FMath::Sin",
+          "lineNumber": 109
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "SetVector",
+          "lineNumber": 111
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "GetWorld",
+          "lineNumber": 113
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "GetTimeSeconds",
+          "lineNumber": 114
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "FRandRange",
+          "lineNumber": 115
+        },
+        {
+          "caller": "PickNewTarget",
+          "callee": "SetFloat",
+          "lineNumber": 116
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetIntent",
+          "lineNumber": 130
+        },
+        {
+          "caller": "Execute",
+          "callee": "IsValid",
+          "lineNumber": 131
+        },
+        {
+          "caller": "Execute",
+          "callee": "ClearMovementIntent",
+          "lineNumber": 133
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 137
+        },
+        {
+          "caller": "Execute",
+          "callee": "MoveToWorldLocation",
+          "lineNumber": 138
+        },
+        {
+          "caller": "Execute",
+          "callee": "SetLookAtLocation",
+          "lineNumber": 139
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetIntent",
+          "lineNumber": 153
+        },
+        {
+          "caller": "Execute",
+          "callee": "MoveToWorldLocation",
+          "lineNumber": 154
+        },
+        {
+          "caller": "Execute",
+          "callee": "SetLookAtLocation",
+          "lineNumber": 155
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetIntent",
+          "lineNumber": 171
+        },
+        {
+          "caller": "Execute",
+          "callee": "IsValid",
+          "lineNumber": 172
+        },
+        {
+          "caller": "Execute",
+          "callee": "ClearMovementIntent",
+          "lineNumber": 174
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 178
+        },
+        {
+          "caller": "Execute",
+          "callee": "SetLookAtLocation",
+          "lineNumber": 179
+        },
+        {
+          "caller": "Execute",
+          "callee": "FVector::DistSquared2D",
+          "lineNumber": 182
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 182
+        },
+        {
+          "caller": "Execute",
+          "callee": "FMath::Square",
+          "lineNumber": 183
+        },
+        {
+          "caller": "Execute",
+          "callee": "MoveToWorldLocation",
+          "lineNumber": 185
+        },
+        {
+          "caller": "Execute",
+          "callee": "ClearMovementIntent",
+          "lineNumber": 189
+        },
+        {
+          "caller": "Execute",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 191
+        },
+        {
+          "caller": "Execute",
+          "callee": "CanAttack",
+          "lineNumber": 193
+        },
+        {
+          "caller": "Execute",
+          "callee": "RequestAttack",
+          "lineNumber": 195
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetIntent",
+          "lineNumber": 220
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 222
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetIntent",
+          "lineNumber": 223
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 223
+        },
+        {
+          "caller": "Execute",
+          "callee": "FMath::Clamp",
+          "lineNumber": 231
+        },
+        {
+          "caller": "Execute",
+          "callee": "FRand",
+          "lineNumber": 233
+        },
+        {
+          "caller": "Execute",
+          "callee": "SetWorldMoveDirection",
+          "lineNumber": 235
+        },
+        {
+          "caller": "Execute",
+          "callee": "GetActorLocation",
+          "lineNumber": 239
+        },
+        {
+          "caller": "Execute",
+          "callee": "Normalize",
+          "lineNumber": 242
+        },
+        {
+          "caller": "Execute",
+          "callee": "FRandRange",
+          "lineNumber": 246
+        },
+        {
+          "caller": "Execute",
+          "callee": "FVector",
+          "lineNumber": 247
+        },
+        {
+          "caller": "Execute",
+          "callee": "FMath::Cos",
+          "lineNumber": 247
+        },
+        {
+          "caller": "Execute",
+          "callee": "FMath::Sin",
+          "lineNumber": 247
+        },
+        {
+          "caller": "Execute",
+          "callee": "SetDirectionControlStrength",
+          "lineNumber": 250
+        },
+        {
+          "caller": "Execute",
+          "callee": "SetWorldMoveDirection",
+          "lineNumber": 251
+        },
+        {
+          "caller": "OnExit",
+          "callee": "SetWorldMoveDirection",
+          "lineNumber": 258
+        },
+        {
+          "caller": "OnExit",
+          "callee": "SetDirectionControlStrength",
+          "lineNumber": 259
+        },
+        {
+          "caller": "UActionSystem",
+          "callee": "BuildDefaultBehaviors",
+          "lineNumber": 271
+        },
+        {
+          "caller": "GetStatId",
+          "callee": "RETURN_QUICK_DECLARE_CYCLE_STAT",
+          "lineNumber": 276
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Reset",
+          "lineNumber": 281
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Reset",
+          "lineNumber": 282
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "AddBehavior",
+          "lineNumber": 287
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "MakeShared<FIdleActionBehavior>",
+          "lineNumber": 287
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "AddBehavior",
+          "lineNumber": 288
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "MakeShared<FWanderActionBehavior>",
+          "lineNumber": 288
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "AddBehavior",
+          "lineNumber": 289
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "MakeShared<FInvestigateActionBehavior>",
+          "lineNumber": 289
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "AddBehavior",
+          "lineNumber": 290
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "MakeShared<FFollowActionBehavior>",
+          "lineNumber": 290
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "AddBehavior",
+          "lineNumber": 291
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "MakeShared<FFleeActionBehavior>",
+          "lineNumber": 291
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "AddBehavior",
+          "lineNumber": 292
+        },
+        {
+          "caller": "BuildDefaultBehaviors",
+          "callee": "MakeShared<FAttackActionBehavior>",
+          "lineNumber": 292
+        },
+        {
+          "caller": "AddBehavior",
+          "callee": "IsValid",
+          "lineNumber": 297
+        },
+        {
+          "caller": "AddBehavior",
+          "callee": "Add",
+          "lineNumber": 302
+        },
+        {
+          "caller": "AddBehavior",
+          "callee": "FindOrAdd",
+          "lineNumber": 302
+        },
+        {
+          "caller": "AddBehavior",
+          "callee": "MoveTemp",
+          "lineNumber": 302
+        },
+        {
+          "caller": "RollNextInterval",
+          "callee": "FMath::Max",
+          "lineNumber": 309
+        },
+        {
+          "caller": "RollNextInterval",
+          "callee": "FMath::FRandRange",
+          "lineNumber": 309
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 315
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UCharacterBrainComponent>",
+          "lineNumber": 322
+        },
+        {
+          "caller": "Tick",
+          "callee": "Num",
+          "lineNumber": 324
+        },
+        {
+          "caller": "Tick",
+          "callee": "Num",
+          "lineNumber": 326
+        },
+        {
+          "caller": "Tick",
+          "callee": "Reset",
+          "lineNumber": 328
+        },
+        {
+          "caller": "Tick",
+          "callee": "CreateIterator",
+          "lineNumber": 335
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 337
+        },
+        {
+          "caller": "Tick",
+          "callee": "Contains",
+          "lineNumber": 337
+        },
+        {
+          "caller": "Tick",
+          "callee": "RemoveCurrent",
+          "lineNumber": 339
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 352
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 358
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindComponentByClass<UCharacterBrainComponent>",
+          "lineNumber": 373
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindComponentByClass<UCharacterPerceptionComponent>",
+          "lineNumber": 374
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetCurrentIntent",
+          "lineNumber": 385
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindOrAdd",
+          "lineNumber": 387
+        },
+        {
+          "caller": "Tick",
+          "callee": "Initialize",
+          "lineNumber": 391
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetTypeHash",
+          "lineNumber": 391
+        },
+        {
+          "caller": "Tick",
+          "callee": "RollNextInterval",
+          "lineNumber": 392
+        },
+        {
+          "caller": "Tick",
+          "callee": "ThinkFor",
+          "lineNumber": 398
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "GetCurrentIntent",
+          "lineNumber": 421
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "RunTransition",
+          "lineNumber": 432
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "Find",
+          "lineNumber": 436
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "Num",
+          "lineNumber": 438
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "ClearMovementIntent",
+          "lineNumber": 442
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "RollNextInterval",
+          "lineNumber": 445
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "IsValid",
+          "lineNumber": 453
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "Execute",
+          "lineNumber": 458
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "GetPreferredInterval",
+          "lineNumber": 460
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "RollNextInterval",
+          "lineNumber": 467
+        },
+        {
+          "caller": "RunTransition",
+          "callee": "Find",
+          "lineNumber": 475
+        },
+        {
+          "caller": "RunTransition",
+          "callee": "IsValid",
+          "lineNumber": 479
+        },
+        {
+          "caller": "RunTransition",
+          "callee": "OnExit",
+          "lineNumber": 481
+        },
+        {
+          "caller": "RunTransition",
+          "callee": "Find",
+          "lineNumber": 486
+        },
+        {
+          "caller": "RunTransition",
+          "callee": "IsValid",
+          "lineNumber": 490
+        },
+        {
+          "caller": "RunTransition",
+          "callee": "OnEnter",
+          "lineNumber": 492
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 27,
+        "functionCount": 22,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 173,
+      "nonEmptyLines": 138,
+      "functions": [
+        {
+          "name": "GetFloat",
+          "startLine": 31,
+          "endLine": 35,
+          "params": [
+            "Key"
+          ]
+        },
+        {
+          "name": "SetFloat",
+          "startLine": 37,
+          "endLine": 40,
+          "params": [
+            "Key",
+            "Value"
+          ]
+        },
+        {
+          "name": "GetVector",
+          "startLine": 42,
+          "endLine": 46,
+          "params": [
+            "Key"
+          ]
+        },
+        {
+          "name": "SetVector",
+          "startLine": 48,
+          "endLine": 51,
+          "params": [
+            "Key",
+            "Value"
+          ]
+        },
+        {
+          "name": "FActionContext",
+          "startLine": 71,
+          "endLine": 74,
+          "params": [
+            "InRandomStream",
+            "InBlackboard"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AActor",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UControlComponent",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCharacterBrainComponent",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCharacterPerceptionComponent",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActorRegistry",
+          "startLine": 14,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FActionBlackboard",
+          "startLine": 24,
+          "endLine": 52,
+          "methods": [
+            "GetFloat",
+            "SetFloat",
+            "GetVector",
+            "SetVector"
+          ],
+          "properties": [
+            "Floats",
+            "Vectors"
+          ]
+        },
+        {
+          "name": "FActionContext",
+          "startLine": 60,
+          "endLine": 75,
+          "methods": [
+            "FActionContext"
+          ],
+          "properties": [
+            "Actor",
+            "Control",
+            "Brain",
+            "Perception",
+            "DeltaTime",
+            "RandomStream",
+            "Blackboard"
+          ]
+        },
+        {
+          "name": "FActionState",
+          "startLine": 105,
+          "endLine": 112,
+          "methods": [],
+          "properties": [
+            "TimeUntilNextThink",
+            "LastIntent",
+            "RandomStream",
+            "Blackboard",
+            "bInitialized"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AActor",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UControlComponent",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "UCharacterBrainComponent",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "UCharacterPerceptionComponent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UActorRegistry",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "GetFloat",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "SetFloat",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "GetVector",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "SetVector",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "FActionBlackboard",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "FActionContext",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "FActionContext",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "FActionState",
+          "line": 105,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetFloat",
+          "callee": "Find",
+          "lineNumber": 33
+        },
+        {
+          "caller": "SetFloat",
+          "callee": "Add",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetVector",
+          "callee": "Find",
+          "lineNumber": 44
+        },
+        {
+          "caller": "SetVector",
+          "callee": "Add",
+          "lineNumber": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 13,
+        "functionCount": 5,
+        "classCount": 8
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 272,
+      "nonEmptyLines": 226,
+      "functions": [
+        {
+          "name": "IsTickable",
+          "startLine": 8,
+          "endLine": 11,
+          "params": []
+        },
+        {
+          "name": "Cleanup",
+          "startLine": 13,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "GetStatId",
+          "startLine": 18,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "RollNextThinkInterval",
+          "startLine": 23,
+          "endLine": 27,
+          "params": []
+        },
+        {
+          "name": "Tick",
+          "startLine": 29,
+          "endLine": 90,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "ThinkFor",
+          "startLine": 92,
+          "endLine": 144,
+          "params": [
+            "Actor",
+            "BrainComponent",
+            "State",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "HasRelevantChange",
+          "startLine": 146,
+          "endLine": 160,
+          "params": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "name": "DecideIntent",
+          "startLine": 163,
+          "endLine": 272,
+          "params": [
+            "BrainComponent",
+            "PerceptionComponent"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IsTickable",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "Cleanup",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "GetStatId",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "RollNextThinkInterval",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "ThinkFor",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "HasRelevantChange",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "DecideIntent",
+          "line": 163,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Cleanup",
+          "callee": "Reset",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GetStatId",
+          "callee": "RETURN_QUICK_DECLARE_CYCLE_STAT",
+          "lineNumber": 20
+        },
+        {
+          "caller": "RollNextThinkInterval",
+          "callee": "FMath::Max",
+          "lineNumber": 26
+        },
+        {
+          "caller": "RollNextThinkInterval",
+          "callee": "FMath::FRandRange",
+          "lineNumber": 26
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UCharacterBrainComponent>",
+          "lineNumber": 40
+        },
+        {
+          "caller": "Tick",
+          "callee": "Num",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Tick",
+          "callee": "Num",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Tick",
+          "callee": "Reset",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Tick",
+          "callee": "CreateIterator",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Tick",
+          "callee": "Contains",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Tick",
+          "callee": "RemoveCurrent",
+          "lineNumber": 58
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 64
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindComponentByClass<UCharacterBrainComponent>",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindOrAdd",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Tick",
+          "callee": "RollNextThinkInterval",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Tick",
+          "callee": "ThinkFor",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "RollNextThinkInterval",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "FindComponentByClass<UCharacterPerceptionComponent>",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "DecideIntent",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "SetIntent",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "SetFeeling",
+          "lineNumber": 112
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "SetTargetActor",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "SetTargetLocation",
+          "lineNumber": 114
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "HasRelevantChange",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "GetWorld",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "GetSubsystem<UEventBusSubsystem>",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ThinkFor",
+          "callee": "Publish<FBrainIntentChangedPayload>",
+          "lineNumber": 143
+        },
+        {
+          "caller": "HasRelevantChange",
+          "callee": "FMath::Abs",
+          "lineNumber": 156
+        },
+        {
+          "caller": "HasRelevantChange",
+          "callee": "FVector::DistSquared",
+          "lineNumber": 157
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "GetPerceivedActors",
+          "lineNumber": 180
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "Num",
+          "lineNumber": 183
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "GetPerceivedActors",
+          "lineNumber": 198
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 219
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 225
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 231
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "GetActorLocation",
+          "lineNumber": 242
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 251
+        },
+        {
+          "caller": "DecideIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 262
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 80,
+      "classes": [
+        {
+          "name": "UCharacterBrainComponent",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCharacterPerceptionComponent",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActorRegistry",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FBrainIntentChangedPayload",
+          "startLine": 14,
+          "endLine": 35,
+          "methods": [],
+          "properties": [
+            "Owner",
+            "Intent",
+            "Effort",
+            "Feeling",
+            "TargetActor",
+            "TargetLocation"
+          ]
+        },
+        {
+          "name": "FBrainThinkState",
+          "startLine": 44,
+          "endLine": 52,
+          "methods": [],
+          "properties": [
+            "TimeUntilNextThink",
+            "LastBroadcastIntent",
+            "bHasBroadcastOnce"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UCharacterBrainComponent",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UCharacterPerceptionComponent",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UActorRegistry",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "FBrainIntentChangedPayload",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "FBrainThinkState",
+          "line": 44,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 447,
+      "nonEmptyLines": 352,
+      "functions": [
+        {
+          "name": "Cleanup",
+          "startLine": 12,
+          "endLine": 15,
+          "params": []
+        },
+        {
+          "name": "UPerceptionSystem",
+          "startLine": 17,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "LocationToCell",
+          "startLine": 27,
+          "endLine": 33,
+          "params": [
+            "Location"
+          ]
+        },
+        {
+          "name": "IsInSightCone",
+          "startLine": 112,
+          "endLine": 145,
+          "params": [
+            "EyeLocation",
+            "Forward",
+            "TargetLocation",
+            "SightRange",
+            "SightAngleDegrees",
+            "OutDistance"
+          ]
+        },
+        {
+          "name": "HasLineOfSight",
+          "startLine": 147,
+          "endLine": 178,
+          "params": [
+            "World",
+            "Owner",
+            "EyeLocation",
+            "Target",
+            "TraceChannel"
+          ]
+        },
+        {
+          "name": "Tick",
+          "startLine": 180,
+          "endLine": 244,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "EvaluatePerceiver",
+          "startLine": 246,
+          "endLine": 447,
+          "params": [
+            "World",
+            "Owner",
+            "Perception",
+            "Stats"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Cleanup",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "UPerceptionSystem",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "LocationToCell",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "IsInSightCone",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "HasLineOfSight",
+          "line": 147,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "EvaluatePerceiver",
+          "line": 246,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Cleanup",
+          "callee": "Reset",
+          "lineNumber": 14
+        },
+        {
+          "caller": "UPerceptionSystem",
+          "callee": "Add",
+          "lineNumber": 19
+        },
+        {
+          "caller": "UPerceptionSystem",
+          "callee": "UEngineTypes::ConvertToObjectType",
+          "lineNumber": 20
+        },
+        {
+          "caller": "UPerceptionSystem",
+          "callee": "Add",
+          "lineNumber": 22
+        },
+        {
+          "caller": "UPerceptionSystem",
+          "callee": "UEngineTypes::ConvertToObjectType",
+          "lineNumber": 23
+        },
+        {
+          "caller": "LocationToCell",
+          "callee": "FIntVector",
+          "lineNumber": 29
+        },
+        {
+          "caller": "LocationToCell",
+          "callee": "FMath::FloorToInt",
+          "lineNumber": 30
+        },
+        {
+          "caller": "LocationToCell",
+          "callee": "FMath::FloorToInt",
+          "lineNumber": 31
+        },
+        {
+          "caller": "LocationToCell",
+          "callee": "FMath::FloorToInt",
+          "lineNumber": 32
+        },
+        {
+          "caller": "IsInSightCone",
+          "callee": "Size",
+          "lineNumber": 123
+        },
+        {
+          "caller": "IsInSightCone",
+          "callee": "FMath::Cos",
+          "lineNumber": 135
+        },
+        {
+          "caller": "IsInSightCone",
+          "callee": "FMath::DegreesToRadians",
+          "lineNumber": 136
+        },
+        {
+          "caller": "IsInSightCone",
+          "callee": "FVector::DotProduct",
+          "lineNumber": 140
+        },
+        {
+          "caller": "HasLineOfSight",
+          "callee": "AddIgnoredActor",
+          "lineNumber": 159
+        },
+        {
+          "caller": "HasLineOfSight",
+          "callee": "AddIgnoredActor",
+          "lineNumber": 160
+        },
+        {
+          "caller": "HasLineOfSight",
+          "callee": "LineTraceSingleByChannel",
+          "lineNumber": 165
+        },
+        {
+          "caller": "HasLineOfSight",
+          "callee": "GetActorLocation",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 189
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UCharacterPerceptionComponent>",
+          "lineNumber": 196
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 204
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 205
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindComponentByClass<UCharacterPerceptionComponent>",
+          "lineNumber": 211
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 212
+        },
+        {
+          "caller": "Tick",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 228
+        },
+        {
+          "caller": "Tick",
+          "callee": "EvaluatePerceiver",
+          "lineNumber": 236
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "IsValid",
+          "lineNumber": 253
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "IsValid",
+          "lineNumber": 253
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "IsValid",
+          "lineNumber": 253
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "GetSightRange",
+          "lineNumber": 258
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "GetSightAngle",
+          "lineNumber": 259
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "GetActorLocation",
+          "lineNumber": 260
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "GetActorForwardVector",
+          "lineNumber": 261
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "GetNearbyActors",
+          "lineNumber": 265
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "GetPerceivedActors",
+          "lineNumber": 269
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Reserve",
+          "lineNumber": 272
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Num",
+          "lineNumber": 272
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Num",
+          "lineNumber": 274
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Add",
+          "lineNumber": 278
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Reserve",
+          "lineNumber": 283
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Num",
+          "lineNumber": 283
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Reserve",
+          "lineNumber": 286
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Num",
+          "lineNumber": 286
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Get",
+          "lineNumber": 296
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Add",
+          "lineNumber": 304
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Find",
+          "lineNumber": 306
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "GetActorLocation",
+          "lineNumber": 307
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "FVector::Dist",
+          "lineNumber": 316
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Add",
+          "lineNumber": 322
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "IsInSightCone",
+          "lineNumber": 333
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "HasLineOfSight",
+          "lineNumber": 348
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Add",
+          "lineNumber": 367
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "FVector::Dist",
+          "lineNumber": 378
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Add",
+          "lineNumber": 384
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Num",
+          "lineNumber": 407
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Contains",
+          "lineNumber": 411
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "Add",
+          "lineNumber": 422
+        },
+        {
+          "caller": "EvaluatePerceiver",
+          "callee": "SetPerceivedActors",
+          "lineNumber": 432
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 120,
+      "nonEmptyLines": 101,
+      "classes": [
+        {
+          "name": "UCharacterPerceptionComponent",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UStatsComponent",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FPerceivedActor",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UCharacterPerceptionComponent",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "UStatsComponent",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "FPerceivedActor",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "Config/DefaultEditor.ini",
+      "language": "config",
+      "sizeLines": 6,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Config/DefaultEngine.ini",
+      "language": "config",
+      "sizeLines": 103,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Config/DefaultGame.ini",
+      "language": "config",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Config/DefaultInput.ini",
+      "language": "config",
+      "sizeLines": 84,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "Config/DefaultEditor.ini": [],
+    "Config/DefaultEngine.ini": [],
+    "Config/DefaultGame.ini": [],
+    "Config/DefaultInput.ini": []
+  }
+}

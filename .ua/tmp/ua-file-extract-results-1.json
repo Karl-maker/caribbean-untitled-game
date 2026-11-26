@@ -1,0 +1,4140 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 19,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 19,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 19,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "AK98Actor",
+          "startLine": 13,
+          "endLine": 17,
+          "params": []
+        },
+        {
+          "name": "NotifyRegistryComponentAdded",
+          "startLine": 19,
+          "endLine": 25,
+          "params": [
+            "Component"
+          ]
+        },
+        {
+          "name": "RemoveComponent",
+          "startLine": 28,
+          "endLine": 50,
+          "params": [
+            "Component"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AK98Actor",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NotifyRegistryComponentAdded",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveComponent",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NotifyRegistryComponentAdded",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NotifyRegistryComponentAdded",
+          "callee": "GetWorld",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NotifyRegistryComponentAdded",
+          "callee": "ComponentAdded",
+          "lineNumber": 23
+        },
+        {
+          "caller": "RemoveComponent",
+          "callee": "GetOwner",
+          "lineNumber": 33
+        },
+        {
+          "caller": "RemoveComponent",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 39
+        },
+        {
+          "caller": "RemoveComponent",
+          "callee": "GetWorld",
+          "lineNumber": 39
+        },
+        {
+          "caller": "RemoveComponent",
+          "callee": "ComponentRemoved",
+          "lineNumber": 41
+        },
+        {
+          "caller": "RemoveComponent",
+          "callee": "DestroyComponent",
+          "lineNumber": 47
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 125,
+      "nonEmptyLines": 94,
+      "callGraph": [
+        {
+          "caller": "GetComponentsOfType",
+          "callee": "Reset",
+          "lineNumber": 115
+        },
+        {
+          "caller": "GetComponentsOfType",
+          "callee": "GetComponents<T>",
+          "lineNumber": 117
+        },
+        {
+          "caller": "HasComponent",
+          "callee": "GetComponent<T>",
+          "lineNumber": 124
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 514,
+      "nonEmptyLines": 406,
+      "functions": [
+        {
+          "name": "GetMoveIntent",
+          "startLine": 288,
+          "endLine": 288,
+          "params": []
+        },
+        {
+          "name": "GetWorldMoveDirection",
+          "startLine": 294,
+          "endLine": 294,
+          "params": []
+        },
+        {
+          "name": "GetDesiredWorldLocation",
+          "startLine": 300,
+          "endLine": 300,
+          "params": []
+        },
+        {
+          "name": "GetDirectionAcceptanceRadius",
+          "startLine": 306,
+          "endLine": 306,
+          "params": []
+        },
+        {
+          "name": "GetDirectionControlStrength",
+          "startLine": 312,
+          "endLine": 312,
+          "params": []
+        },
+        {
+          "name": "IsSeekingDestination",
+          "startLine": 321,
+          "endLine": 321,
+          "params": []
+        },
+        {
+          "name": "GetJumpIntent",
+          "startLine": 374,
+          "endLine": 374,
+          "params": []
+        },
+        {
+          "name": "GetInteractIntent",
+          "startLine": 375,
+          "endLine": 375,
+          "params": []
+        },
+        {
+          "name": "GetSprintIntent",
+          "startLine": 376,
+          "endLine": 376,
+          "params": []
+        },
+        {
+          "name": "GetCrouchIntent",
+          "startLine": 377,
+          "endLine": 377,
+          "params": []
+        },
+        {
+          "name": "GetDashIntent",
+          "startLine": 378,
+          "endLine": 378,
+          "params": []
+        },
+        {
+          "name": "GetAimIntent",
+          "startLine": 379,
+          "endLine": 379,
+          "params": []
+        },
+        {
+          "name": "GetFireIntent",
+          "startLine": 380,
+          "endLine": 380,
+          "params": []
+        },
+        {
+          "name": "GetReloadIntent",
+          "startLine": 381,
+          "endLine": 381,
+          "params": []
+        },
+        {
+          "name": "GetLightAttackIntent",
+          "startLine": 387,
+          "endLine": 387,
+          "params": []
+        },
+        {
+          "name": "GetHeavyAttackIntent",
+          "startLine": 388,
+          "endLine": 388,
+          "params": []
+        },
+        {
+          "name": "GetBlockIntent",
+          "startLine": 389,
+          "endLine": 389,
+          "params": []
+        },
+        {
+          "name": "GetDodgeIntent",
+          "startLine": 390,
+          "endLine": 390,
+          "params": []
+        },
+        {
+          "name": "GetLockOnIntent",
+          "startLine": 391,
+          "endLine": 391,
+          "params": []
+        },
+        {
+          "name": "GetWeaponAbilityIntent",
+          "startLine": 392,
+          "endLine": 392,
+          "params": []
+        },
+        {
+          "name": "GetWeaponSwitchIntent",
+          "startLine": 393,
+          "endLine": 393,
+          "params": []
+        },
+        {
+          "name": "GetLookInput",
+          "startLine": 447,
+          "endLine": 447,
+          "params": []
+        },
+        {
+          "name": "GetLookDirection",
+          "startLine": 456,
+          "endLine": 456,
+          "params": []
+        },
+        {
+          "name": "GetReplicatedLocomotion",
+          "startLine": 462,
+          "endLine": 462,
+          "params": []
+        },
+        {
+          "name": "GetViewYaw",
+          "startLine": 468,
+          "endLine": 468,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "EControlType",
+          "startLine": 20,
+          "endLine": 514,
+          "methods": [
+            "UMETA",
+            "SetLookAtLocation",
+            "SetMoveIntent",
+            "ServerSetMoveIntent",
+            "GetMoveIntent",
+            "SetWorldMoveDirection",
+            "GetWorldMoveDirection",
+            "SetDesiredWorldLocation",
+            "GetDesiredWorldLocation",
+            "SetDirectionAcceptanceRadius",
+            "GetDirectionAcceptanceRadius",
+            "SetDirectionControlStrength",
+            "GetDirectionControlStrength",
+            "SetForwardBackIntent",
+            "SetLeftRightIntent",
+            "IsSeekingDestination",
+            "ClearDestination",
+            "MoveToWorldLocation",
+            "SetJumpIntent",
+            "ServerSetJumpIntent",
+            "SetInteractIntent",
+            "SetSprintIntent",
+            "ServerSetSprintIntent",
+            "SetCrouchIntent",
+            "SetDashIntent",
+            "SetAimIntent",
+            "SetFireIntent",
+            "SetReloadIntent",
+            "SetLightAttackIntent",
+            "ServerSetLightAttackIntent",
+            "RequestLightAttack",
+            "ServerRequestLightAttack",
+            "SetHeavyAttackIntent",
+            "ServerSetHeavyAttackIntent",
+            "RequestHeavyAttack",
+            "ServerRequestHeavyAttack",
+            "SetBlockIntent",
+            "ServerSetBlockIntent",
+            "SetDodgeIntent",
+            "SetLockOnIntent",
+            "SetWeaponAbilityIntent",
+            "SetWeaponSwitchIntent",
+            "GetJumpIntent",
+            "GetInteractIntent",
+            "GetSprintIntent",
+            "GetCrouchIntent",
+            "GetDashIntent",
+            "GetAimIntent",
+            "GetFireIntent",
+            "GetReloadIntent",
+            "GetLightAttackIntent",
+            "GetHeavyAttackIntent",
+            "GetBlockIntent",
+            "GetDodgeIntent",
+            "GetLockOnIntent",
+            "GetWeaponAbilityIntent",
+            "GetWeaponSwitchIntent",
+            "GetIntentWeight",
+            "SetIntentWeight",
+            "HasIntent",
+            "HasMovementIntent",
+            "HasActionIntent",
+            "WantsToSprint",
+            "WantsToCrouch",
+            "WantsToDash",
+            "WantsToAim",
+            "WantsToFire",
+            "WantsToLightAttack",
+            "WantsToHeavyAttack",
+            "WantsToBlock",
+            "WantsToDodge",
+            "WantsToLockOn",
+            "WantsToUseWeaponAbility",
+            "WantsToSwitchWeapon",
+            "HasCombatIntent",
+            "SetLookInput",
+            "GetLookInput",
+            "ServerSetLookInput",
+            "SetLookDirection",
+            "GetLookDirection",
+            "ClearLookInput",
+            "GetReplicatedLocomotion",
+            "SetReplicatedLocomotion",
+            "GetViewYaw",
+            "SetViewYaw",
+            "ServerSetViewYaw",
+            "ClearIntents",
+            "ClearMovementIntent",
+            "ClearActionIntent",
+            "ClearCombatIntent",
+            "BeginPlay",
+            "GetLifetimeReplicatedProps",
+            "TickComponent",
+            "OnRep_ReplicatedLocomotion"
+          ],
+          "properties": [
+            "BlueprintType",
+            "UControlComponent",
+            "LookRotationSpeed",
+            "ControlType",
+            "MoveIntent",
+            "WorldMoveDirection",
+            "DesiredWorldLocation",
+            "DirectionAcceptanceRadius",
+            "DirectionControlStrength",
+            "LookDirection",
+            "LookInput",
+            "ReplicatedLocomotion",
+            "ViewYaw",
+            "JumpIntent",
+            "InteractIntent",
+            "SprintIntent",
+            "CrouchIntent",
+            "DashIntent",
+            "AimIntent",
+            "FireIntent",
+            "ReloadIntent",
+            "LightAttackIntent",
+            "HeavyAttackIntent",
+            "BlockIntent",
+            "DodgeIntent",
+            "LockOnIntent",
+            "WeaponAbilityIntent",
+            "WeaponSwitchIntent",
+            "bSeekingDestination"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EControlType",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 25,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 429,
+      "nonEmptyLines": 331,
+      "functions": [
+        {
+          "name": "UStatsComponent",
+          "startLine": 5,
+          "endLine": 9,
+          "params": []
+        },
+        {
+          "name": "BeginPlay",
+          "startLine": 16,
+          "endLine": 37,
+          "params": []
+        },
+        {
+          "name": "EndPlay",
+          "startLine": 39,
+          "endLine": 45,
+          "params": [
+            "EndPlayReason"
+          ]
+        },
+        {
+          "name": "StartStaminaRegenerationTimer",
+          "startLine": 52,
+          "endLine": 69,
+          "params": []
+        },
+        {
+          "name": "StopStaminaRegenerationTimer",
+          "startLine": 71,
+          "endLine": 77,
+          "params": []
+        },
+        {
+          "name": "ResetStaminaRegenDelay",
+          "startLine": 79,
+          "endLine": 83,
+          "params": []
+        },
+        {
+          "name": "TickStaminaRegeneration",
+          "startLine": 85,
+          "endLine": 107,
+          "params": []
+        },
+        {
+          "name": "GetWalkSpeed",
+          "startLine": 114,
+          "endLine": 117,
+          "params": []
+        },
+        {
+          "name": "GetSprintSpeed",
+          "startLine": 120,
+          "endLine": 123,
+          "params": []
+        },
+        {
+          "name": "GetCrouchSpeed",
+          "startLine": 126,
+          "endLine": 129,
+          "params": []
+        },
+        {
+          "name": "GetSprintStaminaCostPerSecond",
+          "startLine": 132,
+          "endLine": 135,
+          "params": []
+        },
+        {
+          "name": "GetJumpStrength",
+          "startLine": 138,
+          "endLine": 141,
+          "params": []
+        },
+        {
+          "name": "GetStamina",
+          "startLine": 148,
+          "endLine": 151,
+          "params": []
+        },
+        {
+          "name": "GetMaxStamina",
+          "startLine": 154,
+          "endLine": 157,
+          "params": []
+        },
+        {
+          "name": "GetStaminaPercent",
+          "startLine": 160,
+          "endLine": 168,
+          "params": []
+        },
+        {
+          "name": "HasStamina",
+          "startLine": 171,
+          "endLine": 179,
+          "params": [
+            "Amount"
+          ]
+        },
+        {
+          "name": "ConsumeStamina",
+          "startLine": 182,
+          "endLine": 204,
+          "params": [
+            "Amount"
+          ]
+        },
+        {
+          "name": "RestoreStamina",
+          "startLine": 207,
+          "endLine": 219,
+          "params": [
+            "Amount"
+          ]
+        },
+        {
+          "name": "SetStamina",
+          "startLine": 222,
+          "endLine": 229,
+          "params": [
+            "NewStamina"
+          ]
+        },
+        {
+          "name": "RestoreFullStamina",
+          "startLine": 232,
+          "endLine": 235,
+          "params": []
+        },
+        {
+          "name": "GetHealth",
+          "startLine": 242,
+          "endLine": 245,
+          "params": []
+        },
+        {
+          "name": "GetMaxHealth",
+          "startLine": 247,
+          "endLine": 250,
+          "params": []
+        },
+        {
+          "name": "GetHealthPercent",
+          "startLine": 252,
+          "endLine": 260,
+          "params": []
+        },
+        {
+          "name": "ApplyDamage",
+          "startLine": 262,
+          "endLine": 279,
+          "params": [
+            "DamageAmount"
+          ]
+        },
+        {
+          "name": "Heal",
+          "startLine": 281,
+          "endLine": 293,
+          "params": [
+            "HealAmount"
+          ]
+        },
+        {
+          "name": "SetHealth",
+          "startLine": 295,
+          "endLine": 302,
+          "params": [
+            "NewHealth"
+          ]
+        },
+        {
+          "name": "RestoreFullHealth",
+          "startLine": 304,
+          "endLine": 307,
+          "params": []
+        },
+        {
+          "name": "IsDead",
+          "startLine": 309,
+          "endLine": 312,
+          "params": []
+        },
+        {
+          "name": "GetDashSpeed",
+          "startLine": 319,
+          "endLine": 322,
+          "params": []
+        },
+        {
+          "name": "GetDashDistance",
+          "startLine": 325,
+          "endLine": 328,
+          "params": []
+        },
+        {
+          "name": "GetDashDuration",
+          "startLine": 331,
+          "endLine": 334,
+          "params": []
+        },
+        {
+          "name": "GetSightRange",
+          "startLine": 341,
+          "endLine": 344,
+          "params": []
+        },
+        {
+          "name": "GetSightAngle",
+          "startLine": 346,
+          "endLine": 349,
+          "params": []
+        },
+        {
+          "name": "GetStrength",
+          "startLine": 356,
+          "endLine": 359,
+          "params": []
+        },
+        {
+          "name": "GetDefense",
+          "startLine": 361,
+          "endLine": 364,
+          "params": []
+        },
+        {
+          "name": "GetPoise",
+          "startLine": 366,
+          "endLine": 369,
+          "params": []
+        },
+        {
+          "name": "GetBlockDamageReduction",
+          "startLine": 376,
+          "endLine": 379,
+          "params": []
+        },
+        {
+          "name": "GetBlockStaminaCost",
+          "startLine": 381,
+          "endLine": 384,
+          "params": []
+        },
+        {
+          "name": "GetBlockAngle",
+          "startLine": 386,
+          "endLine": 389,
+          "params": []
+        },
+        {
+          "name": "GetDodgeDistance",
+          "startLine": 396,
+          "endLine": 399,
+          "params": []
+        },
+        {
+          "name": "GetDodgeDuration",
+          "startLine": 401,
+          "endLine": 404,
+          "params": []
+        },
+        {
+          "name": "GetDodgeStaminaCost",
+          "startLine": 406,
+          "endLine": 409,
+          "params": []
+        },
+        {
+          "name": "GetDodgeCooldown",
+          "startLine": 411,
+          "endLine": 414,
+          "params": []
+        },
+        {
+          "name": "GetDodgeInvulnerabilityDuration",
+          "startLine": 416,
+          "endLine": 419,
+          "params": []
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "startLine": 421,
+          "endLine": 429,
+          "params": [
+            "OutLifetimeProps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UStatsComponent",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "BeginPlay",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "EndPlay",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "StartStaminaRegenerationTimer",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "StopStaminaRegenerationTimer",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "ResetStaminaRegenDelay",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "TickStaminaRegeneration",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "GetWalkSpeed",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "GetSprintSpeed",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "GetCrouchSpeed",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "GetSprintStaminaCostPerSecond",
+          "line": 132,
+          "isDefault": false
+        },
+        {
+          "name": "GetJumpStrength",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "GetStamina",
+          "line": 148,
+          "isDefault": false
+        },
+        {
+          "name": "GetMaxStamina",
+          "line": 154,
+          "isDefault": false
+        },
+        {
+          "name": "GetStaminaPercent",
+          "line": 160,
+          "isDefault": false
+        },
+        {
+          "name": "HasStamina",
+          "line": 171,
+          "isDefault": false
+        },
+        {
+          "name": "ConsumeStamina",
+          "line": 182,
+          "isDefault": false
+        },
+        {
+          "name": "RestoreStamina",
+          "line": 207,
+          "isDefault": false
+        },
+        {
+          "name": "SetStamina",
+          "line": 222,
+          "isDefault": false
+        },
+        {
+          "name": "RestoreFullStamina",
+          "line": 232,
+          "isDefault": false
+        },
+        {
+          "name": "GetHealth",
+          "line": 242,
+          "isDefault": false
+        },
+        {
+          "name": "GetMaxHealth",
+          "line": 247,
+          "isDefault": false
+        },
+        {
+          "name": "GetHealthPercent",
+          "line": 252,
+          "isDefault": false
+        },
+        {
+          "name": "ApplyDamage",
+          "line": 262,
+          "isDefault": false
+        },
+        {
+          "name": "Heal",
+          "line": 281,
+          "isDefault": false
+        },
+        {
+          "name": "SetHealth",
+          "line": 295,
+          "isDefault": false
+        },
+        {
+          "name": "RestoreFullHealth",
+          "line": 304,
+          "isDefault": false
+        },
+        {
+          "name": "IsDead",
+          "line": 309,
+          "isDefault": false
+        },
+        {
+          "name": "GetDashSpeed",
+          "line": 319,
+          "isDefault": false
+        },
+        {
+          "name": "GetDashDistance",
+          "line": 325,
+          "isDefault": false
+        },
+        {
+          "name": "GetDashDuration",
+          "line": 331,
+          "isDefault": false
+        },
+        {
+          "name": "GetSightRange",
+          "line": 341,
+          "isDefault": false
+        },
+        {
+          "name": "GetSightAngle",
+          "line": 346,
+          "isDefault": false
+        },
+        {
+          "name": "GetStrength",
+          "line": 356,
+          "isDefault": false
+        },
+        {
+          "name": "GetDefense",
+          "line": 361,
+          "isDefault": false
+        },
+        {
+          "name": "GetPoise",
+          "line": 366,
+          "isDefault": false
+        },
+        {
+          "name": "GetBlockDamageReduction",
+          "line": 376,
+          "isDefault": false
+        },
+        {
+          "name": "GetBlockStaminaCost",
+          "line": 381,
+          "isDefault": false
+        },
+        {
+          "name": "GetBlockAngle",
+          "line": 386,
+          "isDefault": false
+        },
+        {
+          "name": "GetDodgeDistance",
+          "line": 396,
+          "isDefault": false
+        },
+        {
+          "name": "GetDodgeDuration",
+          "line": 401,
+          "isDefault": false
+        },
+        {
+          "name": "GetDodgeStaminaCost",
+          "line": 406,
+          "isDefault": false
+        },
+        {
+          "name": "GetDodgeCooldown",
+          "line": 411,
+          "isDefault": false
+        },
+        {
+          "name": "GetDodgeInvulnerabilityDuration",
+          "line": 416,
+          "isDefault": false
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "line": 421,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "UStatsComponent",
+          "callee": "SetIsReplicatedByDefault",
+          "lineNumber": 8
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "Super::BeginPlay",
+          "lineNumber": 18
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "FMath::Clamp",
+          "lineNumber": 20
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "FMath::Clamp",
+          "lineNumber": 26
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "GetOwner",
+          "lineNumber": 33
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "HasAuthority",
+          "lineNumber": 33
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "GetOwner",
+          "lineNumber": 33
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "StartStaminaRegenerationTimer",
+          "lineNumber": 35
+        },
+        {
+          "caller": "EndPlay",
+          "callee": "Super::EndPlay",
+          "lineNumber": 41
+        },
+        {
+          "caller": "EndPlay",
+          "callee": "StopStaminaRegenerationTimer",
+          "lineNumber": 44
+        },
+        {
+          "caller": "StartStaminaRegenerationTimer",
+          "callee": "StopStaminaRegenerationTimer",
+          "lineNumber": 55
+        },
+        {
+          "caller": "StartStaminaRegenerationTimer",
+          "callee": "GetWorld",
+          "lineNumber": 58
+        },
+        {
+          "caller": "StartStaminaRegenerationTimer",
+          "callee": "SetTimer",
+          "lineNumber": 60
+        },
+        {
+          "caller": "StartStaminaRegenerationTimer",
+          "callee": "GetTimerManager",
+          "lineNumber": 60
+        },
+        {
+          "caller": "StartStaminaRegenerationTimer",
+          "callee": "GetWorld",
+          "lineNumber": 60
+        },
+        {
+          "caller": "StopStaminaRegenerationTimer",
+          "callee": "GetWorld",
+          "lineNumber": 73
+        },
+        {
+          "caller": "StopStaminaRegenerationTimer",
+          "callee": "IsValid",
+          "lineNumber": 73
+        },
+        {
+          "caller": "StopStaminaRegenerationTimer",
+          "callee": "ClearTimer",
+          "lineNumber": 75
+        },
+        {
+          "caller": "StopStaminaRegenerationTimer",
+          "callee": "GetTimerManager",
+          "lineNumber": 75
+        },
+        {
+          "caller": "StopStaminaRegenerationTimer",
+          "callee": "GetWorld",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TickStaminaRegeneration",
+          "callee": "FMath::Max",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TickStaminaRegeneration",
+          "callee": "RestoreStamina",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ConsumeStamina",
+          "callee": "HasStamina",
+          "lineNumber": 189
+        },
+        {
+          "caller": "ConsumeStamina",
+          "callee": "FMath::Clamp",
+          "lineNumber": 194
+        },
+        {
+          "caller": "ConsumeStamina",
+          "callee": "ResetStaminaRegenDelay",
+          "lineNumber": 201
+        },
+        {
+          "caller": "RestoreStamina",
+          "callee": "FMath::Clamp",
+          "lineNumber": 214
+        },
+        {
+          "caller": "SetStamina",
+          "callee": "FMath::Clamp",
+          "lineNumber": 224
+        },
+        {
+          "caller": "ApplyDamage",
+          "callee": "IsDead",
+          "lineNumber": 264
+        },
+        {
+          "caller": "ApplyDamage",
+          "callee": "FMath::Max",
+          "lineNumber": 270
+        },
+        {
+          "caller": "ApplyDamage",
+          "callee": "FMath::Clamp",
+          "lineNumber": 272
+        },
+        {
+          "caller": "Heal",
+          "callee": "FMath::Clamp",
+          "lineNumber": 288
+        },
+        {
+          "caller": "SetHealth",
+          "callee": "FMath::Clamp",
+          "lineNumber": 297
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "Super::GetLifetimeReplicatedProps",
+          "lineNumber": 423
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 425
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 426
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 427
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 428
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 45,
+        "functionCount": 45,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 578,
+      "nonEmptyLines": 469,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 18,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 14,
+      "classes": [
+        {
+          "name": "FMovementPayload",
+          "startLine": 9,
+          "endLine": 18,
+          "methods": [],
+          "properties": [
+            "Source",
+            "Type"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FMovementPayload",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 269,
+      "nonEmptyLines": 201,
+      "functions": [
+        {
+          "name": "RegisterActor",
+          "startLine": 15,
+          "endLine": 33,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "UnregisterActor",
+          "startLine": 36,
+          "endLine": 56,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "IsRegistered",
+          "startLine": 59,
+          "endLine": 67,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "BuildIndexesForActor",
+          "startLine": 70,
+          "endLine": 96,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "ComponentAdded",
+          "startLine": 99,
+          "endLine": 128,
+          "params": [
+            "Actor",
+            "Component"
+          ]
+        },
+        {
+          "name": "ComponentRemoved",
+          "startLine": 131,
+          "endLine": 167,
+          "params": [
+            "Actor",
+            "Component"
+          ]
+        },
+        {
+          "name": "RemoveActorFromIndexes",
+          "startLine": 184,
+          "endLine": 212,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "CleanupInvalidActors",
+          "startLine": 215,
+          "endLine": 258,
+          "params": []
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 261,
+          "endLine": 268,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "RegisterActor",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "UnregisterActor",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "IsRegistered",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "BuildIndexesForActor",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "ComponentAdded",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "ComponentRemoved",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveActorFromIndexes",
+          "line": 184,
+          "isDefault": false
+        },
+        {
+          "name": "CleanupInvalidActors",
+          "line": 215,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 261,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RegisterActor",
+          "callee": "IsValid",
+          "lineNumber": 17
+        },
+        {
+          "caller": "RegisterActor",
+          "callee": "Contains",
+          "lineNumber": 23
+        },
+        {
+          "caller": "RegisterActor",
+          "callee": "Add",
+          "lineNumber": 29
+        },
+        {
+          "caller": "RegisterActor",
+          "callee": "BuildIndexesForActor",
+          "lineNumber": 32
+        },
+        {
+          "caller": "UnregisterActor",
+          "callee": "Contains",
+          "lineNumber": 44
+        },
+        {
+          "caller": "UnregisterActor",
+          "callee": "Remove",
+          "lineNumber": 46
+        },
+        {
+          "caller": "UnregisterActor",
+          "callee": "RemoveActorFromIndexes",
+          "lineNumber": 48
+        },
+        {
+          "caller": "IsRegistered",
+          "callee": "Contains",
+          "lineNumber": 64
+        },
+        {
+          "caller": "IsRegistered",
+          "callee": "const_cast<AActor*>",
+          "lineNumber": 65
+        },
+        {
+          "caller": "BuildIndexesForActor",
+          "callee": "IsValid",
+          "lineNumber": 74
+        },
+        {
+          "caller": "BuildIndexesForActor",
+          "callee": "GetComponents",
+          "lineNumber": 81
+        },
+        {
+          "caller": "BuildIndexesForActor",
+          "callee": "IsValid",
+          "lineNumber": 86
+        },
+        {
+          "caller": "BuildIndexesForActor",
+          "callee": "ComponentAdded",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ComponentAdded",
+          "callee": "IsValid",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ComponentAdded",
+          "callee": "IsValid",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ComponentAdded",
+          "callee": "GetClass",
+          "lineNumber": 110
+        },
+        {
+          "caller": "ComponentAdded",
+          "callee": "FindOrAdd",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ComponentAdded",
+          "callee": "Contains",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ComponentAdded",
+          "callee": "Add",
+          "lineNumber": 123
+        },
+        {
+          "caller": "ComponentRemoved",
+          "callee": "GetClass",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ComponentRemoved",
+          "callee": "Find",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ComponentRemoved",
+          "callee": "Num",
+          "lineNumber": 157
+        },
+        {
+          "caller": "ComponentRemoved",
+          "callee": "Remove",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ComponentRemoved",
+          "callee": "Num",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ComponentRemoved",
+          "callee": "Remove",
+          "lineNumber": 164
+        },
+        {
+          "caller": "RemoveActorFromIndexes",
+          "callee": "CreateIterator",
+          "lineNumber": 195
+        },
+        {
+          "caller": "RemoveActorFromIndexes",
+          "callee": "Value",
+          "lineNumber": 199
+        },
+        {
+          "caller": "RemoveActorFromIndexes",
+          "callee": "Remove",
+          "lineNumber": 201
+        },
+        {
+          "caller": "RemoveActorFromIndexes",
+          "callee": "Num",
+          "lineNumber": 206
+        },
+        {
+          "caller": "RemoveActorFromIndexes",
+          "callee": "RemoveCurrent",
+          "lineNumber": 208
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "CreateIterator",
+          "lineNumber": 220
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "IsValid",
+          "lineNumber": 224
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "RemoveCurrent",
+          "lineNumber": 226
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "CreateIterator",
+          "lineNumber": 231
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "Value",
+          "lineNumber": 235
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "CreateIterator",
+          "lineNumber": 237
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "IsValid",
+          "lineNumber": 241
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "RemoveCurrent",
+          "lineNumber": 243
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "Num",
+          "lineNumber": 248
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "RemoveCurrent",
+          "lineNumber": 250
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Empty",
+          "lineNumber": 264
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Empty",
+          "lineNumber": 265
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 267
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 50,
+      "classes": [
+        {
+          "name": "AActor",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActorComponent",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AActor",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "UActorComponent",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 530,
+      "nonEmptyLines": 445,
+      "functions": [
+        {
+          "name": "SmoothAngleTo",
+          "startLine": 20,
+          "endLine": 25,
+          "params": [
+            "Current",
+            "Target",
+            "DeltaTime",
+            "Speed"
+          ]
+        },
+        {
+          "name": "UCameraSystem",
+          "startLine": 28,
+          "endLine": 57,
+          "params": []
+        },
+        {
+          "name": "Tick",
+          "startLine": 59,
+          "endLine": 108,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 110,
+          "endLine": 124,
+          "params": [
+            "Actor",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "UpdateCameraState",
+          "startLine": 126,
+          "endLine": 232,
+          "params": [
+            "Actor",
+            "CameraBoom",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "UpdateCameraOrbit",
+          "startLine": 234,
+          "endLine": 304,
+          "params": [
+            "Character",
+            "Control",
+            "State",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "DetermineTargetValues",
+          "startLine": 306,
+          "endLine": 379,
+          "params": [
+            "Actor",
+            "OutOffset",
+            "OutArmLength",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "IsRunning",
+          "startLine": 381,
+          "endLine": 415,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "IsActionState",
+          "startLine": 417,
+          "endLine": 443,
+          "params": [
+            "Actor",
+            "bIsRecentlyJumping"
+          ]
+        },
+        {
+          "name": "SetMouseLook",
+          "startLine": 445,
+          "endLine": 448,
+          "params": [
+            "LookInput"
+          ]
+        },
+        {
+          "name": "SetCameraTarget",
+          "startLine": 450,
+          "endLine": 453,
+          "params": [
+            "InTarget"
+          ]
+        },
+        {
+          "name": "SetUpdateInterval",
+          "startLine": 455,
+          "endLine": 458,
+          "params": [
+            "InTicks"
+          ]
+        },
+        {
+          "name": "SetNormalCamera",
+          "startLine": 460,
+          "endLine": 464,
+          "params": [
+            "Offset",
+            "ArmLength"
+          ]
+        },
+        {
+          "name": "SetRunningCamera",
+          "startLine": 466,
+          "endLine": 470,
+          "params": [
+            "Offset",
+            "ArmLength"
+          ]
+        },
+        {
+          "name": "SetActionCamera",
+          "startLine": 472,
+          "endLine": 476,
+          "params": [
+            "Offset",
+            "ArmLength"
+          ]
+        },
+        {
+          "name": "SetDamping",
+          "startLine": 478,
+          "endLine": 483,
+          "params": [
+            "InPositionDamping",
+            "InArmLengthDamping",
+            "InRotationDamping"
+          ]
+        },
+        {
+          "name": "SetMouseSensitivity",
+          "startLine": 485,
+          "endLine": 488,
+          "params": [
+            "InSensitivity"
+          ]
+        },
+        {
+          "name": "SetLookLimits",
+          "startLine": 490,
+          "endLine": 494,
+          "params": [
+            "InMinPitch",
+            "InMaxPitch"
+          ]
+        },
+        {
+          "name": "SetJumpSmoothTime",
+          "startLine": 496,
+          "endLine": 499,
+          "params": [
+            "InJumpSmoothTime"
+          ]
+        },
+        {
+          "name": "SetAutoRecenter",
+          "startLine": 501,
+          "endLine": 506,
+          "params": [
+            "bEnabled",
+            "Delay",
+            "Speed"
+          ]
+        },
+        {
+          "name": "SetCameraCollision",
+          "startLine": 508,
+          "endLine": 519,
+          "params": [
+            "bEnabled",
+            "ProbeSize"
+          ]
+        },
+        {
+          "name": "CleanupInvalidActors",
+          "startLine": 521,
+          "endLine": 530,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SmoothAngleTo",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "UCameraSystem",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateCameraState",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateCameraOrbit",
+          "line": 234,
+          "isDefault": false
+        },
+        {
+          "name": "DetermineTargetValues",
+          "line": 306,
+          "isDefault": false
+        },
+        {
+          "name": "IsRunning",
+          "line": 381,
+          "isDefault": false
+        },
+        {
+          "name": "IsActionState",
+          "line": 417,
+          "isDefault": false
+        },
+        {
+          "name": "SetMouseLook",
+          "line": 445,
+          "isDefault": false
+        },
+        {
+          "name": "SetCameraTarget",
+          "line": 450,
+          "isDefault": false
+        },
+        {
+          "name": "SetUpdateInterval",
+          "line": 455,
+          "isDefault": false
+        },
+        {
+          "name": "SetNormalCamera",
+          "line": 460,
+          "isDefault": false
+        },
+        {
+          "name": "SetRunningCamera",
+          "line": 466,
+          "isDefault": false
+        },
+        {
+          "name": "SetActionCamera",
+          "line": 472,
+          "isDefault": false
+        },
+        {
+          "name": "SetDamping",
+          "line": 478,
+          "isDefault": false
+        },
+        {
+          "name": "SetMouseSensitivity",
+          "line": 485,
+          "isDefault": false
+        },
+        {
+          "name": "SetLookLimits",
+          "line": 490,
+          "isDefault": false
+        },
+        {
+          "name": "SetJumpSmoothTime",
+          "line": 496,
+          "isDefault": false
+        },
+        {
+          "name": "SetAutoRecenter",
+          "line": 501,
+          "isDefault": false
+        },
+        {
+          "name": "SetCameraCollision",
+          "line": 508,
+          "isDefault": false
+        },
+        {
+          "name": "CleanupInvalidActors",
+          "line": 521,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SmoothAngleTo",
+          "callee": "FMath::FindDeltaAngleDegrees",
+          "lineNumber": 22
+        },
+        {
+          "caller": "SmoothAngleTo",
+          "callee": "FMath::Clamp",
+          "lineNumber": 23
+        },
+        {
+          "caller": "SmoothAngleTo",
+          "callee": "FMath::Exp",
+          "lineNumber": 23
+        },
+        {
+          "caller": "SmoothAngleTo",
+          "callee": "FRotator::NormalizeAxis",
+          "lineNumber": 24
+        },
+        {
+          "caller": "UCameraSystem",
+          "callee": "FVector",
+          "lineNumber": 31
+        },
+        {
+          "caller": "UCameraSystem",
+          "callee": "FVector",
+          "lineNumber": 34
+        },
+        {
+          "caller": "UCameraSystem",
+          "callee": "FVector",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<USpringArmComponent>",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Tick",
+          "callee": "Cast<APawn>",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsLocallyControlled",
+          "lineNumber": 93
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 98
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 98
+        },
+        {
+          "caller": "Tick",
+          "callee": "ProcessActor",
+          "lineNumber": 103
+        },
+        {
+          "caller": "Tick",
+          "callee": "CleanupInvalidActors",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 112
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<USpringArmComponent>",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "UpdateCameraState",
+          "lineNumber": 123
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FindOrAdd",
+          "lineNumber": 128
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "GetActorRotation",
+          "lineNumber": 138
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "SetUsingAbsoluteLocation",
+          "lineNumber": 151
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "SetUsingAbsoluteRotation",
+          "lineNumber": 152
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "Cast<ACharacter>",
+          "lineNumber": 181
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 182
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "DetermineTargetValues",
+          "lineNumber": 187
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "UpdateCameraOrbit",
+          "lineNumber": 196
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FRotator",
+          "lineNumber": 200
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FMath::Clamp",
+          "lineNumber": 203
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FMath::Exp",
+          "lineNumber": 203
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FMath::Clamp",
+          "lineNumber": 204
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FMath::Exp",
+          "lineNumber": 204
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FMath::Lerp",
+          "lineNumber": 207
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FMath::Lerp",
+          "lineNumber": 208
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "SmoothAngleTo",
+          "lineNumber": 212
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "SmoothAngleTo",
+          "lineNumber": 213
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FRotator",
+          "lineNumber": 214
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "RotateVector",
+          "lineNumber": 225
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FVector",
+          "lineNumber": 226
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "GetActorLocation",
+          "lineNumber": 227
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "FVector",
+          "lineNumber": 227
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "SetWorldLocation",
+          "lineNumber": 229
+        },
+        {
+          "caller": "UpdateCameraState",
+          "callee": "SetWorldRotation",
+          "lineNumber": 230
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "IsNearlyZero",
+          "lineNumber": 246
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "GetLookInput",
+          "lineNumber": 248
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "ClearLookInput",
+          "lineNumber": 260
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "IsNearlyZero",
+          "lineNumber": 263
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "FRotator::NormalizeAxis",
+          "lineNumber": 270
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "FMath::Clamp",
+          "lineNumber": 273
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "SetViewYaw",
+          "lineNumber": 278
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "IsNearlyZero",
+          "lineNumber": 294
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "GetVelocity",
+          "lineNumber": 294
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "GetActorRotation",
+          "lineNumber": 297
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "SmoothAngleTo",
+          "lineNumber": 298
+        },
+        {
+          "caller": "UpdateCameraOrbit",
+          "callee": "SetViewYaw",
+          "lineNumber": 301
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "Cast<ACharacter>",
+          "lineNumber": 308
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "GetCharacterMovement",
+          "lineNumber": 316
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 317
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 318
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "Size",
+          "lineNumber": 328
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "IsFalling",
+          "lineNumber": 329
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "IsRunning",
+          "lineNumber": 343
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "IsActionState",
+          "lineNumber": 344
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "FMath::Clamp",
+          "lineNumber": 364
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "FMath::Lerp",
+          "lineNumber": 369
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "FMath::Clamp",
+          "lineNumber": 371
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "FMath::Lerp",
+          "lineNumber": 377
+        },
+        {
+          "caller": "DetermineTargetValues",
+          "callee": "FMath::Lerp",
+          "lineNumber": 378
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "IsValid",
+          "lineNumber": 383
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "Cast<ACharacter>",
+          "lineNumber": 388
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "GetCharacterMovement",
+          "lineNumber": 394
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 395
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 396
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "Size",
+          "lineNumber": 403
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "GetWalkSpeed",
+          "lineNumber": 404
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "GetSprintSpeed",
+          "lineNumber": 405
+        },
+        {
+          "caller": "IsRunning",
+          "callee": "IsFalling",
+          "lineNumber": 412
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "IsValid",
+          "lineNumber": 419
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "Cast<ACharacter>",
+          "lineNumber": 424
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "GetCharacterMovement",
+          "lineNumber": 430
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 431
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "IsCrouching",
+          "lineNumber": 438
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "GetDashIntent",
+          "lineNumber": 439
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "GetAimIntent",
+          "lineNumber": 440
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "GetFireIntent",
+          "lineNumber": 440
+        },
+        {
+          "caller": "IsActionState",
+          "callee": "GetReloadIntent",
+          "lineNumber": 440
+        },
+        {
+          "caller": "SetUpdateInterval",
+          "callee": "FMath::Max",
+          "lineNumber": 457
+        },
+        {
+          "caller": "SetNormalCamera",
+          "callee": "FMath::Max",
+          "lineNumber": 463
+        },
+        {
+          "caller": "SetRunningCamera",
+          "callee": "FMath::Max",
+          "lineNumber": 469
+        },
+        {
+          "caller": "SetActionCamera",
+          "callee": "FMath::Max",
+          "lineNumber": 475
+        },
+        {
+          "caller": "SetDamping",
+          "callee": "FMath::Max",
+          "lineNumber": 480
+        },
+        {
+          "caller": "SetDamping",
+          "callee": "FMath::Max",
+          "lineNumber": 481
+        },
+        {
+          "caller": "SetDamping",
+          "callee": "FMath::Max",
+          "lineNumber": 482
+        },
+        {
+          "caller": "SetMouseSensitivity",
+          "callee": "FMath::Max",
+          "lineNumber": 487
+        },
+        {
+          "caller": "SetLookLimits",
+          "callee": "FMath::Clamp",
+          "lineNumber": 492
+        },
+        {
+          "caller": "SetLookLimits",
+          "callee": "FMath::Clamp",
+          "lineNumber": 493
+        },
+        {
+          "caller": "SetJumpSmoothTime",
+          "callee": "FMath::Max",
+          "lineNumber": 498
+        },
+        {
+          "caller": "SetAutoRecenter",
+          "callee": "FMath::Max",
+          "lineNumber": 504
+        },
+        {
+          "caller": "SetAutoRecenter",
+          "callee": "FMath::Max",
+          "lineNumber": 505
+        },
+        {
+          "caller": "SetCameraCollision",
+          "callee": "FMath::Max",
+          "lineNumber": 511
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "CreateIterator",
+          "lineNumber": 523
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "IsValid",
+          "lineNumber": 525
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "Key",
+          "lineNumber": 525
+        },
+        {
+          "caller": "CleanupInvalidActors",
+          "callee": "RemoveCurrent",
+          "lineNumber": 527
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 22,
+        "functionCount": 22,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 175,
+      "nonEmptyLines": 136,
+      "classes": [
+        {
+          "name": "AActor",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "ACharacter",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UWorld",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "USpringArmComponent",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UControlComponent",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FCameraState",
+          "startLine": 16,
+          "endLine": 43,
+          "methods": [],
+          "properties": [
+            "CurrentOffset",
+            "CurrentArmLength",
+            "CurrentRotation",
+            "TargetOffset",
+            "TargetArmLength",
+            "TargetRotation",
+            "CurrentYaw",
+            "CurrentPitch",
+            "TargetYaw",
+            "TargetPitch",
+            "TimeSinceLastLookInput",
+            "bInitialized"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AActor",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ACharacter",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UWorld",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "USpringArmComponent",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "UControlComponent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "FCameraState",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 138,
+      "nonEmptyLines": 103,
+      "functions": [
+        {
+          "name": "Tick",
+          "startLine": 14,
+          "endLine": 52,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "GetStatId",
+          "startLine": 58,
+          "endLine": 64,
+          "params": []
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 70,
+          "endLine": 123,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "Cleanup",
+          "startLine": 134,
+          "endLine": 138,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Tick",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "GetStatId",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "Cleanup",
+          "line": 134,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 26
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UControlComponent>",
+          "lineNumber": 34
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Tick",
+          "callee": "ProcessActor",
+          "lineNumber": 50
+        },
+        {
+          "caller": "GetStatId",
+          "callee": "RETURN_QUICK_DECLARE_CYCLE_STAT",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "WantsToLightAttack",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindOrAdd",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "RequestAttack",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "WantsToHeavyAttack",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindOrAdd",
+          "lineNumber": 114
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "RequestAttack",
+          "lineNumber": 119
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Empty",
+          "lineNumber": 136
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Empty",
+          "lineNumber": 137
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 90,
+      "nonEmptyLines": 74,
+      "classes": [
+        {
+          "name": "UActorRegistry",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UControlComponent",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCombatComponent",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UActorRegistry",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UControlComponent",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UCombatComponent",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 507,
+      "nonEmptyLines": 420,
+      "functions": [
+        {
+          "name": "Tick",
+          "startLine": 11,
+          "endLine": 44,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 47,
+          "endLine": 110,
+          "params": [
+            "Actor",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "ResolveMoveDirection",
+          "startLine": 117,
+          "endLine": 136,
+          "params": [
+            "Character",
+            "Control"
+          ]
+        },
+        {
+          "name": "ResolveExternalDirection",
+          "startLine": 138,
+          "endLine": 160,
+          "params": [
+            "Character",
+            "Control"
+          ]
+        },
+        {
+          "name": "ComputeIntentDirection",
+          "startLine": 162,
+          "endLine": 196,
+          "params": [
+            "Character",
+            "MoveIntent"
+          ]
+        },
+        {
+          "name": "ApplySpeed",
+          "startLine": 203,
+          "endLine": 221,
+          "params": [
+            "Stats",
+            "Movement",
+            "bWantsToSprint",
+            "bWantsToCrouch"
+          ]
+        },
+        {
+          "name": "ApplyMovement",
+          "startLine": 228,
+          "endLine": 239,
+          "params": [
+            "Character",
+            "MoveDirection"
+          ]
+        },
+        {
+          "name": "ApplyCrouch",
+          "startLine": 246,
+          "endLine": 256,
+          "params": [
+            "Character",
+            "bWantsToCrouch"
+          ]
+        },
+        {
+          "name": "DetermineAndPublishLocomotion",
+          "startLine": 263,
+          "endLine": 330,
+          "params": [
+            "Actor",
+            "Character",
+            "Movement",
+            "Control",
+            "MoveDirection",
+            "bWantsToSprint",
+            "bWantsToCrouch"
+          ]
+        },
+        {
+          "name": "ClearLandingState",
+          "startLine": 332,
+          "endLine": 339,
+          "params": [
+            "WeakActor"
+          ]
+        },
+        {
+          "name": "ClearAllTimersForActor",
+          "startLine": 341,
+          "endLine": 357,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "DetermineLocomotionState",
+          "startLine": 359,
+          "endLine": 477,
+          "params": [
+            "Character",
+            "Movement",
+            "Control",
+            "MoveDirection",
+            "bWantsToSprint",
+            "bWantsToCrouch",
+            "PreviousState"
+          ]
+        },
+        {
+          "name": "GetCurrentLocomotionState",
+          "startLine": 485,
+          "endLine": 489,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "Cleanup",
+          "startLine": 491,
+          "endLine": 507,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Tick",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "ResolveMoveDirection",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "ResolveExternalDirection",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "ComputeIntentDirection",
+          "line": 162,
+          "isDefault": false
+        },
+        {
+          "name": "ApplySpeed",
+          "line": 203,
+          "isDefault": false
+        },
+        {
+          "name": "ApplyMovement",
+          "line": 228,
+          "isDefault": false
+        },
+        {
+          "name": "ApplyCrouch",
+          "line": 246,
+          "isDefault": false
+        },
+        {
+          "name": "DetermineAndPublishLocomotion",
+          "line": 263,
+          "isDefault": false
+        },
+        {
+          "name": "ClearLandingState",
+          "line": 332,
+          "isDefault": false
+        },
+        {
+          "name": "ClearAllTimersForActor",
+          "line": 341,
+          "isDefault": false
+        },
+        {
+          "name": "DetermineLocomotionState",
+          "line": 359,
+          "isDefault": false
+        },
+        {
+          "name": "GetCurrentLocomotionState",
+          "line": 485,
+          "isDefault": false
+        },
+        {
+          "name": "Cleanup",
+          "line": 491,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UControlComponent>",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Tick",
+          "callee": "ProcessActor",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UCharacterMovementComponent>",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Cast<ACharacter>",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetWorld",
+          "lineNumber": 64
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetNetMode",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Cast<APawn>",
+          "lineNumber": 69
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsLocallyControlled",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "ResolveMoveDirection",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "WantsToSprint",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "WantsToCrouch",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "ApplySpeed",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "ApplyMovement",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "ApplyCrouch",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Rotation",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SetActorRotation",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FRotator",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SetActorRotation",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FRotator",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetViewYaw",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "DetermineAndPublishLocomotion",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "ComputeIntentDirection",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "ResolveExternalDirection",
+          "lineNumber": 120
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "IsNearlyZero",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "IsNearlyZero",
+          "lineNumber": 123
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "FMath::Clamp",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "GetDirectionControlStrength",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "FMath::Lerp",
+          "lineNumber": 133
+        },
+        {
+          "caller": "ResolveMoveDirection",
+          "callee": "Normalize",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "IsSeekingDestination",
+          "lineNumber": 140
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "GetDesiredWorldLocation",
+          "lineNumber": 142
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "GetActorLocation",
+          "lineNumber": 142
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "SizeSquared",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "FMath::Square",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "GetDirectionAcceptanceRadius",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "ClearDestination",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "Normalize",
+          "lineNumber": 151
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "SetWorldMoveDirection",
+          "lineNumber": 152
+        },
+        {
+          "caller": "ResolveExternalDirection",
+          "callee": "GetWorldMoveDirection",
+          "lineNumber": 157
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "IsNearlyZero",
+          "lineNumber": 164
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "GetActorRotation",
+          "lineNumber": 172
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 173
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "GetViewYaw",
+          "lineNumber": 175
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "GetUnitAxis",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "FRotationMatrix",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "GetUnitAxis",
+          "lineNumber": 180
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "FRotationMatrix",
+          "lineNumber": 180
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "FMath::Abs",
+          "lineNumber": 183
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "FMath::Abs",
+          "lineNumber": 183
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "FMath::Abs",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ComputeIntentDirection",
+          "callee": "FMath::Abs",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ApplySpeed",
+          "callee": "GetWalkSpeed",
+          "lineNumber": 209
+        },
+        {
+          "caller": "ApplySpeed",
+          "callee": "GetCrouchSpeed",
+          "lineNumber": 213
+        },
+        {
+          "caller": "ApplySpeed",
+          "callee": "GetSprintSpeed",
+          "lineNumber": 217
+        },
+        {
+          "caller": "ApplyMovement",
+          "callee": "IsNearlyZero",
+          "lineNumber": 235
+        },
+        {
+          "caller": "ApplyMovement",
+          "callee": "AddMovementInput",
+          "lineNumber": 237
+        },
+        {
+          "caller": "ApplyCrouch",
+          "callee": "Crouch",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ApplyCrouch",
+          "callee": "UnCrouch",
+          "lineNumber": 254
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "DetermineLocomotionState",
+          "lineNumber": 273
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "GetCurrentLocomotionState",
+          "lineNumber": 280
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "GetCurrentLocomotionState",
+          "lineNumber": 284
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "Find",
+          "lineNumber": 291
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "GetWorld",
+          "lineNumber": 293
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "ClearTimer",
+          "lineNumber": 295
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "GetTimerManager",
+          "lineNumber": 295
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "Remove",
+          "lineNumber": 297
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "GetWorld",
+          "lineNumber": 301
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "SetTimer",
+          "lineNumber": 305
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "GetTimerManager",
+          "lineNumber": 305
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "FTimerDelegate::CreateUObject",
+          "lineNumber": 307
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "Add",
+          "lineNumber": 311
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "Add",
+          "lineNumber": 316
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "SetReplicatedLocomotion",
+          "lineNumber": 317
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "GetEventBus",
+          "lineNumber": 324
+        },
+        {
+          "caller": "DetermineAndPublishLocomotion",
+          "callee": "Publish",
+          "lineNumber": 327
+        },
+        {
+          "caller": "ClearLandingState",
+          "callee": "Get",
+          "lineNumber": 334
+        },
+        {
+          "caller": "ClearLandingState",
+          "callee": "Remove",
+          "lineNumber": 337
+        },
+        {
+          "caller": "ClearAllTimersForActor",
+          "callee": "GetWorld",
+          "lineNumber": 345
+        },
+        {
+          "caller": "ClearAllTimersForActor",
+          "callee": "GetTimerManager",
+          "lineNumber": 348
+        },
+        {
+          "caller": "ClearAllTimersForActor",
+          "callee": "Find",
+          "lineNumber": 351
+        },
+        {
+          "caller": "ClearAllTimersForActor",
+          "callee": "ClearTimer",
+          "lineNumber": 353
+        },
+        {
+          "caller": "ClearAllTimersForActor",
+          "callee": "Remove",
+          "lineNumber": 354
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "Contains",
+          "lineNumber": 378
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "IsFalling",
+          "lineNumber": 386
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "Size",
+          "lineNumber": 410
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 419
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "GetSprintSpeed",
+          "lineNumber": 423
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "FMath::Abs",
+          "lineNumber": 425
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "FMath::Abs",
+          "lineNumber": 425
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "GetActorForwardVector",
+          "lineNumber": 444
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "GetActorRightVector",
+          "lineNumber": 445
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "FMath::Abs",
+          "lineNumber": 446
+        },
+        {
+          "caller": "DetermineLocomotionState",
+          "callee": "FMath::Abs",
+          "lineNumber": 447
+        },
+        {
+          "caller": "GetCurrentLocomotionState",
+          "callee": "Find",
+          "lineNumber": 487
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "GetWorld",
+          "lineNumber": 493
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "GetTimerManager",
+          "lineNumber": 497
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "ClearTimer",
+          "lineNumber": 501
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Empty",
+          "lineNumber": 505
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Empty",
+          "lineNumber": 506
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 54,
+      "classes": [
+        {
+          "name": "AActor",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AActor",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 138,
+      "functions": [
+        {
+          "name": "Tick",
+          "startLine": 13,
+          "endLine": 59,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "GetStatId",
+          "startLine": 61,
+          "endLine": 64,
+          "params": []
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 71,
+          "endLine": 124,
+          "params": [
+            "Actor",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "RequestRegeneration",
+          "startLine": 131,
+          "endLine": 150,
+          "params": [
+            "Stats"
+          ]
+        },
+        {
+          "name": "StopRegeneration",
+          "startLine": 157,
+          "endLine": 166,
+          "params": [
+            "Stats"
+          ]
+        },
+        {
+          "name": "Cleanup",
+          "startLine": 173,
+          "endLine": 176,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Tick",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "GetStatId",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "RequestRegeneration",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "StopRegeneration",
+          "line": 157,
+          "isDefault": false
+        },
+        {
+          "name": "Cleanup",
+          "line": 173,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UStatsComponent>",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Tick",
+          "callee": "ProcessActor",
+          "lineNumber": 56
+        },
+        {
+          "caller": "GetStatId",
+          "callee": "RETURN_QUICK_DECLARE_CYCLE_STAT",
+          "lineNumber": 63
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Contains",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetStamina",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Remove",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FMath::Max",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "RestoreStamina",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetStamina",
+          "lineNumber": 120
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Remove",
+          "lineNumber": 122
+        },
+        {
+          "caller": "RequestRegeneration",
+          "callee": "IsValid",
+          "lineNumber": 134
+        },
+        {
+          "caller": "RequestRegeneration",
+          "callee": "GetStamina",
+          "lineNumber": 140
+        },
+        {
+          "caller": "RequestRegeneration",
+          "callee": "FindOrAdd",
+          "lineNumber": 148
+        },
+        {
+          "caller": "StopRegeneration",
+          "callee": "Remove",
+          "lineNumber": 165
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Empty",
+          "lineNumber": 175
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 61,
+      "classes": [
+        {
+          "name": "UStatsComponent",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActorRegistry",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UStatsComponent",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UActorRegistry",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 186,
+      "nonEmptyLines": 156,
+      "functions": [
+        {
+          "name": "Tick",
+          "startLine": 19,
+          "endLine": 52,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "Cleanup",
+          "startLine": 54,
+          "endLine": 56,
+          "params": []
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 58,
+          "endLine": 78,
+          "params": [
+            "Actor",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "GetSprintSpeedForStamina",
+          "startLine": 80,
+          "endLine": 113,
+          "params": [
+            "Stats",
+            "StaminaPercent"
+          ]
+        },
+        {
+          "name": "DrainFromSprint",
+          "startLine": 115,
+          "endLine": 156,
+          "params": [
+            "Stats",
+            "Movement",
+            "Control",
+            "DeltaTime",
+            "bIsMoving"
+          ]
+        },
+        {
+          "name": "DrainFromJump",
+          "startLine": 158,
+          "endLine": 166,
+          "params": [
+            "Stats",
+            "Character",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "DrainFromLightAttack",
+          "startLine": 168,
+          "endLine": 176,
+          "params": [
+            "Stats",
+            "Actor",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "DrainFromHeavyAttack",
+          "startLine": 178,
+          "endLine": 186,
+          "params": [
+            "Stats",
+            "Actor",
+            "DeltaTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Tick",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "Cleanup",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "GetSprintSpeedForStamina",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "DrainFromSprint",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "DrainFromJump",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "DrainFromLightAttack",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "DrainFromHeavyAttack",
+          "line": 178,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UStatsComponent>",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Tick",
+          "callee": "ProcessActor",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UCharacterMovementComponent>",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "WantsToSprint",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SizeSquared2D",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FMath::Square",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "DrainFromSprint",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetSprintSpeedForStamina",
+          "callee": "GetWalkSpeed",
+          "lineNumber": 89
+        },
+        {
+          "caller": "GetSprintSpeedForStamina",
+          "callee": "GetSprintSpeed",
+          "lineNumber": 90
+        },
+        {
+          "caller": "GetSprintSpeedForStamina",
+          "callee": "FMath::Lerp",
+          "lineNumber": 99
+        },
+        {
+          "caller": "GetSprintSpeedForStamina",
+          "callee": "FMath::Lerp",
+          "lineNumber": 104
+        },
+        {
+          "caller": "GetSprintSpeedForStamina",
+          "callee": "FMath::Lerp",
+          "lineNumber": 109
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "GetWalkSpeed",
+          "lineNumber": 127
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "WantsToCrouch",
+          "lineNumber": 130
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "GetCrouchSpeed",
+          "lineNumber": 132
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "WantsToSprint",
+          "lineNumber": 134
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "GetSprintStaminaCostPerSecond",
+          "lineNumber": 136
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "ConsumeStamina",
+          "lineNumber": 137
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "GetMaxStamina",
+          "lineNumber": 139
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "FMath::Clamp",
+          "lineNumber": 141
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "GetStaminaPercent",
+          "lineNumber": 141
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "GetSprintSpeedForStamina",
+          "lineNumber": 142
+        },
+        {
+          "caller": "DrainFromSprint",
+          "callee": "FMath::FInterpTo",
+          "lineNumber": 150
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 73,
+      "nonEmptyLines": 59,
+      "classes": [
+        {
+          "name": "AActor",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "ACharacter",
+          "startLine": 16,
+          "endLine": 16,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCharacterMovementComponent",
+          "startLine": 17,
+          "endLine": 17,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UControlComponent",
+          "startLine": 18,
+          "endLine": 18,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UStatsComponent",
+          "startLine": 19,
+          "endLine": 19,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AActor",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ACharacter",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UCharacterMovementComponent",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "UControlComponent",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "UStatsComponent",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    }
+  ]
+}

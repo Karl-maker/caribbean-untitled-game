@@ -1,0 +1,51 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "CaribbeanUntitled.uproject",
+      "language": "uproject",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled.Target.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "language": "cpp",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "language": "c",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitledEditor.Target.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "CaribbeanUntitled.uproject": [],
+    "Source/CaribbeanUntitled.Target.cs": [],
+    "Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs": [],
+    "Source/CaribbeanUntitled/CaribbeanUntitled.cpp": [
+      "Source/CaribbeanUntitled/CaribbeanUntitled.h"
+    ],
+    "Source/CaribbeanUntitled/CaribbeanUntitled.h": [],
+    "Source/CaribbeanUntitledEditor.Target.cs": []
+  }
+}

@@ -1,0 +1,5114 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 18,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 18,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 18,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 229,
+      "nonEmptyLines": 191,
+      "functions": [
+        {
+          "name": "UAttackStateComponent",
+          "startLine": 5,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "BeginPlay",
+          "startLine": 18,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "TickComponent",
+          "startLine": 23,
+          "endLine": 32,
+          "params": [
+            "DeltaTime",
+            "TickType",
+            "ThisTickFunction"
+          ]
+        },
+        {
+          "name": "GetPhase",
+          "startLine": 35,
+          "endLine": 38,
+          "params": []
+        },
+        {
+          "name": "GetAttackIndex",
+          "startLine": 40,
+          "endLine": 43,
+          "params": []
+        },
+        {
+          "name": "GetPhaseTime",
+          "startLine": 45,
+          "endLine": 48,
+          "params": []
+        },
+        {
+          "name": "GetPhaseTimeNormalized",
+          "startLine": 50,
+          "endLine": 58,
+          "params": [
+            "TotalPhaseDuration"
+          ]
+        },
+        {
+          "name": "SetPhase",
+          "startLine": 61,
+          "endLine": 64,
+          "params": [
+            "NewPhase"
+          ]
+        },
+        {
+          "name": "SetAttackIndex",
+          "startLine": 66,
+          "endLine": 69,
+          "params": [
+            "NewIndex"
+          ]
+        },
+        {
+          "name": "SetPhaseTime",
+          "startLine": 71,
+          "endLine": 74,
+          "params": [
+            "NewTime"
+          ]
+        },
+        {
+          "name": "IsAttacking",
+          "startLine": 77,
+          "endLine": 80,
+          "params": []
+        },
+        {
+          "name": "IsInPhase",
+          "startLine": 82,
+          "endLine": 85,
+          "params": [
+            "PhaseToCheck"
+          ]
+        },
+        {
+          "name": "ResetAttackState",
+          "startLine": 87,
+          "endLine": 108,
+          "params": []
+        },
+        {
+          "name": "AdvancePhase",
+          "startLine": 110,
+          "endLine": 129,
+          "params": []
+        },
+        {
+          "name": "UpdatePhaseTime",
+          "startLine": 131,
+          "endLine": 137,
+          "params": [
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "StartAnticipation",
+          "startLine": 140,
+          "endLine": 147,
+          "params": [
+            "AttackID"
+          ]
+        },
+        {
+          "name": "StartAnticipationWithMove",
+          "startLine": 149,
+          "endLine": 156,
+          "params": [
+            "AttackID",
+            "InMoveKey",
+            "InMoveId"
+          ]
+        },
+        {
+          "name": "StartActivePhase",
+          "startLine": 158,
+          "endLine": 170,
+          "params": []
+        },
+        {
+          "name": "StartRecoveryPhase",
+          "startLine": 172,
+          "endLine": 184,
+          "params": []
+        },
+        {
+          "name": "ClearAttackState",
+          "startLine": 186,
+          "endLine": 189,
+          "params": []
+        },
+        {
+          "name": "InternalSetPhase",
+          "startLine": 192,
+          "endLine": 212,
+          "params": [
+            "NewPhase"
+          ]
+        },
+        {
+          "name": "InternalSetAttackIndex",
+          "startLine": 214,
+          "endLine": 229,
+          "params": [
+            "NewIndex"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UAttackStateComponent",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "BeginPlay",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "TickComponent",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "GetPhase",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "GetAttackIndex",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "GetPhaseTime",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "GetPhaseTimeNormalized",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "SetPhase",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "SetAttackIndex",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "SetPhaseTime",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "IsAttacking",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "IsInPhase",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "ResetAttackState",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "AdvancePhase",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "UpdatePhaseTime",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "StartAnticipation",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "StartAnticipationWithMove",
+          "line": 149,
+          "isDefault": false
+        },
+        {
+          "name": "StartActivePhase",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "StartRecoveryPhase",
+          "line": 172,
+          "isDefault": false
+        },
+        {
+          "name": "ClearAttackState",
+          "line": 186,
+          "isDefault": false
+        },
+        {
+          "name": "InternalSetPhase",
+          "line": 192,
+          "isDefault": false
+        },
+        {
+          "name": "InternalSetAttackIndex",
+          "line": 214,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BeginPlay",
+          "callee": "Super::BeginPlay",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TickComponent",
+          "callee": "Super::TickComponent",
+          "lineNumber": 25
+        },
+        {
+          "caller": "GetPhaseTimeNormalized",
+          "callee": "FMath::Clamp",
+          "lineNumber": 57
+        },
+        {
+          "caller": "SetPhase",
+          "callee": "InternalSetPhase",
+          "lineNumber": 63
+        },
+        {
+          "caller": "SetAttackIndex",
+          "callee": "InternalSetAttackIndex",
+          "lineNumber": 68
+        },
+        {
+          "caller": "SetPhaseTime",
+          "callee": "FMath::Max",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ResetAttackState",
+          "callee": "SetComponentTickEnabled",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ResetAttackState",
+          "callee": "Broadcast",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ResetAttackState",
+          "callee": "Broadcast",
+          "lineNumber": 106
+        },
+        {
+          "caller": "AdvancePhase",
+          "callee": "SetPhase",
+          "lineNumber": 115
+        },
+        {
+          "caller": "AdvancePhase",
+          "callee": "SetPhase",
+          "lineNumber": 119
+        },
+        {
+          "caller": "AdvancePhase",
+          "callee": "ResetAttackState",
+          "lineNumber": 123
+        },
+        {
+          "caller": "StartAnticipation",
+          "callee": "InternalSetAttackIndex",
+          "lineNumber": 142
+        },
+        {
+          "caller": "StartAnticipation",
+          "callee": "InternalSetPhase",
+          "lineNumber": 143
+        },
+        {
+          "caller": "StartAnticipationWithMove",
+          "callee": "InternalSetAttackIndex",
+          "lineNumber": 151
+        },
+        {
+          "caller": "StartAnticipationWithMove",
+          "callee": "InternalSetPhase",
+          "lineNumber": 152
+        },
+        {
+          "caller": "StartActivePhase",
+          "callee": "InternalSetPhase",
+          "lineNumber": 162
+        },
+        {
+          "caller": "StartActivePhase",
+          "callee": "UE_LOG",
+          "lineNumber": 167
+        },
+        {
+          "caller": "StartActivePhase",
+          "callee": "TEXT",
+          "lineNumber": 167
+        },
+        {
+          "caller": "StartActivePhase",
+          "callee": "UEnum::GetValueAsString",
+          "lineNumber": 168
+        },
+        {
+          "caller": "StartRecoveryPhase",
+          "callee": "InternalSetPhase",
+          "lineNumber": 176
+        },
+        {
+          "caller": "StartRecoveryPhase",
+          "callee": "UE_LOG",
+          "lineNumber": 181
+        },
+        {
+          "caller": "StartRecoveryPhase",
+          "callee": "TEXT",
+          "lineNumber": 181
+        },
+        {
+          "caller": "StartRecoveryPhase",
+          "callee": "UEnum::GetValueAsString",
+          "lineNumber": 182
+        },
+        {
+          "caller": "ClearAttackState",
+          "callee": "ResetAttackState",
+          "lineNumber": 188
+        },
+        {
+          "caller": "InternalSetPhase",
+          "callee": "SetComponentTickEnabled",
+          "lineNumber": 201
+        },
+        {
+          "caller": "InternalSetPhase",
+          "callee": "Broadcast",
+          "lineNumber": 207
+        },
+        {
+          "caller": "InternalSetPhase",
+          "callee": "UE_LOG",
+          "lineNumber": 209
+        },
+        {
+          "caller": "InternalSetPhase",
+          "callee": "TEXT",
+          "lineNumber": 209
+        },
+        {
+          "caller": "InternalSetPhase",
+          "callee": "UEnum::GetValueAsString",
+          "lineNumber": 210
+        },
+        {
+          "caller": "InternalSetPhase",
+          "callee": "UEnum::GetValueAsString",
+          "lineNumber": 211
+        },
+        {
+          "caller": "InternalSetAttackIndex",
+          "callee": "Broadcast",
+          "lineNumber": 225
+        },
+        {
+          "caller": "InternalSetAttackIndex",
+          "callee": "UE_LOG",
+          "lineNumber": 227
+        },
+        {
+          "caller": "InternalSetAttackIndex",
+          "callee": "TEXT",
+          "lineNumber": 227
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 22,
+        "functionCount": 22,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 124,
+      "nonEmptyLines": 90,
+      "functions": [
+        {
+          "name": "GetCurrentMoveKey",
+          "startLine": 45,
+          "endLine": 45,
+          "params": []
+        },
+        {
+          "name": "GetCurrentMoveId",
+          "startLine": 48,
+          "endLine": 48,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "EAttackPhase",
+          "startLine": 11,
+          "endLine": 124,
+          "methods": [
+            "UMETA",
+            "GetPhase",
+            "GetAttackIndex",
+            "GetPhaseTime",
+            "GetPhaseTimeNormalized",
+            "GetCurrentMoveKey",
+            "GetCurrentMoveId",
+            "SetPhase",
+            "SetAttackIndex",
+            "SetPhaseTime",
+            "IsAttacking",
+            "IsInPhase",
+            "ResetAttackState",
+            "AdvancePhase",
+            "UpdatePhaseTime",
+            "StartAnticipation",
+            "StartAnticipationWithMove",
+            "StartActivePhase",
+            "StartRecoveryPhase",
+            "ClearAttackState",
+            "BeginPlay",
+            "TickComponent",
+            "InternalSetPhase",
+            "InternalSetAttackIndex"
+          ],
+          "properties": [
+            "UAttackStateComponent",
+            "OnAttackPhaseChanged",
+            "OnAttackIndexChanged",
+            "Phase",
+            "AttackIndex",
+            "PhaseTime",
+            "CurrentMoveKey",
+            "CurrentMoveId"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EAttackPhase",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 184,
+      "nonEmptyLines": 159,
+      "functions": [
+        {
+          "name": "UCombatComponent",
+          "startLine": 9,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "BeginPlay",
+          "startLine": 20,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "CanAttack",
+          "startLine": 27,
+          "endLine": 30,
+          "params": []
+        },
+        {
+          "name": "RequestAttack",
+          "startLine": 32,
+          "endLine": 87,
+          "params": [
+            "Action"
+          ]
+        },
+        {
+          "name": "GetRequestedAction",
+          "startLine": 89,
+          "endLine": 92,
+          "params": []
+        },
+        {
+          "name": "ClearRequestedAction",
+          "startLine": 94,
+          "endLine": 97,
+          "params": []
+        },
+        {
+          "name": "GetCurrentAttackAnimationKey",
+          "startLine": 99,
+          "endLine": 102,
+          "params": []
+        },
+        {
+          "name": "SetCanAttack",
+          "startLine": 104,
+          "endLine": 113,
+          "params": [
+            "bNewCanAttack"
+          ]
+        },
+        {
+          "name": "SetCurrentAttackAnimationKey",
+          "startLine": 115,
+          "endLine": 126,
+          "params": [
+            "NewAnimationKey"
+          ]
+        },
+        {
+          "name": "TriggerAttackAnimationReplication",
+          "startLine": 128,
+          "endLine": 142,
+          "params": []
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "startLine": 144,
+          "endLine": 150,
+          "params": [
+            "OutLifetimeProps"
+          ]
+        },
+        {
+          "name": "OnRep_AttackAnimationTrigger",
+          "startLine": 152,
+          "endLine": 184,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UCombatComponent",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "BeginPlay",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "CanAttack",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "RequestAttack",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "GetRequestedAction",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "ClearRequestedAction",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "GetCurrentAttackAnimationKey",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "SetCanAttack",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "SetCurrentAttackAnimationKey",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "TriggerAttackAnimationReplication",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "line": 144,
+          "isDefault": false
+        },
+        {
+          "name": "OnRep_AttackAnimationTrigger",
+          "line": 152,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "UCombatComponent",
+          "callee": "SetIsReplicatedByDefault",
+          "lineNumber": 13
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "Super::BeginPlay",
+          "lineNumber": 22
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 34
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "TEXT",
+          "lineNumber": 37
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "GetNameSafe",
+          "lineNumber": 38
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "GetOwner",
+          "lineNumber": 38
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "static_cast<int32>",
+          "lineNumber": 39
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 46
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "TEXT",
+          "lineNumber": 46
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 52
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "TEXT",
+          "lineNumber": 52
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "UEnum::GetValueAsString",
+          "lineNumber": 60
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 61
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "TEXT",
+          "lineNumber": 61
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "GetOwner",
+          "lineNumber": 63
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "GetWorld",
+          "lineNumber": 65
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "GetSubsystem<USetupAttackSystem>",
+          "lineNumber": 68
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 70
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "TEXT",
+          "lineNumber": 73
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "GetName",
+          "lineNumber": 74
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "RequestAttackForActor",
+          "lineNumber": 76
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 83
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "TEXT",
+          "lineNumber": 83
+        },
+        {
+          "caller": "RequestAttack",
+          "callee": "GetName",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SetCurrentAttackAnimationKey",
+          "callee": "UE_LOG",
+          "lineNumber": 117
+        },
+        {
+          "caller": "SetCurrentAttackAnimationKey",
+          "callee": "TEXT",
+          "lineNumber": 120
+        },
+        {
+          "caller": "SetCurrentAttackAnimationKey",
+          "callee": "static_cast<int32>",
+          "lineNumber": 121
+        },
+        {
+          "caller": "SetCurrentAttackAnimationKey",
+          "callee": "GetNameSafe",
+          "lineNumber": 122
+        },
+        {
+          "caller": "SetCurrentAttackAnimationKey",
+          "callee": "GetOwner",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "GetOwner",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "HasAuthority",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "GetOwner",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "UE_LOG",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "TEXT",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "GetNameSafe",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "GetOwner",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TriggerAttackAnimationReplication",
+          "callee": "OnRep_AttackAnimationTrigger",
+          "lineNumber": 140
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "Super::GetLifetimeReplicatedProps",
+          "lineNumber": 146
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 148
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 149
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "GetOwner",
+          "lineNumber": 154
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "GetWorld",
+          "lineNumber": 156
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "GetSubsystem<UEventBusSubsystem>",
+          "lineNumber": 158
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "UE_LOG",
+          "lineNumber": 160
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "TEXT",
+          "lineNumber": 163
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "GetName",
+          "lineNumber": 164
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "static_cast<int32>",
+          "lineNumber": 165
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "Publish<FAttackStartedPayload>",
+          "lineNumber": 172
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "UE_LOG",
+          "lineNumber": 178
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "TEXT",
+          "lineNumber": 181
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "GetNameSafe",
+          "lineNumber": 182
+        },
+        {
+          "caller": "OnRep_AttackAnimationTrigger",
+          "callee": "GetOwner",
+          "lineNumber": 182
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 12,
+        "functionCount": 12,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 58,
+      "functions": [
+        {
+          "name": "GetAttackSequence",
+          "startLine": 55,
+          "endLine": 55,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "ECombatAction",
+          "startLine": 11,
+          "endLine": 78,
+          "methods": [
+            "UMETA",
+            "CanAttack",
+            "RequestAttack",
+            "GetRequestedAction",
+            "ClearRequestedAction",
+            "GetCurrentAttackAnimationKey",
+            "SetCanAttack",
+            "SetCurrentAttackAnimationKey",
+            "TriggerAttackAnimationReplication",
+            "GetAttackSequence",
+            "BeginPlay",
+            "GetLifetimeReplicatedProps",
+            "OnRep_AttackAnimationTrigger"
+          ],
+          "properties": [
+            "UCombatComponent",
+            "RequestedAction",
+            "CurrentAttackAnimationKey",
+            "AttackAnimationTrigger",
+            "bCanAttack"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ECombatAction",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 557,
+      "nonEmptyLines": 472,
+      "functions": [
+        {
+          "name": "UControlComponent",
+          "startLine": 16,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "BeginPlay",
+          "startLine": 23,
+          "endLine": 31,
+          "params": []
+        },
+        {
+          "name": "TickComponent",
+          "startLine": 33,
+          "endLine": 45,
+          "params": [
+            "DeltaTime",
+            "TickType",
+            "ThisTickFunction"
+          ]
+        },
+        {
+          "name": "SetMoveIntent",
+          "startLine": 51,
+          "endLine": 59,
+          "params": [
+            "Intent"
+          ]
+        },
+        {
+          "name": "ServerSetMoveIntent_Implementation",
+          "startLine": 61,
+          "endLine": 64,
+          "params": [
+            "Intent"
+          ]
+        },
+        {
+          "name": "SetWorldMoveDirection",
+          "startLine": 66,
+          "endLine": 69,
+          "params": [
+            "WorldDirection"
+          ]
+        },
+        {
+          "name": "SetForwardBackIntent",
+          "startLine": 71,
+          "endLine": 74,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetLeftRightIntent",
+          "startLine": 76,
+          "endLine": 79,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetDesiredWorldLocation",
+          "startLine": 81,
+          "endLine": 84,
+          "params": [
+            "Location"
+          ]
+        },
+        {
+          "name": "SetDirectionControlStrength",
+          "startLine": 86,
+          "endLine": 89,
+          "params": [
+            "Strength"
+          ]
+        },
+        {
+          "name": "SetDirectionAcceptanceRadius",
+          "startLine": 91,
+          "endLine": 94,
+          "params": [
+            "Radius"
+          ]
+        },
+        {
+          "name": "MoveToWorldLocation",
+          "startLine": 96,
+          "endLine": 102,
+          "params": [
+            "TargetLocation"
+          ]
+        },
+        {
+          "name": "ClearDestination",
+          "startLine": 104,
+          "endLine": 108,
+          "params": []
+        },
+        {
+          "name": "SetJumpIntent",
+          "startLine": 114,
+          "endLine": 122,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetInteractIntent",
+          "startLine": 124,
+          "endLine": 124,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetSprintIntent",
+          "startLine": 125,
+          "endLine": 133,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetCrouchIntent",
+          "startLine": 134,
+          "endLine": 134,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetDashIntent",
+          "startLine": 135,
+          "endLine": 135,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetAimIntent",
+          "startLine": 136,
+          "endLine": 136,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetFireIntent",
+          "startLine": 137,
+          "endLine": 137,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetReloadIntent",
+          "startLine": 138,
+          "endLine": 138,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetLightAttackIntent",
+          "startLine": 144,
+          "endLine": 152,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetHeavyAttackIntent",
+          "startLine": 154,
+          "endLine": 162,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "RequestLightAttack",
+          "startLine": 163,
+          "endLine": 183,
+          "params": []
+        },
+        {
+          "name": "ServerRequestLightAttack_Implementation",
+          "startLine": 185,
+          "endLine": 189,
+          "params": []
+        },
+        {
+          "name": "RequestHeavyAttack",
+          "startLine": 191,
+          "endLine": 211,
+          "params": []
+        },
+        {
+          "name": "ServerRequestHeavyAttack_Implementation",
+          "startLine": 213,
+          "endLine": 217,
+          "params": []
+        },
+        {
+          "name": "SetBlockIntent",
+          "startLine": 218,
+          "endLine": 226,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetDodgeIntent",
+          "startLine": 227,
+          "endLine": 227,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetLockOnIntent",
+          "startLine": 228,
+          "endLine": 228,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetWeaponAbilityIntent",
+          "startLine": 229,
+          "endLine": 229,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "SetWeaponSwitchIntent",
+          "startLine": 230,
+          "endLine": 230,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "ServerSetJumpIntent_Implementation",
+          "startLine": 232,
+          "endLine": 235,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "ServerSetSprintIntent_Implementation",
+          "startLine": 237,
+          "endLine": 240,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "ServerSetLightAttackIntent_Implementation",
+          "startLine": 242,
+          "endLine": 246,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "ServerSetHeavyAttackIntent_Implementation",
+          "startLine": 248,
+          "endLine": 252,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "ServerSetBlockIntent_Implementation",
+          "startLine": 254,
+          "endLine": 257,
+          "params": [
+            "Weight"
+          ]
+        },
+        {
+          "name": "GetIntentWeight",
+          "startLine": 263,
+          "endLine": 295,
+          "params": [
+            "Intent"
+          ]
+        },
+        {
+          "name": "SetIntentWeight",
+          "startLine": 297,
+          "endLine": 336,
+          "params": [
+            "Intent",
+            "Weight"
+          ]
+        },
+        {
+          "name": "HasIntent",
+          "startLine": 342,
+          "endLine": 345,
+          "params": [
+            "Intent",
+            "MinimumWeight"
+          ]
+        },
+        {
+          "name": "HasMovementIntent",
+          "startLine": 347,
+          "endLine": 350,
+          "params": []
+        },
+        {
+          "name": "HasActionIntent",
+          "startLine": 352,
+          "endLine": 362,
+          "params": []
+        },
+        {
+          "name": "WantsToSprint",
+          "startLine": 364,
+          "endLine": 364,
+          "params": []
+        },
+        {
+          "name": "WantsToCrouch",
+          "startLine": 365,
+          "endLine": 365,
+          "params": []
+        },
+        {
+          "name": "WantsToDash",
+          "startLine": 366,
+          "endLine": 366,
+          "params": []
+        },
+        {
+          "name": "WantsToAim",
+          "startLine": 367,
+          "endLine": 367,
+          "params": []
+        },
+        {
+          "name": "WantsToFire",
+          "startLine": 368,
+          "endLine": 368,
+          "params": []
+        },
+        {
+          "name": "WantsToLightAttack",
+          "startLine": 374,
+          "endLine": 374,
+          "params": []
+        },
+        {
+          "name": "WantsToHeavyAttack",
+          "startLine": 375,
+          "endLine": 375,
+          "params": []
+        },
+        {
+          "name": "WantsToBlock",
+          "startLine": 376,
+          "endLine": 376,
+          "params": []
+        },
+        {
+          "name": "WantsToDodge",
+          "startLine": 377,
+          "endLine": 377,
+          "params": []
+        },
+        {
+          "name": "WantsToLockOn",
+          "startLine": 378,
+          "endLine": 378,
+          "params": []
+        },
+        {
+          "name": "WantsToUseWeaponAbility",
+          "startLine": 379,
+          "endLine": 379,
+          "params": []
+        },
+        {
+          "name": "WantsToSwitchWeapon",
+          "startLine": 380,
+          "endLine": 380,
+          "params": []
+        },
+        {
+          "name": "HasCombatIntent",
+          "startLine": 382,
+          "endLine": 391,
+          "params": []
+        },
+        {
+          "name": "SetLookInput",
+          "startLine": 397,
+          "endLine": 405,
+          "params": [
+            "Input"
+          ]
+        },
+        {
+          "name": "SetLookDirection",
+          "startLine": 407,
+          "endLine": 410,
+          "params": [
+            "Direction"
+          ]
+        },
+        {
+          "name": "ClearLookInput",
+          "startLine": 412,
+          "endLine": 420,
+          "params": []
+        },
+        {
+          "name": "SetViewYaw",
+          "startLine": 422,
+          "endLine": 430,
+          "params": [
+            "NewYaw"
+          ]
+        },
+        {
+          "name": "ServerSetViewYaw_Implementation",
+          "startLine": 432,
+          "endLine": 435,
+          "params": [
+            "NewYaw"
+          ]
+        },
+        {
+          "name": "ServerSetLookInput_Implementation",
+          "startLine": 437,
+          "endLine": 440,
+          "params": [
+            "Input"
+          ]
+        },
+        {
+          "name": "SetReplicatedLocomotion",
+          "startLine": 442,
+          "endLine": 455,
+          "params": [
+            "NewLocomotion"
+          ]
+        },
+        {
+          "name": "ClearIntents",
+          "startLine": 461,
+          "endLine": 467,
+          "params": []
+        },
+        {
+          "name": "ClearMovementIntent",
+          "startLine": 469,
+          "endLine": 474,
+          "params": []
+        },
+        {
+          "name": "ClearActionIntent",
+          "startLine": 476,
+          "endLine": 486,
+          "params": []
+        },
+        {
+          "name": "ClearCombatIntent",
+          "startLine": 488,
+          "endLine": 497,
+          "params": []
+        },
+        {
+          "name": "SetLookAtLocation",
+          "startLine": 499,
+          "endLine": 511,
+          "params": [
+            "WorldLocation"
+          ]
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "startLine": 513,
+          "endLine": 540,
+          "params": [
+            "OutLifetimeProps"
+          ]
+        },
+        {
+          "name": "OnRep_ReplicatedLocomotion",
+          "startLine": 542,
+          "endLine": 557,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UControlComponent",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "BeginPlay",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "TickComponent",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "SetMoveIntent",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetMoveIntent_Implementation",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "SetWorldMoveDirection",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "SetForwardBackIntent",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "SetLeftRightIntent",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "SetDesiredWorldLocation",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "SetDirectionControlStrength",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "SetDirectionAcceptanceRadius",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "MoveToWorldLocation",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "ClearDestination",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "SetJumpIntent",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "SetInteractIntent",
+          "line": 124,
+          "isDefault": false
+        },
+        {
+          "name": "SetSprintIntent",
+          "line": 125,
+          "isDefault": false
+        },
+        {
+          "name": "SetCrouchIntent",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "SetDashIntent",
+          "line": 135,
+          "isDefault": false
+        },
+        {
+          "name": "SetAimIntent",
+          "line": 136,
+          "isDefault": false
+        },
+        {
+          "name": "SetFireIntent",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "SetReloadIntent",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "SetLightAttackIntent",
+          "line": 144,
+          "isDefault": false
+        },
+        {
+          "name": "SetHeavyAttackIntent",
+          "line": 154,
+          "isDefault": false
+        },
+        {
+          "name": "RequestLightAttack",
+          "line": 163,
+          "isDefault": false
+        },
+        {
+          "name": "ServerRequestLightAttack_Implementation",
+          "line": 185,
+          "isDefault": false
+        },
+        {
+          "name": "RequestHeavyAttack",
+          "line": 191,
+          "isDefault": false
+        },
+        {
+          "name": "ServerRequestHeavyAttack_Implementation",
+          "line": 213,
+          "isDefault": false
+        },
+        {
+          "name": "SetBlockIntent",
+          "line": 218,
+          "isDefault": false
+        },
+        {
+          "name": "SetDodgeIntent",
+          "line": 227,
+          "isDefault": false
+        },
+        {
+          "name": "SetLockOnIntent",
+          "line": 228,
+          "isDefault": false
+        },
+        {
+          "name": "SetWeaponAbilityIntent",
+          "line": 229,
+          "isDefault": false
+        },
+        {
+          "name": "SetWeaponSwitchIntent",
+          "line": 230,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetJumpIntent_Implementation",
+          "line": 232,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetSprintIntent_Implementation",
+          "line": 237,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetLightAttackIntent_Implementation",
+          "line": 242,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetHeavyAttackIntent_Implementation",
+          "line": 248,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetBlockIntent_Implementation",
+          "line": 254,
+          "isDefault": false
+        },
+        {
+          "name": "GetIntentWeight",
+          "line": 263,
+          "isDefault": false
+        },
+        {
+          "name": "SetIntentWeight",
+          "line": 297,
+          "isDefault": false
+        },
+        {
+          "name": "HasIntent",
+          "line": 342,
+          "isDefault": false
+        },
+        {
+          "name": "HasMovementIntent",
+          "line": 347,
+          "isDefault": false
+        },
+        {
+          "name": "HasActionIntent",
+          "line": 352,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToSprint",
+          "line": 364,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToCrouch",
+          "line": 365,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToDash",
+          "line": 366,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToAim",
+          "line": 367,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToFire",
+          "line": 368,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToLightAttack",
+          "line": 374,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToHeavyAttack",
+          "line": 375,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToBlock",
+          "line": 376,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToDodge",
+          "line": 377,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToLockOn",
+          "line": 378,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToUseWeaponAbility",
+          "line": 379,
+          "isDefault": false
+        },
+        {
+          "name": "WantsToSwitchWeapon",
+          "line": 380,
+          "isDefault": false
+        },
+        {
+          "name": "HasCombatIntent",
+          "line": 382,
+          "isDefault": false
+        },
+        {
+          "name": "SetLookInput",
+          "line": 397,
+          "isDefault": false
+        },
+        {
+          "name": "SetLookDirection",
+          "line": 407,
+          "isDefault": false
+        },
+        {
+          "name": "ClearLookInput",
+          "line": 412,
+          "isDefault": false
+        },
+        {
+          "name": "SetViewYaw",
+          "line": 422,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetViewYaw_Implementation",
+          "line": 432,
+          "isDefault": false
+        },
+        {
+          "name": "ServerSetLookInput_Implementation",
+          "line": 437,
+          "isDefault": false
+        },
+        {
+          "name": "SetReplicatedLocomotion",
+          "line": 442,
+          "isDefault": false
+        },
+        {
+          "name": "ClearIntents",
+          "line": 461,
+          "isDefault": false
+        },
+        {
+          "name": "ClearMovementIntent",
+          "line": 469,
+          "isDefault": false
+        },
+        {
+          "name": "ClearActionIntent",
+          "line": 476,
+          "isDefault": false
+        },
+        {
+          "name": "ClearCombatIntent",
+          "line": 488,
+          "isDefault": false
+        },
+        {
+          "name": "SetLookAtLocation",
+          "line": 499,
+          "isDefault": false
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "line": 513,
+          "isDefault": false
+        },
+        {
+          "name": "OnRep_ReplicatedLocomotion",
+          "line": 542,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "UControlComponent",
+          "callee": "SetIsReplicatedByDefault",
+          "lineNumber": 20
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "Super::BeginPlay",
+          "lineNumber": 25
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "GetOwner",
+          "lineNumber": 27
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "GetActorRotation",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TickComponent",
+          "callee": "Super::TickComponent",
+          "lineNumber": 38
+        },
+        {
+          "caller": "SetMoveIntent",
+          "callee": "ClampAxes",
+          "lineNumber": 53
+        },
+        {
+          "caller": "SetMoveIntent",
+          "callee": "GetOwner",
+          "lineNumber": 55
+        },
+        {
+          "caller": "SetMoveIntent",
+          "callee": "HasAuthority",
+          "lineNumber": 55
+        },
+        {
+          "caller": "SetMoveIntent",
+          "callee": "GetOwner",
+          "lineNumber": 55
+        },
+        {
+          "caller": "SetMoveIntent",
+          "callee": "ServerSetMoveIntent",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ServerSetMoveIntent_Implementation",
+          "callee": "ClampAxes",
+          "lineNumber": 63
+        },
+        {
+          "caller": "SetWorldMoveDirection",
+          "callee": "GetSafeNormal",
+          "lineNumber": 68
+        },
+        {
+          "caller": "SetForwardBackIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 73
+        },
+        {
+          "caller": "SetLeftRightIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 78
+        },
+        {
+          "caller": "SetDirectionControlStrength",
+          "callee": "FMath::Clamp",
+          "lineNumber": 88
+        },
+        {
+          "caller": "SetDirectionAcceptanceRadius",
+          "callee": "FMath::Max",
+          "lineNumber": 93
+        },
+        {
+          "caller": "SetJumpIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 116
+        },
+        {
+          "caller": "SetJumpIntent",
+          "callee": "GetOwner",
+          "lineNumber": 118
+        },
+        {
+          "caller": "SetJumpIntent",
+          "callee": "HasAuthority",
+          "lineNumber": 118
+        },
+        {
+          "caller": "SetJumpIntent",
+          "callee": "GetOwner",
+          "lineNumber": 118
+        },
+        {
+          "caller": "SetJumpIntent",
+          "callee": "ServerSetJumpIntent",
+          "lineNumber": 120
+        },
+        {
+          "caller": "SetInteractIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 124
+        },
+        {
+          "caller": "SetSprintIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 127
+        },
+        {
+          "caller": "SetSprintIntent",
+          "callee": "GetOwner",
+          "lineNumber": 129
+        },
+        {
+          "caller": "SetSprintIntent",
+          "callee": "HasAuthority",
+          "lineNumber": 129
+        },
+        {
+          "caller": "SetSprintIntent",
+          "callee": "GetOwner",
+          "lineNumber": 129
+        },
+        {
+          "caller": "SetSprintIntent",
+          "callee": "ServerSetSprintIntent",
+          "lineNumber": 131
+        },
+        {
+          "caller": "SetCrouchIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 134
+        },
+        {
+          "caller": "SetDashIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 135
+        },
+        {
+          "caller": "SetAimIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 136
+        },
+        {
+          "caller": "SetFireIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 137
+        },
+        {
+          "caller": "SetReloadIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 138
+        },
+        {
+          "caller": "SetLightAttackIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 146
+        },
+        {
+          "caller": "SetLightAttackIntent",
+          "callee": "GetOwner",
+          "lineNumber": 148
+        },
+        {
+          "caller": "SetLightAttackIntent",
+          "callee": "HasAuthority",
+          "lineNumber": 148
+        },
+        {
+          "caller": "SetLightAttackIntent",
+          "callee": "GetOwner",
+          "lineNumber": 148
+        },
+        {
+          "caller": "SetLightAttackIntent",
+          "callee": "ServerSetLightAttackIntent",
+          "lineNumber": 150
+        },
+        {
+          "caller": "SetHeavyAttackIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 156
+        },
+        {
+          "caller": "SetHeavyAttackIntent",
+          "callee": "GetOwner",
+          "lineNumber": 158
+        },
+        {
+          "caller": "SetHeavyAttackIntent",
+          "callee": "HasAuthority",
+          "lineNumber": 158
+        },
+        {
+          "caller": "SetHeavyAttackIntent",
+          "callee": "GetOwner",
+          "lineNumber": 158
+        },
+        {
+          "caller": "SetHeavyAttackIntent",
+          "callee": "ServerSetHeavyAttackIntent",
+          "lineNumber": 160
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "GetOwner",
+          "lineNumber": 165
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "HasAuthority",
+          "lineNumber": 165
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "GetOwner",
+          "lineNumber": 165
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "ServerRequestLightAttack",
+          "lineNumber": 167
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "GetOwner",
+          "lineNumber": 171
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 173
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 175
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "TEXT",
+          "lineNumber": 175
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "GetNameSafe",
+          "lineNumber": 175
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "RequestAttack",
+          "lineNumber": 176
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 180
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "TEXT",
+          "lineNumber": 180
+        },
+        {
+          "caller": "RequestLightAttack",
+          "callee": "GetNameSafe",
+          "lineNumber": 180
+        },
+        {
+          "caller": "ServerRequestLightAttack_Implementation",
+          "callee": "UE_LOG",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ServerRequestLightAttack_Implementation",
+          "callee": "TEXT",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ServerRequestLightAttack_Implementation",
+          "callee": "GetNameSafe",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ServerRequestLightAttack_Implementation",
+          "callee": "GetOwner",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ServerRequestLightAttack_Implementation",
+          "callee": "RequestLightAttack",
+          "lineNumber": 188
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "GetOwner",
+          "lineNumber": 193
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "HasAuthority",
+          "lineNumber": 193
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "GetOwner",
+          "lineNumber": 193
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "ServerRequestHeavyAttack",
+          "lineNumber": 195
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "GetOwner",
+          "lineNumber": 199
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 201
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 203
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "TEXT",
+          "lineNumber": 203
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "GetNameSafe",
+          "lineNumber": 203
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "RequestAttack",
+          "lineNumber": 204
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "UE_LOG",
+          "lineNumber": 208
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "TEXT",
+          "lineNumber": 208
+        },
+        {
+          "caller": "RequestHeavyAttack",
+          "callee": "GetNameSafe",
+          "lineNumber": 208
+        },
+        {
+          "caller": "ServerRequestHeavyAttack_Implementation",
+          "callee": "UE_LOG",
+          "lineNumber": 215
+        },
+        {
+          "caller": "ServerRequestHeavyAttack_Implementation",
+          "callee": "TEXT",
+          "lineNumber": 215
+        },
+        {
+          "caller": "ServerRequestHeavyAttack_Implementation",
+          "callee": "GetNameSafe",
+          "lineNumber": 215
+        },
+        {
+          "caller": "ServerRequestHeavyAttack_Implementation",
+          "callee": "GetOwner",
+          "lineNumber": 215
+        },
+        {
+          "caller": "ServerRequestHeavyAttack_Implementation",
+          "callee": "RequestHeavyAttack",
+          "lineNumber": 216
+        },
+        {
+          "caller": "SetBlockIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 220
+        },
+        {
+          "caller": "SetBlockIntent",
+          "callee": "GetOwner",
+          "lineNumber": 222
+        },
+        {
+          "caller": "SetBlockIntent",
+          "callee": "HasAuthority",
+          "lineNumber": 222
+        },
+        {
+          "caller": "SetBlockIntent",
+          "callee": "GetOwner",
+          "lineNumber": 222
+        },
+        {
+          "caller": "SetBlockIntent",
+          "callee": "ServerSetBlockIntent",
+          "lineNumber": 224
+        },
+        {
+          "caller": "SetDodgeIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 227
+        },
+        {
+          "caller": "SetLockOnIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 228
+        },
+        {
+          "caller": "SetWeaponAbilityIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 229
+        },
+        {
+          "caller": "SetWeaponSwitchIntent",
+          "callee": "FMath::Clamp",
+          "lineNumber": 230
+        },
+        {
+          "caller": "ServerSetJumpIntent_Implementation",
+          "callee": "FMath::Clamp",
+          "lineNumber": 234
+        },
+        {
+          "caller": "ServerSetSprintIntent_Implementation",
+          "callee": "FMath::Clamp",
+          "lineNumber": 239
+        },
+        {
+          "caller": "ServerSetLightAttackIntent_Implementation",
+          "callee": "FMath::Clamp",
+          "lineNumber": 244
+        },
+        {
+          "caller": "ServerSetLightAttackIntent_Implementation",
+          "callee": "UE_LOG",
+          "lineNumber": 245
+        },
+        {
+          "caller": "ServerSetLightAttackIntent_Implementation",
+          "callee": "TEXT",
+          "lineNumber": 245
+        },
+        {
+          "caller": "ServerSetLightAttackIntent_Implementation",
+          "callee": "GetNameSafe",
+          "lineNumber": 245
+        },
+        {
+          "caller": "ServerSetLightAttackIntent_Implementation",
+          "callee": "GetOwner",
+          "lineNumber": 245
+        },
+        {
+          "caller": "ServerSetHeavyAttackIntent_Implementation",
+          "callee": "FMath::Clamp",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ServerSetHeavyAttackIntent_Implementation",
+          "callee": "UE_LOG",
+          "lineNumber": 251
+        },
+        {
+          "caller": "ServerSetHeavyAttackIntent_Implementation",
+          "callee": "TEXT",
+          "lineNumber": 251
+        },
+        {
+          "caller": "ServerSetHeavyAttackIntent_Implementation",
+          "callee": "GetNameSafe",
+          "lineNumber": 251
+        },
+        {
+          "caller": "ServerSetHeavyAttackIntent_Implementation",
+          "callee": "GetOwner",
+          "lineNumber": 251
+        },
+        {
+          "caller": "ServerSetBlockIntent_Implementation",
+          "callee": "FMath::Clamp",
+          "lineNumber": 256
+        },
+        {
+          "caller": "SetIntentWeight",
+          "callee": "FMath::Clamp",
+          "lineNumber": 306
+        },
+        {
+          "caller": "SetIntentWeight",
+          "callee": "FMath::Clamp",
+          "lineNumber": 307
+        },
+        {
+          "caller": "HasIntent",
+          "callee": "FMath::Abs",
+          "lineNumber": 344
+        },
+        {
+          "caller": "HasIntent",
+          "callee": "GetIntentWeight",
+          "lineNumber": 344
+        },
+        {
+          "caller": "HasMovementIntent",
+          "callee": "IsNearlyZero",
+          "lineNumber": 349
+        },
+        {
+          "caller": "HasMovementIntent",
+          "callee": "IsNearlyZero",
+          "lineNumber": 349
+        },
+        {
+          "caller": "WantsToSprint",
+          "callee": "HasMovementIntent",
+          "lineNumber": 364
+        },
+        {
+          "caller": "SetLookInput",
+          "callee": "GetOwner",
+          "lineNumber": 401
+        },
+        {
+          "caller": "SetLookInput",
+          "callee": "HasAuthority",
+          "lineNumber": 401
+        },
+        {
+          "caller": "SetLookInput",
+          "callee": "GetOwner",
+          "lineNumber": 401
+        },
+        {
+          "caller": "SetLookInput",
+          "callee": "ServerSetLookInput",
+          "lineNumber": 403
+        },
+        {
+          "caller": "SetLookDirection",
+          "callee": "GetSafeNormal",
+          "lineNumber": 409
+        },
+        {
+          "caller": "ClearLookInput",
+          "callee": "GetOwner",
+          "lineNumber": 416
+        },
+        {
+          "caller": "ClearLookInput",
+          "callee": "HasAuthority",
+          "lineNumber": 416
+        },
+        {
+          "caller": "ClearLookInput",
+          "callee": "GetOwner",
+          "lineNumber": 416
+        },
+        {
+          "caller": "ClearLookInput",
+          "callee": "ServerSetLookInput",
+          "lineNumber": 418
+        },
+        {
+          "caller": "SetViewYaw",
+          "callee": "FRotator::NormalizeAxis",
+          "lineNumber": 424
+        },
+        {
+          "caller": "SetViewYaw",
+          "callee": "GetOwner",
+          "lineNumber": 426
+        },
+        {
+          "caller": "SetViewYaw",
+          "callee": "HasAuthority",
+          "lineNumber": 426
+        },
+        {
+          "caller": "SetViewYaw",
+          "callee": "GetOwner",
+          "lineNumber": 426
+        },
+        {
+          "caller": "SetViewYaw",
+          "callee": "ServerSetViewYaw",
+          "lineNumber": 428
+        },
+        {
+          "caller": "ServerSetViewYaw_Implementation",
+          "callee": "FRotator::NormalizeAxis",
+          "lineNumber": 434
+        },
+        {
+          "caller": "ServerSetLookInput_Implementation",
+          "callee": "ClampAxes",
+          "lineNumber": 439
+        },
+        {
+          "caller": "SetReplicatedLocomotion",
+          "callee": "GetOwner",
+          "lineNumber": 451
+        },
+        {
+          "caller": "SetReplicatedLocomotion",
+          "callee": "HasAuthority",
+          "lineNumber": 451
+        },
+        {
+          "caller": "SetReplicatedLocomotion",
+          "callee": "GetOwner",
+          "lineNumber": 451
+        },
+        {
+          "caller": "SetReplicatedLocomotion",
+          "callee": "OnRep_ReplicatedLocomotion",
+          "lineNumber": 453
+        },
+        {
+          "caller": "ClearIntents",
+          "callee": "ClearMovementIntent",
+          "lineNumber": 463
+        },
+        {
+          "caller": "ClearIntents",
+          "callee": "ClearActionIntent",
+          "lineNumber": 464
+        },
+        {
+          "caller": "ClearIntents",
+          "callee": "ClearCombatIntent",
+          "lineNumber": 465
+        },
+        {
+          "caller": "ClearIntents",
+          "callee": "ClearLookInput",
+          "lineNumber": 466
+        },
+        {
+          "caller": "SetLookAtLocation",
+          "callee": "GetOwner",
+          "lineNumber": 501
+        },
+        {
+          "caller": "SetLookAtLocation",
+          "callee": "GetActorLocation",
+          "lineNumber": 503
+        },
+        {
+          "caller": "SetLookAtLocation",
+          "callee": "IsNearlyZero",
+          "lineNumber": 506
+        },
+        {
+          "caller": "SetLookAtLocation",
+          "callee": "SetLookDirection",
+          "lineNumber": 508
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "Super::GetLifetimeReplicatedProps",
+          "lineNumber": 515
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 518
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 519
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 522
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 523
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 524
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 525
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 526
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 527
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 528
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 529
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 532
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 533
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 534
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 535
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 536
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 537
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 538
+        },
+        {
+          "caller": "OnRep_ReplicatedLocomotion",
+          "callee": "GetOwner",
+          "lineNumber": 544
+        },
+        {
+          "caller": "OnRep_ReplicatedLocomotion",
+          "callee": "GetWorld",
+          "lineNumber": 546
+        },
+        {
+          "caller": "OnRep_ReplicatedLocomotion",
+          "callee": "GetSubsystem<UEventBusSubsystem>",
+          "lineNumber": 548
+        },
+        {
+          "caller": "OnRep_ReplicatedLocomotion",
+          "callee": "Publish",
+          "lineNumber": 553
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 69,
+        "functionCount": 69,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 96,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "UMoveSetComponent",
+          "startLine": 4,
+          "endLine": 8,
+          "params": []
+        },
+        {
+          "name": "GetMove",
+          "startLine": 10,
+          "endLine": 26,
+          "params": [
+            "Key"
+          ]
+        },
+        {
+          "name": "AddMove",
+          "startLine": 28,
+          "endLine": 49,
+          "params": [
+            "Key",
+            "Move"
+          ]
+        },
+        {
+          "name": "RemoveMove",
+          "startLine": 51,
+          "endLine": 68,
+          "params": [
+            "Key"
+          ]
+        },
+        {
+          "name": "ClearAllMoves",
+          "startLine": 70,
+          "endLine": 74,
+          "params": []
+        },
+        {
+          "name": "HasMove",
+          "startLine": 76,
+          "endLine": 83,
+          "params": [
+            "Key"
+          ]
+        },
+        {
+          "name": "GetAvailableMoveKeys",
+          "startLine": 85,
+          "endLine": 90,
+          "params": []
+        },
+        {
+          "name": "IsKeyValid",
+          "startLine": 92,
+          "endLine": 96,
+          "params": [
+            "Key"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UMoveSetComponent",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "GetMove",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "AddMove",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveMove",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "ClearAllMoves",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "HasMove",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "GetAvailableMoveKeys",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "IsKeyValid",
+          "line": 92,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetMove",
+          "callee": "IsKeyValid",
+          "lineNumber": 12
+        },
+        {
+          "caller": "GetMove",
+          "callee": "UE_LOG",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GetMove",
+          "callee": "TEXT",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GetMove",
+          "callee": "FGameplayCombatMove",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GetMove",
+          "callee": "Find",
+          "lineNumber": 18
+        },
+        {
+          "caller": "GetMove",
+          "callee": "UE_LOG",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GetMove",
+          "callee": "TEXT",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GetMove",
+          "callee": "static_cast<int32>",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GetMove",
+          "callee": "FGameplayCombatMove",
+          "lineNumber": 25
+        },
+        {
+          "caller": "AddMove",
+          "callee": "IsKeyValid",
+          "lineNumber": 30
+        },
+        {
+          "caller": "AddMove",
+          "callee": "UE_LOG",
+          "lineNumber": 32
+        },
+        {
+          "caller": "AddMove",
+          "callee": "TEXT",
+          "lineNumber": 32
+        },
+        {
+          "caller": "AddMove",
+          "callee": "UE_LOG",
+          "lineNumber": 38
+        },
+        {
+          "caller": "AddMove",
+          "callee": "TEXT",
+          "lineNumber": 38
+        },
+        {
+          "caller": "AddMove",
+          "callee": "Contains",
+          "lineNumber": 43
+        },
+        {
+          "caller": "AddMove",
+          "callee": "UE_LOG",
+          "lineNumber": 45
+        },
+        {
+          "caller": "AddMove",
+          "callee": "TEXT",
+          "lineNumber": 45
+        },
+        {
+          "caller": "AddMove",
+          "callee": "static_cast<int32>",
+          "lineNumber": 45
+        },
+        {
+          "caller": "AddMove",
+          "callee": "Add",
+          "lineNumber": 48
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "IsKeyValid",
+          "lineNumber": 53
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "UE_LOG",
+          "lineNumber": 55
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "TEXT",
+          "lineNumber": 55
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "Remove",
+          "lineNumber": 59
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "UE_LOG",
+          "lineNumber": 62
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "TEXT",
+          "lineNumber": 62
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "static_cast<int32>",
+          "lineNumber": 62
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "UE_LOG",
+          "lineNumber": 66
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "TEXT",
+          "lineNumber": 66
+        },
+        {
+          "caller": "RemoveMove",
+          "callee": "static_cast<int32>",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ClearAllMoves",
+          "callee": "Empty",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ClearAllMoves",
+          "callee": "UE_LOG",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ClearAllMoves",
+          "callee": "TEXT",
+          "lineNumber": 73
+        },
+        {
+          "caller": "HasMove",
+          "callee": "IsKeyValid",
+          "lineNumber": 78
+        },
+        {
+          "caller": "HasMove",
+          "callee": "Contains",
+          "lineNumber": 82
+        },
+        {
+          "caller": "GetAvailableMoveKeys",
+          "callee": "GetKeys",
+          "lineNumber": 88
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 48,
+      "classes": [
+        {
+          "name": "EMoveSetTypeKey",
+          "startLine": 10,
+          "endLine": 60,
+          "methods": [
+            "UMETA",
+            "GetMove",
+            "AddMove",
+            "RemoveMove",
+            "ClearAllMoves",
+            "HasMove",
+            "GetAvailableMoveKeys",
+            "IsKeyValid"
+          ],
+          "properties": [
+            "UMoveSetComponent",
+            "Moves"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EMoveSetTypeKey",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 258,
+      "nonEmptyLines": 205,
+      "callGraph": [
+        {
+          "caller": "RemoveObject",
+          "callee": "RemoveAll",
+          "lineNumber": 129
+        },
+        {
+          "caller": "GetEventTypeId",
+          "callee": "GetTypeHash",
+          "lineNumber": 167
+        },
+        {
+          "caller": "GetEventTypeId",
+          "callee": "DecayedType::StaticStruct",
+          "lineNumber": 167
+        },
+        {
+          "caller": "Publish",
+          "callee": "GetEventTypeId<DecayedType>",
+          "lineNumber": 176
+        },
+        {
+          "caller": "Publish",
+          "callee": "Find",
+          "lineNumber": 178
+        },
+        {
+          "caller": "Publish",
+          "callee": "static_cast<TEventChannel<DecayedType>&>",
+          "lineNumber": 185
+        },
+        {
+          "caller": "Publish",
+          "callee": "Broadcast",
+          "lineNumber": 187
+        },
+        {
+          "caller": "Publish",
+          "callee": "Publish<DecayedType>",
+          "lineNumber": 194
+        },
+        {
+          "caller": "Publish",
+          "callee": "static_cast<const DecayedType&>",
+          "lineNumber": 194
+        },
+        {
+          "caller": "Subscribe",
+          "callee": "GetOrCreateChannel<PayloadType>",
+          "lineNumber": 232
+        },
+        {
+          "caller": "Subscribe",
+          "callee": "AddUObject",
+          "lineNumber": 234
+        },
+        {
+          "caller": "Unsubscribe",
+          "callee": "RemoveObject",
+          "lineNumber": 255
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 99,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "Initialize",
+          "startLine": 16,
+          "endLine": 28,
+          "params": [
+            "Collection"
+          ]
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 30,
+          "endLine": 38,
+          "params": []
+        },
+        {
+          "name": "OnAttackStarted",
+          "startLine": 57,
+          "endLine": 99,
+          "params": [
+            "Payload"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Initialize",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "OnAttackStarted",
+          "line": 57,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Initialize",
+          "callee": "Super::Initialize",
+          "lineNumber": 18
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetEventBus",
+          "lineNumber": 21
+        },
+        {
+          "caller": "Initialize",
+          "callee": "Subscribe<FAttackStartedPayload>",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "GetEventBus",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Unsubscribe",
+          "lineNumber": 34
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 37
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "IsValid",
+          "lineNumber": 59
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 64
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "IsValid",
+          "lineNumber": 65
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "GetCurrentAttackAnimationKey",
+          "lineNumber": 70
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "FindAnimationRegistry",
+          "lineNumber": 78
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "FindAnimation",
+          "lineNumber": 80
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "GetAnimationSystem",
+          "lineNumber": 87
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "RequestAnimationState",
+          "lineNumber": 89
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 32,
+      "classes": [
+        {
+          "name": "UAnimationSystem",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimationRegistryComponent",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "startLine": 14,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FAttackStartedPayload",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UAnimationSystem",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimationRegistryComponent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "FAttackStartedPayload",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 727,
+      "nonEmptyLines": 591,
+      "functions": [
+        {
+          "name": "Tick",
+          "startLine": 47,
+          "endLine": 88,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "DetectCollisions",
+          "startLine": 95,
+          "endLine": 139,
+          "params": [
+            "World"
+          ]
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 146,
+          "endLine": 242,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "ProcessCombatVolume",
+          "startLine": 249,
+          "endLine": 448,
+          "params": [
+            "CombatVolume"
+          ]
+        },
+        {
+          "name": "ProcessOverlap",
+          "startLine": 455,
+          "endLine": 651,
+          "params": [
+            "SourceVolume",
+            "Overlap"
+          ]
+        },
+        {
+          "name": "RegisterHitForCurrentAttack",
+          "startLine": 653,
+          "endLine": 683,
+          "params": [
+            "SourceActor",
+            "TargetActor"
+          ]
+        },
+        {
+          "name": "PublishCollisionEvent",
+          "startLine": 690,
+          "endLine": 703,
+          "params": [
+            "Payload"
+          ]
+        },
+        {
+          "name": "Cleanup",
+          "startLine": 723,
+          "endLine": 727,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Tick",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "DetectCollisions",
+          "line": 95,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessCombatVolume",
+          "line": 249,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessOverlap",
+          "line": 455,
+          "isDefault": false
+        },
+        {
+          "name": "RegisterHitForCurrentAttack",
+          "line": 653,
+          "isDefault": false
+        },
+        {
+          "name": "PublishCollisionEvent",
+          "line": 690,
+          "isDefault": false
+        },
+        {
+          "name": "Cleanup",
+          "line": 723,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Tick",
+          "callee": "GetNetMode",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Tick",
+          "callee": "FMath::Fmod",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Tick",
+          "callee": "DetectCollisions",
+          "lineNumber": 87
+        },
+        {
+          "caller": "DetectCollisions",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 103
+        },
+        {
+          "caller": "DetectCollisions",
+          "callee": "GetActorsWithComponent<UCombatVolumeComponent>",
+          "lineNumber": 121
+        },
+        {
+          "caller": "DetectCollisions",
+          "callee": "Get",
+          "lineNumber": 130
+        },
+        {
+          "caller": "DetectCollisions",
+          "callee": "IsValid",
+          "lineNumber": 132
+        },
+        {
+          "caller": "DetectCollisions",
+          "callee": "ProcessActor",
+          "lineNumber": 137
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetComponents<UCombatVolumeComponent>",
+          "lineNumber": 183
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 191
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsEnabled",
+          "lineNumber": 203
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsAttackActive",
+          "lineNumber": 229
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "ProcessCombatVolume",
+          "lineNumber": 235
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Remove",
+          "lineNumber": 240
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "IsValid",
+          "lineNumber": 253
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetCollisionShape",
+          "lineNumber": 263
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "IsValid",
+          "lineNumber": 265
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetCollisionEnabled",
+          "lineNumber": 274
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetWorld",
+          "lineNumber": 280
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "TEXT",
+          "lineNumber": 294
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetOwner",
+          "lineNumber": 312
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "IsValid",
+          "lineNumber": 314
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "AddIgnoredActor",
+          "lineNumber": 316
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetShapeType",
+          "lineNumber": 338
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetBoxExtent",
+          "lineNumber": 343
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "FCollisionShape::MakeBox",
+          "lineNumber": 346
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetSphereRadius",
+          "lineNumber": 354
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "FCollisionShape::MakeSphere",
+          "lineNumber": 362
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetCapsuleRadius",
+          "lineNumber": 370
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetCapsuleHalfHeight",
+          "lineNumber": 373
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "FCollisionShape::MakeCapsule",
+          "lineNumber": 382
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetComponentLocation",
+          "lineNumber": 401
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "GetComponentQuat",
+          "lineNumber": 404
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "OverlapMultiByChannel",
+          "lineNumber": 423
+        },
+        {
+          "caller": "ProcessCombatVolume",
+          "callee": "ProcessOverlap",
+          "lineNumber": 443
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsValid",
+          "lineNumber": 460
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "Get",
+          "lineNumber": 476
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsValid",
+          "lineNumber": 478
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetOwner",
+          "lineNumber": 488
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetOwner",
+          "lineNumber": 491
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsValid",
+          "lineNumber": 493
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetComponents<UCombatVolumeComponent>",
+          "lineNumber": 525
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsValid",
+          "lineNumber": 531
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetCollisionShape",
+          "lineNumber": 536
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsEnabled",
+          "lineNumber": 566
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "RegisterHitForCurrentAttack",
+          "lineNumber": 571
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsValid",
+          "lineNumber": 590
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsValid",
+          "lineNumber": 602
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetCollisionShape",
+          "lineNumber": 632
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "IsValid",
+          "lineNumber": 634
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetAttachParent",
+          "lineNumber": 637
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetAttachSocketName",
+          "lineNumber": 640
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "GetComponentLocation",
+          "lineNumber": 643
+        },
+        {
+          "caller": "ProcessOverlap",
+          "callee": "PublishCollisionEvent",
+          "lineNumber": 650
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "IsValid",
+          "lineNumber": 657
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "IsValid",
+          "lineNumber": 657
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 664
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "GetAttackSequence",
+          "lineNumber": 666
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "FindOrAdd",
+          "lineNumber": 669
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "Reset",
+          "lineNumber": 673
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "Contains",
+          "lineNumber": 676
+        },
+        {
+          "caller": "RegisterHitForCurrentAttack",
+          "callee": "Add",
+          "lineNumber": 681
+        },
+        {
+          "caller": "PublishCollisionEvent",
+          "callee": "GetEventBus",
+          "lineNumber": 695
+        },
+        {
+          "caller": "PublishCollisionEvent",
+          "callee": "Publish",
+          "lineNumber": 702
+        },
+        {
+          "caller": "Cleanup",
+          "callee": "Reset",
+          "lineNumber": 726
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 169,
+      "nonEmptyLines": 131,
+      "classes": [
+        {
+          "name": "UCombatVolumeComponent",
+          "startLine": 6,
+          "endLine": 6,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UPrimitiveComponent",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "USceneComponent",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FCombatCollisionPayload",
+          "startLine": 18,
+          "endLine": 99,
+          "methods": [],
+          "properties": [
+            "SourceVolume",
+            "SourceActor",
+            "SourceAttachedTo",
+            "SourceAttachSocket",
+            "TargetVolume",
+            "TargetActor",
+            "TargetComponent",
+            "Location"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UCombatVolumeComponent",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "UPrimitiveComponent",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "USceneComponent",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "FCombatCollisionPayload",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 213,
+      "nonEmptyLines": 167,
+      "functions": [
+        {
+          "name": "Initialize",
+          "startLine": 25,
+          "endLine": 33,
+          "params": [
+            "Collection"
+          ]
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 36,
+          "endLine": 42,
+          "params": []
+        },
+        {
+          "name": "SubscribeToEvents",
+          "startLine": 62,
+          "endLine": 77,
+          "params": []
+        },
+        {
+          "name": "UnsubscribeFromEvents",
+          "startLine": 80,
+          "endLine": 90,
+          "params": []
+        },
+        {
+          "name": "OnCombatCollision",
+          "startLine": 97,
+          "endLine": 176,
+          "params": [
+            "Payload"
+          ]
+        },
+        {
+          "name": "IsBlockEffective",
+          "startLine": 178,
+          "endLine": 213,
+          "params": [
+            "SourceActor",
+            "TargetActor"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Initialize",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "SubscribeToEvents",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "UnsubscribeFromEvents",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "OnCombatCollision",
+          "line": 97,
+          "isDefault": false
+        },
+        {
+          "name": "IsBlockEffective",
+          "line": 178,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Initialize",
+          "callee": "Super::Initialize",
+          "lineNumber": 29
+        },
+        {
+          "caller": "Initialize",
+          "callee": "SubscribeToEvents",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "UnsubscribeFromEvents",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 41
+        },
+        {
+          "caller": "SubscribeToEvents",
+          "callee": "GetEventBus",
+          "lineNumber": 64
+        },
+        {
+          "caller": "SubscribeToEvents",
+          "callee": "Subscribe<FCombatCollisionPayload>",
+          "lineNumber": 72
+        },
+        {
+          "caller": "UnsubscribeFromEvents",
+          "callee": "GetEventBus",
+          "lineNumber": 82
+        },
+        {
+          "caller": "UnsubscribeFromEvents",
+          "callee": "Unsubscribe",
+          "lineNumber": 89
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetWorld",
+          "lineNumber": 101
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetNetMode",
+          "lineNumber": 102
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "IsValid",
+          "lineNumber": 109
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "IsValid",
+          "lineNumber": 110
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "FindComponentByClass<UAttackStateComponent>",
+          "lineNumber": 117
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "FindComponentByClass<UMoveSetComponent>",
+          "lineNumber": 119
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 121
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "IsDead",
+          "lineNumber": 123
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetMove",
+          "lineNumber": 129
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetCurrentMoveKey",
+          "lineNumber": 129
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "IsNone",
+          "lineNumber": 130
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 136
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "FMath::Max",
+          "lineNumber": 138
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetStrength",
+          "lineNumber": 140
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "IsBlockEffective",
+          "lineNumber": 145
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetBlockStaminaCost",
+          "lineNumber": 147
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "ConsumeStamina",
+          "lineNumber": 148
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetBlockDamageReduction",
+          "lineNumber": 151
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetHealth",
+          "lineNumber": 156
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "ApplyDamage",
+          "lineNumber": 157
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "FMath::Max",
+          "lineNumber": 167
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetHealth",
+          "lineNumber": 167
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "IsDead",
+          "lineNumber": 169
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "GetEventBus",
+          "lineNumber": 172
+        },
+        {
+          "caller": "OnCombatCollision",
+          "callee": "Publish",
+          "lineNumber": 174
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "IsValid",
+          "lineNumber": 182
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "IsValid",
+          "lineNumber": 182
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 188
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 190
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "WantsToBlock",
+          "lineNumber": 191
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "GetActorLocation",
+          "lineNumber": 197
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "GetActorLocation",
+          "lineNumber": 197
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "Normalize",
+          "lineNumber": 199
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "GetActorForwardVector",
+          "lineNumber": 204
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "Normalize",
+          "lineNumber": 206
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "FMath::DegreesToRadians",
+          "lineNumber": 209
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "GetBlockAngle",
+          "lineNumber": 209
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "FVector::DotProduct",
+          "lineNumber": 211
+        },
+        {
+          "caller": "IsBlockEffective",
+          "callee": "FMath::Cos",
+          "lineNumber": 212
+        }
+      ],
+      "metrics": {
+        "importCount": 9,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 123,
+      "nonEmptyLines": 100,
+      "classes": [
+        {
+          "name": "FCombatCollisionPayload",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "AActor",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "FCombatCollisionPayload",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "AActor",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 222,
+      "nonEmptyLines": 187,
+      "functions": [
+        {
+          "name": "Initialize",
+          "startLine": 18,
+          "endLine": 21,
+          "params": [
+            "Collection"
+          ]
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 23,
+          "endLine": 26,
+          "params": []
+        },
+        {
+          "name": "GetStatId",
+          "startLine": 28,
+          "endLine": 31,
+          "params": []
+        },
+        {
+          "name": "Tick",
+          "startLine": 33,
+          "endLine": 36,
+          "params": [
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "Tick",
+          "startLine": 38,
+          "endLine": 79,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "ResolveMoveKey",
+          "startLine": 93,
+          "endLine": 109,
+          "params": [
+            "Action",
+            "OutMoveKey"
+          ]
+        },
+        {
+          "name": "RequestAttackForActor",
+          "startLine": 111,
+          "endLine": 141,
+          "params": [
+            "Actor",
+            "RequestedAction"
+          ]
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 143,
+          "endLine": 167,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "StartAttack",
+          "startLine": 169,
+          "endLine": 222,
+          "params": [
+            "Actor",
+            "Combat",
+            "MoveSet",
+            "AttackState",
+            "RequestedAction"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Initialize",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "GetStatId",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "ResolveMoveKey",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "RequestAttackForActor",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "StartAttack",
+          "line": 169,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Initialize",
+          "callee": "Super::Initialize",
+          "lineNumber": 20
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 25
+        },
+        {
+          "caller": "GetStatId",
+          "callee": "RETURN_QUICK_DECLARE_CYCLE_STAT",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Tick",
+          "callee": "Tick",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetWorld",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetNetMode",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetActorsWithComponent<UCombatComponent>",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Tick",
+          "callee": "ProcessActor",
+          "lineNumber": 77
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "IsValid",
+          "lineNumber": 115
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "HasAuthority",
+          "lineNumber": 120
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 125
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "FindComponentByClass<UMoveSetComponent>",
+          "lineNumber": 126
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "FindComponentByClass<UAttackStateComponent>",
+          "lineNumber": 127
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "IsValid",
+          "lineNumber": 129
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "IsValid",
+          "lineNumber": 129
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "IsValid",
+          "lineNumber": 129
+        },
+        {
+          "caller": "RequestAttackForActor",
+          "callee": "StartAttack",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UMoveSetComponent>",
+          "lineNumber": 146
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UAttackStateComponent>",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetRequestedAction",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "StartAttack",
+          "lineNumber": 160
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "IsValid",
+          "lineNumber": 176
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "IsValid",
+          "lineNumber": 176
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "IsValid",
+          "lineNumber": 176
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "IsValid",
+          "lineNumber": 176
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "ResolveMoveKey",
+          "lineNumber": 182
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "GetMove",
+          "lineNumber": 187
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "IsNone",
+          "lineNumber": 188
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "FindComponentByClass<UStatsComponent>",
+          "lineNumber": 194
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "ConsumeStamina",
+          "lineNumber": 196
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "ClearRequestedAction",
+          "lineNumber": 198
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "SetCanAttack",
+          "lineNumber": 203
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "ClearRequestedAction",
+          "lineNumber": 204
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "SetCurrentAttackAnimationKey",
+          "lineNumber": 205
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "TriggerAttackAnimationReplication",
+          "lineNumber": 206
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "SetPhaseTime",
+          "lineNumber": 207
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "StartAnticipationWithMove",
+          "lineNumber": 208
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "static_cast<int32>",
+          "lineNumber": 208
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "GetEventBus",
+          "lineNumber": 210
+        },
+        {
+          "caller": "StartAttack",
+          "callee": "Publish<FAttackStartedPayload>",
+          "lineNumber": 217
+        }
+      ],
+      "metrics": {
+        "importCount": 7,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 68,
+      "nonEmptyLines": 55,
+      "functions": [
+        {
+          "name": "IsTickable",
+          "startLine": 52,
+          "endLine": 52,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "UActorRegistry",
+          "startLine": 16,
+          "endLine": 16,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAttackStateComponent",
+          "startLine": 17,
+          "endLine": 17,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "startLine": 18,
+          "endLine": 18,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "CARIBBEANUNTITLED_API",
+          "startLine": 39,
+          "endLine": 39,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UActorRegistry",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UAttackStateComponent",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "CARIBBEANUNTITLED_API",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "IsTickable",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 5,
+        "functionCount": 1,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 215,
+      "nonEmptyLines": 185,
+      "functions": [
+        {
+          "name": "GetPhaseDuration",
+          "startLine": 18,
+          "endLine": 31,
+          "params": [
+            "Move",
+            "Phase"
+          ]
+        },
+        {
+          "name": "Initialize",
+          "startLine": 34,
+          "endLine": 38,
+          "params": [
+            "Collection"
+          ]
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 40,
+          "endLine": 45,
+          "params": []
+        },
+        {
+          "name": "GetStatId",
+          "startLine": 47,
+          "endLine": 50,
+          "params": []
+        },
+        {
+          "name": "Tick",
+          "startLine": 52,
+          "endLine": 55,
+          "params": [
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "Tick",
+          "startLine": 57,
+          "endLine": 91,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "SubscribeToEvents",
+          "startLine": 105,
+          "endLine": 111,
+          "params": []
+        },
+        {
+          "name": "UnsubscribeFromEvents",
+          "startLine": 113,
+          "endLine": 119,
+          "params": []
+        },
+        {
+          "name": "OnAttackStarted",
+          "startLine": 121,
+          "endLine": 138,
+          "params": [
+            "Payload"
+          ]
+        },
+        {
+          "name": "SetMoveVolumesActive",
+          "startLine": 140,
+          "endLine": 149,
+          "params": [
+            "Move",
+            "bActive"
+          ]
+        },
+        {
+          "name": "ProcessActor",
+          "startLine": 151,
+          "endLine": 215,
+          "params": [
+            "Actor",
+            "State",
+            "DeltaTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetPhaseDuration",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Initialize",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "GetStatId",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "SubscribeToEvents",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "UnsubscribeFromEvents",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "OnAttackStarted",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "SetMoveVolumesActive",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessActor",
+          "line": 151,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Initialize",
+          "callee": "Super::Initialize",
+          "lineNumber": 36
+        },
+        {
+          "caller": "Initialize",
+          "callee": "SubscribeToEvents",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "UnsubscribeFromEvents",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Empty",
+          "lineNumber": 43
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetStatId",
+          "callee": "RETURN_QUICK_DECLARE_CYCLE_STAT",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Tick",
+          "callee": "Tick",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetWorld",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Tick",
+          "callee": "Num",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetNetMode",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 74
+        },
+        {
+          "caller": "Tick",
+          "callee": "CreateIterator",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Tick",
+          "callee": "Get",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Tick",
+          "callee": "IsValid",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Tick",
+          "callee": "RemoveCurrent",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Tick",
+          "callee": "ProcessActor",
+          "lineNumber": 89
+        },
+        {
+          "caller": "SubscribeToEvents",
+          "callee": "GetEventBus",
+          "lineNumber": 107
+        },
+        {
+          "caller": "SubscribeToEvents",
+          "callee": "Subscribe<FAttackStartedPayload>",
+          "lineNumber": 109
+        },
+        {
+          "caller": "UnsubscribeFromEvents",
+          "callee": "GetEventBus",
+          "lineNumber": 115
+        },
+        {
+          "caller": "UnsubscribeFromEvents",
+          "callee": "Unsubscribe",
+          "lineNumber": 117
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "IsValid",
+          "lineNumber": 123
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "HasAuthority",
+          "lineNumber": 128
+        },
+        {
+          "caller": "OnAttackStarted",
+          "callee": "FindOrAdd",
+          "lineNumber": 134
+        },
+        {
+          "caller": "SetMoveVolumesActive",
+          "callee": "IsValid",
+          "lineNumber": 144
+        },
+        {
+          "caller": "SetMoveVolumesActive",
+          "callee": "SetAttackActive",
+          "lineNumber": 146
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UAttackStateComponent>",
+          "lineNumber": 153
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "FindComponentByClass<UCombatComponent>",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "IsValid",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Remove",
+          "lineNumber": 158
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetPhase",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetPhaseTime",
+          "lineNumber": 163
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "GetPhaseDuration",
+          "lineNumber": 164
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "StartActivePhase",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SetMoveVolumesActive",
+          "lineNumber": 178
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SetMoveVolumesActive",
+          "lineNumber": 184
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "StartRecoveryPhase",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SetMoveVolumesActive",
+          "lineNumber": 194
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SetCanAttack",
+          "lineNumber": 200
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "ClearAttackState",
+          "lineNumber": 201
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Remove",
+          "lineNumber": 202
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "SetMoveVolumesActive",
+          "lineNumber": 210
+        },
+        {
+          "caller": "ProcessActor",
+          "callee": "Remove",
+          "lineNumber": 213
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 11,
+        "functionCount": 11,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 44,
+      "functions": [
+        {
+          "name": "IsTickable",
+          "startLine": 34,
+          "endLine": 34,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "UAttackStateComponent",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCombatComponent",
+          "startLine": 16,
+          "endLine": 16,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "startLine": 17,
+          "endLine": 17,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActorRegistry",
+          "startLine": 18,
+          "endLine": 18,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "CARIBBEANUNTITLED_API",
+          "startLine": 21,
+          "endLine": 21,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UAttackStateComponent",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "UCombatComponent",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "UActorRegistry",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "CARIBBEANUNTITLED_API",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "IsTickable",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 6,
+        "functionCount": 1,
+        "classCount": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "language": "c",
+      "sizeLines": 145,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "language": "c",
+      "sizeLines": 145,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "language": "cpp",
+      "sizeLines": 220,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "language": "c",
+      "sizeLines": 133,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 496,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "language": "c",
+      "sizeLines": 173,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 272,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "language": "c",
+      "sizeLines": 104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "language": "cpp",
+      "sizeLines": 447,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "language": "c",
+      "sizeLines": 120,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "Source/CaribbeanUntitled/Systems/BrainSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h": [],
+    "Source/CaribbeanUntitled/Components/PerceptionComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/PerceptionComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Components/PerceptionComponent.h": [],
+    "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp": [
+      "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "Source/CaribbeanUntitled/Systems/StaminaSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h": [],
+    "Source/CaribbeanUntitled/Systems/ActionSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/ActionSystem.h": [
+      "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/BrainSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/BrainSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/BrainSystem.h": [
+      "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp": [
+      "Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "Source/CaribbeanUntitled/Systems/PerceptionSystem.h"
+    ],
+    "Source/CaribbeanUntitled/Systems/PerceptionSystem.h": []
+  }
+}

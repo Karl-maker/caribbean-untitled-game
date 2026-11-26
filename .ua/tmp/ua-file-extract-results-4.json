@@ -1,0 +1,1343 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 13,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 13,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 13,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 182,
+      "nonEmptyLines": 148,
+      "classes": [
+        {
+          "name": "UControlComponent",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UStatsComponent",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimationRegistryComponent",
+          "startLine": 14,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UMoveSetComponent",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCombatComponent",
+          "startLine": 16,
+          "endLine": 16,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAttackStateComponent",
+          "startLine": 17,
+          "endLine": 17,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActorRegistry",
+          "startLine": 18,
+          "endLine": 18,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimInstance",
+          "startLine": 19,
+          "endLine": 19,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimSequenceBase",
+          "startLine": 20,
+          "endLine": 20,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCombatVolumeComponent",
+          "startLine": 21,
+          "endLine": 21,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UPoseableMeshComponent",
+          "startLine": 22,
+          "endLine": 22,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimationSystem",
+          "startLine": 23,
+          "endLine": 23,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UControlComponent",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "UStatsComponent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimationRegistryComponent",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "UMoveSetComponent",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "UCombatComponent",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UAttackStateComponent",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "UActorRegistry",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimInstance",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimSequenceBase",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "UCombatVolumeComponent",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "UPoseableMeshComponent",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimationSystem",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 12,
+        "functionCount": 0,
+        "classCount": 12
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 27,
+      "functions": [
+        {
+          "name": "ANonPlayableCharacter",
+          "startLine": 4,
+          "endLine": 34,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ANonPlayableCharacter",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ANonPlayableCharacter",
+          "callee": "CreateDefaultSubobject<UCharacterBrainComponent>",
+          "lineNumber": 7
+        },
+        {
+          "caller": "ANonPlayableCharacter",
+          "callee": "TEXT",
+          "lineNumber": 8
+        },
+        {
+          "caller": "ANonPlayableCharacter",
+          "callee": "SetFeeling",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ANonPlayableCharacter",
+          "callee": "SetIntent",
+          "lineNumber": 27
+        },
+        {
+          "caller": "ANonPlayableCharacter",
+          "callee": "CreateDefaultSubobject<UCharacterPerceptionComponent>",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ANonPlayableCharacter",
+          "callee": "TEXT",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 35,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 43,
+      "classes": [
+        {
+          "name": "UPlayerInputComponent",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "USpringArmComponent",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCameraComponent",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UPlayerInputComponent",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "USpringArmComponent",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "UCameraComponent",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 273,
+      "nonEmptyLines": 221,
+      "functions": [
+        {
+          "name": "ACaribbeanGameMode",
+          "startLine": 10,
+          "endLine": 14,
+          "params": []
+        },
+        {
+          "name": "PostLogin",
+          "startLine": 61,
+          "endLine": 64,
+          "params": [
+            "NewPlayer"
+          ]
+        },
+        {
+          "name": "HandleStartingNewPlayer_Implementation",
+          "startLine": 66,
+          "endLine": 90,
+          "params": [
+            "NewPlayer"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ACaribbeanGameMode",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "PostLogin",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "HandleStartingNewPlayer_Implementation",
+          "line": 66,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ACaribbeanGameMode",
+          "callee": "APlayableActor::StaticClass",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ACaribbeanGameMode",
+          "callee": "APlayerHudController::StaticClass",
+          "lineNumber": 13
+        },
+        {
+          "caller": "PostLogin",
+          "callee": "Super::PostLogin",
+          "lineNumber": 63
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "Super::HandleStartingNewPlayer_Implementation",
+          "lineNumber": 70
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "HasAuthority",
+          "lineNumber": 72
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "Cast<APlayableActor>",
+          "lineNumber": 77
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "GetPawn",
+          "lineNumber": 77
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "GetPawn",
+          "lineNumber": 82
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "UnPossess",
+          "lineNumber": 84
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "Destroy",
+          "lineNumber": 85
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "RestartPlayer",
+          "lineNumber": 88
+        },
+        {
+          "caller": "HandleStartingNewPlayer_Implementation",
+          "callee": "EnsurePlayableActorForController",
+          "lineNumber": 89
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 28,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 75,
+      "nonEmptyLines": 64,
+      "functions": [
+        {
+          "name": "RebuildWidget",
+          "startLine": 9,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "NativeConstruct",
+          "startLine": 23,
+          "endLine": 27,
+          "params": []
+        },
+        {
+          "name": "RebuildHud",
+          "startLine": 29,
+          "endLine": 75,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "RebuildWidget",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "NativeConstruct",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "RebuildHud",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RebuildWidget",
+          "callee": "NewObject<UWidgetTree>",
+          "lineNumber": 13
+        },
+        {
+          "caller": "RebuildWidget",
+          "callee": "TEXT",
+          "lineNumber": 13
+        },
+        {
+          "caller": "RebuildWidget",
+          "callee": "ConstructWidget<UCanvasPanel>",
+          "lineNumber": 16
+        },
+        {
+          "caller": "RebuildWidget",
+          "callee": "UCanvasPanel::StaticClass",
+          "lineNumber": 16
+        },
+        {
+          "caller": "RebuildWidget",
+          "callee": "TEXT",
+          "lineNumber": 16
+        },
+        {
+          "caller": "RebuildWidget",
+          "callee": "RebuildHud",
+          "lineNumber": 19
+        },
+        {
+          "caller": "RebuildWidget",
+          "callee": "TakeWidget",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NativeConstruct",
+          "callee": "Super::NativeConstruct",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NativeConstruct",
+          "callee": "RebuildHud",
+          "lineNumber": 26
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "ConstructWidget<UOverlay>",
+          "lineNumber": 33
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "UOverlay::StaticClass",
+          "lineNumber": 33
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "TEXT",
+          "lineNumber": 33
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "AddChildToCanvas",
+          "lineNumber": 34
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetAnchors",
+          "lineNumber": 37
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "FAnchors",
+          "lineNumber": 37
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetAlignment",
+          "lineNumber": 38
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "FVector2D",
+          "lineNumber": 38
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetPosition",
+          "lineNumber": 39
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "FVector2D",
+          "lineNumber": 39
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetAutoSize",
+          "lineNumber": 40
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "ConstructWidget<UOverlay>",
+          "lineNumber": 46
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "UOverlay::StaticClass",
+          "lineNumber": 46
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "TEXT",
+          "lineNumber": 46
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "AddChildToCanvas",
+          "lineNumber": 47
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetAnchors",
+          "lineNumber": 50
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "FAnchors",
+          "lineNumber": 50
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetAlignment",
+          "lineNumber": 51
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "FVector2D",
+          "lineNumber": 51
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetPosition",
+          "lineNumber": 52
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "FVector2D",
+          "lineNumber": 52
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "SetAutoSize",
+          "lineNumber": 53
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "ClearChildren",
+          "lineNumber": 62
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "ClearChildren",
+          "lineNumber": 63
+        },
+        {
+          "caller": "RebuildHud",
+          "callee": "BuildWidget",
+          "lineNumber": 73
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidget.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 30,
+      "classes": [
+        {
+          "name": "UHorizontalBox",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UHudWidgetComponent",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UCanvasPanel",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UOverlay",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UWidgetTree",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UHorizontalBox",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "UHudWidgetComponent",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UCanvasPanel",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UOverlay",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UWidgetTree",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "UHorizontalBox",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UWidgetTree",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UWidget",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UUserWidget",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UOverlay",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UHorizontalBox",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "UWidgetTree",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UWidget",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UUserWidget",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UOverlay",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 111,
+      "nonEmptyLines": 95,
+      "functions": [
+        {
+          "name": "ULifeHudWidgetComponent",
+          "startLine": 15,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "BuildWidget",
+          "startLine": 42,
+          "endLine": 111,
+          "params": [
+            "OwnerWidget",
+            "WidgetTree",
+            "LayerContainer"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ULifeHudWidgetComponent",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "BuildWidget",
+          "line": 42,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ULifeHudWidgetComponent",
+          "callee": "TEXT",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ULifeHudWidgetComponent",
+          "callee": "Succeeded",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ULifeHudWidgetComponent",
+          "callee": "Get",
+          "lineNumber": 23
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "Cast<UHudWidget>",
+          "lineNumber": 44
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "ConstructWidget<UOverlay>",
+          "lineNumber": 50
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "UOverlay::StaticClass",
+          "lineNumber": 50
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "AddChildToOverlay",
+          "lineNumber": 51
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "Cast<UOverlaySlot>",
+          "lineNumber": 53
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetPadding",
+          "lineNumber": 55
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FMargin",
+          "lineNumber": 55
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetHorizontalAlignment",
+          "lineNumber": 56
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetVerticalAlignment",
+          "lineNumber": 57
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "ConstructWidget<USizeBox>",
+          "lineNumber": 60
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "USizeBox::StaticClass",
+          "lineNumber": 60
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetWidthOverride",
+          "lineNumber": 61
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetHeightOverride",
+          "lineNumber": 62
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "ConstructWidget<UImage>",
+          "lineNumber": 64
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "UImage::StaticClass",
+          "lineNumber": 64
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetColorAndOpacity",
+          "lineNumber": 65
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetBrushSize",
+          "lineNumber": 66
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "AddChild",
+          "lineNumber": 67
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "AddChildToOverlay",
+          "lineNumber": 69
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetPadding",
+          "lineNumber": 72
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FMargin",
+          "lineNumber": 72
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetHorizontalAlignment",
+          "lineNumber": 73
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetVerticalAlignment",
+          "lineNumber": 74
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FindStatsComponentFromWidget",
+          "lineNumber": 77
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FMath::Max",
+          "lineNumber": 79
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "GetMaxHealth",
+          "lineNumber": 79
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FMath::Clamp",
+          "lineNumber": 80
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "GetHealth",
+          "lineNumber": 80
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetWidthOverride",
+          "lineNumber": 81
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "ConstructWidget<USizeBox>",
+          "lineNumber": 86
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "USizeBox::StaticClass",
+          "lineNumber": 86
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetWidthOverride",
+          "lineNumber": 87
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetHeightOverride",
+          "lineNumber": 88
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "ConstructWidget<UImage>",
+          "lineNumber": 90
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "UImage::StaticClass",
+          "lineNumber": 90
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FMath::Max",
+          "lineNumber": 94
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "static_cast<float>",
+          "lineNumber": 94
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "GetSizeX",
+          "lineNumber": 94
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FMath::Max",
+          "lineNumber": 95
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "static_cast<float>",
+          "lineNumber": 95
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "GetSizeY",
+          "lineNumber": 95
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "FMath::Max",
+          "lineNumber": 97
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetBrushFromTexture",
+          "lineNumber": 98
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetBrushSize",
+          "lineNumber": 99
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "AddChild",
+          "lineNumber": 102
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "AddChildToOverlay",
+          "lineNumber": 104
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetHorizontalAlignment",
+          "lineNumber": 107
+        },
+        {
+          "caller": "BuildWidget",
+          "callee": "SetVerticalAlignment",
+          "lineNumber": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 34,
+      "classes": [
+        {
+          "name": "UImage",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UOverlay",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UStatsComponent",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UTexture2D",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UWidgetTree",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UUserWidget",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UImage",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "UOverlay",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UStatsComponent",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UTexture2D",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UWidgetTree",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "UUserWidget",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "APlayerHudController",
+          "startLine": 7,
+          "endLine": 11,
+          "params": []
+        },
+        {
+          "name": "BeginPlay",
+          "startLine": 13,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "CreateHud",
+          "startLine": 23,
+          "endLine": 44,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "APlayerHudController",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "BeginPlay",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "CreateHud",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "APlayerHudController",
+          "callee": "CreateDefaultSubobject<ULifeHudWidgetComponent>",
+          "lineNumber": 10
+        },
+        {
+          "caller": "APlayerHudController",
+          "callee": "TEXT",
+          "lineNumber": 10
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "Super::BeginPlay",
+          "lineNumber": 15
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "IsLocalController",
+          "lineNumber": 17
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "CreateHud",
+          "lineNumber": 19
+        },
+        {
+          "caller": "CreateHud",
+          "callee": "UHudWidget::StaticClass",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateHud",
+          "callee": "CreateWidget<UHudWidget>",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateHud",
+          "callee": "Add",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateHud",
+          "callee": "AddToViewport",
+          "lineNumber": 40
+        },
+        {
+          "caller": "CreateHud",
+          "callee": "RebuildHud",
+          "lineNumber": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 23,
+      "classes": [
+        {
+          "name": "UHudWidget",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "ULifeHudWidgetComponent",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UHudWidget",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "ULifeHudWidgetComponent",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    }
+  ]
+}

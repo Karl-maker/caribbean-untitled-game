@@ -1,0 +1,3458 @@
+{
+  "fileNodes": [
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "type": "file",
+      "name": "K98Actor.cpp",
+      "filePath": "Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "summary": "Implements a K98 weapon actor helper that removes registered components safely while keeping the global actor registry synchronized.",
+      "tags": [
+        "gameplay-actor",
+        "unreal-engine",
+        "networking"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "type": "file",
+      "name": "K98Actor.h",
+      "filePath": "Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "summary": "Declares the replicated K98 weapon actor and its configurable weapon, collision, and attachment behavior.",
+      "tags": [
+        "gameplay-actor",
+        "unreal-engine",
+        "networking"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "file",
+      "name": "ControlComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "summary": "Declares the replicated control-intent component that bridges local player or AI intent into server-authoritative movement and combat decisions.",
+      "tags": [
+        "input",
+        "control-intent",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "type": "file",
+      "name": "StatsComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "summary": "Implements replicated health and stamina mutation, regeneration, damage, healing, and lifecycle behavior.",
+      "tags": [
+        "attributes",
+        "stamina",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "file",
+      "name": "StatsComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "summary": "Defines the authoritative character statistics component, replicated attributes, delegates, and stamina regeneration policy.",
+      "tags": [
+        "attributes",
+        "stamina",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "type": "file",
+      "name": "Locomotion.h",
+      "filePath": "Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "summary": "Defines locomotion states shared by movement, replication, and animation selection.",
+      "tags": [
+        "movement",
+        "locomotion",
+        "gameplay-system"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "type": "file",
+      "name": "MovementPayload.h",
+      "filePath": "Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "summary": "Defines the event-bus payload used to broadcast an actor's resolved locomotion state.",
+      "tags": [
+        "movement",
+        "locomotion",
+        "gameplay-system"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "type": "file",
+      "name": "ActorRegistry.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "summary": "Implements weak actor registration and component-indexed lookup tables so gameplay systems avoid repeated world scans.",
+      "tags": [
+        "registry",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "file",
+      "name": "ActorRegistry.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "summary": "Declares the world subsystem that indexes actors by component type and cleans invalid weak references.",
+      "tags": [
+        "registry",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "type": "file",
+      "name": "CameraSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "summary": "Implements local-player camera orbit, zoom, collision, and context-sensitive targeting behavior.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "type": "file",
+      "name": "CameraSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "summary": "Declares the camera gameplay system and per-actor camera state used for smooth local presentation.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "type": "file",
+      "name": "CombatInputSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "summary": "Consumes replicated combat intent, applies request throttling, and forwards valid attack requests to combat components.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "type": "file",
+      "name": "CombatInputSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "summary": "Declares the combat-input processing system and its per-actor request state.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "type": "file",
+      "name": "MovementSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "summary": "Implements server-authoritative camera-relative movement, speed selection, crouching, jumping, and replicated locomotion classification.",
+      "tags": [
+        "movement",
+        "locomotion",
+        "gameplay-system"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "type": "file",
+      "name": "MovementSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "summary": "Declares movement processing and the helpers used to resolve intent into authoritative character motion.",
+      "tags": [
+        "movement",
+        "locomotion",
+        "gameplay-system"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "type": "file",
+      "name": "StaminaRegenerationSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "summary": "Implements registry-driven stamina regeneration scheduling for actors with stats components.",
+      "tags": [
+        "attributes",
+        "stamina",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "type": "file",
+      "name": "StaminaRegenerationSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "summary": "Declares the stamina regeneration system and its per-actor regeneration state.",
+      "tags": [
+        "attributes",
+        "stamina",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "type": "file",
+      "name": "StaminaSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "summary": "Implements sprint stamina drain and speed scaling for authoritative characters.",
+      "tags": [
+        "attributes",
+        "stamina",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "type": "file",
+      "name": "StaminaSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "summary": "Declares stamina consumption processing and sprint-speed calculation.",
+      "tags": [
+        "attributes",
+        "stamina",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "type": "file",
+      "name": "AttackStateComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "summary": "Implements the replicated attack phase state machine, phase transitions, and reset behavior.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "file",
+      "name": "AttackStateComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "summary": "Defines attack phases and the replicated component that tracks the active move and timing state.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "type": "file",
+      "name": "CombatComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "summary": "Implements validated attack requests, cooldown gating, attack animation replication, and combat action state.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "file",
+      "name": "CombatComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "summary": "Declares the combat action component and its authoritative attack request interface.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "type": "file",
+      "name": "ControlComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "summary": "Implements replicated player and AI intent setters, server RPCs, locomotion notifications, and intent clearing.",
+      "tags": [
+        "input",
+        "control-intent",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "type": "file",
+      "name": "MoveSetComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "summary": "Implements keyed combat move lookup and runtime move-set mutation.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "file",
+      "name": "MoveSetComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "summary": "Defines move-set categories and the component that stores combat moves by stable key.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "file",
+      "name": "EventBusSubsystem.h",
+      "filePath": "Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "summary": "Provides a typed world event bus for decoupled USTRUCT payload publication and subscription.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "type": "file",
+      "name": "CombatAnimationSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "summary": "Translates attack-start events into layered animation requests through the central animation system.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "type": "file",
+      "name": "CombatAnimationSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "summary": "Declares the event-driven combat animation adapter.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "type": "file",
+      "name": "CombatDetectionSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "summary": "Implements authoritative combat-volume collision detection, per-attack hit deduplication, and collision event publication.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "type": "file",
+      "name": "CombatDetectionSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "summary": "Declares combat collision payloads and the detection system's processing interface.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "type": "file",
+      "name": "CombatSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "summary": "Resolves combat collision events into block checks, damage application, and authoritative gameplay outcomes.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "type": "file",
+      "name": "CombatSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "summary": "Declares the event-driven combat resolution subsystem.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "type": "file",
+      "name": "SetupAttackSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "summary": "Validates queued attack requests, selects moves, consumes required resources, and starts authoritative attacks.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "file",
+      "name": "SetupAttackSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "summary": "Declares attack setup processing and request entry points.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "type": "file",
+      "name": "TimeAttackSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "summary": "Advances wind-up, active, and recovery phases while enabling the correct combat volumes for each move window.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "type": "file",
+      "name": "TimeAttackSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "summary": "Declares the attack timing subsystem and phase-volume control helpers.",
+      "tags": [
+        "gameplay",
+        "unreal-engine",
+        "cpp"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "type": "file",
+      "name": "CharacterActor.cpp",
+      "filePath": "Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "summary": "Constructs the core networked character, gameplay components, collision volumes, visual profiles, default moves, and native skeletal animation runtime.",
+      "tags": [
+        "gameplay-actor",
+        "unreal-engine",
+        "networking"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "type": "file",
+      "name": "PlayableActor.cpp",
+      "filePath": "Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "summary": "Configures the player-controlled character camera, input adapter, animation profiles, and player-specific setup.",
+      "tags": [
+        "gameplay-actor",
+        "unreal-engine",
+        "networking"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "type": "file",
+      "name": "AnimationRegistryComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "summary": "Implements key-based animation definition registration and lookup.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "file",
+      "name": "AnimationRegistryComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "summary": "Defines animation keys, layers, playback definitions, and the per-character animation registry.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "type": "file",
+      "name": "CombatVolumeComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "summary": "Creates, configures, attaches, and enables runtime hit or hurt collision shapes from data-driven definitions.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "file",
+      "name": "CombatVolumeComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "summary": "Declares data-driven combat volume geometry, attachment, collision, and runtime shape ownership.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "type": "file",
+      "name": "PlayerInputComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "summary": "Binds Enhanced Input actions and translates local input callbacks into control-component intent or attack requests.",
+      "tags": [
+        "input",
+        "control-intent",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "type": "file",
+      "name": "PlayerInputComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "summary": "Declares the Enhanced Input adapter and configurable action assets for a playable character.",
+      "tags": [
+        "input",
+        "control-intent",
+        "replication"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "type": "file",
+      "name": "AnimationRequestPayload.h",
+      "filePath": "Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "summary": "Defines event-bus payloads and transition data used to request animation state changes.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "type": "file",
+      "name": "CaribbeanAssetSettings.cpp",
+      "filePath": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "summary": "Implements lookup helpers for project-wide character, animation, attachment, and input profiles.",
+      "tags": [
+        "configuration",
+        "asset-profile",
+        "developer-settings"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "file",
+      "name": "CaribbeanAssetSettings.h",
+      "filePath": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "summary": "Defines developer settings and keyed asset profiles for visuals, animation sets, combat bones, and control mappings.",
+      "tags": [
+        "configuration",
+        "asset-profile",
+        "developer-settings"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "type": "file",
+      "name": "AnimationSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "summary": "Implements the central layered animation state machine, transition queues, dynamic montage playback, and stale actor cleanup.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "type": "file",
+      "name": "AnimationSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "summary": "Declares animation state, transition, queue, and montage lifecycle APIs for the world animation subsystem.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "type": "file",
+      "name": "MovementAnimationSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "summary": "Maps replicated locomotion events to animation keys and submits requests to the animation system.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "type": "file",
+      "name": "MovementAnimationSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "summary": "Declares the locomotion-to-animation event adapter.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "type": "file",
+      "name": "GameplayCombatMoveTypes.h",
+      "filePath": "Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "summary": "Defines the data model for a combat move, including timings, animation, stamina cost, and active volumes.",
+      "tags": [
+        "combat",
+        "gameplay-system",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "type": "file",
+      "name": "MovementAnimationTypes.h",
+      "filePath": "Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "summary": "Defines movement animation transition rules and state resolution data.",
+      "tags": [
+        "animation",
+        "gameplay-system",
+        "unreal-engine"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "type": "file",
+      "name": "CharacterActor.h",
+      "filePath": "Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "summary": "Declares the shared networked character base, its gameplay components, profile keys, animation compatibility surface, and replicated visual setup.",
+      "tags": [
+        "actor",
+        "gameplay",
+        "networking",
+        "character"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "type": "file",
+      "name": "NonPlayableCharacter.cpp",
+      "filePath": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "summary": "Constructs AI-controlled characters with brain and perception components configured for server-side decision making.",
+      "tags": [
+        "actor",
+        "gameplay",
+        "networking",
+        "character"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "type": "file",
+      "name": "NonPlayableCharacter.h",
+      "filePath": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "summary": "Declares the NPC specialization that owns perception and brain state used by the AI systems.",
+      "tags": [
+        "actor",
+        "gameplay",
+        "networking",
+        "character"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "type": "file",
+      "name": "PlayableActor.h",
+      "filePath": "Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "summary": "Declares the player-controlled character specialization with camera, input, and profile-driven setup.",
+      "tags": [
+        "actor",
+        "gameplay",
+        "networking",
+        "character"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "type": "file",
+      "name": "CaribbeanGameMode.cpp",
+      "filePath": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "summary": "Implements authoritative player startup, fallback pawn spawning, possession, and game-mode defaults.",
+      "tags": [
+        "game-mode",
+        "authority",
+        "player-lifecycle"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "type": "file",
+      "name": "CaribbeanGameMode.h",
+      "filePath": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "summary": "Declares the authoritative game mode and player-start lifecycle overrides.",
+      "tags": [
+        "game-mode",
+        "authority",
+        "player-lifecycle"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "type": "file",
+      "name": "HudWidget.cpp",
+      "filePath": "Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "summary": "Builds and rebuilds the root UMG HUD container, delegating individual panels to modular HUD components.",
+      "tags": [
+        "ui",
+        "umg",
+        "component",
+        "player-facing"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "type": "file",
+      "name": "HudWidget.h",
+      "filePath": "Source/CaribbeanUntitled/UI/HudWidget.h",
+      "summary": "Declares the root user widget and the component collection used to compose the player HUD.",
+      "tags": [
+        "ui",
+        "umg",
+        "component",
+        "player-facing"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "type": "file",
+      "name": "HudWidgetComponent.h",
+      "filePath": "Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "summary": "Defines the lightweight extension interface used by modular C++ HUD features.",
+      "tags": [
+        "ui",
+        "umg",
+        "component",
+        "player-facing"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "type": "file",
+      "name": "LifeHudWidgetComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "summary": "Builds the health presentation widget and binds its display to the controlled pawn's stats component.",
+      "tags": [
+        "ui",
+        "umg",
+        "component",
+        "player-facing"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "type": "file",
+      "name": "LifeHudWidgetComponent.h",
+      "filePath": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "summary": "Declares tunable health HUD layout, texture, and stats binding state.",
+      "tags": [
+        "ui",
+        "umg",
+        "component",
+        "player-facing"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "type": "file",
+      "name": "PlayerHudController.cpp",
+      "filePath": "Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "summary": "Creates the HUD only for local players and installs the default modular life display.",
+      "tags": [
+        "ui",
+        "umg",
+        "component",
+        "player-facing"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "type": "file",
+      "name": "PlayerHudController.h",
+      "filePath": "Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "summary": "Declares the local player controller responsible for owning the root HUD widget.",
+      "tags": [
+        "ui",
+        "umg",
+        "component",
+        "player-facing"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "type": "file",
+      "name": "CharacterBrainComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "summary": "Implements mutation and reset operations for the NPC's current intent, feeling, target, and effort.",
+      "tags": [
+        "ai",
+        "decision-making",
+        "state-management"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "file",
+      "name": "CharacterBrainComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "summary": "Defines AI personality traits, intent state, and the actor component that stores brain decisions.",
+      "tags": [
+        "ai",
+        "decision-making",
+        "state-management"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "type": "file",
+      "name": "PerceptionComponent.cpp",
+      "filePath": "Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "summary": "Implements storage updates for perceived actors and ranked threats.",
+      "tags": [
+        "ai",
+        "perception",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "file",
+      "name": "PerceptionComponent.h",
+      "filePath": "Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "summary": "Defines perception records, sensory tuning, threat memory, and component-owned observation state.",
+      "tags": [
+        "ai",
+        "perception",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "type": "file",
+      "name": "GameplaySystemScheduler.cpp",
+      "filePath": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "summary": "Initializes gameplay subsystems and executes them in explicit input, gameplay, movement, physics, post-physics, and transform phases.",
+      "tags": [
+        "scheduler",
+        "orchestration",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "type": "file",
+      "name": "GameplaySystemScheduler.h",
+      "filePath": "Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "summary": "Declares the world scheduler, phase contract, subsystem references, and frame-level profiling statistics.",
+      "tags": [
+        "scheduler",
+        "orchestration",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "type": "file",
+      "name": "ActionSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "summary": "Implements interval-driven AI behaviors such as idle, wander, follow, investigate, attack, and flee, translating brain intent into control intent.",
+      "tags": [
+        "ai",
+        "behavior",
+        "control-intent",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "type": "file",
+      "name": "ActionSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "summary": "Defines the AI action context, blackboard, behavior interface, per-actor state, and action-system API.",
+      "tags": [
+        "ai",
+        "behavior",
+        "control-intent",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "type": "file",
+      "name": "BrainSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "summary": "Evaluates staggered NPC decisions from personality and perception, then publishes meaningful intent changes.",
+      "tags": [
+        "ai",
+        "decision-making",
+        "state-management"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "type": "file",
+      "name": "BrainSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "summary": "Declares brain decision payloads, per-NPC think scheduling, and intent evaluation helpers.",
+      "tags": [
+        "ai",
+        "decision-making",
+        "state-management"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "type": "file",
+      "name": "PerceptionSystem.cpp",
+      "filePath": "Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "summary": "Implements spatially partitioned, interval-driven sight and threat evaluation with line-of-sight checks.",
+      "tags": [
+        "ai",
+        "perception",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "type": "file",
+      "name": "PerceptionSystem.h",
+      "filePath": "Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "summary": "Declares perception scheduling, spatial-grid caches, sight tests, and per-perceiver evaluation state.",
+      "tags": [
+        "ai",
+        "perception",
+        "performance",
+        "world-subsystem"
+      ]
+    },
+    {
+      "id": "config:Config/DefaultEditor.ini",
+      "type": "config",
+      "name": "DefaultEditor.ini",
+      "filePath": "Config/DefaultEditor.ini",
+      "summary": "Defines shared Unreal Editor asset-preview scene profiles and editor-only visualization defaults.",
+      "tags": [
+        "configuration",
+        "unreal-engine",
+        "project-settings"
+      ]
+    },
+    {
+      "id": "config:Config/DefaultEngine.ini",
+      "type": "config",
+      "name": "DefaultEngine.ini",
+      "filePath": "Config/DefaultEngine.ini",
+      "summary": "Configures maps, game mode, desktop rendering, Lumen, ray tracing, Substrate, shader models, audio, and platform RHIs.",
+      "tags": [
+        "configuration",
+        "unreal-engine",
+        "rendering"
+      ]
+    },
+    {
+      "id": "config:Config/DefaultGame.ini",
+      "type": "config",
+      "name": "DefaultGame.ini",
+      "filePath": "Config/DefaultGame.ini",
+      "summary": "Defines project identity plus profile-driven character visuals, animations, controls, and playable-actor defaults.",
+      "tags": [
+        "configuration",
+        "unreal-engine",
+        "project-settings"
+      ]
+    },
+    {
+      "id": "config:Config/DefaultInput.ini",
+      "type": "config",
+      "name": "DefaultInput.ini",
+      "filePath": "Config/DefaultInput.ini",
+      "summary": "Configures legacy axis properties, Enhanced Input classes, mouse capture, motion controls, and console input.",
+      "tags": [
+        "configuration",
+        "unreal-engine",
+        "input"
+      ]
+    },
+    {
+      "id": "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "type": "document",
+      "name": "AnimationPipeline.md",
+      "filePath": "Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "summary": "Explains the request-driven animation architecture, registry-based asset lookup, native AnimGraph layering, montage playback, and the replication bridge between authoritative locomotion state and client presentation.",
+      "tags": [
+        "documentation",
+        "animation-system",
+        "networking",
+        "animgraph",
+        "gameplay-pipeline"
+      ]
+    },
+    {
+      "id": "document:Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "type": "document",
+      "name": "HudWidgets.md",
+      "filePath": "Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "summary": "Describes the modular C++ HUD composition model, including local-player ownership, reusable widget components, and the life-bar implementation pattern.",
+      "tags": [
+        "documentation",
+        "ui",
+        "hud",
+        "umg",
+        "component-pattern"
+      ]
+    },
+    {
+      "id": "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "type": "document",
+      "name": "InputPipeline.md",
+      "filePath": "Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "summary": "Documents how Enhanced Input callbacks become replicated control intent, how authoritative gameplay systems consume that intent, and how locomotion state feeds movement and animation presentation.",
+      "tags": [
+        "documentation",
+        "input-system",
+        "replication",
+        "movement",
+        "gameplay-pipeline"
+      ]
+    },
+    {
+      "id": "document:Source/CaribbeanUntitled/Docs/Profiles.md",
+      "type": "document",
+      "name": "Profiles.md",
+      "filePath": "Source/CaribbeanUntitled/Docs/Profiles.md",
+      "summary": "Provides the setup workflow for keyed visual, animation, combat-attachment, and control-mapping profiles, including native skeletal-mesh animation slots and skeleton-specific bone mappings.",
+      "tags": [
+        "documentation",
+        "asset-configuration",
+        "animation-profiles",
+        "input-profiles",
+        "bone-mapping"
+      ]
+    },
+    {
+      "id": "file:CaribbeanUntitled.uproject",
+      "type": "file",
+      "name": "CaribbeanUntitled.uproject",
+      "filePath": "CaribbeanUntitled.uproject",
+      "summary": "Declares the Unreal Engine 5.8 project, its default-loaded CaribbeanUntitled runtime module, and the editor-only Modeling Tools mode plugin.",
+      "tags": [
+        "entry-point",
+        "unreal-project",
+        "module-registration",
+        "editor-plugin"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled.Target.cs",
+      "type": "file",
+      "name": "CaribbeanUntitled.Target.cs",
+      "filePath": "Source/CaribbeanUntitled.Target.cs",
+      "summary": "Defines the standalone game build target with Unreal 5.8 include ordering, V7 build defaults, and the CaribbeanUntitled runtime module.",
+      "tags": [
+        "build-system",
+        "game-target",
+        "unreal-build-tool",
+        "entry-point"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs",
+      "type": "file",
+      "name": "CaribbeanUntitled.Build.cs",
+      "filePath": "Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs",
+      "summary": "Defines the runtime module's build dependencies for core engine features, Enhanced Input, UMG, Slate, and explicit/shared precompiled headers.",
+      "tags": [
+        "build-system",
+        "module-rules",
+        "dependencies",
+        "unreal-build-tool"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "type": "file",
+      "name": "CaribbeanUntitled.cpp",
+      "filePath": "Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "summary": "Registers CaribbeanUntitled as the project's primary Unreal game module using the default module implementation.",
+      "tags": [
+        "entry-point",
+        "module-registration",
+        "runtime-module"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "type": "file",
+      "name": "CaribbeanUntitled.h",
+      "filePath": "Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "summary": "Provides the minimal public header for the primary runtime module and exposes Unreal core declarations.",
+      "tags": [
+        "module-header",
+        "type-definition",
+        "unreal-core"
+      ]
+    },
+    {
+      "id": "file:Source/CaribbeanUntitledEditor.Target.cs",
+      "type": "file",
+      "name": "CaribbeanUntitledEditor.Target.cs",
+      "filePath": "Source/CaribbeanUntitledEditor.Target.cs",
+      "summary": "Defines the Unreal Editor build target with Unreal 5.8 include ordering, V7 build defaults, and the CaribbeanUntitled runtime module.",
+      "tags": [
+        "build-system",
+        "editor-target",
+        "unreal-build-tool",
+        "entry-point"
+      ]
+    }
+  ],
+  "importEdges": [
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "target": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "target": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "target": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "target": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "target": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "target": "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "target": "file:Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "target": "file:Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ],
+  "allEdges": [
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "target": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/K98Actor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "target": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "target": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "target": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "target": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "target": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "target": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "target": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "target": "file:Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "target": "file:Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "target": "file:Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CameraSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/MovementSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/ActionSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "target": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "target": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "target": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "target": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "target": "file:Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "target": "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "target": "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "target": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "target": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/Profiles.md",
+      "target": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Source/CaribbeanUntitled/Docs/Profiles.md",
+      "target": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp",
+      "target": "file:Source/CaribbeanUntitled/CaribbeanUntitled.h",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

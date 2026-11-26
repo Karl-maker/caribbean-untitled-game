@@ -1,0 +1,824 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "file:CaribbeanUntitled.uproject",
+      "score": 2,
+      "name": "CaribbeanUntitled.uproject",
+      "summary": "Declares the Unreal Engine 5.8 project, its default-loaded CaribbeanUntitled runtime module, and the editor-only Modeling Tools mode plugin.",
+      "type": "file"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled.Target.cs",
+      "score": 2,
+      "name": "CaribbeanUntitled.Target.cs",
+      "summary": "Defines the standalone game build target with Unreal 5.8 include ordering, V7 build defaults, and the CaribbeanUntitled runtime module.",
+      "type": "file"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "score": 2,
+      "name": "PlayableActor.cpp",
+      "summary": "Configures the player-controlled character camera, input adapter, animation profiles, and player-specific setup.",
+      "type": "file"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "score": 2,
+      "name": "GameplaySystemScheduler.cpp",
+      "summary": "Initializes gameplay subsystems and executes them in explicit input, gameplay, movement, physics, post-physics, and transform phases.",
+      "type": "file"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "score": 2,
+      "name": "ActionSystem.cpp",
+      "summary": "Implements interval-driven AI behaviors such as idle, wander, follow, investigate, attack, and flee, translating brain intent into control intent.",
+      "type": "file"
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h",
+      "fanIn": 15,
+      "name": "ActorRegistry.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "fanIn": 14,
+      "name": "AnimationRegistryComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CombatComponent.h",
+      "fanIn": 11,
+      "name": "CombatComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h",
+      "fanIn": 11,
+      "name": "EventBusSubsystem.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "fanIn": 10,
+      "name": "StatsComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/ControlComponent.h",
+      "fanIn": 9,
+      "name": "ControlComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "fanIn": 7,
+      "name": "CombatVolumeComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h",
+      "fanIn": 6,
+      "name": "MoveSetComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h",
+      "fanIn": 5,
+      "name": "AttackStateComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h",
+      "fanIn": 5,
+      "name": "PerceptionComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "fanIn": 4,
+      "name": "CharacterBrainComponent.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "fanIn": 4,
+      "name": "CaribbeanAssetSettings.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h",
+      "fanIn": 4,
+      "name": "SetupAttackSystem.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "fanIn": 3,
+      "name": "CharacterActor.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Enums/Locomotion.h",
+      "fanIn": 3,
+      "name": "Locomotion.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Events/MovementPayload.h",
+      "fanIn": 3,
+      "name": "MovementPayload.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "fanIn": 3,
+      "name": "AnimationSystem.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/BrainSystem.h",
+      "fanIn": 3,
+      "name": "BrainSystem.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h",
+      "fanIn": 3,
+      "name": "CombatDetectionSystem.h"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/UI/HudWidget.h",
+      "fanIn": 3,
+      "name": "HudWidget.h"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "fanOut": 10,
+      "name": "CharacterActor.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp",
+      "fanOut": 9,
+      "name": "GameplaySystemScheduler.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp",
+      "fanOut": 9,
+      "name": "CombatSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp",
+      "fanOut": 7,
+      "name": "SetupAttackSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp",
+      "fanOut": 6,
+      "name": "CombatAnimationSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp",
+      "fanOut": 5,
+      "name": "ControlComponent.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp",
+      "fanOut": 5,
+      "name": "ActionSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp",
+      "fanOut": 5,
+      "name": "CombatDetectionSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp",
+      "fanOut": 5,
+      "name": "TimeAttackSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "fanOut": 4,
+      "name": "PlayableActor.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "fanOut": 4,
+      "name": "AnimationSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp",
+      "fanOut": 4,
+      "name": "BrainSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp",
+      "fanOut": 4,
+      "name": "CameraSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp",
+      "fanOut": 4,
+      "name": "CombatInputSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "fanOut": 4,
+      "name": "MovementAnimationSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp",
+      "fanOut": 4,
+      "name": "MovementSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp",
+      "fanOut": 4,
+      "name": "PerceptionSystem.cpp"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp",
+      "fanOut": 4,
+      "name": "StaminaSystem.cpp"
+    },
+    {
+      "id": "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "fanOut": 3,
+      "name": "InputPipeline.md"
+    },
+    {
+      "id": "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "fanOut": 3,
+      "name": "NonPlayableCharacter.h"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:CaribbeanUntitled.uproject",
+    "order": [
+      "file:CaribbeanUntitled.uproject"
+    ],
+    "depthMap": {
+      "file:CaribbeanUntitled.uproject": 0
+    },
+    "byDepth": {
+      "0": [
+        "file:CaribbeanUntitled.uproject"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+        "name": "AnimationPipeline.md",
+        "type": "document",
+        "summary": "Explains the request-driven animation architecture, registry-based asset lookup, native AnimGraph layering, montage playback, and the replication bridge between authoritative locomotion state and client presentation."
+      },
+      {
+        "id": "document:Source/CaribbeanUntitled/Docs/HudWidgets.md",
+        "name": "HudWidgets.md",
+        "type": "document",
+        "summary": "Describes the modular C++ HUD composition model, including local-player ownership, reusable widget components, and the life-bar implementation pattern."
+      },
+      {
+        "id": "document:Source/CaribbeanUntitled/Docs/InputPipeline.md",
+        "name": "InputPipeline.md",
+        "type": "document",
+        "summary": "Documents how Enhanced Input callbacks become replicated control intent, how authoritative gameplay systems consume that intent, and how locomotion state feeds movement and animation presentation."
+      },
+      {
+        "id": "document:Source/CaribbeanUntitled/Docs/Profiles.md",
+        "name": "Profiles.md",
+        "type": "document",
+        "summary": "Provides the setup workflow for keyed visual, animation, combat-attachment, and control-mapping profiles, including native skeletal-mesh animation slots and skeleton-specific bone mappings."
+      }
+    ],
+    "infrastructure": [],
+    "data": [],
+    "config": [
+      {
+        "id": "config:Config/DefaultEditor.ini",
+        "name": "DefaultEditor.ini",
+        "type": "config",
+        "summary": "Defines shared Unreal Editor asset-preview scene profiles and editor-only visualization defaults."
+      },
+      {
+        "id": "config:Config/DefaultEngine.ini",
+        "name": "DefaultEngine.ini",
+        "type": "config",
+        "summary": "Configures maps, game mode, desktop rendering, Lumen, ray tracing, Substrate, shader models, audio, and platform RHIs."
+      },
+      {
+        "id": "config:Config/DefaultGame.ini",
+        "name": "DefaultGame.ini",
+        "type": "config",
+        "summary": "Defines project identity plus profile-driven character visuals, animations, controls, and playable-actor defaults."
+      },
+      {
+        "id": "config:Config/DefaultInput.ini",
+        "name": "DefaultInput.ini",
+        "type": "config",
+        "summary": "Configures legacy axis properties, Enhanced Input classes, mouse capture, motion controls, and console input."
+      }
+    ]
+  },
+  "clusters": [],
+  "layers": {
+    "count": 7,
+    "list": [
+      {
+        "id": "layer:runtime-actors",
+        "name": "Runtime Actors",
+        "description": "Character classes and game-mode composition roots that own Unreal object lifetimes, assemble components, and connect player or NPC instances to the gameplay framework."
+      },
+      {
+        "id": "layer:gameplay-components",
+        "name": "Gameplay Components",
+        "description": "Replicated and local actor state for control, stats, combat, perception, animation registries, movesets, and collision volumes consumed by higher-level systems."
+      },
+      {
+        "id": "layer:gameplay-systems",
+        "name": "Gameplay Systems",
+        "description": "World-scoped orchestration for movement, stamina, AI, perception, combat phases, hit detection, camera behavior, and animation requests, including the explicit gameplay scheduler."
+      },
+      {
+        "id": "layer:contracts-and-messaging",
+        "name": "Contracts and Messaging",
+        "description": "Shared enums, payload structures, combat and animation data types, and the typed world event bus that decouple producers from gameplay-system consumers."
+      },
+      {
+        "id": "layer:presentation",
+        "name": "Presentation",
+        "description": "Local-player HUD controllers and modular UMG widget components that translate replicated gameplay state into client-side interface output."
+      },
+      {
+        "id": "layer:project-platform",
+        "name": "Project and Platform",
+        "description": "Unreal module entry points, target and build rules, project descriptor, engine/game/input configuration, asset settings, and other platform-facing integration."
+      },
+      {
+        "id": "layer:documentation",
+        "name": "Documentation",
+        "description": "Maintainer guides for input, animation, character profiles, and HUD extension workflows."
+      }
+    ]
+  },
+  "nodeSummaryIndex": {
+    "file:Source/CaribbeanUntitled/Actors/K98Actor.cpp": {
+      "name": "K98Actor.cpp",
+      "type": "file",
+      "summary": "Implements a K98 weapon actor helper that removes registered components safely while keeping the global actor registry synchronized."
+    },
+    "file:Source/CaribbeanUntitled/Actors/K98Actor.h": {
+      "name": "K98Actor.h",
+      "type": "file",
+      "summary": "Declares the replicated K98 weapon actor and its configurable weapon, collision, and attachment behavior."
+    },
+    "file:Source/CaribbeanUntitled/Components/ControlComponent.h": {
+      "name": "ControlComponent.h",
+      "type": "file",
+      "summary": "Declares the replicated control-intent component that bridges local player or AI intent into server-authoritative movement and combat decisions."
+    },
+    "file:Source/CaribbeanUntitled/Components/StatsComponent.cpp": {
+      "name": "StatsComponent.cpp",
+      "type": "file",
+      "summary": "Implements replicated health and stamina mutation, regeneration, damage, healing, and lifecycle behavior."
+    },
+    "file:Source/CaribbeanUntitled/Components/StatsComponent.h": {
+      "name": "StatsComponent.h",
+      "type": "file",
+      "summary": "Defines the authoritative character statistics component, replicated attributes, delegates, and stamina regeneration policy."
+    },
+    "file:Source/CaribbeanUntitled/Enums/Locomotion.h": {
+      "name": "Locomotion.h",
+      "type": "file",
+      "summary": "Defines locomotion states shared by movement, replication, and animation selection."
+    },
+    "file:Source/CaribbeanUntitled/Events/MovementPayload.h": {
+      "name": "MovementPayload.h",
+      "type": "file",
+      "summary": "Defines the event-bus payload used to broadcast an actor's resolved locomotion state."
+    },
+    "file:Source/CaribbeanUntitled/Systems/ActorRegistry.cpp": {
+      "name": "ActorRegistry.cpp",
+      "type": "file",
+      "summary": "Implements weak actor registration and component-indexed lookup tables so gameplay systems avoid repeated world scans."
+    },
+    "file:Source/CaribbeanUntitled/Systems/ActorRegistry.h": {
+      "name": "ActorRegistry.h",
+      "type": "file",
+      "summary": "Declares the world subsystem that indexes actors by component type and cleans invalid weak references."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CameraSystem.cpp": {
+      "name": "CameraSystem.cpp",
+      "type": "file",
+      "summary": "Implements local-player camera orbit, zoom, collision, and context-sensitive targeting behavior."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CameraSystem.h": {
+      "name": "CameraSystem.h",
+      "type": "file",
+      "summary": "Declares the camera gameplay system and per-actor camera state used for smooth local presentation."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.cpp": {
+      "name": "CombatInputSystem.cpp",
+      "type": "file",
+      "summary": "Consumes replicated combat intent, applies request throttling, and forwards valid attack requests to combat components."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatInputSystem.h": {
+      "name": "CombatInputSystem.h",
+      "type": "file",
+      "summary": "Declares the combat-input processing system and its per-actor request state."
+    },
+    "file:Source/CaribbeanUntitled/Systems/MovementSystem.cpp": {
+      "name": "MovementSystem.cpp",
+      "type": "file",
+      "summary": "Implements server-authoritative camera-relative movement, speed selection, crouching, jumping, and replicated locomotion classification."
+    },
+    "file:Source/CaribbeanUntitled/Systems/MovementSystem.h": {
+      "name": "MovementSystem.h",
+      "type": "file",
+      "summary": "Declares movement processing and the helpers used to resolve intent into authoritative character motion."
+    },
+    "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.cpp": {
+      "name": "StaminaRegenerationSystem.cpp",
+      "type": "file",
+      "summary": "Implements registry-driven stamina regeneration scheduling for actors with stats components."
+    },
+    "file:Source/CaribbeanUntitled/Systems/StaminaRegenerationSystem.h": {
+      "name": "StaminaRegenerationSystem.h",
+      "type": "file",
+      "summary": "Declares the stamina regeneration system and its per-actor regeneration state."
+    },
+    "file:Source/CaribbeanUntitled/Systems/StaminaSystem.cpp": {
+      "name": "StaminaSystem.cpp",
+      "type": "file",
+      "summary": "Implements sprint stamina drain and speed scaling for authoritative characters."
+    },
+    "file:Source/CaribbeanUntitled/Systems/StaminaSystem.h": {
+      "name": "StaminaSystem.h",
+      "type": "file",
+      "summary": "Declares stamina consumption processing and sprint-speed calculation."
+    },
+    "file:Source/CaribbeanUntitled/Components/AttackStateComponent.cpp": {
+      "name": "AttackStateComponent.cpp",
+      "type": "file",
+      "summary": "Implements the replicated attack phase state machine, phase transitions, and reset behavior."
+    },
+    "file:Source/CaribbeanUntitled/Components/AttackStateComponent.h": {
+      "name": "AttackStateComponent.h",
+      "type": "file",
+      "summary": "Defines attack phases and the replicated component that tracks the active move and timing state."
+    },
+    "file:Source/CaribbeanUntitled/Components/CombatComponent.cpp": {
+      "name": "CombatComponent.cpp",
+      "type": "file",
+      "summary": "Implements validated attack requests, cooldown gating, attack animation replication, and combat action state."
+    },
+    "file:Source/CaribbeanUntitled/Components/CombatComponent.h": {
+      "name": "CombatComponent.h",
+      "type": "file",
+      "summary": "Declares the combat action component and its authoritative attack request interface."
+    },
+    "file:Source/CaribbeanUntitled/Components/ControlComponent.cpp": {
+      "name": "ControlComponent.cpp",
+      "type": "file",
+      "summary": "Implements replicated player and AI intent setters, server RPCs, locomotion notifications, and intent clearing."
+    },
+    "file:Source/CaribbeanUntitled/Components/MoveSetComponent.cpp": {
+      "name": "MoveSetComponent.cpp",
+      "type": "file",
+      "summary": "Implements keyed combat move lookup and runtime move-set mutation."
+    },
+    "file:Source/CaribbeanUntitled/Components/MoveSetComponent.h": {
+      "name": "MoveSetComponent.h",
+      "type": "file",
+      "summary": "Defines move-set categories and the component that stores combat moves by stable key."
+    },
+    "file:Source/CaribbeanUntitled/EventBus/EventBusSubsystem.h": {
+      "name": "EventBusSubsystem.h",
+      "type": "file",
+      "summary": "Provides a typed world event bus for decoupled USTRUCT payload publication and subscription."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.cpp": {
+      "name": "CombatAnimationSystem.cpp",
+      "type": "file",
+      "summary": "Translates attack-start events into layered animation requests through the central animation system."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatAnimationSystem.h": {
+      "name": "CombatAnimationSystem.h",
+      "type": "file",
+      "summary": "Declares the event-driven combat animation adapter."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.cpp": {
+      "name": "CombatDetectionSystem.cpp",
+      "type": "file",
+      "summary": "Implements authoritative combat-volume collision detection, per-attack hit deduplication, and collision event publication."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatDetectionSystem.h": {
+      "name": "CombatDetectionSystem.h",
+      "type": "file",
+      "summary": "Declares combat collision payloads and the detection system's processing interface."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatSystem.cpp": {
+      "name": "CombatSystem.cpp",
+      "type": "file",
+      "summary": "Resolves combat collision events into block checks, damage application, and authoritative gameplay outcomes."
+    },
+    "file:Source/CaribbeanUntitled/Systems/CombatSystem.h": {
+      "name": "CombatSystem.h",
+      "type": "file",
+      "summary": "Declares the event-driven combat resolution subsystem."
+    },
+    "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.cpp": {
+      "name": "SetupAttackSystem.cpp",
+      "type": "file",
+      "summary": "Validates queued attack requests, selects moves, consumes required resources, and starts authoritative attacks."
+    },
+    "file:Source/CaribbeanUntitled/Systems/SetupAttackSystem.h": {
+      "name": "SetupAttackSystem.h",
+      "type": "file",
+      "summary": "Declares attack setup processing and request entry points."
+    },
+    "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.cpp": {
+      "name": "TimeAttackSystem.cpp",
+      "type": "file",
+      "summary": "Advances wind-up, active, and recovery phases while enabling the correct combat volumes for each move window."
+    },
+    "file:Source/CaribbeanUntitled/Systems/TimeAttackSystem.h": {
+      "name": "TimeAttackSystem.h",
+      "type": "file",
+      "summary": "Declares the attack timing subsystem and phase-volume control helpers."
+    },
+    "file:Source/CaribbeanUntitled/Actors/CharacterActor.cpp": {
+      "name": "CharacterActor.cpp",
+      "type": "file",
+      "summary": "Constructs the core networked character, gameplay components, collision volumes, visual profiles, default moves, and native skeletal animation runtime."
+    },
+    "file:Source/CaribbeanUntitled/Actors/PlayableActor.cpp": {
+      "name": "PlayableActor.cpp",
+      "type": "file",
+      "summary": "Configures the player-controlled character camera, input adapter, animation profiles, and player-specific setup."
+    },
+    "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp": {
+      "name": "AnimationRegistryComponent.cpp",
+      "type": "file",
+      "summary": "Implements key-based animation definition registration and lookup."
+    },
+    "file:Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h": {
+      "name": "AnimationRegistryComponent.h",
+      "type": "file",
+      "summary": "Defines animation keys, layers, playback definitions, and the per-character animation registry."
+    },
+    "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp": {
+      "name": "CombatVolumeComponent.cpp",
+      "type": "file",
+      "summary": "Creates, configures, attaches, and enables runtime hit or hurt collision shapes from data-driven definitions."
+    },
+    "file:Source/CaribbeanUntitled/Components/CombatVolumeComponent.h": {
+      "name": "CombatVolumeComponent.h",
+      "type": "file",
+      "summary": "Declares data-driven combat volume geometry, attachment, collision, and runtime shape ownership."
+    },
+    "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp": {
+      "name": "PlayerInputComponent.cpp",
+      "type": "file",
+      "summary": "Binds Enhanced Input actions and translates local input callbacks into control-component intent or attack requests."
+    },
+    "file:Source/CaribbeanUntitled/Components/PlayerInputComponent.h": {
+      "name": "PlayerInputComponent.h",
+      "type": "file",
+      "summary": "Declares the Enhanced Input adapter and configurable action assets for a playable character."
+    },
+    "file:Source/CaribbeanUntitled/Events/AnimationRequestPayload.h": {
+      "name": "AnimationRequestPayload.h",
+      "type": "file",
+      "summary": "Defines event-bus payloads and transition data used to request animation state changes."
+    },
+    "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp": {
+      "name": "CaribbeanAssetSettings.cpp",
+      "type": "file",
+      "summary": "Implements lookup helpers for project-wide character, animation, attachment, and input profiles."
+    },
+    "file:Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h": {
+      "name": "CaribbeanAssetSettings.h",
+      "type": "file",
+      "summary": "Defines developer settings and keyed asset profiles for visuals, animation sets, combat bones, and control mappings."
+    },
+    "file:Source/CaribbeanUntitled/Systems/AnimationSystem.cpp": {
+      "name": "AnimationSystem.cpp",
+      "type": "file",
+      "summary": "Implements the central layered animation state machine, transition queues, dynamic montage playback, and stale actor cleanup."
+    },
+    "file:Source/CaribbeanUntitled/Systems/AnimationSystem.h": {
+      "name": "AnimationSystem.h",
+      "type": "file",
+      "summary": "Declares animation state, transition, queue, and montage lifecycle APIs for the world animation subsystem."
+    },
+    "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp": {
+      "name": "MovementAnimationSystem.cpp",
+      "type": "file",
+      "summary": "Maps replicated locomotion events to animation keys and submits requests to the animation system."
+    },
+    "file:Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h": {
+      "name": "MovementAnimationSystem.h",
+      "type": "file",
+      "summary": "Declares the locomotion-to-animation event adapter."
+    },
+    "file:Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h": {
+      "name": "GameplayCombatMoveTypes.h",
+      "type": "file",
+      "summary": "Defines the data model for a combat move, including timings, animation, stamina cost, and active volumes."
+    },
+    "file:Source/CaribbeanUntitled/Types/MovementAnimationTypes.h": {
+      "name": "MovementAnimationTypes.h",
+      "type": "file",
+      "summary": "Defines movement animation transition rules and state resolution data."
+    },
+    "file:Source/CaribbeanUntitled/Actors/CharacterActor.h": {
+      "name": "CharacterActor.h",
+      "type": "file",
+      "summary": "Declares the shared networked character base, its gameplay components, profile keys, animation compatibility surface, and replicated visual setup."
+    },
+    "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp": {
+      "name": "NonPlayableCharacter.cpp",
+      "type": "file",
+      "summary": "Constructs AI-controlled characters with brain and perception components configured for server-side decision making."
+    },
+    "file:Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h": {
+      "name": "NonPlayableCharacter.h",
+      "type": "file",
+      "summary": "Declares the NPC specialization that owns perception and brain state used by the AI systems."
+    },
+    "file:Source/CaribbeanUntitled/Actors/PlayableActor.h": {
+      "name": "PlayableActor.h",
+      "type": "file",
+      "summary": "Declares the player-controlled character specialization with camera, input, and profile-driven setup."
+    },
+    "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp": {
+      "name": "CaribbeanGameMode.cpp",
+      "type": "file",
+      "summary": "Implements authoritative player startup, fallback pawn spawning, possession, and game-mode defaults."
+    },
+    "file:Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h": {
+      "name": "CaribbeanGameMode.h",
+      "type": "file",
+      "summary": "Declares the authoritative game mode and player-start lifecycle overrides."
+    },
+    "file:Source/CaribbeanUntitled/UI/HudWidget.cpp": {
+      "name": "HudWidget.cpp",
+      "type": "file",
+      "summary": "Builds and rebuilds the root UMG HUD container, delegating individual panels to modular HUD components."
+    },
+    "file:Source/CaribbeanUntitled/UI/HudWidget.h": {
+      "name": "HudWidget.h",
+      "type": "file",
+      "summary": "Declares the root user widget and the component collection used to compose the player HUD."
+    },
+    "file:Source/CaribbeanUntitled/UI/HudWidgetComponent.h": {
+      "name": "HudWidgetComponent.h",
+      "type": "file",
+      "summary": "Defines the lightweight extension interface used by modular C++ HUD features."
+    },
+    "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp": {
+      "name": "LifeHudWidgetComponent.cpp",
+      "type": "file",
+      "summary": "Builds the health presentation widget and binds its display to the controlled pawn's stats component."
+    },
+    "file:Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h": {
+      "name": "LifeHudWidgetComponent.h",
+      "type": "file",
+      "summary": "Declares tunable health HUD layout, texture, and stats binding state."
+    },
+    "file:Source/CaribbeanUntitled/UI/PlayerHudController.cpp": {
+      "name": "PlayerHudController.cpp",
+      "type": "file",
+      "summary": "Creates the HUD only for local players and installs the default modular life display."
+    },
+    "file:Source/CaribbeanUntitled/UI/PlayerHudController.h": {
+      "name": "PlayerHudController.h",
+      "type": "file",
+      "summary": "Declares the local player controller responsible for owning the root HUD widget."
+    },
+    "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.cpp": {
+      "name": "CharacterBrainComponent.cpp",
+      "type": "file",
+      "summary": "Implements mutation and reset operations for the NPC's current intent, feeling, target, and effort."
+    },
+    "file:Source/CaribbeanUntitled/Components/CharacterBrainComponent.h": {
+      "name": "CharacterBrainComponent.h",
+      "type": "file",
+      "summary": "Defines AI personality traits, intent state, and the actor component that stores brain decisions."
+    },
+    "file:Source/CaribbeanUntitled/Components/PerceptionComponent.cpp": {
+      "name": "PerceptionComponent.cpp",
+      "type": "file",
+      "summary": "Implements storage updates for perceived actors and ranked threats."
+    },
+    "file:Source/CaribbeanUntitled/Components/PerceptionComponent.h": {
+      "name": "PerceptionComponent.h",
+      "type": "file",
+      "summary": "Defines perception records, sensory tuning, threat memory, and component-owned observation state."
+    },
+    "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.cpp": {
+      "name": "GameplaySystemScheduler.cpp",
+      "type": "file",
+      "summary": "Initializes gameplay subsystems and executes them in explicit input, gameplay, movement, physics, post-physics, and transform phases."
+    },
+    "file:Source/CaribbeanUntitled/Scheduler/GameplaySystemScheduler.h": {
+      "name": "GameplaySystemScheduler.h",
+      "type": "file",
+      "summary": "Declares the world scheduler, phase contract, subsystem references, and frame-level profiling statistics."
+    },
+    "file:Source/CaribbeanUntitled/Systems/ActionSystem.cpp": {
+      "name": "ActionSystem.cpp",
+      "type": "file",
+      "summary": "Implements interval-driven AI behaviors such as idle, wander, follow, investigate, attack, and flee, translating brain intent into control intent."
+    },
+    "file:Source/CaribbeanUntitled/Systems/ActionSystem.h": {
+      "name": "ActionSystem.h",
+      "type": "file",
+      "summary": "Defines the AI action context, blackboard, behavior interface, per-actor state, and action-system API."
+    },
+    "file:Source/CaribbeanUntitled/Systems/BrainSystem.cpp": {
+      "name": "BrainSystem.cpp",
+      "type": "file",
+      "summary": "Evaluates staggered NPC decisions from personality and perception, then publishes meaningful intent changes."
+    },
+    "file:Source/CaribbeanUntitled/Systems/BrainSystem.h": {
+      "name": "BrainSystem.h",
+      "type": "file",
+      "summary": "Declares brain decision payloads, per-NPC think scheduling, and intent evaluation helpers."
+    },
+    "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.cpp": {
+      "name": "PerceptionSystem.cpp",
+      "type": "file",
+      "summary": "Implements spatially partitioned, interval-driven sight and threat evaluation with line-of-sight checks."
+    },
+    "file:Source/CaribbeanUntitled/Systems/PerceptionSystem.h": {
+      "name": "PerceptionSystem.h",
+      "type": "file",
+      "summary": "Declares perception scheduling, spatial-grid caches, sight tests, and per-perceiver evaluation state."
+    },
+    "config:Config/DefaultEditor.ini": {
+      "name": "DefaultEditor.ini",
+      "type": "config",
+      "summary": "Defines shared Unreal Editor asset-preview scene profiles and editor-only visualization defaults."
+    },
+    "config:Config/DefaultEngine.ini": {
+      "name": "DefaultEngine.ini",
+      "type": "config",
+      "summary": "Configures maps, game mode, desktop rendering, Lumen, ray tracing, Substrate, shader models, audio, and platform RHIs."
+    },
+    "config:Config/DefaultGame.ini": {
+      "name": "DefaultGame.ini",
+      "type": "config",
+      "summary": "Defines project identity plus profile-driven character visuals, animations, controls, and playable-actor defaults."
+    },
+    "config:Config/DefaultInput.ini": {
+      "name": "DefaultInput.ini",
+      "type": "config",
+      "summary": "Configures legacy axis properties, Enhanced Input classes, mouse capture, motion controls, and console input."
+    },
+    "document:Source/CaribbeanUntitled/Docs/AnimationPipeline.md": {
+      "name": "AnimationPipeline.md",
+      "type": "document",
+      "summary": "Explains the request-driven animation architecture, registry-based asset lookup, native AnimGraph layering, montage playback, and the replication bridge between authoritative locomotion state and client presentation."
+    },
+    "document:Source/CaribbeanUntitled/Docs/HudWidgets.md": {
+      "name": "HudWidgets.md",
+      "type": "document",
+      "summary": "Describes the modular C++ HUD composition model, including local-player ownership, reusable widget components, and the life-bar implementation pattern."
+    },
+    "document:Source/CaribbeanUntitled/Docs/InputPipeline.md": {
+      "name": "InputPipeline.md",
+      "type": "document",
+      "summary": "Documents how Enhanced Input callbacks become replicated control intent, how authoritative gameplay systems consume that intent, and how locomotion state feeds movement and animation presentation."
+    },
+    "document:Source/CaribbeanUntitled/Docs/Profiles.md": {
+      "name": "Profiles.md",
+      "type": "document",
+      "summary": "Provides the setup workflow for keyed visual, animation, combat-attachment, and control-mapping profiles, including native skeletal-mesh animation slots and skeleton-specific bone mappings."
+    },
+    "file:CaribbeanUntitled.uproject": {
+      "name": "CaribbeanUntitled.uproject",
+      "type": "file",
+      "summary": "Declares the Unreal Engine 5.8 project, its default-loaded CaribbeanUntitled runtime module, and the editor-only Modeling Tools mode plugin."
+    },
+    "file:Source/CaribbeanUntitled.Target.cs": {
+      "name": "CaribbeanUntitled.Target.cs",
+      "type": "file",
+      "summary": "Defines the standalone game build target with Unreal 5.8 include ordering, V7 build defaults, and the CaribbeanUntitled runtime module."
+    },
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.Build.cs": {
+      "name": "CaribbeanUntitled.Build.cs",
+      "type": "file",
+      "summary": "Defines the runtime module's build dependencies for core engine features, Enhanced Input, UMG, Slate, and explicit/shared precompiled headers."
+    },
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.cpp": {
+      "name": "CaribbeanUntitled.cpp",
+      "type": "file",
+      "summary": "Registers CaribbeanUntitled as the project's primary Unreal game module using the default module implementation."
+    },
+    "file:Source/CaribbeanUntitled/CaribbeanUntitled.h": {
+      "name": "CaribbeanUntitled.h",
+      "type": "file",
+      "summary": "Provides the minimal public header for the primary runtime module and exposes Unreal core declarations."
+    },
+    "file:Source/CaribbeanUntitledEditor.Target.cs": {
+      "name": "CaribbeanUntitledEditor.Target.cs",
+      "type": "file",
+      "summary": "Defines the Unreal Editor build target with Unreal 5.8 include ordering, V7 build defaults, and the CaribbeanUntitled runtime module."
+    }
+  },
+  "totalNodes": 93,
+  "totalEdges": 422
+}

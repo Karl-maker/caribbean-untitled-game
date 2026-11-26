@@ -1,0 +1,3949 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 17,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 17,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 17,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "Source/CaribbeanUntitled/Actors/CharacterActor.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 719,
+      "nonEmptyLines": 605,
+      "functions": [
+        {
+          "name": "ACharacterActor",
+          "startLine": 29,
+          "endLine": 517,
+          "params": []
+        },
+        {
+          "name": "ApplyCharacterVisualProfile",
+          "startLine": 519,
+          "endLine": 554,
+          "params": []
+        },
+        {
+          "name": "SyncPoseableMeshFromSkeletalMesh",
+          "startLine": 556,
+          "endLine": 569,
+          "params": []
+        },
+        {
+          "name": "UpdatePoseableMeshFromCurrentAnimation",
+          "startLine": 571,
+          "endLine": 576,
+          "params": [
+            "DeltaSeconds"
+          ]
+        },
+        {
+          "name": "OnRep_CharacterVisualProfileKey",
+          "startLine": 578,
+          "endLine": 581,
+          "params": []
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "startLine": 583,
+          "endLine": 587,
+          "params": [
+            "OutLifetimeProps"
+          ]
+        },
+        {
+          "name": "PostInitializeComponents",
+          "startLine": 594,
+          "endLine": 695,
+          "params": []
+        },
+        {
+          "name": "EndPlay",
+          "startLine": 702,
+          "endLine": 719,
+          "params": [
+            "EndPlayReason"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ACharacterActor",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "ApplyCharacterVisualProfile",
+          "line": 519,
+          "isDefault": false
+        },
+        {
+          "name": "SyncPoseableMeshFromSkeletalMesh",
+          "line": 556,
+          "isDefault": false
+        },
+        {
+          "name": "UpdatePoseableMeshFromCurrentAnimation",
+          "line": 571,
+          "isDefault": false
+        },
+        {
+          "name": "OnRep_CharacterVisualProfileKey",
+          "line": 578,
+          "isDefault": false
+        },
+        {
+          "name": "GetLifetimeReplicatedProps",
+          "line": 583,
+          "isDefault": false
+        },
+        {
+          "name": "PostInitializeComponents",
+          "line": 594,
+          "isDefault": false
+        },
+        {
+          "name": "EndPlay",
+          "line": 702,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetReplicateMovement",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetMesh",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetCapsuleComponent",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CalcBounds",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetComponentTransform",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetScaledCapsuleHalfHeight",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "AddRelativeLocation",
+          "lineNumber": 58
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FVector",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "AddRelativeRotation",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FRotator",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UPoseableMeshComponent>",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetupAttachment",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetCapsuleComponent",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetRelativeLocation",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetRelativeLocation",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetRelativeRotation",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetRelativeRotation",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetRelativeScale3D",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetRelativeScale3D",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetVisibility",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetHiddenInGame",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetCollisionEnabled",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetVisibility",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "SetHiddenInGame",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UControlComponent>",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UStatsComponent>",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UAnimationRegistryComponent>",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UMoveSetComponent>",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 114
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UCombatComponent>",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UAttackStateComponent>",
+          "lineNumber": 123
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "ApplyCharacterVisualProfile",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UCombatVolumeComponent>",
+          "lineNumber": 146
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UCombatVolumeComponent>",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UCombatVolumeComponent>",
+          "lineNumber": 173
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 174
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UCombatVolumeComponent>",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UCombatVolumeComponent>",
+          "lineNumber": 199
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 200
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "CreateDefaultSubobject<UCombatVolumeComponent>",
+          "lineNumber": 212
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 213
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 236
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 236
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 237
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 246
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 246
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 247
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Cast<UAnimSequence>",
+          "lineNumber": 260
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TryLoad",
+          "lineNumber": 260
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 261
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 261
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 262
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 265
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Cast<UAnimSequence>",
+          "lineNumber": 275
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TryLoad",
+          "lineNumber": 275
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 276
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 276
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 277
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 280
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Cast<UAnimSequence>",
+          "lineNumber": 290
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TryLoad",
+          "lineNumber": 290
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 291
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 291
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 292
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 295
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Cast<UAnimSequence>",
+          "lineNumber": 305
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TryLoad",
+          "lineNumber": 305
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 306
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 306
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 307
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 310
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Cast<UAnimSequence>",
+          "lineNumber": 320
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TryLoad",
+          "lineNumber": 320
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 321
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 321
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 322
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 331
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 331
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 332
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 341
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 341
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 342
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 355
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 355
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 356
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 365
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 365
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 366
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 375
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 375
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 376
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 389
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 389
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 390
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 393
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Cast<UAnimSequence>",
+          "lineNumber": 404
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TryLoad",
+          "lineNumber": 404
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 405
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 405
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 406
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 416
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 416
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 417
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 427
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 427
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 428
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 442
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 442
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 443
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 453
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 453
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 454
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FText::FromString",
+          "lineNumber": 464
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 464
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 465
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "TEXT",
+          "lineNumber": 471
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "Add",
+          "lineNumber": 478
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "AddMove",
+          "lineNumber": 480
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "GetCharacterMovement",
+          "lineNumber": 501
+        },
+        {
+          "caller": "ACharacterActor",
+          "callee": "FRotator",
+          "lineNumber": 507
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "UCaribbeanAssetSettings::Get",
+          "lineNumber": 521
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "GetMesh",
+          "lineNumber": 522
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "Get",
+          "lineNumber": 523
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "FindCharacterVisualProfile",
+          "lineNumber": 530
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "IsValid",
+          "lineNumber": 537
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "Cast<USkeletalMesh>",
+          "lineNumber": 538
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "TryLoad",
+          "lineNumber": 538
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "SetSkeletalMesh",
+          "lineNumber": 541
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "SetSkeletalMesh",
+          "lineNumber": 544
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "TryLoadClass<UAnimInstance>",
+          "lineNumber": 549
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "SetAnimationMode",
+          "lineNumber": 551
+        },
+        {
+          "caller": "ApplyCharacterVisualProfile",
+          "callee": "SetAnimInstanceClass",
+          "lineNumber": 552
+        },
+        {
+          "caller": "SyncPoseableMeshFromSkeletalMesh",
+          "callee": "GetMesh",
+          "lineNumber": 558
+        },
+        {
+          "caller": "SyncPoseableMeshFromSkeletalMesh",
+          "callee": "Get",
+          "lineNumber": 559
+        },
+        {
+          "caller": "SyncPoseableMeshFromSkeletalMesh",
+          "callee": "IsVisible",
+          "lineNumber": 560
+        },
+        {
+          "caller": "SyncPoseableMeshFromSkeletalMesh",
+          "callee": "RefreshBoneTransforms",
+          "lineNumber": 565
+        },
+        {
+          "caller": "SyncPoseableMeshFromSkeletalMesh",
+          "callee": "CopyPoseFromSkeletalComponent",
+          "lineNumber": 566
+        },
+        {
+          "caller": "SyncPoseableMeshFromSkeletalMesh",
+          "callee": "RefreshBoneTransforms",
+          "lineNumber": 567
+        },
+        {
+          "caller": "SyncPoseableMeshFromSkeletalMesh",
+          "callee": "MarkRefreshTransformDirty",
+          "lineNumber": 568
+        },
+        {
+          "caller": "OnRep_CharacterVisualProfileKey",
+          "callee": "ApplyCharacterVisualProfile",
+          "lineNumber": 580
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "Super::GetLifetimeReplicatedProps",
+          "lineNumber": 585
+        },
+        {
+          "caller": "GetLifetimeReplicatedProps",
+          "callee": "DOREPLIFETIME",
+          "lineNumber": 586
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "Super::PostInitializeComponents",
+          "lineNumber": 596
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "GetMesh",
+          "lineNumber": 605
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "UCaribbeanAssetSettings::Get",
+          "lineNumber": 607
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "FindCombatAttachmentProfile",
+          "lineNumber": 609
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "ToString",
+          "lineNumber": 610
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "Find",
+          "lineNumber": 620
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "TOptional<FName>",
+          "lineNumber": 626
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "ResolveBoneName",
+          "lineNumber": 636
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "IsSet",
+          "lineNumber": 638
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "GetValue",
+          "lineNumber": 643
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "DoesSocketExist",
+          "lineNumber": 650
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "GetBoneIndex",
+          "lineNumber": 651
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "AttachToComponent",
+          "lineNumber": 656
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "GetCollisionShape",
+          "lineNumber": 666
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "IsValid",
+          "lineNumber": 667
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "AttachCombatVolume",
+          "lineNumber": 674
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "AttachCombatVolume",
+          "lineNumber": 675
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "AttachCombatVolume",
+          "lineNumber": 676
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "AttachCombatVolume",
+          "lineNumber": 677
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "AttachCombatVolume",
+          "lineNumber": 678
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "AttachCombatVolume",
+          "lineNumber": 679
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "GetWorld",
+          "lineNumber": 681
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 684
+        },
+        {
+          "caller": "PostInitializeComponents",
+          "callee": "RegisterActor",
+          "lineNumber": 686
+        },
+        {
+          "caller": "EndPlay",
+          "callee": "GetWorld",
+          "lineNumber": 709
+        },
+        {
+          "caller": "EndPlay",
+          "callee": "GetSubsystem<UActorRegistry>",
+          "lineNumber": 712
+        },
+        {
+          "caller": "EndPlay",
+          "callee": "UnregisterActor",
+          "lineNumber": 714
+        },
+        {
+          "caller": "EndPlay",
+          "callee": "Super::EndPlay",
+          "lineNumber": 718
+        }
+      ],
+      "metrics": {
+        "importCount": 10,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/PlayableActor.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 241,
+      "nonEmptyLines": 200,
+      "functions": [
+        {
+          "name": "ConfigureAnimationDefinition",
+          "startLine": 31,
+          "endLine": 52,
+          "params": [
+            "Registry",
+            "Key",
+            "Animation"
+          ]
+        },
+        {
+          "name": "APlayableActor",
+          "startLine": 55,
+          "endLine": 228,
+          "params": []
+        },
+        {
+          "name": "SetupPlayerInputComponent",
+          "startLine": 230,
+          "endLine": 241,
+          "params": [
+            "PlayerInput"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConfigureAnimationDefinition",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "APlayableActor",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "SetupPlayerInputComponent",
+          "line": 230,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "APlayableActor",
+          "callee": "UCaribbeanAssetSettings::Get",
+          "lineNumber": 57
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "CreateDefaultSubobject<UPlayerInputComponent>",
+          "lineNumber": 64
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 65
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "CreateDefaultSubobject<USpringArmComponent>",
+          "lineNumber": 74
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 75
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "SetupAttachment",
+          "lineNumber": 78
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "CreateDefaultSubobject<UCameraComponent>",
+          "lineNumber": 90
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 91
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "SetupAttachment",
+          "lineNumber": 94
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "FindControlMappingProfile",
+          "lineNumber": 105
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputMappingContext>",
+          "lineNumber": 110
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 115
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 120
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 125
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 130
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 135
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 140
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 145
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 150
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UInputAction>",
+          "lineNumber": 155
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "FindAnimationProfile",
+          "lineNumber": 164
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "ConfigureAnimationDefinition",
+          "lineNumber": 171
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UAnimSequence>",
+          "lineNumber": 174
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "ConfigureAnimationDefinition",
+          "lineNumber": 184
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UAnimSequence>",
+          "lineNumber": 187
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "FSoftObjectPath",
+          "lineNumber": 188
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 188
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "ConfigureAnimationDefinition",
+          "lineNumber": 192
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UAnimSequence>",
+          "lineNumber": 195
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "FSoftObjectPath",
+          "lineNumber": 196
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 196
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "ConfigureAnimationDefinition",
+          "lineNumber": 200
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UAnimSequence>",
+          "lineNumber": 203
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "FSoftObjectPath",
+          "lineNumber": 204
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 204
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "ConfigureAnimationDefinition",
+          "lineNumber": 208
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UAnimSequence>",
+          "lineNumber": 211
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "FSoftObjectPath",
+          "lineNumber": 212
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 212
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "ConfigureAnimationDefinition",
+          "lineNumber": 216
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "LoadAssetOrNull<UAnimSequence>",
+          "lineNumber": 219
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "FSoftObjectPath",
+          "lineNumber": 220
+        },
+        {
+          "caller": "APlayableActor",
+          "callee": "TEXT",
+          "lineNumber": 220
+        },
+        {
+          "caller": "SetupPlayerInputComponent",
+          "callee": "Super::SetupPlayerInputComponent",
+          "lineNumber": 234
+        },
+        {
+          "caller": "SetupPlayerInputComponent",
+          "callee": "FindComponentByClass<UPlayerInputComponent>",
+          "lineNumber": 237
+        },
+        {
+          "caller": "SetupPlayerInputComponent",
+          "callee": "BindInput",
+          "lineNumber": 239
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 82,
+      "nonEmptyLines": 63,
+      "functions": [
+        {
+          "name": "UAnimationRegistryComponent",
+          "startLine": 13,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "GetAnimation",
+          "startLine": 40,
+          "endLine": 54,
+          "params": [
+            "Key"
+          ]
+        },
+        {
+          "name": "HasAnimation",
+          "startLine": 57,
+          "endLine": 62,
+          "params": [
+            "Key"
+          ]
+        },
+        {
+          "name": "TryFindAnimation",
+          "startLine": 65,
+          "endLine": 82,
+          "params": [
+            "Key",
+            "OutAnimation"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UAnimationRegistryComponent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "GetAnimation",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "HasAnimation",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "TryFindAnimation",
+          "line": 65,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetAnimation",
+          "callee": "FindAnimation",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GetAnimation",
+          "callee": "FAnimationDefinition",
+          "lineNumber": 53
+        },
+        {
+          "caller": "HasAnimation",
+          "callee": "FindAnimation",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TryFindAnimation",
+          "callee": "FindAnimation",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TryFindAnimation",
+          "callee": "FAnimationDefinition",
+          "lineNumber": 75
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 328,
+      "nonEmptyLines": 276,
+      "classes": [
+        {
+          "name": "EAnimationKey",
+          "startLine": 26,
+          "endLine": 328,
+          "methods": [
+            "UMETA",
+            "GetAnimation",
+            "HasAnimation",
+            "TryFindAnimation"
+          ],
+          "properties": [
+            "BlueprintType",
+            "BlueprintType",
+            "BlueprintType",
+            "BlueprintType",
+            "UAnimationRegistryComponent",
+            "Animations",
+            "FindAnimation"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EAnimationKey",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 357,
+      "nonEmptyLines": 285,
+      "functions": [
+        {
+          "name": "UCombatVolumeComponent",
+          "startLine": 21,
+          "endLine": 33,
+          "params": []
+        },
+        {
+          "name": "OnRegister",
+          "startLine": 40,
+          "endLine": 45,
+          "params": []
+        },
+        {
+          "name": "OnUnregister",
+          "startLine": 48,
+          "endLine": 57,
+          "params": []
+        },
+        {
+          "name": "CreateCollisionShape",
+          "startLine": 64,
+          "endLine": 148,
+          "params": []
+        },
+        {
+          "name": "ConfigureCollisionShape",
+          "startLine": 155,
+          "endLine": 268,
+          "params": []
+        },
+        {
+          "name": "AttachToComponent",
+          "startLine": 275,
+          "endLine": 297,
+          "params": [
+            "Parent",
+            "SocketName"
+          ]
+        },
+        {
+          "name": "Detach",
+          "startLine": 300,
+          "endLine": 310,
+          "params": []
+        },
+        {
+          "name": "SetEnabled",
+          "startLine": 317,
+          "endLine": 329,
+          "params": [
+            "bEnabled"
+          ]
+        },
+        {
+          "name": "IsEnabled",
+          "startLine": 332,
+          "endLine": 341,
+          "params": []
+        },
+        {
+          "name": "SetAttackActive",
+          "startLine": 348,
+          "endLine": 351,
+          "params": [
+            "bActive"
+          ]
+        },
+        {
+          "name": "IsAttackActive",
+          "startLine": 354,
+          "endLine": 357,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UCombatVolumeComponent",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "OnRegister",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "OnUnregister",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "CreateCollisionShape",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "ConfigureCollisionShape",
+          "line": 155,
+          "isDefault": false
+        },
+        {
+          "name": "AttachToComponent",
+          "line": 275,
+          "isDefault": false
+        },
+        {
+          "name": "Detach",
+          "line": 300,
+          "isDefault": false
+        },
+        {
+          "name": "SetEnabled",
+          "line": 317,
+          "isDefault": false
+        },
+        {
+          "name": "IsEnabled",
+          "line": 332,
+          "isDefault": false
+        },
+        {
+          "name": "SetAttackActive",
+          "line": 348,
+          "isDefault": false
+        },
+        {
+          "name": "IsAttackActive",
+          "line": 354,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "OnRegister",
+          "callee": "Super::OnRegister",
+          "lineNumber": 42
+        },
+        {
+          "caller": "OnRegister",
+          "callee": "CreateCollisionShape",
+          "lineNumber": 44
+        },
+        {
+          "caller": "OnUnregister",
+          "callee": "DestroyComponent",
+          "lineNumber": 52
+        },
+        {
+          "caller": "OnUnregister",
+          "callee": "Super::OnUnregister",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "GetOwner",
+          "lineNumber": 71
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "NewObject<UBoxComponent>",
+          "lineNumber": 83
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "NewObject<USphereComponent>",
+          "lineNumber": 96
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "NewObject<UCapsuleComponent>",
+          "lineNumber": 109
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "AddInstanceComponent",
+          "lineNumber": 133
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "ConfigureCollisionShape",
+          "lineNumber": 135
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "RegisterComponent",
+          "lineNumber": 137
+        },
+        {
+          "caller": "CreateCollisionShape",
+          "callee": "SetCollisionEnabled",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetSimulatePhysics",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetEnableGravity",
+          "lineNumber": 163
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetCanEverAffectNavigation",
+          "lineNumber": 164
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetCollisionEnabled",
+          "lineNumber": 171
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetCollisionObjectType",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetGenerateOverlapEvents",
+          "lineNumber": 191
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetCollisionResponseToAllChannels",
+          "lineNumber": 198
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetCollisionResponseToChannel",
+          "lineNumber": 205
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "Cast<UBoxComponent>",
+          "lineNumber": 220
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetBoxExtent",
+          "lineNumber": 224
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "Cast<USphereComponent>",
+          "lineNumber": 235
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetSphereRadius",
+          "lineNumber": 239
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "Cast<UCapsuleComponent>",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ConfigureCollisionShape",
+          "callee": "SetCapsuleSize",
+          "lineNumber": 254
+        },
+        {
+          "caller": "AttachToComponent",
+          "callee": "AttachToComponent",
+          "lineNumber": 292
+        },
+        {
+          "caller": "Detach",
+          "callee": "DetachFromComponent",
+          "lineNumber": 307
+        },
+        {
+          "caller": "SetEnabled",
+          "callee": "SetCollisionEnabled",
+          "lineNumber": 324
+        },
+        {
+          "caller": "IsEnabled",
+          "callee": "GetCollisionEnabled",
+          "lineNumber": 339
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 11,
+        "functionCount": 11,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/CombatVolumeComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 198,
+      "nonEmptyLines": 148,
+      "classes": [
+        {
+          "name": "UShapeComponent",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UShapeComponent",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PlayerInputComponent.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 912,
+      "nonEmptyLines": 755,
+      "functions": [
+        {
+          "name": "UPlayerInputComponent",
+          "startLine": 15,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "BeginPlay",
+          "startLine": 21,
+          "endLine": 33,
+          "params": []
+        },
+        {
+          "name": "BindInput",
+          "startLine": 36,
+          "endLine": 490,
+          "params": [
+            "PlayerInputComponent"
+          ]
+        },
+        {
+          "name": "HandleMoveForward",
+          "startLine": 496,
+          "endLine": 509,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleMoveBackward",
+          "startLine": 512,
+          "endLine": 525,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleMoveRight",
+          "startLine": 528,
+          "endLine": 541,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleMoveLeft",
+          "startLine": 544,
+          "endLine": 557,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleLookInput",
+          "startLine": 563,
+          "endLine": 576,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleJumpStarted",
+          "startLine": 583,
+          "endLine": 593,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleJumpCompleted",
+          "startLine": 596,
+          "endLine": 606,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleSprintStarted",
+          "startLine": 612,
+          "endLine": 622,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleSprintCompleted",
+          "startLine": 625,
+          "endLine": 635,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleCrouchStarted",
+          "startLine": 642,
+          "endLine": 652,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleCrouchCompleted",
+          "startLine": 655,
+          "endLine": 665,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleAimStarted",
+          "startLine": 673,
+          "endLine": 683,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleAimCompleted",
+          "startLine": 685,
+          "endLine": 695,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleReloadStarted",
+          "startLine": 698,
+          "endLine": 708,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleReloadCompleted",
+          "startLine": 710,
+          "endLine": 720,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleLightAttackStarted",
+          "startLine": 723,
+          "endLine": 740,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleLightAttackCompleted",
+          "startLine": 742,
+          "endLine": 757,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleHeavyAttackStarted",
+          "startLine": 760,
+          "endLine": 770,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleHeavyAttackCompleted",
+          "startLine": 772,
+          "endLine": 787,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleBlockStarted",
+          "startLine": 790,
+          "endLine": 800,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleBlockCompleted",
+          "startLine": 802,
+          "endLine": 812,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleDodgeStarted",
+          "startLine": 815,
+          "endLine": 825,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleDodgeCompleted",
+          "startLine": 827,
+          "endLine": 837,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleLockOnStarted",
+          "startLine": 840,
+          "endLine": 850,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleLockOnCompleted",
+          "startLine": 852,
+          "endLine": 862,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleWeaponAbilityStarted",
+          "startLine": 865,
+          "endLine": 875,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleWeaponAbilityCompleted",
+          "startLine": 877,
+          "endLine": 887,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleWeaponSwitchStarted",
+          "startLine": 890,
+          "endLine": 900,
+          "params": [
+            "Value"
+          ]
+        },
+        {
+          "name": "HandleWeaponSwitchCompleted",
+          "startLine": 902,
+          "endLine": 912,
+          "params": [
+            "Value"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UPlayerInputComponent",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "BeginPlay",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "BindInput",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "HandleMoveForward",
+          "line": 496,
+          "isDefault": false
+        },
+        {
+          "name": "HandleMoveBackward",
+          "line": 512,
+          "isDefault": false
+        },
+        {
+          "name": "HandleMoveRight",
+          "line": 528,
+          "isDefault": false
+        },
+        {
+          "name": "HandleMoveLeft",
+          "line": 544,
+          "isDefault": false
+        },
+        {
+          "name": "HandleLookInput",
+          "line": 563,
+          "isDefault": false
+        },
+        {
+          "name": "HandleJumpStarted",
+          "line": 583,
+          "isDefault": false
+        },
+        {
+          "name": "HandleJumpCompleted",
+          "line": 596,
+          "isDefault": false
+        },
+        {
+          "name": "HandleSprintStarted",
+          "line": 612,
+          "isDefault": false
+        },
+        {
+          "name": "HandleSprintCompleted",
+          "line": 625,
+          "isDefault": false
+        },
+        {
+          "name": "HandleCrouchStarted",
+          "line": 642,
+          "isDefault": false
+        },
+        {
+          "name": "HandleCrouchCompleted",
+          "line": 655,
+          "isDefault": false
+        },
+        {
+          "name": "HandleAimStarted",
+          "line": 673,
+          "isDefault": false
+        },
+        {
+          "name": "HandleAimCompleted",
+          "line": 685,
+          "isDefault": false
+        },
+        {
+          "name": "HandleReloadStarted",
+          "line": 698,
+          "isDefault": false
+        },
+        {
+          "name": "HandleReloadCompleted",
+          "line": 710,
+          "isDefault": false
+        },
+        {
+          "name": "HandleLightAttackStarted",
+          "line": 723,
+          "isDefault": false
+        },
+        {
+          "name": "HandleLightAttackCompleted",
+          "line": 742,
+          "isDefault": false
+        },
+        {
+          "name": "HandleHeavyAttackStarted",
+          "line": 760,
+          "isDefault": false
+        },
+        {
+          "name": "HandleHeavyAttackCompleted",
+          "line": 772,
+          "isDefault": false
+        },
+        {
+          "name": "HandleBlockStarted",
+          "line": 790,
+          "isDefault": false
+        },
+        {
+          "name": "HandleBlockCompleted",
+          "line": 802,
+          "isDefault": false
+        },
+        {
+          "name": "HandleDodgeStarted",
+          "line": 815,
+          "isDefault": false
+        },
+        {
+          "name": "HandleDodgeCompleted",
+          "line": 827,
+          "isDefault": false
+        },
+        {
+          "name": "HandleLockOnStarted",
+          "line": 840,
+          "isDefault": false
+        },
+        {
+          "name": "HandleLockOnCompleted",
+          "line": 852,
+          "isDefault": false
+        },
+        {
+          "name": "HandleWeaponAbilityStarted",
+          "line": 865,
+          "isDefault": false
+        },
+        {
+          "name": "HandleWeaponAbilityCompleted",
+          "line": 877,
+          "isDefault": false
+        },
+        {
+          "name": "HandleWeaponSwitchStarted",
+          "line": 890,
+          "isDefault": false
+        },
+        {
+          "name": "HandleWeaponSwitchCompleted",
+          "line": 902,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BeginPlay",
+          "callee": "Super::BeginPlay",
+          "lineNumber": 23
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "GetOwner",
+          "lineNumber": 25
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 25
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "GetOwner",
+          "lineNumber": 25
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "SetLookDirection",
+          "lineNumber": 30
+        },
+        {
+          "caller": "BeginPlay",
+          "callee": "ClearLookInput",
+          "lineNumber": 31
+        },
+        {
+          "caller": "BindInput",
+          "callee": "UE_LOG",
+          "lineNumber": 42
+        },
+        {
+          "caller": "BindInput",
+          "callee": "TEXT",
+          "lineNumber": 45
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetNameSafe",
+          "lineNumber": 46
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetOwner",
+          "lineNumber": 46
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetOwner",
+          "lineNumber": 58
+        },
+        {
+          "caller": "BindInput",
+          "callee": "FindComponentByClass<UControlComponent>",
+          "lineNumber": 59
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetOwner",
+          "lineNumber": 59
+        },
+        {
+          "caller": "BindInput",
+          "callee": "UE_LOG",
+          "lineNumber": 65
+        },
+        {
+          "caller": "BindInput",
+          "callee": "TEXT",
+          "lineNumber": 68
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetName",
+          "lineNumber": 69
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetOwner",
+          "lineNumber": 69
+        },
+        {
+          "caller": "BindInput",
+          "callee": "Cast<UEnhancedInputComponent>",
+          "lineNumber": 91
+        },
+        {
+          "caller": "BindInput",
+          "callee": "UE_LOG",
+          "lineNumber": 95
+        },
+        {
+          "caller": "BindInput",
+          "callee": "TEXT",
+          "lineNumber": 98
+        },
+        {
+          "caller": "BindInput",
+          "callee": "Cast<APawn>",
+          "lineNumber": 110
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetOwner",
+          "lineNumber": 110
+        },
+        {
+          "caller": "BindInput",
+          "callee": "Cast<APlayerController>",
+          "lineNumber": 119
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetController",
+          "lineNumber": 120
+        },
+        {
+          "caller": "BindInput",
+          "callee": "UE_LOG",
+          "lineNumber": 125
+        },
+        {
+          "caller": "BindInput",
+          "callee": "TEXT",
+          "lineNumber": 128
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetName",
+          "lineNumber": 129
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetOwner",
+          "lineNumber": 129
+        },
+        {
+          "caller": "BindInput",
+          "callee": "IsLocalController",
+          "lineNumber": 135
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetLocalPlayer",
+          "lineNumber": 145
+        },
+        {
+          "caller": "BindInput",
+          "callee": "GetSubsystem<\n                UEnhancedInputLocalPlayerSubsystem>",
+          "lineNumber": 148
+        },
+        {
+          "caller": "BindInput",
+          "callee": "AddMappingContext",
+          "lineNumber": 153
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 169
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 176
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 187
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 194
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 205
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 212
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 223
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 230
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 245
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 263
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 270
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 285
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 292
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 307
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 314
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 330
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 337
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 348
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 355
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 366
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 373
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 384
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 391
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 402
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 409
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 420
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 427
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 438
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 445
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 456
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 463
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 474
+        },
+        {
+          "caller": "BindInput",
+          "callee": "BindAction",
+          "lineNumber": 481
+        },
+        {
+          "caller": "HandleMoveForward",
+          "callee": "SetMoveIntent",
+          "lineNumber": 505
+        },
+        {
+          "caller": "HandleMoveForward",
+          "callee": "FVector2D",
+          "lineNumber": 505
+        },
+        {
+          "caller": "HandleMoveForward",
+          "callee": "GetMoveIntent",
+          "lineNumber": 506
+        },
+        {
+          "caller": "HandleMoveForward",
+          "callee": "Get<bool>",
+          "lineNumber": 507
+        },
+        {
+          "caller": "HandleMoveBackward",
+          "callee": "SetMoveIntent",
+          "lineNumber": 521
+        },
+        {
+          "caller": "HandleMoveBackward",
+          "callee": "FVector2D",
+          "lineNumber": 521
+        },
+        {
+          "caller": "HandleMoveBackward",
+          "callee": "GetMoveIntent",
+          "lineNumber": 522
+        },
+        {
+          "caller": "HandleMoveBackward",
+          "callee": "Get<bool>",
+          "lineNumber": 523
+        },
+        {
+          "caller": "HandleMoveRight",
+          "callee": "SetMoveIntent",
+          "lineNumber": 537
+        },
+        {
+          "caller": "HandleMoveRight",
+          "callee": "FVector2D",
+          "lineNumber": 537
+        },
+        {
+          "caller": "HandleMoveRight",
+          "callee": "Get<bool>",
+          "lineNumber": 538
+        },
+        {
+          "caller": "HandleMoveRight",
+          "callee": "GetMoveIntent",
+          "lineNumber": 539
+        },
+        {
+          "caller": "HandleMoveLeft",
+          "callee": "SetMoveIntent",
+          "lineNumber": 553
+        },
+        {
+          "caller": "HandleMoveLeft",
+          "callee": "FVector2D",
+          "lineNumber": 553
+        },
+        {
+          "caller": "HandleMoveLeft",
+          "callee": "Get<bool>",
+          "lineNumber": 554
+        },
+        {
+          "caller": "HandleMoveLeft",
+          "callee": "GetMoveIntent",
+          "lineNumber": 555
+        },
+        {
+          "caller": "HandleLookInput",
+          "callee": "Get<FVector2D>",
+          "lineNumber": 572
+        },
+        {
+          "caller": "HandleLookInput",
+          "callee": "SetLookInput",
+          "lineNumber": 575
+        },
+        {
+          "caller": "HandleJumpStarted",
+          "callee": "SetJumpIntent",
+          "lineNumber": 592
+        },
+        {
+          "caller": "HandleJumpCompleted",
+          "callee": "SetJumpIntent",
+          "lineNumber": 605
+        },
+        {
+          "caller": "HandleSprintStarted",
+          "callee": "SetSprintIntent",
+          "lineNumber": 621
+        },
+        {
+          "caller": "HandleSprintCompleted",
+          "callee": "SetSprintIntent",
+          "lineNumber": 634
+        },
+        {
+          "caller": "HandleLightAttackStarted",
+          "callee": "UE_LOG",
+          "lineNumber": 732
+        },
+        {
+          "caller": "HandleLightAttackStarted",
+          "callee": "TEXT",
+          "lineNumber": 735
+        },
+        {
+          "caller": "HandleLightAttackStarted",
+          "callee": "GetName",
+          "lineNumber": 736
+        },
+        {
+          "caller": "HandleLightAttackStarted",
+          "callee": "GetOwner",
+          "lineNumber": 736
+        },
+        {
+          "caller": "HandleLightAttackStarted",
+          "callee": "RequestLightAttack",
+          "lineNumber": 739
+        },
+        {
+          "caller": "HandleLightAttackCompleted",
+          "callee": "UE_LOG",
+          "lineNumber": 751
+        },
+        {
+          "caller": "HandleLightAttackCompleted",
+          "callee": "TEXT",
+          "lineNumber": 754
+        },
+        {
+          "caller": "HandleLightAttackCompleted",
+          "callee": "GetName",
+          "lineNumber": 755
+        },
+        {
+          "caller": "HandleLightAttackCompleted",
+          "callee": "GetOwner",
+          "lineNumber": 755
+        },
+        {
+          "caller": "HandleHeavyAttackStarted",
+          "callee": "RequestHeavyAttack",
+          "lineNumber": 769
+        },
+        {
+          "caller": "HandleHeavyAttackCompleted",
+          "callee": "UE_LOG",
+          "lineNumber": 781
+        },
+        {
+          "caller": "HandleHeavyAttackCompleted",
+          "callee": "TEXT",
+          "lineNumber": 784
+        },
+        {
+          "caller": "HandleHeavyAttackCompleted",
+          "callee": "GetName",
+          "lineNumber": 785
+        },
+        {
+          "caller": "HandleHeavyAttackCompleted",
+          "callee": "GetOwner",
+          "lineNumber": 785
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 32,
+        "functionCount": 32,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Components/PlayerInputComponent.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 229,
+      "nonEmptyLines": 163,
+      "classes": [
+        {
+          "name": "UControlComponent",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UInputMappingContext",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UInputAction",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UInputComponent",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UControlComponent",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UInputMappingContext",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UInputAction",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UInputComponent",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Events/AnimationRequestPayload.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 189,
+      "nonEmptyLines": 169,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 49,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Settings/CaribbeanAssetSettings.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 181,
+      "nonEmptyLines": 145,
+      "classes": [
+        {
+          "name": "UAnimInstance",
+          "startLine": 9,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimSequence",
+          "startLine": 10,
+          "endLine": 10,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UInputAction",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UInputMappingContext",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "USkeletalMesh",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FCharacterVisualProfile",
+          "startLine": 16,
+          "endLine": 40,
+          "methods": [],
+          "properties": [
+            "EditAnywhere",
+            "ProfileKey",
+            "EditAnywhere",
+            "SkeletalMesh",
+            "EditAnywhere",
+            "AnimBlueprintClass"
+          ]
+        },
+        {
+          "name": "FAnimationAssetEntry",
+          "startLine": 43,
+          "endLine": 52,
+          "methods": [],
+          "properties": [
+            "EditAnywhere",
+            "Key",
+            "EditAnywhere",
+            "Animation"
+          ]
+        },
+        {
+          "name": "FAnimationProfile",
+          "startLine": 55,
+          "endLine": 73,
+          "methods": [],
+          "properties": [
+            "EditAnywhere",
+            "ProfileKey",
+            "EditAnywhere",
+            "Entries"
+          ]
+        },
+        {
+          "name": "FCombatAttachmentProfile",
+          "startLine": 76,
+          "endLine": 96,
+          "methods": [],
+          "properties": [
+            "EditAnywhere",
+            "ProfileKey",
+            "BoneNamesByBodyPart"
+          ]
+        },
+        {
+          "name": "FControlMappingProfile",
+          "startLine": 99,
+          "endLine": 141,
+          "methods": [],
+          "properties": [
+            "EditAnywhere",
+            "ProfileKey",
+            "EditAnywhere",
+            "DefaultMappingContext",
+            "EditAnywhere",
+            "MoveForwardAction",
+            "EditAnywhere",
+            "MoveBackwardAction",
+            "EditAnywhere",
+            "MoveLeftAction",
+            "EditAnywhere",
+            "MoveRightAction",
+            "EditAnywhere",
+            "LookAction",
+            "EditAnywhere",
+            "JumpAction",
+            "EditAnywhere",
+            "SprintAction",
+            "EditAnywhere",
+            "CrouchAction",
+            "EditAnywhere",
+            "LightAttackAction"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UAnimInstance",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimSequence",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UInputAction",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "UInputMappingContext",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "USkeletalMesh",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "FCharacterVisualProfile",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "FAnimationAssetEntry",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "FAnimationProfile",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "FCombatAttachmentProfile",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "FControlMappingProfile",
+          "line": 99,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 10,
+        "functionCount": 0,
+        "classCount": 10
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/AnimationSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 833,
+      "nonEmptyLines": 657,
+      "functions": [
+        {
+          "name": "ResolveSlotName",
+          "startLine": 20,
+          "endLine": 35,
+          "params": [
+            "Layer"
+          ]
+        },
+        {
+          "name": "Initialize",
+          "startLine": 43,
+          "endLine": 60,
+          "params": [
+            "Collection"
+          ]
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 63,
+          "endLine": 73,
+          "params": []
+        },
+        {
+          "name": "Tick",
+          "startLine": 75,
+          "endLine": 78,
+          "params": [
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "Tick",
+          "startLine": 80,
+          "endLine": 85,
+          "params": [
+            "World",
+            "DeltaTime"
+          ]
+        },
+        {
+          "name": "RequestAnimationState",
+          "startLine": 92,
+          "endLine": 193,
+          "params": [
+            "Actor",
+            "NewState",
+            "bForce",
+            "Layer"
+          ]
+        },
+        {
+          "name": "GetCurrentState",
+          "startLine": 200,
+          "endLine": 205,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "GetCurrentState",
+          "startLine": 207,
+          "endLine": 217,
+          "params": [
+            "Actor",
+            "Layer"
+          ]
+        },
+        {
+          "name": "GetStateElapsedTime",
+          "startLine": 219,
+          "endLine": 236,
+          "params": [
+            "Actor",
+            "Layer"
+          ]
+        },
+        {
+          "name": "ClearActorState",
+          "startLine": 267,
+          "endLine": 308,
+          "params": [
+            "Actor"
+          ]
+        },
+        {
+          "name": "PruneStaleActors",
+          "startLine": 373,
+          "endLine": 382,
+          "params": []
+        },
+        {
+          "name": "BuildResolvedRules",
+          "startLine": 389,
+          "endLine": 414,
+          "params": []
+        },
+        {
+          "name": "AdvanceQueue",
+          "startLine": 475,
+          "endLine": 577,
+          "params": [
+            "Actor",
+            "State",
+            "Layer"
+          ]
+        },
+        {
+          "name": "PlayStateAnimation",
+          "startLine": 584,
+          "endLine": 702,
+          "params": [
+            "Actor",
+            "Key",
+            "Layer",
+            "OutMontage"
+          ]
+        },
+        {
+          "name": "OnStateAnimationEnded",
+          "startLine": 709,
+          "endLine": 767,
+          "params": [
+            "Montage",
+            "bInterrupted",
+            "Actor",
+            "Layer"
+          ]
+        },
+        {
+          "name": "OnAnimationRequest",
+          "startLine": 815,
+          "endLine": 833,
+          "params": [
+            "Payload"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ResolveSlotName",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Initialize",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "Tick",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "RequestAnimationState",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "GetCurrentState",
+          "line": 200,
+          "isDefault": false
+        },
+        {
+          "name": "GetCurrentState",
+          "line": 207,
+          "isDefault": false
+        },
+        {
+          "name": "GetStateElapsedTime",
+          "line": 219,
+          "isDefault": false
+        },
+        {
+          "name": "ClearActorState",
+          "line": 267,
+          "isDefault": false
+        },
+        {
+          "name": "PruneStaleActors",
+          "line": 373,
+          "isDefault": false
+        },
+        {
+          "name": "BuildResolvedRules",
+          "line": 389,
+          "isDefault": false
+        },
+        {
+          "name": "AdvanceQueue",
+          "line": 475,
+          "isDefault": false
+        },
+        {
+          "name": "PlayStateAnimation",
+          "line": 584,
+          "isDefault": false
+        },
+        {
+          "name": "OnStateAnimationEnded",
+          "line": 709,
+          "isDefault": false
+        },
+        {
+          "name": "OnAnimationRequest",
+          "line": 815,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Initialize",
+          "callee": "Super::Initialize",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Initialize",
+          "callee": "BuildResolvedRules",
+          "lineNumber": 48
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetEventBus",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Initialize",
+          "callee": "Subscribe<FAnimationRequestPayload>",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "GetEventBus",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Unsubscribe",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Empty",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Tick",
+          "callee": "Tick",
+          "lineNumber": 77
+        },
+        {
+          "caller": "Tick",
+          "callee": "GetWorld",
+          "lineNumber": 77
+        },
+        {
+          "caller": "Tick",
+          "callee": "PruneStaleActors",
+          "lineNumber": 84
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "GetOrCreateActorState",
+          "lineNumber": 112
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "Num",
+          "lineNumber": 118
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "FindComponentByClass<USkeletalMeshComponent>",
+          "lineNumber": 129
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "GetAnimInstance",
+          "lineNumber": 132
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "Get",
+          "lineNumber": 136
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "Montage_Stop",
+          "lineNumber": 138
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "FMath::Max",
+          "lineNumber": 139
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "GetBlendTime",
+          "lineNumber": 139
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "GetWorld",
+          "lineNumber": 145
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "GetTimeSeconds",
+          "lineNumber": 148
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "FindTransitionRule",
+          "lineNumber": 156
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "Add",
+          "lineNumber": 183
+        },
+        {
+          "caller": "RequestAnimationState",
+          "callee": "AdvanceQueue",
+          "lineNumber": 188
+        },
+        {
+          "caller": "GetCurrentState",
+          "callee": "GetCurrentState",
+          "lineNumber": 204
+        },
+        {
+          "caller": "GetCurrentState",
+          "callee": "FindActorAnimationState",
+          "lineNumber": 215
+        },
+        {
+          "caller": "GetCurrentState",
+          "callee": "const_cast<UAnimationSystem*>",
+          "lineNumber": 215
+        },
+        {
+          "caller": "GetStateElapsedTime",
+          "callee": "FindActorAnimationState",
+          "lineNumber": 227
+        },
+        {
+          "caller": "GetStateElapsedTime",
+          "callee": "const_cast<UAnimationSystem*>",
+          "lineNumber": 227
+        },
+        {
+          "caller": "GetStateElapsedTime",
+          "callee": "GetWorld",
+          "lineNumber": 233
+        },
+        {
+          "caller": "GetStateElapsedTime",
+          "callee": "GetTimeSeconds",
+          "lineNumber": 234
+        },
+        {
+          "caller": "GetStateElapsedTime",
+          "callee": "static_cast<float>",
+          "lineNumber": 235
+        },
+        {
+          "caller": "GetStateElapsedTime",
+          "callee": "FMath::Max",
+          "lineNumber": 235
+        },
+        {
+          "caller": "ClearActorState",
+          "callee": "Find",
+          "lineNumber": 275
+        },
+        {
+          "caller": "ClearActorState",
+          "callee": "FindComponentByClass<USkeletalMeshComponent>",
+          "lineNumber": 283
+        },
+        {
+          "caller": "ClearActorState",
+          "callee": "GetAnimInstance",
+          "lineNumber": 286
+        },
+        {
+          "caller": "ClearActorState",
+          "callee": "Get",
+          "lineNumber": 297
+        },
+        {
+          "caller": "ClearActorState",
+          "callee": "Montage_Stop",
+          "lineNumber": 299
+        },
+        {
+          "caller": "ClearActorState",
+          "callee": "GetBlendTime",
+          "lineNumber": 300
+        },
+        {
+          "caller": "ClearActorState",
+          "callee": "Remove",
+          "lineNumber": 307
+        },
+        {
+          "caller": "PruneStaleActors",
+          "callee": "CreateIterator",
+          "lineNumber": 375
+        },
+        {
+          "caller": "PruneStaleActors",
+          "callee": "IsValid",
+          "lineNumber": 377
+        },
+        {
+          "caller": "PruneStaleActors",
+          "callee": "RemoveCurrent",
+          "lineNumber": 379
+        },
+        {
+          "caller": "BuildResolvedRules",
+          "callee": "Reset",
+          "lineNumber": 391
+        },
+        {
+          "caller": "BuildResolvedRules",
+          "callee": "GetAllRows<FActorAnimTransitionRule>",
+          "lineNumber": 397
+        },
+        {
+          "caller": "BuildResolvedRules",
+          "callee": "TEXT",
+          "lineNumber": 398
+        },
+        {
+          "caller": "BuildResolvedRules",
+          "callee": "Add",
+          "lineNumber": 407
+        },
+        {
+          "caller": "BuildResolvedRules",
+          "callee": "Append",
+          "lineNumber": 412
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "Num",
+          "lineNumber": 486
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "RemoveAt",
+          "lineNumber": 494
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "PlayStateAnimation",
+          "lineNumber": 500
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "Num",
+          "lineNumber": 519
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "AdvanceQueue",
+          "lineNumber": 521
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "GetWorld",
+          "lineNumber": 536
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "GetTimeSeconds",
+          "lineNumber": 539
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "FindComponentByClass<USkeletalMeshComponent>",
+          "lineNumber": 549
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "GetAnimInstance",
+          "lineNumber": 557
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "BindUObject",
+          "lineNumber": 566
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "TWeakObjectPtr<AActor>",
+          "lineNumber": 569
+        },
+        {
+          "caller": "AdvanceQueue",
+          "callee": "Montage_SetEndDelegate",
+          "lineNumber": 573
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "FindAnimationRegistry",
+          "lineNumber": 600
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "TryFindAnimation",
+          "lineNumber": 610
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "FindComponentByClass<USkeletalMeshComponent>",
+          "lineNumber": 622
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "GetAnimInstance",
+          "lineNumber": 630
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "SetRootMotionMode",
+          "lineNumber": 639
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "Cast<UAnimSequenceBase>",
+          "lineNumber": 645
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "PlaySlotAnimationAsDynamicMontage",
+          "lineNumber": 655
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "ResolveSlotName",
+          "lineNumber": 659
+        },
+        {
+          "caller": "PlayStateAnimation",
+          "callee": "PlayAnimation",
+          "lineNumber": 694
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "IsValid",
+          "lineNumber": 718
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "FindActorAnimationState",
+          "lineNumber": 730
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "Get",
+          "lineNumber": 731
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "Get",
+          "lineNumber": 742
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "Num",
+          "lineNumber": 747
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "AdvanceQueue",
+          "lineNumber": 749
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "Get",
+          "lineNumber": 750
+        },
+        {
+          "caller": "OnStateAnimationEnded",
+          "callee": "Reset",
+          "lineNumber": 760
+        },
+        {
+          "caller": "OnAnimationRequest",
+          "callee": "Get",
+          "lineNumber": 820
+        },
+        {
+          "caller": "OnAnimationRequest",
+          "callee": "IsValid",
+          "lineNumber": 821
+        },
+        {
+          "caller": "OnAnimationRequest",
+          "callee": "RequestAnimationState",
+          "lineNumber": 827
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 16,
+        "functionCount": 16,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/AnimationSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 280,
+      "nonEmptyLines": 230,
+      "classes": [
+        {
+          "name": "UAnimationRegistryComponent",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimInstance",
+          "startLine": 14,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimMontage",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UAnimSequenceBase",
+          "startLine": 16,
+          "endLine": 16,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "startLine": 17,
+          "endLine": 17,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UActorRegistry",
+          "startLine": 18,
+          "endLine": 18,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FAnimationDefinition",
+          "startLine": 19,
+          "endLine": 19,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UAnimationRegistryComponent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimInstance",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimMontage",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "UAnimSequenceBase",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "UActorRegistry",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "FAnimationDefinition",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 7,
+        "functionCount": 0,
+        "classCount": 7
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.cpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 105,
+      "nonEmptyLines": 77,
+      "functions": [
+        {
+          "name": "Initialize",
+          "startLine": 15,
+          "endLine": 25,
+          "params": [
+            "Collection"
+          ]
+        },
+        {
+          "name": "Deinitialize",
+          "startLine": 28,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "OnMovementControlEvent",
+          "startLine": 38,
+          "endLine": 105,
+          "params": [
+            "Payload"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Initialize",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "Deinitialize",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "OnMovementControlEvent",
+          "line": 38,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Initialize",
+          "callee": "Super::Initialize",
+          "lineNumber": 17
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetSubsystem<UEventBusSubsystem>",
+          "lineNumber": 19
+        },
+        {
+          "caller": "Initialize",
+          "callee": "GetWorld",
+          "lineNumber": 19
+        },
+        {
+          "caller": "Initialize",
+          "callee": "Subscribe<FMovementPayload>",
+          "lineNumber": 21
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "GetSubsystem<UEventBusSubsystem>",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "GetWorld",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Unsubscribe",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Deinitialize",
+          "callee": "Super::Deinitialize",
+          "lineNumber": 34
+        },
+        {
+          "caller": "OnMovementControlEvent",
+          "callee": "RequestAnimationState",
+          "lineNumber": 99
+        },
+        {
+          "caller": "OnMovementControlEvent",
+          "callee": "GetSubsystem<UAnimationSystem>",
+          "lineNumber": 99
+        },
+        {
+          "caller": "OnMovementControlEvent",
+          "callee": "GetWorld",
+          "lineNumber": 99
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Systems/MovementAnimationSystem.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 99,
+      "nonEmptyLines": 83,
+      "classes": [
+        {
+          "name": "UAnimationSystem",
+          "startLine": 13,
+          "endLine": 13,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "startLine": 14,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "FMovementPayload",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UAnimationSystem",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UEventBusSubsystem",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "FMovementPayload",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Types/GameplayCombatMoveTypes.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "FGameplayCombatMove",
+          "startLine": 9,
+          "endLine": 38,
+          "methods": [],
+          "properties": [
+            "EditAnywhere",
+            "MoveId",
+            "EditAnywhere",
+            "Animation",
+            "EditAnywhere",
+            "AnticipationTime",
+            "EditAnywhere",
+            "ActiveTime",
+            "EditAnywhere",
+            "RecoveryTime",
+            "EditAnywhere",
+            "Damage",
+            "EditAnywhere",
+            "Stamina",
+            "CombatVolumes"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FGameplayCombatMove",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Types/MovementAnimationTypes.h",
+      "language": "c",
+      "fileCategory": "code",
+      "totalLines": 168,
+      "nonEmptyLines": 150,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

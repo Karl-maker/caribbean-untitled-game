@@ -1,0 +1,126 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "language": "c",
+      "sizeLines": 182,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp",
+      "language": "cpp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h",
+      "language": "c",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "language": "c",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp",
+      "language": "cpp",
+      "sizeLines": 273,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h",
+      "language": "c",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidget.cpp",
+      "language": "cpp",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidget.h",
+      "language": "c",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/HudWidgetComponent.h",
+      "language": "c",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp",
+      "language": "cpp",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "language": "c",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/PlayerHudController.cpp",
+      "language": "cpp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/UI/PlayerHudController.h",
+      "language": "c",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "Source/CaribbeanUntitled/Actors/CharacterActor.h": [
+      "Source/CaribbeanUntitled/Components/AnimationRegistryComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.cpp": [
+      "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h"
+    ],
+    "Source/CaribbeanUntitled/Actors/NonPlayableCharacter.h": [
+      "Source/CaribbeanUntitled/Actors/CharacterActor.h",
+      "Source/CaribbeanUntitled/Components/CharacterBrainComponent.h",
+      "Source/CaribbeanUntitled/Components/PerceptionComponent.h"
+    ],
+    "Source/CaribbeanUntitled/Actors/PlayableActor.h": [
+      "Source/CaribbeanUntitled/Actors/CharacterActor.h"
+    ],
+    "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.cpp": [
+      "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h"
+    ],
+    "Source/CaribbeanUntitled/GameMode/CaribbeanGameMode.h": [
+      "Source/CaribbeanUntitled/Actors/PlayableActor.h",
+      "Source/CaribbeanUntitled/UI/PlayerHudController.h"
+    ],
+    "Source/CaribbeanUntitled/UI/HudWidget.cpp": [
+      "Source/CaribbeanUntitled/UI/HudWidget.h",
+      "Source/CaribbeanUntitled/UI/HudWidgetComponent.h"
+    ],
+    "Source/CaribbeanUntitled/UI/HudWidget.h": [],
+    "Source/CaribbeanUntitled/UI/HudWidgetComponent.h": [],
+    "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.cpp": [
+      "Source/CaribbeanUntitled/Components/StatsComponent.h",
+      "Source/CaribbeanUntitled/UI/HudWidget.h",
+      "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h"
+    ],
+    "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h": [
+      "Source/CaribbeanUntitled/UI/HudWidgetComponent.h"
+    ],
+    "Source/CaribbeanUntitled/UI/PlayerHudController.cpp": [
+      "Source/CaribbeanUntitled/UI/HudWidget.h",
+      "Source/CaribbeanUntitled/UI/LifeHudWidgetComponent.h",
+      "Source/CaribbeanUntitled/UI/PlayerHudController.h"
+    ],
+    "Source/CaribbeanUntitled/UI/PlayerHudController.h": []
+  }
+}

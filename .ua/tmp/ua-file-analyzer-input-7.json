@@ -1,0 +1,35 @@
+{
+  "projectRoot": "/Users/family/Documents/Software Projects/is-ed/caribbean-untitled-game",
+  "batchFiles": [
+    {
+      "path": "Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "language": "markdown",
+      "sizeLines": 246,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "language": "markdown",
+      "sizeLines": 44,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "language": "markdown",
+      "sizeLines": 256,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/Profiles.md",
+      "language": "markdown",
+      "sizeLines": 223,
+      "fileCategory": "docs"
+    }
+  ],
+  "batchImportData": {
+    "Source/CaribbeanUntitled/Docs/AnimationPipeline.md": [],
+    "Source/CaribbeanUntitled/Docs/HudWidgets.md": [],
+    "Source/CaribbeanUntitled/Docs/InputPipeline.md": [],
+    "Source/CaribbeanUntitled/Docs/Profiles.md": []
+  }
+}

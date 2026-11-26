@@ -1,0 +1,463 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 4,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 4
+    }
+  },
+  "results": [
+    {
+      "path": "Source/CaribbeanUntitled/Docs/AnimationPipeline.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 246,
+      "nonEmptyLines": 165,
+      "sections": [
+        {
+          "heading": "Animation Pipeline",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Big Picture",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Main Pieces",
+          "level": 2,
+          "line": 16
+        },
+        {
+          "heading": "What The Registry Does",
+          "level": 2,
+          "line": 26
+        },
+        {
+          "heading": "Where The Assets Come From",
+          "level": 2,
+          "line": 46
+        },
+        {
+          "heading": "How Animation Requests Are Made",
+          "level": 2,
+          "line": 72
+        },
+        {
+          "heading": "Movement",
+          "level": 3,
+          "line": 76
+        },
+        {
+          "heading": "Combat",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "How `UAnimationSystem` Works",
+          "level": 2,
+          "line": 92
+        },
+        {
+          "heading": "Transition Rules",
+          "level": 2,
+          "line": 104
+        },
+        {
+          "heading": "Playback Path",
+          "level": 2,
+          "line": 118
+        },
+        {
+          "heading": "Layer Masks And Hierarchy",
+          "level": 2,
+          "line": 129
+        },
+        {
+          "heading": "Skeletal Mesh Runtime",
+          "level": 2,
+          "line": 152
+        },
+        {
+          "heading": "Client And Server Behavior",
+          "level": 2,
+          "line": 161
+        },
+        {
+          "heading": "Server",
+          "level": 3,
+          "line": 163
+        },
+        {
+          "heading": "Client",
+          "level": 3,
+          "line": 179
+        },
+        {
+          "heading": "Replication Bridge",
+          "level": 3,
+          "line": 191
+        },
+        {
+          "heading": "Why The Blend Settings Matter",
+          "level": 2,
+          "line": 197
+        },
+        {
+          "heading": "Practical Flow Example",
+          "level": 2,
+          "line": 209
+        },
+        {
+          "heading": "Example: light attack",
+          "level": 3,
+          "line": 211
+        },
+        {
+          "heading": "Example: walk to strafe",
+          "level": 3,
+          "line": 220
+        },
+        {
+          "heading": "Extending The Pipeline",
+          "level": 2,
+          "line": 230
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "line": 240
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 23
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/HudWidgets.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 44,
+      "nonEmptyLines": 30,
+      "sections": [
+        {
+          "heading": "HUD Widgets With C++",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Overview",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Life Widget Example",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "Adding A New HUD Component",
+          "level": 2,
+          "line": 23
+        },
+        {
+          "heading": "Example Pattern",
+          "level": 2,
+          "line": 31
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "line": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/InputPipeline.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 256,
+      "nonEmptyLines": 173,
+      "sections": [
+        {
+          "heading": "Input Pipeline",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Big Picture",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Main Pieces",
+          "level": 2,
+          "line": 15
+        },
+        {
+          "heading": "Local Input Capture",
+          "level": 2,
+          "line": 24
+        },
+        {
+          "heading": "Movement Input",
+          "level": 2,
+          "line": 36
+        },
+        {
+          "heading": "Look Input",
+          "level": 2,
+          "line": 52
+        },
+        {
+          "heading": "Action Input",
+          "level": 2,
+          "line": 60
+        },
+        {
+          "heading": "Client And Server Behavior",
+          "level": 2,
+          "line": 80
+        },
+        {
+          "heading": "Client",
+          "level": 3,
+          "line": 82
+        },
+        {
+          "heading": "Server",
+          "level": 3,
+          "line": 92
+        },
+        {
+          "heading": "Replication In `UControlComponent`",
+          "level": 2,
+          "line": 107
+        },
+        {
+          "heading": "Movement Evaluation",
+          "level": 2,
+          "line": 134
+        },
+        {
+          "heading": "Camera And Movement",
+          "level": 2,
+          "line": 157
+        },
+        {
+          "heading": "Combat Input Flow",
+          "level": 2,
+          "line": 165
+        },
+        {
+          "heading": "Movement To Animation",
+          "level": 2,
+          "line": 176
+        },
+        {
+          "heading": "Input To Pose",
+          "level": 2,
+          "line": 191
+        },
+        {
+          "heading": "Example Flow",
+          "level": 2,
+          "line": 204
+        },
+        {
+          "heading": "Move forward",
+          "level": 3,
+          "line": 206
+        },
+        {
+          "heading": "Move left while sprinting",
+          "level": 3,
+          "line": 215
+        },
+        {
+          "heading": "Move backwards",
+          "level": 3,
+          "line": 223
+        },
+        {
+          "heading": "Adding A New Input",
+          "level": 2,
+          "line": 230
+        },
+        {
+          "heading": "Adding A New Movement Direction",
+          "level": 2,
+          "line": 240
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "line": 250
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 23
+      }
+    },
+    {
+      "path": "Source/CaribbeanUntitled/Docs/Profiles.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 223,
+      "nonEmptyLines": 156,
+      "sections": [
+        {
+          "heading": "Profile Setup Guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "What A Profile Key Does",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Visual Profiles",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "Fields",
+          "level": 3,
+          "line": 22
+        },
+        {
+          "heading": "How To Add One",
+          "level": 3,
+          "line": 28
+        },
+        {
+          "heading": "Example",
+          "level": 3,
+          "line": 36
+        },
+        {
+          "heading": "Animation Profiles",
+          "level": 2,
+          "line": 42
+        },
+        {
+          "heading": "Fields",
+          "level": 3,
+          "line": 46
+        },
+        {
+          "heading": "How To Add One",
+          "level": 3,
+          "line": 58
+        },
+        {
+          "heading": "Example",
+          "level": 3,
+          "line": 66
+        },
+        {
+          "heading": "Combat Attachment Profiles",
+          "level": 2,
+          "line": 82
+        },
+        {
+          "heading": "Fields",
+          "level": 3,
+          "line": 88
+        },
+        {
+          "heading": "How To Add One",
+          "level": 3,
+          "line": 102
+        },
+        {
+          "heading": "Example",
+          "level": 3,
+          "line": 110
+        },
+        {
+          "heading": "Control Mapping Profiles",
+          "level": 2,
+          "line": 123
+        },
+        {
+          "heading": "Fields",
+          "level": 3,
+          "line": 127
+        },
+        {
+          "heading": "How To Add One",
+          "level": 3,
+          "line": 140
+        },
+        {
+          "heading": "Character Setup",
+          "level": 2,
+          "line": 147
+        },
+        {
+          "heading": "Native Skeletal Mesh Runtime",
+          "level": 2,
+          "line": 161
+        },
+        {
+          "heading": "Animation Layers",
+          "level": 2,
+          "line": 182
+        },
+        {
+          "heading": "How It Works",
+          "level": 3,
+          "line": 191
+        },
+        {
+          "heading": "Example",
+          "level": 3,
+          "line": 199
+        },
+        {
+          "heading": "Recommended Workflow",
+          "level": 2,
+          "line": 209
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "line": 219
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 24
+      }
+    }
+  ]
+}
