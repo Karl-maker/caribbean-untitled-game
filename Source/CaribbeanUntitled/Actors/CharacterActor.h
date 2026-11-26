@@ -30,7 +30,6 @@ class CARIBBEANUNTITLED_API ACharacterActor : public ACharacter
 public:
 
     ACharacterActor();
-    virtual void Tick(float DeltaSeconds) override;
 
 
 protected:
@@ -174,6 +173,10 @@ protected:
     void ApplyCharacterVisualProfile();
 
 public:
+    /**
+     * Legacy compatibility hooks. The production render path now uses the
+     * native USkeletalMeshComponent and AnimInstance directly.
+     */
     void SyncPoseableMeshFromSkeletalMesh();
     void UpdatePoseableMeshFromCurrentAnimation(float DeltaSeconds);
 };

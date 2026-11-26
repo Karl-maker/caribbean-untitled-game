@@ -12,7 +12,6 @@
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "../Actors/CharacterActor.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 
@@ -80,38 +79,9 @@ void UAnimationSystem::Tick(float DeltaTime)
 
 void UAnimationSystem::Tick(UWorld* World, float DeltaTime)
 {
-    if (DeltaTime <= 0.0f)
-    {
-        return;
-    }
-
-    UActorRegistry* Registry =
-        World ? World->GetSubsystem<UActorRegistry>() : nullptr;
-    if (!Registry)
-    {
-        return;
-    }
-
-    const TSet<TWeakObjectPtr<AActor>>* Actors =
-        Registry->GetActorsWithComponent<UAnimationRegistryComponent>();
-    if (!Actors)
-    {
-        return;
-    }
-
-    for (const TWeakObjectPtr<AActor>& WeakActor : *Actors)
-    {
-        AActor* Actor = WeakActor.Get();
-        if (!IsValid(Actor))
-        {
-            continue;
-        }
-
-        if (ACharacterActor* CharacterActor = Cast<ACharacterActor>(Actor))
-        {
-            CharacterActor->SyncPoseableMeshFromSkeletalMesh();
-        }
-    }
+    (void)World;
+    (void)DeltaTime;
+    PruneStaleActors();
 }
 
 
@@ -699,14 +669,7 @@ bool UAnimationSystem::PlayStateAnimation(
                     Definition.StartPosition
                 );
 
-            if (OutMontage)
-            {
-                if (ACharacterActor* CharacterActor = Cast<ACharacterActor>(Actor))
-                {
-                    CharacterActor->SyncPoseableMeshFromSkeletalMesh();
-                }
-            }
-            else
+            if (!OutMontage)
             {
             }
 
@@ -732,11 +695,6 @@ bool UAnimationSystem::PlayStateAnimation(
         Definition.Animation,
         bLooping
     );
-
-    if (ACharacterActor* CharacterActor = Cast<ACharacterActor>(Actor))
-    {
-        CharacterActor->SyncPoseableMeshFromSkeletalMesh();
-    }
 
     // OutMontage stays nullptr — PlayAnimation() produces no montage to
     // track, but playback itself genuinely succeeded.

@@ -158,55 +158,53 @@ Control mapping profiles define the input assets for a control scheme.
 
 For a new character variant, keep the keys aligned unless you intentionally want different behavior.
 
-## Poseable Mesh Refactor Notes
+## Native Skeletal Mesh Runtime
 
-The project is moving toward poseable-mesh driven runtime IK for characters that need direct bone edits.
+Characters render through `ACharacter::GetMesh()` and its Animation Blueprint.
+The hidden poseable component is retained only for compatibility with existing
+assets.
 
 That means:
 
 - visual profiles still define the base mesh asset
 - animation profiles still define the request-driven locomotion and combat assets
-- IK no longer depends on an AnimBP event chain
-- direct head/neck rotation is applied on a `UPoseableMeshComponent` when present
+- dynamic montages play through named AnimGraph slots
+- IK, aiming, head tracking, and bone masks belong in the AnimGraph or Control Rig
+- no gameplay C++ loop samples and writes every bone each frame
 
-If a character uses the poseable path, the important bone references should stay stable in the combat attachment profile, especially:
+Important attachment bones should stay stable in the combat attachment profile,
+especially:
 
 - `Head`
 - `Neck`
 - `Spine`
 
-## Animation Breakpoints
+## Animation Layers
 
-The poseable animation path supports per-animation breakpoint modes with a character-level breakpoint bone.
+The runtime uses these named slots:
 
-### Fields
-
-On `FAnimationDefinition`:
-
-- `Breakpoint`
-
-On `ACharacterActor`:
-
-- `UpperBodyBreakpointBoneName`
+- `lower-body`
+- `upper-body`
+- `face`
+- `ik`
 
 ### How It Works
 
-- `FullBody` means the animation can affect the whole skeleton.
-- `SpineAndDown` means the overlay starts at the configured breakpoint bone and affects that bone and its descendants in the hierarchy.
-- `SpineAndUp` is available for rigs that want the inverse split.
-
-The split is hierarchy-based, not index-based.
-That means you can move the breakpoint up or down the rig by changing the character's breakpoint bone without changing gameplay code.
+- C++ chooses an `EAnimationLayer`.
+- `UAnimationSystem` routes the montage to the matching slot.
+- The Animation Blueprint combines slots with cached poses and
+  `Layered Blend Per Bone`.
+- The current upper-body branch should begin at `Spine`.
 
 ### Example
 
 For the Demo Bot:
 
-- `UpperBodyBreakpointBoneName = Spine`
-- combat punches use `Breakpoint = SpineAndDown`
+- locomotion feeds the base pose
+- combat punches play through `upper-body`
+- the AnimGraph blends the upper-body slot from `Spine`
 - locomotion remains `FullBody`
-- bones below the breakpoint stay on the locomotion pose
-- bones above the breakpoint blend toward the upper-body animation
+- lower-body locomotion remains active while punching
 
 ## Recommended Workflow
 

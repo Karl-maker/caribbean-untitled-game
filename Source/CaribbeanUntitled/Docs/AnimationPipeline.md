@@ -126,39 +126,37 @@ When a state is played, the system:
 
 If there is no `UAnimInstance`, it falls back to direct mesh playback.
 
-## Breakpoints And Hierarchy
+## Layer Masks And Hierarchy
 
-Upper-body playback is controlled per animation entry, while the actual breakpoint bone is owned by the character.
+Bone evaluation now stays inside Unreal's native AnimGraph. C++ selects an
+animation layer and plays a dynamic montage into its corresponding slot.
 
-Each `FAnimationDefinition` can declare:
+The Animation Blueprint must provide the matching slot nodes:
 
-- `Breakpoint`
+- `lower-body` for full-body locomotion
+- `upper-body` for combat and other upper-body overlays
+- `face` for facial animation
+- `ik` for IK/additive work
 
-`ACharacterActor::UpperBodyBreakpointBoneName` decides which bone the split uses when an upper-body layer is active.
+Use `Layered Blend Per Bone` in the AnimGraph to combine the upper-body slot
+with locomotion. The current character split starts at `Spine`.
 
-Rules:
+This moves hierarchy traversal, pose caching, update-rate optimization, and
+parallel animation evaluation back into the engine instead of walking and
+writing every bone from gameplay C++.
 
-- `FullBody` means the animation can affect the whole skeleton.
-- `SpineAndDown` means the overlay starts at the configured breakpoint bone and applies to that bone and all of its descendants.
-- `SpineAndUp` is available for rigs that want the inverse split.
+`FAnimationDefinition::Breakpoint` and
+`ACharacterActor::UpperBodyBreakpointBoneName` remain available for asset
+compatibility, but the AnimGraph's blend filters now define the runtime mask.
 
-The code walks the bone hierarchy from parent to child.
-It does not rely on bone index order.
+## Skeletal Mesh Runtime
 
-That means you can move the breakpoint up or down the hierarchy for a character by changing its configured breakpoint bone name without touching each animation entry.
+`ACharacter::GetMesh()` is the visible runtime mesh. Its AnimInstance evaluates
+locomotion, slots, montages, and layered blends natively.
 
-For the current character setup:
-
-- locomotion uses the full body layer
-- punches, hit reacts, and interact use the upper-body layer
-- the configurable breakpoint bone is `Spine`
-- bones below that breakpoint remain on the locomotion pose
-
-## Poseable Mesh Runtime
-
-`ACharacterActor` still maintains a `UPoseableMeshComponent`, but it now exists only as a runtime copy of the active animation state.
-
-The animation system samples the current full-body and upper-body layers, blends them against the configured breakpoint, and writes the final bone transforms into the poseable mesh each frame.
+The old `UPoseableMeshComponent` remains hidden and non-ticking so existing
+Blueprint assets do not lose the serialized component, but it is no longer part
+of the runtime render path.
 
 ## Client And Server Behavior
 
